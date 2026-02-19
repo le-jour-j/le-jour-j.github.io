@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boîte à Noms</title>
+    <title>La Boîte à Noms</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -19,16 +19,11 @@
             font-family: Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
             margin: 0;
-            padding: 2rem;
+            padding: 20px;
             transition: background 0.1s;
         }
 
-        /* Effet Arc-en-ciel à l'ajout */
         body.rainbow-active {
             background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
             background-size: 1400% 1400%;
@@ -49,68 +44,71 @@
             }
         }
 
-        .container {
-            background-color: var(--container-bg);
-            padding: 2rem;
-            border-radius: 4px;
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-            z-index: 10;
-        }
-
         h1 {
-            margin-top: 0;
-            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 30px;
             border-bottom: 1px solid #333;
-            padding-bottom: 1rem;
+            padding-bottom: 10px;
         }
 
-        p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+        /* Grille des boîtes */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .box {
+            background-color: var(--container-bg);
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .box h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            color: var(--accent);
         }
 
         .input-group {
             display: flex;
-            gap: 10px;
-            margin-bottom: 2rem;
+            gap: 5px;
+            margin-bottom: 1.5rem;
         }
 
         input[type="text"] {
             flex-grow: 1;
-            padding: 10px;
+            padding: 8px;
             background-color: #2a2a2a;
             border: 1px solid #444;
             color: var(--text-main);
             border-radius: 2px;
+            font-size: 0.9rem;
         }
 
-        button.action-btn {
+        button.add-btn {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 12px;
             cursor: pointer;
             border-radius: 2px;
             font-weight: bold;
-        }
-
-        button.action-btn:hover {
-            background-color: var(--accent-hover);
         }
 
         ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         li {
             background-color: #2a2a2a;
-            margin-bottom: 8px;
-            padding: 12px;
+            margin-bottom: 6px;
+            padding: 10px;
             border-radius: 2px;
             display: flex;
             justify-content: space-between;
@@ -118,7 +116,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            user-select: none;
+            font-size: 0.9rem;
         }
 
         li.used {
@@ -131,19 +129,12 @@
             background: none;
             color: #ff4757;
             border: 1px solid #ff4757;
-            border-radius: 2px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
             cursor: pointer;
-            padding: 4px 8px;
-            font-size: 0.8rem;
             z-index: 2;
         }
 
-        .delete-btn:hover {
-            background: #ff4757;
-            color: white;
-        }
-
-        /* Effet Explosion au clic */
         .explosion-effect {
             position: absolute;
             border-radius: 50%;
@@ -151,9 +142,8 @@
             transform: translate(-50%, -50%) scale(0);
             animation: explode 0.5s ease-out forwards;
             pointer-events: none;
-            width: 150px;
-            height: 150px;
-            z-index: 1;
+            width: 100px;
+            height: 100px;
         }
 
         @keyframes explode {
@@ -167,110 +157,135 @@
 
 <body>
 
-    <div class="container">
-        <h1>Boîte à Noms</h1>
-        <p>Action 1 : Saisir un nom et cliquer sur Ajouter.<br>Action 2 : Cliquer sur un nom pour le rayer.<br>Action 3
-            : Cliquer sur Supprimer (Mot de passe requis).</p>
+    <h1>Boîtes à Noms</h1>
 
-        <div class="input-group">
-            <input type="text" id="nameInput" placeholder="Saisir un nom...">
-            <button id="addBtn" class="action-btn">Ajouter</button>
+    <div class="grid">
+        <div class="box" id="box-groupes">
+            <h2>Groupes</h2>
+            <div class="input-group">
+                <input type="text" placeholder="Ajouter un groupe...">
+                <button class="add-btn">OK</button>
+            </div>
+            <ul></ul>
         </div>
 
-        <ul id="nameList"></ul>
+        <div class="box" id="box-prenoms">
+            <h2>Prénoms</h2>
+            <div class="input-group">
+                <input type="text" placeholder="Ajouter un prénom...">
+                <button class="add-btn">OK</button>
+            </div>
+            <ul></ul>
+        </div>
+
+        <div class="box" id="box-oiseaux">
+            <h2>Oiseaux</h2>
+            <div class="input-group">
+                <input type="text" placeholder="Ajouter un oiseau...">
+                <button class="add-btn">OK</button>
+            </div>
+            <ul></ul>
+        </div>
+
+        <div class="box" id="box-entreprises">
+            <h2>Entreprises</h2>
+            <div class="input-group">
+                <input type="text" placeholder="Ajouter une entreprise...">
+                <button class="add-btn">OK</button>
+            </div>
+            <ul></ul>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // COPIE TES PARAMÈTRES FIREBASE ICI :
+        // CONFIG FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyBpdYG7d8zokmKmQIj6MYunn4w0sIoj4jc",
-            authDomain: "boite-a-nom.firebaseapp.com",
-            databaseURL: "https://boite-a-nom-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "boite-a-nom",
-            storageBucket: "boite-a-nom.firebasestorage.app",
-            messagingSenderId: "134639035959",
-            appId: "1:134639035959:web:5d73c66bdd325470dac1b2",
+            apiKey: "TON_API_KEY",
+            authDomain: "TON_PROJET.firebaseapp.com",
+            databaseURL: "https://TON_PROJET-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "TON_PROJET",
+            storageBucket: "TON_PROJET.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const namesRef = ref(db, 'noms');
 
-        const MODERATOR_PASSWORD = "admin";
-        const inputEl = document.getElementById('nameInput');
-        const addBtnEl = document.getElementById('addBtn');
-        const listEl = document.getElementById('nameList');
-        const bodyEl = document.body;
+        const ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin"
 
-        function triggerRainbow() {
-            bodyEl.classList.remove('rainbow-active');
-            void bodyEl.offsetWidth;
-            bodyEl.classList.add('rainbow-active');
-            setTimeout(() => bodyEl.classList.remove('rainbow-active'), 1000);
+        async function hashPassword(string) {
+            const utf8 = new TextEncoder().encode(string);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        function createExplosion(e, parentElement) {
-            const explosion = document.createElement('span');
-            explosion.classList.add('explosion-effect');
-            const rect = parentElement.getBoundingClientRect();
-            explosion.style.left = `${e.clientX - rect.left}px`;
-            explosion.style.top = `${e.clientY - rect.top}px`;
-            parentElement.appendChild(explosion);
-            setTimeout(() => explosion.remove(), 500);
-        }
+        function setupBox(boxId) {
+            const boxEl = document.getElementById(`box-${boxId}`);
+            const inputEl = boxEl.querySelector('input');
+            const btnEl = boxEl.querySelector('button');
+            const listEl = boxEl.querySelector('ul');
+            const namesRef = ref(db, 'boites/' + boxId);
 
-        onValue(namesRef, (snapshot) => {
-            listEl.innerHTML = '';
-            const data = snapshot.val();
-            if (data) {
-                const namesArray = Object.entries(data).reverse();
-                namesArray.forEach(([key, item]) => {
-                    const li = document.createElement('li');
-                    li.textContent = item.text;
-                    if (item.used) li.classList.add('used');
+            // Écouter les données
+            onValue(namesRef, (snapshot) => {
+                listEl.innerHTML = '';
+                const data = snapshot.val();
+                if (data) {
+                    Object.entries(data).reverse().forEach(([key, item]) => {
+                        const li = document.createElement('li');
+                        li.textContent = item.text;
+                        if (item.used) li.classList.add('used');
 
-                    li.addEventListener('click', (e) => {
-                        if (e.target.tagName !== 'BUTTON') {
-                            createExplosion(e, li);
-                            update(ref(db, 'noms/' + key), { used: !item.used });
-                        }
+                        li.onclick = (e) => {
+                            if (e.target.tagName !== 'BUTTON') {
+                                const explosion = document.createElement('span');
+                                explosion.classList.add('explosion-effect');
+                                explosion.style.left = `${e.clientX - li.getBoundingClientRect().left}px`;
+                                explosion.style.top = `${e.clientY - li.getBoundingClientRect().top}px`;
+                                li.appendChild(explosion);
+                                update(ref(db, `boites/${boxId}/${key}`), { used: !item.used });
+                                setTimeout(() => explosion.remove(), 500);
+                            }
+                        };
+
+                        const del = document.createElement('button');
+                        del.textContent = 'Supprimer';
+                        del.className = 'delete-btn';
+                        del.onclick = async (e) => {
+                            e.stopPropagation();
+                            const pass = prompt("Password :");
+                            if (pass && await hashPassword(pass) === ADMIN_HASH) {
+                                remove(ref(db, `boites/${boxId}/${key}`));
+                            }
+                        };
+
+                        li.appendChild(del);
+                        listEl.appendChild(li);
                     });
+                }
+            });
 
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.textContent = 'Supprimer';
-                    deleteBtn.className = 'delete-btn';
-                    deleteBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const pass = prompt("Action modérateur. Mot de passe requis :");
-                        if (pass === MODERATOR_PASSWORD) {
-                            remove(ref(db, 'noms/' + key));
-                        } else if (pass !== null) {
-                            alert("Mot de passe incorrect.");
-                        }
-                    });
-
-                    li.appendChild(deleteBtn);
-                    listEl.appendChild(li);
-                });
-            }
-        });
-
-        function addName() {
-            const text = inputEl.value.trim();
-            if (text !== '') {
-                push(namesRef, { text: text, used: false });
-                inputEl.value = '';
-                triggerRainbow();
-            }
+            // Ajouter un nom
+            const addAction = () => {
+                const text = inputEl.value.trim();
+                if (text) {
+                    push(namesRef, { text, used: false });
+                    inputEl.value = '';
+                    document.body.classList.add('rainbow-active');
+                    setTimeout(() => document.body.classList.remove('rainbow-active'), 1000);
+                }
+            };
+            btnEl.onclick = addAction;
+            inputEl.onkeypress = (e) => { if (e.key === 'Enter') addAction(); };
         }
 
-        addBtnEl.addEventListener('click', addName);
-        inputEl.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addName();
-        });
+        // Initialiser toutes les boîtes
+        ['groupes', 'prenoms', 'oiseaux', 'entreprises'].forEach(setupBox);
     </script>
 </body>
 
