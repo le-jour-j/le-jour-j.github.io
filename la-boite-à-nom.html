@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Boîte à Noms</title>
+    <title>Les Boîtes à Noms</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -12,144 +12,139 @@
             --text-main: #e0e0e0;
             --text-muted: #666;
             --accent: #4a90e2;
-            --accent-hover: #357abd;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
             padding: 20px;
-            transition: background 0.1s;
-        }
-
-        body.rainbow-active {
-            background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            background-size: 1400% 1400%;
-            animation: rainbowDash 1s ease-out;
-        }
-
-        @keyframes rainbowDash {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
         }
 
         h1 {
             text-align: center;
+            font-weight: normal;
             margin-bottom: 30px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
         }
 
-        /* Grille des boîtes */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .box {
-            background-color: var(--container-bg);
-            padding: 1.5rem;
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .box h2 {
-            font-size: 1.2rem;
             margin-top: 0;
             color: var(--accent);
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
         }
 
         .input-group {
             display: flex;
             gap: 5px;
-            margin-bottom: 1.5rem;
+            margin: 15px 0;
         }
 
-        input[type="text"] {
-            flex-grow: 1;
+        input {
+            flex: 1;
             padding: 8px;
-            background-color: #2a2a2a;
+            background: #2a2a2a;
             border: 1px solid #444;
-            color: var(--text-main);
-            border-radius: 2px;
-            font-size: 0.9rem;
+            color: white;
+            border-radius: 4px;
         }
 
         button.add-btn {
-            background-color: var(--accent);
+            background: var(--accent);
             color: white;
             border: none;
             padding: 8px 12px;
             cursor: pointer;
-            border-radius: 2px;
+            border-radius: 4px;
             font-weight: bold;
         }
 
         ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
             margin: 0;
-            max-height: 400px;
-            overflow-y: auto;
+            flex: 1;
         }
 
         li {
-            background-color: #2a2a2a;
-            margin-bottom: 6px;
+            background: #2a2a2a;
+            margin-bottom: 5px;
             padding: 10px;
-            border-radius: 2px;
+            border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        li:hover {
+            background: #333;
         }
 
         li.used {
             text-decoration: line-through;
-            color: var(--text-muted);
-            background-color: #1a1a1a;
+            opacity: 0.5;
         }
 
-        .delete-btn {
+        .del-btn {
             background: none;
-            color: #ff4757;
             border: 1px solid #ff4757;
-            padding: 2px 6px;
+            color: #ff4757;
             font-size: 0.7rem;
+            padding: 2px 5px;
             cursor: pointer;
-            z-index: 2;
+            border-radius: 3px;
         }
 
-        .explosion-effect {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-            transform: translate(-50%, -50%) scale(0);
-            animation: explode 0.5s ease-out forwards;
-            pointer-events: none;
-            width: 100px;
-            height: 100px;
+        /* Animation Arc-en-ciel */
+        body.rainbow-active {
+            animation: rainbowBg 0.8s;
         }
 
-        @keyframes explode {
-            to {
-                transform: translate(-50%, -50%) scale(4);
-                opacity: 0;
+        @keyframes rainbowBg {
+            0% {
+                background: #ff0000;
+            }
+
+            20% {
+                background: #ffff00;
+            }
+
+            40% {
+                background: #00ff00;
+            }
+
+            60% {
+                background: #00ffff;
+            }
+
+            80% {
+                background: #0000ff;
+            }
+
+            100% {
+                background: var(--bg-color);
             }
         }
     </style>
@@ -163,7 +158,7 @@
         <div class="box" id="box-groupes">
             <h2>Groupes</h2>
             <div class="input-group">
-                <input type="text" placeholder="Ajouter un groupe...">
+                <input type="text" placeholder="Ajouter...">
                 <button class="add-btn">OK</button>
             </div>
             <ul></ul>
@@ -172,7 +167,7 @@
         <div class="box" id="box-prenoms">
             <h2>Prénoms</h2>
             <div class="input-group">
-                <input type="text" placeholder="Ajouter un prénom...">
+                <input type="text" placeholder="Ajouter...">
                 <button class="add-btn">OK</button>
             </div>
             <ul></ul>
@@ -181,7 +176,7 @@
         <div class="box" id="box-oiseaux">
             <h2>Oiseaux</h2>
             <div class="input-group">
-                <input type="text" placeholder="Ajouter un oiseau...">
+                <input type="text" placeholder="Ajouter...">
                 <button class="add-btn">OK</button>
             </div>
             <ul></ul>
@@ -190,7 +185,7 @@
         <div class="box" id="box-entreprises">
             <h2>Entreprises</h2>
             <div class="input-group">
-                <input type="text" placeholder="Ajouter une entreprise...">
+                <input type="text" placeholder="Ajouter...">
                 <button class="add-btn">OK</button>
             </div>
             <ul></ul>
@@ -201,11 +196,11 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // CONFIG FIREBASE
+        // CONFIG FIREBASE (REMETS TES INFOS ICI)
         const firebaseConfig = {
             apiKey: "TON_API_KEY",
             authDomain: "TON_PROJET.firebaseapp.com",
-            databaseURL: "https://TON_PROJET-default-rtdb.europe-west1.firebasedatabase.app",
+            databaseURL: "https://boite-a-nom-default-rtdb.europe-west1.firebasedatabase.app/",
             projectId: "TON_PROJET",
             storageBucket: "TON_PROJET.appspot.com",
             messagingSenderId: "123456789",
@@ -215,7 +210,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin"
+        const ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 
         async function hashPassword(string) {
             const utf8 = new TextEncoder().encode(string);
@@ -224,68 +219,57 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        function setupBox(boxId) {
-            const boxEl = document.getElementById(`box-${boxId}`);
-            const inputEl = boxEl.querySelector('input');
-            const btnEl = boxEl.querySelector('button');
-            const listEl = boxEl.querySelector('ul');
-            const namesRef = ref(db, 'boites/' + boxId);
+        function initBox(id) {
+            const el = document.getElementById('box-' + id);
+            const input = el.querySelector('input');
+            const btn = el.querySelector('button');
+            const list = el.querySelector('ul');
+            const dbRef = ref(db, 'boites/' + id);
 
-            // Écouter les données
-            onValue(namesRef, (snapshot) => {
-                listEl.innerHTML = '';
-                const data = snapshot.val();
+            // Lecture en temps réel
+            onValue(dbRef, (snap) => {
+                list.innerHTML = '';
+                const data = snap.val();
                 if (data) {
-                    Object.entries(data).reverse().forEach(([key, item]) => {
+                    Object.entries(data).reverse().forEach(([key, val]) => {
                         const li = document.createElement('li');
-                        li.textContent = item.text;
-                        if (item.used) li.classList.add('used');
+                        li.className = val.used ? 'used' : '';
+                        li.innerHTML = `<span>${val.text}</span><button class="del-btn">Suppr</button>`;
 
+                        // Toggle rayé
                         li.onclick = (e) => {
                             if (e.target.tagName !== 'BUTTON') {
-                                const explosion = document.createElement('span');
-                                explosion.classList.add('explosion-effect');
-                                explosion.style.left = `${e.clientX - li.getBoundingClientRect().left}px`;
-                                explosion.style.top = `${e.clientY - li.getBoundingClientRect().top}px`;
-                                li.appendChild(explosion);
-                                update(ref(db, `boites/${boxId}/${key}`), { used: !item.used });
-                                setTimeout(() => explosion.remove(), 500);
+                                update(ref(db, `boites/${id}/${key}`), { used: !val.used });
                             }
                         };
 
-                        const del = document.createElement('button');
-                        del.textContent = 'Supprimer';
-                        del.className = 'delete-btn';
-                        del.onclick = async (e) => {
+                        // Supprimer
+                        li.querySelector('button').onclick = async (e) => {
                             e.stopPropagation();
-                            const pass = prompt("Password :");
-                            if (pass && await hashPassword(pass) === ADMIN_HASH) {
-                                remove(ref(db, `boites/${boxId}/${key}`));
+                            const p = prompt("Pass?");
+                            if (p && await hashPassword(p) === ADMIN_HASH) {
+                                remove(ref(db, `boites/${id}/${key}`));
                             }
                         };
-
-                        li.appendChild(del);
-                        listEl.appendChild(li);
+                        list.appendChild(li);
                     });
                 }
             });
 
-            // Ajouter un nom
-            const addAction = () => {
-                const text = inputEl.value.trim();
-                if (text) {
-                    push(namesRef, { text, used: false });
-                    inputEl.value = '';
+            // Ajouter
+            const add = () => {
+                if (input.value.trim()) {
+                    push(dbRef, { text: input.value.trim(), used: false });
+                    input.value = '';
                     document.body.classList.add('rainbow-active');
-                    setTimeout(() => document.body.classList.remove('rainbow-active'), 1000);
+                    setTimeout(() => document.body.classList.remove('rainbow-active'), 800);
                 }
             };
-            btnEl.onclick = addAction;
-            inputEl.onkeypress = (e) => { if (e.key === 'Enter') addAction(); };
+            btn.onclick = add;
+            input.onkeydown = (e) => { if (e.key === 'Enter') add(); };
         }
 
-        // Initialiser toutes les boîtes
-        ['groupes', 'prenoms', 'oiseaux', 'entreprises'].forEach(setupBox);
+        ['groupes', 'prenoms', 'oiseaux', 'entreprises'].forEach(initBox);
     </script>
 </body>
 
