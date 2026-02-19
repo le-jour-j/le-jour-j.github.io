@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeanson Péchin | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;
+            --text: #00ff88;
+            --accent: #ff00ff;
+            --accent-dim: #ff00ff44;
+            --card-bg: #0a0a0a;
+            --cyan: #00ffff;
+        }
+
+        @font-face {
+            font-family: 'Mono';
+            src: local('Courier New'), local('monospace');
+        }
+
+        body {
+            font-family: 'Mono', 'Courier New', monospace;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        /* Scanlines SF effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 255, 136, 0.03),
+                    rgba(0, 255, 136, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: 9998;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(10px);
+            }
+        }
+
+        /* Grid background */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            opacity: 0;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .cursor.active {
+            opacity: 1;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--accent-dim);
+        }
+
+        /* Score Counter */
+        .score-display {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent);
+            background: rgba(0, 0, 0, 0.8);
+            text-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--accent);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent);
+            }
+        }
+
+        /* Navigation cyberpunk */
+        .header-container {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--text);
+            background: rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '>';
+            position: absolute;
+            left: -20px;
+            transition: left 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            transform: translateX(5px);
+        }
+
+        nav a:hover::before {
+            left: 5px;
+        }
+
+        nav a.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+
+        /* Main title - now in header */
+        .main-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            text-shadow: 0 0 20px var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            90%,
+            100% {
+                transform: translate(-50%, -50%);
+            }
+
+            92% {
+                transform: translate(-50%, -50%) translate(-2px, 2px);
+            }
+
+            94% {
+                transform: translate(-50%, -50%) translate(2px, -2px);
+            }
+
+            96% {
+                transform: translate(-50%, -50%) translate(-2px, -2px);
+            }
+        }
+
+        /* Content sections */
+        .content-section {
+            min-height: 100vh;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+            z-index: 10;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px var(--cyan);
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* Projects Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .project-card {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            cursor: none;
+            background: var(--card-bg);
+            border: 1px solid var(--text);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+            transform: translateY(-8px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.4s ease;
+            filter: brightness(0.7) blur(0px) saturate(0.5);
+        }
+
+        .project-card:hover img {
+            transform: scale(1.15) rotate(1deg);
+            filter: brightness(0.4) blur(8px) saturate(1.5);
+        }
+
+        .project-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            font-size: 1.3rem;
+            font-weight: 300;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .project-card:hover .project-title {
+            transform: translateY(0);
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        /* Bio section */
+        .bio-content,
+        .cv-content,
+        .blog-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .bio-content p,
+        .cv-content p,
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 5px var(--text);
+        }
+
+        .cv-content h3 {
+            color: var(--cyan);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* Floating heads (cliquables) */
+        .floating-head {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            cursor: none;
+            z-index: 50;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px var(--accent));
+            animation: float-head 15s ease-in-out infinite;
+        }
+
+        .floating-head:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 20px var(--accent));
+        }
+
+        /* Particle effect for explosion */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float-head {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(0, -60px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(-30px, -30px) rotate(270deg);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 0 20px var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .modal-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+
+        .modal-nav.prev {
+            left: 2rem;
+        }
+
+        .modal-nav.next {
+            right: 2rem;
+        }
+
+        .modal-nav button {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .modal-nav button:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 0 20px var(--accent);
+            transform: scale(1.2);
+        }
+
+        .modal-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .modal-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 5px var(--text);
+        }
+
+        .modal-image {
+            width: 100%;
+            margin: 2rem 0;
+            animation: fadeIn 0.6s ease;
+            border: 1px solid var(--cyan);
+            box-shadow: 0 0 20px var(--cyan);
+        }
+
+        /* Blog posts */
+        .blog-post {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: 1px solid var(--text);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .blog-post h3 {
+            color: var(--cyan);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                font-size: 0.8rem;
+            }
+
+            .content-section {
+                padding: 6rem 1.5rem 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-nav {
+                display: none;
+            }
+
+            .score-display {
+                top: 1rem;
+                right: 1rem;
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="score-display">POINTS: <span id="score">0</span></div>
+
+    <div class="header-container">
+        <h1 class="main-title">JEANSON_PÉCHIN.EXE</h1>
+        <nav>
+            <a href="#" data-section="projects" class="nav-link active">[PROJETS]</a>
+            <a href="#" data-section="bio" class="nav-link">[BIO]</a>
+            <a href="#" data-section="cv" class="nav-link">[CV]</a>
+            <a href="#" data-section="blog" class="nav-link">[LA_VIDA]</a>
+            <a href="lamusique/" target="_blank">[MUSIQUE]</a>
+            <a href="mailto:jeanson.pechin@gmail.com">[CONTACT]</a>
+        </nav>
+    </div>
+
+    <!-- Projects Section -->
+    <section class="content-section active" id="projects">
+        <h2 class="section-title">&gt; PROJETS_</h2>
+        <div class="grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- Bio Section -->
+    <section class="content-section" id="bio">
+        <h2 class="section-title">&gt; BIOGRAPHIE_</h2>
+        <div class="bio-content">
+            <p>Jeanson suit le rythme de marche effréné de ses parents, mais ce qui l'intéresse, c'est la poésie, la
+                musique, le dessin qu'il entreprend chaque fois qu'il s'ennuie. Les années passent, les voitures
+                défilent, ses parents se séparent et le laissent seul dans le foyer familial au début de la grande
+                adolescence.</p>
+
+            <p>C'est la première fois qu'il décide pour lui : fini le sport, les maths et la réussite, place aux
+                plaisirs interdits, aux arts et à la lose. Il change de bande de copains avec qui il formera un groupe
+                de non-artistes. Sans se définir, sans se savoir, la bande de Meaux va réinventer son monde grâce à une
+                pratique radicale de la performance.</p>
+
+            <p>De rencontre en rencontre, Jeanson intégrera les Beaux Arts de Paris où il deviendra l'assistant d'un
+                premier père spirituel : Tadashi Kawamata. Toujours porté par cet esprit mutin, il enverra très vite
+                balader l'art à la parisienne qu'il trouve morose et sclérosé.</p>
+
+            <p>Son échange universitaire sera un nouveau moment déterminant dans son éducation artistique. Il découvre
+                en Amérique du Sud, à Santiago au Chili, des étudiants en arts très engagés politiquement. Il
+                s'inspirera de ce qu'il a vu là-bas pour la suite de son parcours. Faire de l'art, se jouer des règles,
+                c'est Résister.</p>
+
+            <p>De retour à Paris, il fonde deux collectifs, toujours au plus près de sa vie : le premier, Cosmos
+                Merguez, avec une bande de copains de l'école, le second, pôle-fromage avec son amoureuse de l'époque.
+                Tous ensemble, ils s'installeront en Bretagne où ils réalisent des projets dans les quartiers urbains et
+                ruraux difficiles.</p>
+
+            <p>Jeanson n'a qu'une idée en tête, aider les populations vulnérabilisées en utilisant l'art comme un
+                terrain de jeu : trouver un modèle économique et social qui permet de ne pas subir sa vie en se
+                réappropriant les espaces que nous occupons. L'art, est pour lui comme ce bout de fromage qui pue, qu'on
+                aime ou qu'on déteste, il ne nous laisse jamais indifférent.</p>
+        </div>
+    </section>
+
+    <!-- CV Section -->
+    <section class="content-section" id="cv">
+        <h2 class="section-title">&gt; CURRICULUM_VITESSE_</h2>
+        <div class="cv-content">
+            <h3>&gt;&gt; FORMATION</h3>
+            <p>École Nationale Supérieure des Beaux-Arts de Paris<br>
+                Assistant de Tadashi Kawamata<br>
+                Échange universitaire à Santiago, Chili</p>
+
+            <h3>&gt;&gt; COLLECTIFS</h3>
+            <p><strong>Cosmos Merguez</strong> - Collectif artistique pluridisciplinaire<br>
+                <strong>Pôle-Fromage</strong> - Interventions en milieu urbain et rural
+            </p>
+
+            <h3>&gt;&gt; PRATIQUES</h3>
+            <p>Installation • Performance • Dessin • Espace public • Art participatif • Interventions urbaines • Édition
+            </p>
+
+            <h3>&gt;&gt; DÉMARCHE</h3>
+            <p>Art pirate, art open source, art démocratie. Tout le monde est artiste, l'art est un fragment de la
+                société dont nous avons la charge collectivement. Par l'art, tester les limites du monde de l'argent, de
+                la bienséance, de notre rapport à l'espace public.</p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="content-section" id="blog">
+        <h2 class="section-title">&gt; LA_VIDA_</h2>
+        <div class="blog-content">
+            <p style="margin-bottom: 2rem; font-size: 1.2rem;">Un jour on rit. D'autres jours, on regarde.</p>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <a href="https://jeansonpechin.com/vida.html"
+                    style="padding: 1.5rem; border: 2px solid var(--cyan); background: rgba(0, 255, 255, 0.05); text-decoration: none; color: var(--cyan); text-align: center; text-shadow: 0 0 10px var(--cyan); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;"
+                    onmouseover="this.style.background='rgba(0, 255, 255, 0.15)'; this.style.boxShadow='0 0 20px var(--cyan)'"
+                    onmouseout="this.style.background='rgba(0, 255, 255, 0.05)'; this.style.boxShadow='none'">
+                    [PAGE 1]
+                </a>
+                <a href="https://jeansonpechin.com/vidaaa.html"
+                    style="padding: 1.5rem; border: 2px solid var(--cyan); background: rgba(0, 255, 255, 0.05); text-decoration: none; color: var(--cyan); text-align: center; text-shadow: 0 0 10px var(--cyan); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;"
+                    onmouseover="this.style.background='rgba(0, 255, 255, 0.15)'; this.style.boxShadow='0 0 20px var(--cyan)'"
+                    onmouseout="this.style.background='rgba(0, 255, 255, 0.05)'; this.style.boxShadow='none'">
+                    [PAGE 2]
+                </a>
+                <a href="https://jeansonpechin.com/vidaaaa.html"
+                    style="padding: 1.5rem; border: 2px solid var(--cyan); background: rgba(0, 255, 255, 0.05); text-decoration: none; color: var(--cyan); text-align: center; text-shadow: 0 0 10px var(--cyan); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;"
+                    onmouseover="this.style.background='rgba(0, 255, 255, 0.15)'; this.style.boxShadow='0 0 20px var(--cyan)'"
+                    onmouseout="this.style.background='rgba(0, 255, 255, 0.05)'; this.style.boxShadow='none'">
+                    [PAGE 3]
+                </a>
+                <a href="https://jeansonpechin.com/vidaa.html"
+                    style="padding: 1.5rem; border: 2px solid var(--cyan); background: rgba(0, 255, 255, 0.05); text-decoration: none; color: var(--cyan); text-align: center; text-shadow: 0 0 10px var(--cyan); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;"
+                    onmouseover="this.style.background='rgba(0, 255, 255, 0.15)'; this.style.boxShadow='0 0 20px var(--cyan)'"
+                    onmouseout="this.style.background='rgba(0, 255, 255, 0.05)'; this.style.boxShadow='none'">
+                    [PAGE 4]
+                </a>
+            </div>
+
+            <div class="blog-post">
+                <h3>&gt; Dans le flou</h3>
+                <p>Au moins comme ça vous savez qui je suis.</p>
+            </div>
+            <div class="blog-post">
+                <h3>&gt; Faire en sorte que le Japon pue</h3>
+                <p>J'avais des soucis de transports là-bas.</p>
+            </div>
+            <div class="blog-post">
+                <h3>&gt; Chipsface</h3>
+                <p>Comme ça vous me reconnaîtrez sans doute mieux.</p>
+            </div>
+            <div class="blog-post">
+                <h3>&gt; Salut l'artiste, lol.</h3>
+                <p>Il dormait au milieu de ses dessins comme un bon gros artiste.</p>
+            </div>
+            <div class="blog-post">
+                <h3>&gt; Les capuchas</h3>
+                <p>Ils m'ont retourné le cerveau.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <button class="modal-close" id="closeModal">×</button>
+        <div class="modal-nav prev">
+            <button id="prevProject">‹</button>
+        </div>
+        <div class="modal-nav next">
+            <button id="nextProject">›</button>
+        </div>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <!-- Floating clickable heads -->
+    <img src="https://jeansonpechin.com/images/tete-o.png" class="floating-head" style="top: 15%; left: 10%;" alt="head"
+        onerror="this.style.display='none'">
+    <img src="https://jeansonpechin.com/images/tete-d.png" class="floating-head" style="top: 40%; right: 15%;"
+        alt="head" onerror="this.style.display='none'">
+    <img src="https://jeansonpechin.com/images/tete-w.png" class="floating-head" style="bottom: 20%; left: 20%;"
+        alt="head" onerror="this.style.display='none'">
+    <img src="https://jeansonpechin.com/images/tete-c.png" class="floating-head" style="bottom: 30%; right: 10%;"
+        alt="head" onerror="this.style.display='none'">
+
+    <script>
+        const projects = [
+            {
+                title: "Troc de trucs",
+                image: "https://jeansonpechin.com/images/troc/troc_cheque_jeanson_pechin_AA.jpg",
+                description: "Après quelques semaines de troc contre des chèques-dessin, j'ai commencé à accumuler pas mal de choses. Ces choses, je les photographie, et les regroupe dans un livret.",
+                link: "https://jeansonpechin.com/troc.html"
+            },
+            {
+                title: "Se faire bellex",
+                image: "https://jeansonpechin.com/images/maquillage/peinture_vernis_E_jeanson_pechin.jpg",
+                description: "Exploration des codes de beauté à travers le maquillage et la peinture.",
+                link: "https://jeansonpechin.com/maquillage.html"
+            },
+            {
+                title: "Covering Maxime",
+                image: "https://jeansonpechin.com/images/maxime/covering_maxime_A_jeanson_pechin_peinture.jpg",
+                description: "Une intervention picturale sur automobile.",
+                link: "https://jeansonpechin.com/maxime.html"
+            },
+            {
+                title: "Canitropie",
+                image: "https://jeansonpechin.com/images/metamorphose/metamorphose_chien_F_jeanson_pechin.jpg",
+                description: "Métamorphose et transformation dans l'espace urbain.",
+                link: "https://jeansonpechin.com/metamorphose.html"
+            },
+            {
+                title: "Poussez-vous ?",
+                image: "https://jeansonpechin.com/images/fleurs/fleurs-meudon-G-jeanson-pechin.jpg",
+                description: "Quand la nature reprend ses droits.",
+                link: "https://jeansonpechin.com/fleurs.html"
+            },
+            {
+                title: "Intermarché",
+                image: "https://jeansonpechin.com/images/inter/affiche_intermartche_exposition_noiseau_jeanson_pechin.jpg",
+                description: "Une réflexion sur la grande distribution et la consommation.",
+                link: "https://jeansonpechin.com/caddie.html"
+            },
+            {
+                title: "Mourir encore",
+                image: "https://jeansonpechin.com/images/mort/croix_C_jeanson_pechin_espace_public.jpg",
+                description: "Mémoire et disparition dans l'espace public.",
+                link: "https://jeansonpechin.com/mourir.html"
+            },
+            {
+                title: "Claude Monnaie",
+                image: "https://jeansonpechin.com/images/cheque/cheque_Y_jeanson_pechin.jpg",
+                description: "Création d'une monnaie alternative par le dessin.",
+                link: "https://jeansonpechin.com/cheques.html"
+            },
+            {
+                title: "Illegal run",
+                image: "https://jeansonpechin.com/images/stock/stock_car_E_jeanson_pechin_paris_espace_public.jpg",
+                description: "Courses sauvages et appropriation de l'espace urbain.",
+                link: "https://jeansonpechin.com/courses.html"
+            },
+            {
+                title: "Images bavardes",
+                image: "https://jeansonpechin.com/images/bavarde/image_bavarde_amour_jeanson_pechin.jpg",
+                description: "Quand les images prennent la parole.",
+                link: "https://jeansonpechin.com/bavardes.html"
+            },
+            {
+                title: "Anarcho-jante",
+                image: "https://jeansonpechin.com/images/jante/jante-anarchie-C-jeanson-pechin.jpg",
+                description: "Subversion automobile et symboles politiques.",
+                link: "https://jeansonpechin.com/jantes.html"
+            },
+            {
+                title: "Traverser la Terre",
+                image: "https://jeansonpechin.com/images/trou/trou-maison-japon-C-jeanson-pechin.jpg",
+                description: "Creuser pour voir de l'autre côté.",
+                link: "https://jeansonpechin.com/trou.html"
+            },
+            {
+                title: "Bleu, blanc, rouge",
+                image: "https://jeansonpechin.com/images/france/bleu_rouge_j_abstrait_dessin_jeanson_pechin.jpg",
+                description: "Questionner les symboles nationaux.",
+                link: "https://jeansonpechin.com/france.html"
+            },
+            {
+                title: "#Dunkitude",
+                image: "https://jeansonpechin.com/images/dunkerque/dunkitude_AA_jeanson_pechin_livre.jpg",
+                description: "Chronique d'une ville et de son identité.",
+                link: "https://jeansonpechin.com/dunkitude.html"
+            },
+            {
+                title: "Sept sept mitraillette",
+                image: "https://jeansonpechin.com/images/septsept/septsept_AAAA_meaux_photos_graffiti_voyage_jeanson_pechin.jpg",
+                description: "Documentation d'une jeunesse entre art et territoire.",
+                link: "https://jeansonpechin.com/septsept.html"
+            },
+            {
+                title: "Le moment préféré des enfants",
+                image: "https://jeansonpechin.com/images/sapin/sapin_documentaire_X_photo_jeanson_pechin.jpg",
+                description: "Noël et ses rituels familiaux.",
+                link: "https://jeansonpechin.com/sapins.html"
+            },
+            {
+                title: "L'enjoliveur social",
+                image: "https://jeansonpechin.com/images/enjoliveur/enjoliveur_social_H_rue_voiture_roue_jeanson_pechin.jpg",
+                description: "Embellir le quotidien automobile.",
+                link: "https://jeansonpechin.com/enjoliveur.html"
+            },
+            {
+                title: "Commenter le présent",
+                image: "https://jeansonpechin.com/images/commentaire/commentaire-tombola-F-jeanson-pechin.jpg",
+                description: "Interventions textuelles dans l'espace public.",
+                link: "https://jeansonpechin.com/com.html"
+            },
+            {
+                title: "Confortablement installé",
+                image: "https://jeansonpechin.com/images/chaussons/chaussons_poissons_A_jeanson_pechin.jpg",
+                description: "Le confort domestique comme sculpture.",
+                link: "https://jeansonpechin.com/chaussons.html"
+            },
+            {
+                title: "Voiture fiesta",
+                image: "https://jeansonpechin.com/images/tunning/tunning_A_jeanson_pechin_art_installation.jpg",
+                description: "Transformation festive de l'automobile.",
+                link: "https://jeansonpechin.com/evasion.html"
+            },
+            {
+                title: "J'y ai laissé une partie de moi",
+                image: "https://jeansonpechin.com/images/animita/animita_E_jeanson_pechin_espace_public.jpg",
+                description: "Mémoriaux improvisés et traces personnelles.",
+                link: "https://jeansonpechin.com/animita.html"
+            },
+            {
+                title: "Le vrai du faux",
+                image: "https://jeansonpechin.com/images/voitures/le_mans_G_jeanson_pechin_sculpture.jpg",
+                description: "Entre réalité et fiction automobile.",
+                link: "https://jeansonpechin.com/lemans.html"
+            },
+            {
+                title: "Sur la brèche",
+                image: "https://jeansonpechin.com/images/biere/biere-beaux-arts-I-jeanson-pechin.jpg",
+                description: "La fête comme pratique artistique collective.",
+                link: "https://jeansonpechin.com/biere.html"
+            }
+        ];
+
+        let currentProjectIndex = 0;
+        let score = 0;
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.classList.add('active');
+        });
+
+        document.querySelectorAll('a, button, .project-card, .floating-head, .nav-link').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Navigation between sections
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.content-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetSection = link.dataset.section;
+
+                if (targetSection) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    sections.forEach(s => s.classList.remove('active'));
+                    document.getElementById(targetSection).classList.add('active');
+                }
+            });
+        });
+
+        // Generate project grid
+        const grid = document.getElementById('projectsGrid');
+        projects.forEach((project, index) => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <img src="${project.image}" alt="${project.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%230a0a0a%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%2300ff88%22%3E${project.title}%3C/text%3E%3C/svg%3E'">
+                <h3 class="project-title">${project.title}</h3>
+            `;
+            card.addEventListener('click', () => openModal(index));
+            grid.appendChild(card);
+        });
+
+        // Floating heads - click to add score and create new one
+        const floatingHeads = document.querySelectorAll('.floating-head');
+        const headImages = [
+            'https://jeansonpechin.com/images/tete-o.png',
+            'https://jeansonpechin.com/images/tete-d.png',
+            'https://jeansonpechin.com/images/tete-w.png',
+            'https://jeansonpechin.com/images/tete-c.png',
+            'https://jeansonpechin.com/images/fantome.png'
+        ];
+
+        floatingHeads.forEach(head => {
+            head.addEventListener('click', function (e) {
+                // Get head position
+                const rect = this.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                // Create explosion particles
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+
+                    const angle = (Math.PI * 2 * i) / 20;
+                    const velocity = 100 + Math.random() * 100;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+
+                    particle.style.left = centerX + 'px';
+                    particle.style.top = centerY + 'px';
+                    particle.style.setProperty('--tx', tx + 'px');
+                    particle.style.setProperty('--ty', ty + 'px');
+                    particle.style.background = i % 2 === 0 ? 'var(--accent)' : 'var(--cyan)';
+
+                    document.body.appendChild(particle);
+
+                    particle.style.animation = 'explode 0.8s ease-out forwards';
+
+                    setTimeout(() => particle.remove(), 800);
+                }
+
+                // Add score with animation
+                score += 10;
+                const scoreEl = document.getElementById('score');
+                scoreEl.textContent = score;
+                scoreEl.style.transform = 'scale(1.5)';
+                scoreEl.style.color = 'var(--accent)';
+                setTimeout(() => {
+                    scoreEl.style.transform = 'scale(1)';
+                    scoreEl.style.color = 'inherit';
+                }, 200);
+
+                // Animate head disappearance
+                this.style.transition = 'all 0.3s ease';
+                this.style.transform = 'scale(1.5) rotate(360deg)';
+                this.style.opacity = '0';
+
+                setTimeout(() => {
+                    // Random new position
+                    const newTop = Math.random() * 80 + 10;
+                    const newLeft = Math.random() * 80 + 10;
+                    const randomImage = headImages[Math.floor(Math.random() * headImages.length)];
+
+                    this.style.top = newTop + '%';
+                    this.style.left = newLeft + '%';
+                    this.src = randomImage;
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                    this.style.opacity = '1';
+                    this.style.transition = 'all 0.5s ease';
+                }, 300);
+            });
+        });
+
+        // Modal functions
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const closeBtn = document.getElementById('closeModal');
+        const prevBtn = document.getElementById('prevProject');
+        const nextBtn = document.getElementById('nextProject');
+
+        function openModal(index) {
+            currentProjectIndex = index;
+            const project = projects[index];
+
+            modalContent.innerHTML = `
+                <h2 class="modal-title">${project.title}</h2>
+                <p class="modal-description">${project.description}</p>
+                <img class="modal-image" src="${project.image}" alt="${project.title}" onerror="this.style.display='none'">
+                <p style="margin-top: 2rem; text-align: center;">
+                    <a href="${project.link}" style="color: var(--cyan); text-decoration: none; text-shadow: 0 0 10px var(--cyan); text-transform: uppercase; letter-spacing: 2px;">
+                        &gt;&gt; ACCÉDER AU PROJET COMPLET
+                    </a>
+                </p>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextProject() {
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+            openModal(currentProjectIndex);
+        }
+
+        function prevProject() {
+            currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+            openModal(currentProjectIndex);
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        nextBtn.addEventListener('click', nextProject);
+        prevBtn.addEventListener('click', prevProject);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowRight') nextProject();
+            if (e.key === 'ArrowLeft') prevProject();
+        });
+    </script>
+</body>
+
+</html>

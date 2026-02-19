@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeanson Péchin | Chaos Organique</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Police Mono -->
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Animation fluide des bulles */
+        .particle {
+            transition: transform 0s, z-index 0s;
+            will-change: transform;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .particle:hover {
+            z-index: 50;
+            transform: scale(1.25) !important;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            border-color: #facc15;
+        }
+
+        /* Masque pour le texte sur l'image */
+        .particle-overlay {
+            background: rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, opacity 0.3s;
+        }
+
+        .particle:hover .particle-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 1;
+        }
+
+        /* Cacher le texte par défaut, l'afficher au survol */
+        .particle-content {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .particle:hover .particle-content {
+            opacity: 1;
+        }
+
+        /* Animation de rotation pour les pointillés */
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spin-slow {
+            animation: spin-slow 15s linear infinite;
+        }
+
+        /* Fantôme flottant */
+        .ghost-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-neutral-900 text-white overflow-hidden w-screen h-screen selection:bg-yellow-400 selection:text-black relative">
+
+    <!-- FOND MYCÉLIUM -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none bg-grid-pattern"></div>
+
+    <!-- EN-TÊTE FIXE -->
+    <header class="absolute top-6 left-6 z-40 pointer-events-none mix-blend-difference">
+        <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
+            Jeanson<br>Péchin
+        </h1>
+        <div class="mt-2 flex items-center gap-2 text-xs md:text-sm animate-pulse text-green-400">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span>SYSTÈME EN COURS D'ANALYSE...</span>
+        </div>
+    </header>
+
+    <!-- INSTRUCTIONS -->
+    <div class="absolute bottom-6 left-6 z-40 pointer-events-none mix-blend-difference hidden md:block opacity-70">
+        <p class="text-xs max-w-xs leading-relaxed font-bold text-yellow-500">
+            MODE D'EMPLOI :<br>
+            INTERCEPTEZ LES CELLULES FLOTTANTES.
+        </p>
+    </div>
+
+    <!-- BOUTON CONTACT & BOOK -->
+    <div class="absolute top-6 right-6 z-50 flex gap-2">
+        <a href="https://jeansonpechin.com/drive/portfolio_num_jeanson_pechin.pdf" target="_blank"
+            class="border border-white/20 hover:bg-white hover:text-black px-4 py-2 rounded-full transition-all text-xs uppercase font-bold tracking-widest cursor-pointer backdrop-blur-sm">
+            BOOK PDF
+        </a>
+        <a href="mailto:jeanson.pechin@gmail.com"
+            class="border border-white/20 bg-yellow-400 text-black hover:bg-white px-4 py-2 rounded-full transition-all text-xs uppercase font-bold tracking-widest cursor-pointer backdrop-blur-sm">
+            Contact
+        </a>
+    </div>
+
+    <!-- CONTENEUR DES PARTICULES (PROJETS) -->
+    <div id="universe" class="absolute inset-0 z-10"></div>
+
+    <!-- FANTÔME (Easter Egg) -->
+    <div class="absolute bottom-10 left-1/2 opacity-20 pointer-events-none ghost-float z-0">
+        <img src="images/fantome.png" alt="" class="w-32">
+    </div>
+
+    <!-- MODAL DÉTAIL PROJET -->
+    <div id="modal"
+        class="hidden absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
+        <div
+            class="bg-neutral-100 text-black w-full max-w-4xl h-[85vh] relative shadow-2xl border-4 border-yellow-400 transform transition-all animate-in fade-in zoom-in duration-300 flex flex-col overflow-hidden rounded-sm">
+
+            <!-- En-tête du Dossier -->
+            <div class="p-6 border-b-2 border-black bg-white flex justify-between items-start shrink-0 relative z-20">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span
+                            class="px-3 py-1 text-xs font-bold text-white uppercase rounded bg-black tracking-widest">DOSSIER</span>
+                        <span id="modal-id"
+                            class="font-mono text-sm text-neutral-500 font-bold border border-neutral-300 px-2 py-0.5">XXX</span>
+                    </div>
+                    <h2 id="modal-title" class="text-3xl md:text-5xl font-black uppercase leading-none tracking-tight">
+                        TITRE PROJET</h2>
+                </div>
+
+                <button onclick="closeModal()"
+                    class="group p-2 hover:bg-black hover:text-white rounded-full transition-colors border-2 border-neutral-200 hover:border-black">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        class="group-hover:rotate-90 transition-transform">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contenu du Dossier -->
+            <div class="overflow-y-auto p-0 grow bg-neutral-50 relative flex flex-col">
+
+                <!-- Grande Image Principale -->
+                <div class="w-full h-1/2 min-h-[300px] relative border-b-2 border-black bg-neutral-200 shrink-0">
+                    <img id="modal-main-image" src="" alt="Vue du projet" class="w-full h-full object-cover">
+                    <div
+                        class="absolute bottom-4 left-6 text-white text-xs font-mono uppercase tracking-widest bg-black/50 px-2 py-1 backdrop-blur-sm">
+                        Preuve Visuelle N°1
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-12 grow flex flex-col items-center justify-center text-center">
+                    <p class="text-xl font-serif italic mb-8 leading-relaxed text-neutral-600">
+                        Ce fichier contient des données supplémentaires.
+                    </p>
+
+                    <a id="modal-link" href="#"
+                        class="inline-flex items-center gap-3 bg-black text-white px-8 py-4 text-lg font-bold uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-all border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+                        Accéder aux preuves
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTE D'INTENTION (Intro) -->
+    <div id="intro-card"
+        class="absolute bottom-10 right-6 md:right-10 max-w-md z-40 transition-opacity duration-500 hidden md:block group cursor-pointer"
+        onclick="closeIntro()">
+        <div
+            class="bg-yellow-400 text-black p-6 shadow-[8px_8px_0px_#ffffff] -rotate-1 group-hover:rotate-0 transition-transform duration-300 border-2 border-black">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="font-bold uppercase text-lg border-b-2 border-black pb-1">Manifeste</h3>
+                <button class="hover:bg-black hover:text-white p-1 rounded-full"><svg width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <p class="font-serif text-sm md:text-base leading-tight mb-4 italic">
+                "Habitons-nous les uns les autres. Soyons fleurs, soyons loups. Traquons nos habitudes, troquons nos
+                costumes, le temps d’un carnaval intergalactique."
+            </p>
+            <p class="text-xs font-mono uppercase font-bold text-right border-t border-black pt-2 mt-2">
+                Un mycélium qui se raconte.
+            </p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // DONNÉES EXTRAITES DE VOTRE SITE
+        const projects = [
+            { title: "Troc de trucs?", img: "images/troc/troc_cheque_jeanson_pechin_AA.jpg", link: "troc.html", hex: "#facc15", size: 140 },
+            { title: "Se faire bellex", img: "images/maquillage/peinture_vernis_E_jeanson_pechin.jpg", link: "maquillage.html", hex: "#ec4899", size: 150 },
+            { title: "Covering Maxime", img: "images/maxime/covering_maxime_A_jeanson_pechin_peinture.jpg", link: "maxime.html", hex: "#3b82f6", size: 160 },
+            { title: "Mdp : Nomaster#01", img: "images/inter/affiche_intermartche_exposition_noiseau_jeanson_pechin.jpg", link: "metamorphose.html", hex: "#22c55e", size: 170 },
+            { title: "Canitropie", img: "images/metamorphose/metamorphose_chien_F_jeanson_pechin.jpg", link: "metamorphose.html", hex: "#e5e5e5", size: 155 },
+            { title: "Poussez-vous ?", img: "images/fleurs/fleurs-meudon-G-jeanson-pechin.jpg", link: "fleurs.html", hex: "#f472b6", size: 130 },
+            { title: "Intermartché", img: "images/inter/affiche_intermartche_exposition_noiseau_jeanson_pechin.jpg", link: "caddie.html", hex: "#60a5fa", size: 180 },
+            { title: "Mourir encore", img: "images/mort/croix_C_jeanson_pechin_espace_public.jpg", link: "mourir.html", hex: "#171717", size: 145 },
+            { title: "Claude Monnaie", img: "images/cheque/cheque_Y_jeanson_pechin.jpg", link: "cheques.html", hex: "#84cc16", size: 190 },
+            { title: "Illegal run", img: "images/stock/stock_car_E_jeanson_pechin_paris_espace_public.jpg", link: "courses.html", hex: "#ef4444", size: 165 },
+            { title: "Images bavardes", img: "images/bavarde/image_bavarde_amour_jeanson_pechin.jpg", link: "bavardes.html", hex: "#d946ef", size: 175 },
+            { title: "Anarcho-jante", img: "images/jante/jante-anarchie-C-jeanson-pechin.jpg", link: "jantes.html", hex: "#fbbf24", size: 140 },
+            { title: "Traverser la Terre", img: "images/trou/trou-maison-japon-C-jeanson-pechin.jpg", link: "trou.html", hex: "#a8a29e", size: 150 },
+            { title: "Bleu, blanc, rouge", img: "images/france/bleu_rouge_j_abstrait_dessin_jeanson_pechin.jpg", link: "france.html", hex: "#3b82f6", size: 160 },
+            { title: "#Dunkitude", img: "images/dunkerque/dunkitude_AA_jeanson_pechin_livre.jpg", link: "dunkitude.html", hex: "#f97316", size: 155 },
+            { title: "Sept sept mitraillette", img: "images/septsept/septsept_AAAA_meaux_photos_graffiti_voyage_jeanson_pechin.jpg", link: "septsept.html", hex: "#64748b", size: 170 },
+            { title: "Sapins", img: "images/sapin/sapin_documentaire_X_photo_jeanson_pechin.jpg", link: "sapins.html", hex: "#15803d", size: 145 },
+            { title: "L'enjoliveur social", img: "images/enjoliveur/enjoliveur_social_H_rue_voiture_roue_jeanson_pechin.jpg", link: "enjoliveur.html", hex: "#94a3b8", size: 165 },
+            { title: "Commenter le présent", img: "images/commentaire/commentaire-tombola-F-jeanson-pechin.jpg", link: "com.html", hex: "#fcd34d", size: 150 },
+            { title: "Confortablement installé", img: "images/chaussons/chaussons_poissons_A_jeanson_pechin.jpg", link: "chaussons.html", hex: "#f87171", size: 140 },
+            { title: "Voiture fiesta", img: "images/tunning/tunning_A_jeanson_pechin_art_installation.jpg", link: "evasion.html", hex: "#c084fc", size: 180 },
+            { title: "Animita", img: "images/animita/animita_E_jeanson_pechin_espace_public.jpg", link: "animita.html", hex: "#fb923c", size: 155 },
+            { title: "Le vrai du faux", img: "images/voitures/le_mans_G_jeanson_pechin_sculpture.jpg", link: "lemans.html", hex: "#e11d48", size: 160 },
+            { title: "Sur la brèche", img: "images/biere/biere-beaux-arts-I-jeanson-pechin.jpg", link: "biere.html", hex: "#ca8a04", size: 150 }
+        ];
+
+        const container = document.getElementById('universe');
+        let particles = [];
+        let animationId;
+        let isModalOpen = false;
+
+        function init() {
+            container.innerHTML = '';
+            particles = [];
+
+            projects.forEach((proj, index) => {
+                const el = document.createElement('div');
+                el.className = `absolute rounded-full flex items-center justify-center cursor-pointer border-2 border-white/20 particle overflow-hidden bg-neutral-800`;
+                el.style.width = proj.size + 'px';
+                el.style.height = proj.size + 'px';
+
+                // Préchargement sécurisé
+                const imgCheck = new Image();
+                imgCheck.src = proj.img;
+                imgCheck.onload = () => { el.style.backgroundImage = `url('${proj.img}')`; };
+                imgCheck.onerror = () => {
+                    el.style.backgroundColor = proj.hex;
+                    el.classList.add('bg-opacity-50');
+                    el.innerHTML += `<span class="text-xs font-bold text-black/50 absolute">IMG?</span>`;
+                };
+
+                el.innerHTML = `
+                    <div class="particle-overlay absolute inset-0 rounded-full flex flex-col items-center justify-center p-2 text-center">
+                        <div class="particle-content transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                            <div class="text-[10px] font-bold tracking-widest uppercase mb-1 text-yellow-400 bg-black/50 px-1 inline-block">DOSSIER ${index + 1}</div>
+                            <div class="font-bold leading-tight uppercase text-sm md:text-base text-white drop-shadow-md mt-1">${proj.title}</div>
+                        </div>
+                    </div>
+                    <div class="absolute w-full h-full border border-dashed border-white/40 rounded-full opacity-30 spin-slow pointer-events-none"></div>
+                `;
+
+                el.onclick = () => openModal(proj);
+
+                // Dispersion aléatoire
+                const p = {
+                    element: el,
+                    x: Math.random() * (window.innerWidth - proj.size),
+                    y: Math.random() * (window.innerHeight - proj.size),
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8,
+                    size: proj.size
+                };
+
+                particles.push(p);
+                container.appendChild(el);
+            });
+
+            animate();
+        }
+
+        function animate() {
+            if (!isModalOpen) {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x <= 0 || p.x + p.size >= window.innerWidth) p.vx = -p.vx;
+                    if (p.y <= 0 || p.y + p.size >= window.innerHeight) p.vy = -p.vy;
+                    p.element.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+                });
+            }
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function openModal(project) {
+            isModalOpen = true;
+            document.getElementById('modal-title').innerText = project.title;
+            // Génère un faux ID pour le style "Science"
+            document.getElementById('modal-id').innerText = "JP-" + project.title.substring(0, 3).toUpperCase() + "-" + Math.floor(Math.random() * 99);
+            document.getElementById('modal-main-image').src = project.img;
+
+            // Le bouton pointe vers le vrai fichier HTML
+            document.getElementById('modal-link').href = project.link;
+
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            isModalOpen = false;
+        }
+
+        function closeIntro() {
+            document.getElementById('intro-card').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-card').remove();
+            }, 500);
+        }
+
+        window.onload = init;
+        window.onresize = () => {
+            particles.forEach(p => {
+                if (p.x > window.innerWidth) p.x = window.innerWidth - p.size;
+                if (p.y > window.innerHeight) p.y = window.innerHeight - p.size;
+            });
+        };
+    </script>
+</body>
+
+</html>
