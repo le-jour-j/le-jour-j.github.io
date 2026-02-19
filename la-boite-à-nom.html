@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Grenade Boîte à Noms</title>
+    <title>Boîte à Noms</title>
     <style>
         :root {
             --bg-color: #121212;
             --container-bg: #1e1e1e;
             --text-main: #e0e0e0;
             --text-muted: #666;
-            --accent: #ff4757;
-            --accent-hover: #ff6b81;
+            --accent: #4a90e2;
+            --accent-hover: #357abd;
         }
 
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             display: flex;
@@ -25,30 +25,51 @@
             min-height: 100vh;
             margin: 0;
             padding: 2rem;
+            transition: background 0.1s;
+        }
+
+        /* Effet Arc-en-ciel à l'ajout */
+        body.rainbow-active {
+            background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 1400% 1400%;
+            animation: rainbowDash 1s ease-out;
+        }
+
+        @keyframes rainbowDash {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
             background-color: var(--container-bg);
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
             width: 100%;
             max-width: 600px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             margin-top: 0;
-            border-bottom: 2px solid var(--text-muted);
-            padding-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
         }
 
         p {
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .input-group {
@@ -63,28 +84,20 @@
             background-color: #2a2a2a;
             border: 1px solid #444;
             color: var(--text-main);
-            border-radius: 4px;
-            font-family: inherit;
+            border-radius: 2px;
         }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        button {
+        button.action-btn {
             background-color: var(--accent);
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            border-radius: 4px;
-            font-family: inherit;
+            border-radius: 2px;
             font-weight: bold;
-            transition: background-color 0.2s ease;
         }
 
-        button:hover {
+        button.action-btn:hover {
             background-color: var(--accent-hover);
         }
 
@@ -98,68 +111,115 @@
             background-color: #2a2a2a;
             margin-bottom: 8px;
             padding: 12px;
-            border-radius: 4px;
+            border-radius: 2px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border-left: 4px solid transparent;
-        }
-
-        li:hover {
-            background-color: #333;
+            position: relative;
+            overflow: hidden;
+            /* Nécessaire pour contenir l'explosion */
+            user-select: none;
         }
 
         li.used {
             text-decoration: line-through;
             color: var(--text-muted);
             background-color: #1a1a1a;
-            border-left-color: var(--text-muted);
-            opacity: 0.7;
         }
 
         .delete-btn {
             background: none;
-            color: var(--text-muted);
-            border: none;
+            color: #ff4757;
+            border: 1px solid #ff4757;
+            border-radius: 2px;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0 5px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            z-index: 2;
+            /* Pour rester cliquable au-dessus de l'effet */
         }
 
         .delete-btn:hover {
-            color: var(--accent);
-            background: none;
+            background: #ff4757;
+            color: white;
+        }
+
+        /* Effet Explosion (Onde de choc) au clic */
+        .explosion-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            animation: explode 0.5s ease-out forwards;
+            pointer-events: none;
+            width: 150px;
+            height: 150px;
+            z-index: 1;
+        }
+
+        @keyframes explode {
+            to {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <div class="container">
-        <h1>💣 Grenade Boîte à Noms</h1>
-        <p>Amassez l'absurde et l'utile. Cliquez sur un nom pour acter son utilisation.</p>
+        <h1>Boîte à Noms</h1>
+        <p>Action 1 : Saisir un nom et cliquer sur Ajouter.<br>Action 2 : Cliquer sur un nom pour le rayer.<br>Action 3
+            : Cliquer sur Supprimer (Mot de passe requis).</p>
 
         <div class="input-group">
-            <input type="text" id="nameInput" placeholder="Nouveau nom, concept, fulgurance...">
-            <button id="addBtn">Dégoupiller</button>
+            <input type="text" id="nameInput" placeholder="Saisir un nom...">
+            <button id="addBtn" class="action-btn">Ajouter</button>
         </div>
 
         <ul id="nameList"></ul>
     </div>
 
     <script>
-        let names = JSON.parse(localStorage.getItem('grenadeNames')) || [];
+        const MODERATOR_PASSWORD = "admin"; // Change ce mot de passe ici si besoin
+        let names = JSON.parse(localStorage.getItem('boxNamesData')) || [];
+
         const inputEl = document.getElementById('nameInput');
         const addBtnEl = document.getElementById('addBtn');
         const listEl = document.getElementById('nameList');
+        const bodyEl = document.body;
 
         function saveToStorage() {
-            localStorage.setItem('grenadeNames', JSON.stringify(names));
+            localStorage.setItem('boxNamesData', JSON.stringify(names));
+        }
+
+        function triggerRainbow() {
+            bodyEl.classList.remove('rainbow-active');
+            void bodyEl.offsetWidth;
+            bodyEl.classList.add('rainbow-active');
+            setTimeout(() => bodyEl.classList.remove('rainbow-active'), 1000);
+        }
+
+        function createExplosion(e, parentElement) {
+            const explosion = document.createElement('span');
+            explosion.classList.add('explosion-effect');
+
+            const rect = parentElement.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            explosion.style.left = `${x}px`;
+            explosion.style.top = `${y}px`;
+
+            parentElement.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
         }
 
         function renderNames() {
             listEl.innerHTML = '';
+
             names.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.textContent = item.text;
@@ -167,20 +227,27 @@
 
                 li.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'BUTTON') {
+                        createExplosion(e, li);
                         names[index].used = !names[index].used;
                         saveToStorage();
-                        renderNames();
+                        // Délai pour laisser l'animation visible avant de re-rendre la liste
+                        setTimeout(renderNames, 300);
                     }
                 });
 
                 const deleteBtn = document.createElement('button');
-                deleteBtn.innerHTML = '&times;';
+                deleteBtn.textContent = 'Supprimer';
                 deleteBtn.className = 'delete-btn';
-                deleteBtn.title = 'Supprimer définitivement';
-                deleteBtn.addEventListener('click', () => {
-                    names.splice(index, 1);
-                    saveToStorage();
-                    renderNames();
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Empêche le clic de rayer le nom
+                    const pass = prompt("Action modérateur. Mot de passe requis :");
+                    if (pass === MODERATOR_PASSWORD) {
+                        names.splice(index, 1);
+                        saveToStorage();
+                        renderNames();
+                    } else if (pass !== null) {
+                        alert("Mot de passe incorrect.");
+                    }
                 });
 
                 li.appendChild(deleteBtn);
@@ -191,10 +258,11 @@
         function addName() {
             const text = inputEl.value.trim();
             if (text !== '') {
-                names.push({ text: text, used: false });
+                names.unshift({ text: text, used: false });
                 inputEl.value = '';
                 saveToStorage();
                 renderNames();
+                triggerRainbow();
             }
         }
 
