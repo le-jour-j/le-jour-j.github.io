@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chambre de Compensation - Jeanson Péchin</title>
+    <style>
+        body { background: #05040c; color: #39ff6a; font-family: 'Inconsolata', monospace; margin: 0; padding: 20px; overflow-x: hidden; }
+        .container { display: flex; height: 80vh; gap: 20px; }
+        .flux { width: 25%; background: #050a05; padding: 20px; overflow-y: auto; border: 1px solid #39ff6a; }
+        .dashboard { width: 50%; padding: 20px; }
+        .controle { width: 25%; padding: 20px; }
+        .log { font-size: 12px; margin: 5px 0; opacity: 0.8; }
+        .actif { background: rgba(57,255,106,0.1); padding: 10px; margin: 10px 0; border-left: 3px solid #ffb347; }
+        .sparkline { width: 100px; height: 20px; background: #000; display: inline-block; vertical-align: middle; }
+        .compteur { position: fixed; top: 10px; right: 10px; background: #ff4444; padding: 10px; font-size: 18px; font-weight: bold; }
+        button { background: #39ff6a; color: #05040c; border: none; padding: 10px; cursor: pointer; font-family: inherit; }
+        button:hover { background: #ffb347; }
+        @keyframes corruption { 0% { opacity: 1; } 50% { filter: blur(1px); } 100% { opacity: 1; } }
+        .corrompu { animation: corruption 2s infinite; }
+    </style>
+</head>
+<body>
+    <div class="compteur" id="compteur">CAPITAL DE LATENCE GLOBAL : 4 837 219 UL (+0 UL/min)</div>
+    <div class="container">
+        <div class="flux" id="flux">
+            <h3>Flux d'activité</h3>
+            <div class="log">[2026-03-05 08:09:00] Système initialisé</div>
+        </div>
+        <div class="dashboard">
+            <h2>Tableau des actifs</h2>
+            <div class="actif">
+                CLAUDE MONNAIE <span class="sparkline" id="spark1"></span> ▲ +12 UL
+            </div>
+            <div class="actif">
+                CHEQUIER DESSINÉ <span class="sparkline" id="spark2"></span> ▼ -3 UL
+            </div>
+            <div class="actif">
+                CARTE BANCAIRE VERNIE <span class="sparkline" id="spark3"></span> ▲ +5 UL
+            </div>
+        </div>
+        <div class="controle">
+            <h3>Contrôle mycélien</h3>
+            <button onclick="showReseau()">Afficher le réseau</button>
+        </div>
+    </div>
+
+    <script>
+        let ulGlobal = 4837219;
+        let ulRate = 14;
+        let sessionStart = Date.now();
+        let logId = 1;
+
+        function addLog(msg) {
+            const flux = document.getElementById('flux');
+            const log = document.createElement('div');
+            log.className = 'log';
+            log.textContent = `[${new Date().toISOString().slice(0,19).replace('T',' ')}] ${msg}`;
+            flux.appendChild(log);
+            flux.scrollTop = flux.scrollHeight;
+        }
+
+        function updateCompteur() {
+            const now = Date.now();
+            const elapsedMin = (now - sessionStart) / 60000;
+            ulGlobal += Math.floor(elapsedMin * ulRate);
+            document.getElementById('compteur').textContent = `CAPITAL DE LATENCE GLOBAL : ${ulGlobal.toLocaleString()} UL (+${ulRate} UL/min)`;
+        }
+
+        // Sparklines simples (canvas)
+        function drawSparkline(id, trend) {
+            const canvas = document.getElementById(id);
+            const ctx = canvas.getContext('2d');
+            ctx.strokeStyle = trend > 0 ? '#39ff6a' : '#ff4444';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < 100; i++) {
+                const y = 10 + Math.sin(i/10 + trend) * 5;
+                ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+        }
+
+        function showReseau() {
+            addLog(`Connexion visiteur #${Math.floor(Math.random()*10000)} – latence initiale ${Math.floor(Math.random()*100)} ms`);
+            document.body.classList.add('corrompu');
+        }
+
+        // Init
+        drawSparkline('spark1', 1);
+        drawSparkline('spark2', -1);
+        drawSparkline('spark3', 0.5);
+        addLog('Connexion visiteur #' + Math.floor(Math.random()*10000) + ' – latence initiale 48 ms');
+
+        setInterval(() => {
+            updateCompteur();
+            if (Math.random() < 0.1) addLog(`+${Math.floor(Math.random()*10)} UL – attention capturée`);
+        }, 10000);
+
+        setInterval(() => {
+            if (Math.random() < 0.3) {
+                const actifs = document.querySelectorAll('.actif');
+                actifs[Math.floor(Math.random()*actifs.length)].classList.add('corrompu');
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

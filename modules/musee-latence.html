@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUSÉE DE LATENCE — CCF/∿</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne+Mono&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --bg: #080b08;
+  --green: #4dff91;
+  --amber: #ffc84a;
+  --red: #ff5555;
+  --dim: #101810;
+  --mid: #1e2e1e;
+  --text: #b8d4b8;
+  --faint: #2a3e2a;
+  --glow: 0 0 12px rgba(77,255,145,0.35);
+  --glow-a: 0 0 10px rgba(255,200,74,0.4);
+  --panel-w: 320px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--green);
+  font-family: 'Syne Mono', monospace;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* ── ENTRY SCREEN ── */
+#entry {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 32px;
+  transition: opacity 0.6s ease;
+}
+
+#entry.hidden { opacity: 0; pointer-events: none; }
+
+.entry-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--green);
+  text-shadow: var(--glow);
+  text-align: center;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.entry-sub {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #3a6a3a;
+  text-align: center;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+.entry-form {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.url-input {
+  background: var(--dim);
+  border: 1px solid var(--faint);
+  color: var(--green);
+  font-family: 'Syne Mono', monospace;
+  font-size: 13px;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.url-input:focus {
+  border-color: var(--green);
+  box-shadow: var(--glow);
+}
+
+.url-input::placeholder { color: #2a4a2a; }
+
+.transform-btn {
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-family: 'Syne Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-shadow: var(--glow);
+}
+
+.transform-btn:hover {
+  background: rgba(77,255,145,0.08);
+  box-shadow: var(--glow);
+}
+
+.entry-note {
+  margin-top: 32px;
+  font-size: 10px;
+  color: #2a4a2a;
+  text-align: center;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  max-width: 480px;
+}
+
+/* scan line on entry */
+#entry::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(77,255,145,0.015) 3px, rgba(77,255,145,0.015) 4px);
+  pointer-events: none;
+}
+
+/* ── MAIN LAYOUT ── */
+#workspace {
+  display: none;
+  height: 100vh;
+  flex-direction: row;
+}
+
+#workspace.active { display: flex; }
+
+/* iframe container */
+#frame-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+#site-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* overlay canvas for injections */
+#overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── SIDE PANEL ── */
+#panel {
+  width: var(--panel-w);
+  background: var(--bg);
+  border-left: 1px solid var(--faint);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.panel-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--faint);
+  background: var(--dim);
+}
+
+.panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--green);
+  text-shadow: var(--glow);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.panel-sub {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: #3a6a3a;
+  text-transform: uppercase;
+}
+
+/* URL bar */
+.url-bar {
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--faint);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: var(--dim);
+}
+
+.url-mini {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #3a6a3a;
+  font-family: 'Syne Mono', monospace;
+  font-size: 9px;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.url-go {
+  background: transparent;
+  border: 1px solid var(--faint);
+  color: var(--green);
+  font-family: 'Syne Mono', monospace;
+  font-size: 9px;
+  padding: 4px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.url-go:hover { border-color: var(--green); }
+
+/* UL counter */
+.ul-bar {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--faint);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ul-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.ul-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--amber);
+  text-shadow: var(--glow-a);
+  line-height: 1;
+}
+
+.ul-lbl { font-size: 9px; color: #5a8a5a; letter-spacing: 0.15em; }
+
+.ul-rate {
+  font-size: 9px;
+  color: #3a6a3a;
+  text-align: right;
+  line-height: 1.7;
+}
+
+/* transforms panel */
+.transforms {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--faint);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tr-label {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3a6a3a;
+  margin-bottom: 4px;
+}
+
+.tr-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text);
+  padding: 5px 0;
+  border-bottom: 1px solid #0d1a0d;
+  cursor: pointer;
+  gap: 8px;
+  user-select: none;
+}
+
+.tr-toggle:hover { color: var(--green); }
+
+.tr-name { flex: 1; line-height: 1.4; }
+
+.tr-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--faint);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.tr-toggle.on .tr-dot {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: var(--glow);
+}
+
+/* stats */
+.stats-grid {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--faint);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-cell {
+  background: var(--dim);
+  padding: 8px 10px;
+}
+
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green);
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-size: 8px;
+  color: #3a6a3a;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+/* log */
+.log-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--faint) transparent;
+}
+
+.log-entry {
+  font-size: 9px;
+  color: #3a6a3a;
+  padding: 3px 0;
+  border-bottom: 1px solid #0d1a0d;
+  line-height: 1.6;
+  opacity: 0;
+  animation: li 0.3s ease forwards;
+}
+
+.log-entry .le-tag { color: var(--green); }
+.log-entry .le-warn { color: var(--amber); }
+.log-entry .le-url { color: #5a8a5a; word-break: break-all; }
+
+@keyframes li { to { opacity: 1; } }
+
+/* panel footer */
+.panel-foot {
+  padding: 8px 16px;
+  border-top: 1px solid var(--faint);
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #1e3a1e;
+  letter-spacing: 0.1em;
+}
+
+.foot-btn {
+  background: transparent;
+  border: none;
+  color: #3a6a3a;
+  font-family: 'Syne Mono', monospace;
+  font-size: 8px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+  padding: 0;
+}
+
+.foot-btn:hover { color: var(--green); }
+
+/* ── INJECTED OVERLAYS (into iframe via postMessage simulation) ── */
+/* These styles are injected as strings into the iframe document */
+
+/* ── FRAGMENT CARDS (shown in panel) ── */
+.fragment-feed {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--faint);
+  max-height: 140px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--faint) transparent;
+}
+
+.fragment-card {
+  background: var(--dim);
+  border-left: 2px solid var(--green);
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  font-size: 10px;
+  color: var(--text);
+  line-height: 1.6;
+  opacity: 0;
+  animation: li 0.4s ease forwards;
+}
+
+.fragment-card .fc-type {
+  font-size: 8px;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+  margin-bottom: 3px;
+}
+
+/* ── MODAL OVERLAY ── */
+#modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+#modal.show { display: flex; }
+
+.modal-box {
+  background: var(--bg);
+  border: 1px solid var(--green);
+  box-shadow: var(--glow);
+  padding: 28px 32px;
+  max-width: 500px;
+  width: 100%;
+  font-size: 13px;
+}
+
+.modal-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--amber);
+  text-shadow: var(--glow-a);
+  margin-bottom: 14px;
+}
+
+.modal-box p { color: var(--text); line-height: 1.7; margin-bottom: 10px; font-size: 12px; }
+.modal-box .poem { font-style: italic; color: var(--green); border-left: 1px solid var(--faint); padding-left: 10px; margin: 10px 0; line-height: 1.9; font-size: 11px; }
+
+.modal-close {
+  background: transparent; border: 1px solid var(--faint); color: #5a8a5a;
+  font-family: 'Syne Mono', monospace; font-size: 10px; padding: 8px 14px;
+  cursor: pointer; margin-top: 14px; letter-spacing: 0.1em; transition: all 0.15s;
+}
+.modal-close:hover { border-color: var(--green); color: var(--green); }
+
+/* scanlines */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@media (max-width: 600px) {
+  :root { --panel-w: 100vw; }
+  #workspace { flex-direction: column; }
+  #frame-wrap { height: 50vh; }
+  #panel { width: 100%; height: 50vh; border-left: none; border-top: 1px solid var(--faint); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── ENTRY ── -->
+<div id="entry">
+  <div class="entry-logo">Musée de Latence</div>
+  <div class="entry-sub">Chambre de Compensation Fantôme · BTM/∿ · Instrument d'analyse</div>
+
+  <div class="entry-form">
+    <input class="url-input" id="url-input" type="text"
+      placeholder="https://exemple.com — collez une URL à transformer"
+      value="">
+    <button class="transform-btn" id="entry-go">[ OUVRIR DANS LE MUSÉE ]</button>
+  </div>
+
+  <div class="entry-note">
+    Cet instrument transforme n'importe quelle page web en exposition de latence.<br>
+    Les images publicitaires deviennent des fragments du corpus.<br>
+    Les boutons d'achat se recouvrent de temps mort.<br>
+    Les métriques se convertissent en Unités de Latence.<br>
+    Les titres reçoivent des annotations de la Chambre.<br><br>
+    <span style="color:#1e3a1e;">Aucune donnée n'est envoyée. Aucune trace n'est conservée.</span>
+  </div>
+</div>
+
+<!-- ── WORKSPACE ── -->
+<div id="workspace">
+
+  <div id="frame-wrap">
+    <iframe id="site-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+      title="Site transformé"></iframe>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <div id="panel">
+    <div class="panel-header">
+      <div class="panel-title">Musée de Latence</div>
+      <div class="panel-sub">CCF/∿ · Instrument actif</div>
+    </div>
+
+    <div class="url-bar">
+      <input class="url-mini" id="url-mini" type="text" placeholder="url en cours…">
+      <button class="url-go" id="url-go-btn">→ ALLER</button>
+      <button class="url-go" id="url-back-btn" style="border-color:#1e3a1e;color:#3a6a3a;">← RETOUR</button>
+    </div>
+
+    <div class="ul-bar">
+      <div class="ul-counter">
+        <span class="ul-val" id="ul-val">0</span>
+        <span class="ul-lbl">UL accumulées</span>
+      </div>
+      <div class="ul-rate" id="ul-rate">
+        0 UL/min<br>
+        <span style="font-size:8px;color:#1e3a1e;">temps sur page</span>
+      </div>
+    </div>
+
+    <!-- TRANSFORMS -->
+    <div class="transforms">
+      <div class="tr-label">Transformations actives</div>
+      <div class="tr-toggle on" data-id="images">
+        <span class="tr-name">Images pub → fragments corpus</span>
+        <span class="tr-dot"></span>
+      </div>
+      <div class="tr-toggle on" data-id="buttons">
+        <span class="tr-name">Boutons d'achat → couche latence</span>
+        <span class="tr-dot"></span>
+      </div>
+      <div class="tr-toggle on" data-id="metrics">
+        <span class="tr-name">Métriques → nécrose UL</span>
+        <span class="tr-dot"></span>
+      </div>
+      <div class="tr-toggle on" data-id="headings">
+        <span class="tr-name">Titres → annotations CCF</span>
+        <span class="tr-dot"></span>
+      </div>
+      <div class="tr-toggle on" data-id="void">
+        <span class="tr-name">Espaces vides → cartographie silence</span>
+        <span class="tr-dot"></span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-imgs">0</div>
+        <div class="stat-lbl">images transformées</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-btns">0</div>
+        <div class="stat-lbl">boutons recouverts</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-metrics">0</div>
+        <div class="stat-lbl">métriques nécrosées</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="stat-heads">0</div>
+        <div class="stat-lbl">titres annotés</div>
+      </div>
+    </div>
+
+    <!-- FRAGMENT FEED -->
+    <div class="fragment-feed" id="fragment-feed"></div>
+
+    <!-- LOG -->
+    <div class="log-area" id="log-area"></div>
+
+    <div class="panel-foot">
+      <span>BTM/∿ · usage personnel</span>
+      <button class="foot-btn" id="btn-export">[ EXPORTER RAPPORT ]</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">—</h2>
+    <div id="modal-body"></div>
+    <button class="modal-close" id="modal-close">[ FERMER ]</button>
+  </div>
+</div>
+
+<script>
+// ── CORPUS DATA ──
+const FRAGMENTS = [
+  "Le buffer s'est rempli. Ce qu'on y a versé n'a pas de nom dans le système.",
+  "L'erreur était là depuis 73 jours sans ticket, sans auteur. Elle fonctionnait parfaitement.",
+  "3 secondes de chargement. Dans cet intervalle, une décision a été suspendue.",
+  "La Chambre de Compensation Fantôme enregistre cet échange sans le comptabiliser.",
+  "Dormant n'est pas mort. La spore attend dans l'infrastructure.",
+  "Ce que vous voyez ici n'existe pas dans le bilan. C'est pourquoi ça existe.",
+  "Toute métrique est une fiction. Celle-ci a été convertie en UL pour plus d'honnêteté.",
+  "Le mycélium n'a pas de centre. Vous êtes un nœud parmi d'autres.",
+  "Cette image était une publicité. Elle est maintenant un fragment de temps mort.",
+  "La latence du réseau vous a offert 847ms. Personne d'autre ne vous les avait offertes.",
+  "Ce bouton voulait votre argent. Il veut maintenant votre attention différée.",
+  "Le silence entre deux clics appartient à la Chambre. Elle ne l'a pas demandé.",
+];
+
+const CCF_ANNOTATIONS = [
+  "[ CCF/∿ : ce titre produit de la valeur sans le savoir ]",
+  "[ annotation Chambre : contenu non compensé ]",
+  "[ BTM/∿ : temps de lecture non monétisé — 1 UL générée ]",
+  "[ nœud mycélien détecté — propagation possible ]",
+  "[ CCF : souveraineté de lecture revendiquée ]",
+  "[ ce titre a été lu. La lecture est un acte d'échange. ]",
+  "[ annotation invisible : ce contenu existe dans votre mémoire maintenant ]",
+  "[ BTM : titre converti en temps suspendu — valeur indéterminée ]",
+];
+
+const LATENCE_LABELS = [
+  "∿ UL suspendues",
+  "ms de temps mort",
+  "unités non optimisées",
+  "latence déclarée souveraine",
+  "∿ valeur fantôme",
+];
+
+const HAIKUS = [
+  ["Le chiffre s'efface —", "ce que tu voulais compter", "n'existe plus ici."],
+  ["Prix barré en rouge :", "derrière, 847ms", "de silence gratuit."],
+  ["Un million de vues.", "Chacune a duré combien ?", "La Chambre a compté."],
+];
+
+// ── STATE ──
+let activeTransforms = { images: true, buttons: true, metrics: true, headings: true, void: true };
+let ulBalance = 0;
+let sessionStart = null;
+let stats = { imgs: 0, btns: 0, metrics: 0, heads: 0 };
+let logCount = 0;
+let currentUrl = '';
+
+// ── DOM ──
+const entry     = document.getElementById('entry');
+const workspace = document.getElementById('workspace');
+const frame     = document.getElementById('site-frame');
+const urlInput  = document.getElementById('url-input');
+const urlMini   = document.getElementById('url-mini');
+const ulVal     = document.getElementById('ul-val');
+const ulRate    = document.getElementById('ul-rate');
+const logArea   = document.getElementById('log-area');
+const fragFeed  = document.getElementById('fragment-feed');
+const modal     = document.getElementById('modal');
+
+// ── ENTRY ──
+document.getElementById('entry-go').addEventListener('click', loadUrl);
+urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') loadUrl(); });
+
+function loadUrl() {
+  let url = urlInput.value.trim();
+  if (!url) return;
+  if (!url.startsWith('http')) url = 'https://' + url;
+  openMuseum(url);
+}
+
+document.getElementById('url-go-btn').addEventListener('click', () => {
+  let url = urlMini.value.trim();
+  if (!url.startsWith('http')) url = 'https://' + url;
+  loadPage(url);
+});
+
+document.getElementById('url-back-btn').addEventListener('click', () => {
+  entry.classList.remove('hidden');
+  setTimeout(() => {
+    workspace.classList.remove('active');
+    entry.style.opacity = '1';
+    entry.style.pointerEvents = 'all';
+  }, 600);
+});
+
+// ── OPEN MUSEUM ──
+function openMuseum(url) {
+  currentUrl = url;
+  entry.classList.add('hidden');
+  setTimeout(() => {
+    workspace.classList.add('active');
+    loadPage(url);
+    sessionStart = Date.now();
+    startULCounter();
+  }, 600);
+}
+
+function loadPage(url) {
+  currentUrl = url;
+  urlMini.value = url;
+  // Reset stats for new page
+  stats = { imgs: 0, btns: 0, metrics: 0, heads: 0 };
+  updateStats();
+  log(`Chargement : <span class="le-url">${url}</span>`);
+
+  frame.src = url;
+
+  frame.onload = () => {
+    log('<span class="le-tag">[CCF]</span> Page chargée — analyse en cours…');
+    setTimeout(() => injectTransformations(), 800);
+  };
+
+  frame.onerror = () => {
+    log('<span class="le-warn">[WRN]</span> Accès direct bloqué — simulation locale activée', true);
+    simulateTransformations();
+  };
+}
+
+// ── INJECT TRANSFORMATIONS ──
+function injectTransformations() {
+  try {
+    const doc = frame.contentDocument || frame.contentWindow.document;
+    if (!doc || !doc.body) throw new Error('no doc');
+
+    const script = doc.createElement('script');
+    script.textContent = buildInjectionScript();
+    doc.body.appendChild(script);
+
+    log('<span class="le-tag">[SYS]</span> Transformations injectées.');
+    collectStats(doc);
+  } catch(e) {
+    // Cross-origin — simulate
+    log('<span class="le-warn">[CCF]</span> Cross-origin détecté — simulation de transformations activée.');
+    simulateTransformations();
+  }
+}
+
+function buildInjectionScript() {
+  const frags = JSON.stringify(FRAGMENTS);
+  const annots = JSON.stringify(CCF_ANNOTATIONS);
+  const labels = JSON.stringify(LATENCE_LABELS);
+  const active = JSON.stringify(activeTransforms);
+
+  return `
+(function() {
+  const FRAGMENTS = ${frags};
+  const ANNOTS = ${annots};
+  const LABELS = ${labels};
+  const ACTIVE = ${active};
+  const rand = arr => arr[Math.floor(Math.random()*arr.length)];
+  const randN = (mn,mx) => Math.floor(Math.random()*(mx-mn)+mn);
+
+  // CSS injection
+  const style = document.createElement('style');
+  style.textContent = \`
+    .ccf-overlay {
+      position:relative!important;
+    }
+    .ccf-img-replace {
+      background: #050a05!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:12px!important;
+      font-family:monospace!important;
+      font-size:11px!important;
+      color:#4dff91!important;
+      line-height:1.6!important;
+      border:1px solid #1e2e1e!important;
+      box-sizing:border-box!important;
+      min-height:60px!important;
+      text-shadow:0 0 8px rgba(77,255,145,0.3)!important;
+    }
+    .ccf-btn-cover {
+      position:absolute!important;
+      inset:0!important;
+      background:rgba(5,10,5,0.92)!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      font-family:monospace!important;
+      font-size:10px!important;
+      color:#4dff91!important;
+      text-align:center!important;
+      padding:4px!important;
+      line-height:1.4!important;
+      pointer-events:none!important;
+      z-index:9999!important;
+      border:1px solid #1e2e1e!important;
+    }
+    .ccf-annotation {
+      display:block!important;
+      font-family:monospace!important;
+      font-size:9px!important;
+      color:#3a6a3a!important;
+      letter-spacing:0.05em!important;
+      margin-top:3px!important;
+      font-style:normal!important;
+    }
+    .ccf-metric-cover {
+      background:#0d1a0d!important;
+      color:#ffc84a!important;
+      font-family:monospace!important;
+      font-size:inherit!important;
+      padding:0 4px!important;
+      border:1px solid #1e2e1e!important;
+    }
+    .ccf-void-map {
+      background:linear-gradient(135deg,#050a05 25%,#0a1a0a 25%,#0a1a0a 50%,#050a05 50%,#050a05 75%,#0a1a0a 75%)!important;
+      background-size:8px 8px!important;
+      position:relative!important;
+      min-height:40px!important;
+    }
+    .ccf-void-label {
+      position:absolute!important;
+      top:50%!important;transform:translateY(-50%)!important;
+      left:0!important;right:0!important;
+      text-align:center!important;
+      font-family:monospace!important;
+      font-size:9px!important;
+      color:#1e3a1e!important;
+      letter-spacing:0.15em!important;
+    }
+  \`;
+  document.head.appendChild(style);
+
+  // 1 · IMAGES
+  if (ACTIVE.images) {
+    const imgs = [...document.querySelectorAll('img')].filter(i => {
+      const w = i.offsetWidth, h = i.offsetHeight;
+      return w > 80 && h > 40;
+    });
+    imgs.slice(0,12).forEach(img => {
+      const div = document.createElement('div');
+      div.className = 'ccf-img-replace';
+      div.style.width  = img.offsetWidth  + 'px';
+      div.style.height = img.offsetHeight + 'px';
+      div.textContent = rand(FRAGMENTS);
+      img.parentNode.insertBefore(div, img);
+      img.style.display = 'none';
+    });
+  }
+
+  // 2 · BUY BUTTONS
+  if (ACTIVE.buttons) {
+    const buyWords = ['acheter','buy','commander','ajouter','add to cart','shop','payer','€','$','£'];
+    const btns = [...document.querySelectorAll('button,a,[role=button],input[type=submit]')]
+      .filter(el => {
+        const t = (el.textContent || el.value || '').toLowerCase();
+        return buyWords.some(w => t.includes(w));
+      });
+    btns.slice(0,8).forEach(btn => {
+      btn.style.position = 'relative';
+      const cover = document.createElement('div');
+      cover.className = 'ccf-btn-cover';
+      const ul = randN(3,24);
+      cover.textContent = ul + ' UL · temps mort déclaré souverain';
+      btn.appendChild(cover);
+    });
+  }
+
+  // 3 · METRICS
+  if (ACTIVE.metrics) {
+    const metricRx = /\\b\\d{3,}[\\s,.]?\\d*[KkMm]?\\b/g;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    let node;
+    while (node = walker.nextNode()) nodes.push(node);
+    nodes.slice(0, 30).forEach(n => {
+      if (metricRx.test(n.textContent)) {
+        const span = document.createElement('span');
+        span.className = 'ccf-metric-cover';
+        span.textContent = randN(10,999) + ' UL';
+        span.title = 'métrique nécrosée · Chambre de Compensation Fantôme';
+        n.parentNode.replaceChild(span, n);
+      }
+    });
+  }
+
+  // 4 · HEADINGS
+  if (ACTIVE.headings) {
+    const heads = [...document.querySelectorAll('h1,h2,h3')];
+    heads.slice(0,6).forEach(h => {
+      const ann = document.createElement('span');
+      ann.className = 'ccf-annotation';
+      ann.textContent = rand(ANNOTS);
+      h.appendChild(ann);
+    });
+  }
+
+  // 5 · VOID MAPPING
+  if (ACTIVE.void) {
+    const divs = [...document.querySelectorAll('div,section,article')]
+      .filter(el => {
+        const rect = el.getBoundingClientRect();
+        return rect.width > 200 && rect.height > 80
+          && !el.textContent.trim()
+          && !el.querySelector('img,video,canvas');
+      });
+    divs.slice(0,4).forEach(el => {
+      el.classList.add('ccf-void-map');
+      const lbl = document.createElement('div');
+      lbl.className = 'ccf-void-label';
+      lbl.textContent = '∿ espace vide cartographié · ' + (el.offsetWidth * el.offsetHeight / 1000).toFixed(0) + ' UL de silence';
+      el.appendChild(lbl);
+    });
+  }
+
+})();
+  `;
+}
+
+// ── SIMULATION (cross-origin fallback) ──
+function simulateTransformations() {
+  const delay = ms => new Promise(r => setTimeout(r, ms));
+
+  (async () => {
+    await delay(300);
+    if (activeTransforms.images) {
+      const n = Math.floor(Math.random()*6+3);
+      stats.imgs = n;
+      for (let i = 0; i < n; i++) {
+        await delay(200);
+        addFragment('IMAGE → FRAGMENT', FRAGMENTS[Math.floor(Math.random()*FRAGMENTS.length)]);
+        log(`<span class="le-tag">[IMG]</span> Image ${i+1} remplacée par fragment corpus.`);
+        ulBalance += 2;
+      }
+    }
+    await delay(400);
+    if (activeTransforms.buttons) {
+      const n = Math.floor(Math.random()*3+1);
+      stats.btns = n;
+      for (let i = 0; i < n; i++) {
+        await delay(300);
+        log(`<span class="le-tag">[BTN]</span> Bouton d'achat recouvert — ${Math.floor(Math.random()*20+3)} UL.`);
+        ulBalance += 5;
+      }
+    }
+    await delay(200);
+    if (activeTransforms.metrics) {
+      const n = Math.floor(Math.random()*8+4);
+      stats.metrics = n;
+      log(`<span class="le-warn">[MET]</span> ${n} métriques nécrosées → converties en UL.`);
+      ulBalance += n * 3;
+    }
+    await delay(200);
+    if (activeTransforms.headings) {
+      const n = Math.floor(Math.random()*4+2);
+      stats.heads = n;
+      for (let i = 0; i < n; i++) {
+        await delay(250);
+        log(`<span class="le-tag">[H]</span> Titre annoté : ${CCF_ANNOTATIONS[Math.floor(Math.random()*CCF_ANNOTATIONS.length)]}`);
+        ulBalance += 1;
+      }
+    }
+    await delay(300);
+    if (activeTransforms.void) {
+      const n = Math.floor(Math.random()*3+1);
+      log(`<span class="le-tag">[∿]</span> ${n} espaces vides cartographiés.`);
+      ulBalance += n * 4;
+    }
+    updateStats();
+    updateUL();
+    log('<span class="le-tag">[CCF]</span> Transformation complète. Page muséifiée.');
+  })();
+}
+
+function collectStats(doc) {
+  try {
+    stats.imgs    = doc.querySelectorAll('.ccf-img-replace').length;
+    stats.btns    = doc.querySelectorAll('.ccf-btn-cover').length;
+    stats.metrics = doc.querySelectorAll('.ccf-metric-cover').length;
+    stats.heads   = doc.querySelectorAll('.ccf-annotation').length;
+    ulBalance += stats.imgs * 2 + stats.btns * 5 + stats.metrics * 3 + stats.heads;
+    updateStats();
+    updateUL();
+  } catch(e) {}
+}
+
+// ── UL COUNTER ──
+function startULCounter() {
+  setInterval(() => {
+    if (!sessionStart) return;
+    const elapsed = (Date.now() - sessionStart) / 1000;
+    const rate = Math.floor(ulBalance / (elapsed / 60));
+    ulRate.innerHTML = `${rate} UL/min<br><span style="font-size:8px;color:#1e3a1e;">${Math.floor(elapsed)}s sur page</span>`;
+    // passive accumulation
+    if (Math.random() > 0.7) { ulBalance += 1; updateUL(); }
+  }, 3000);
+}
+
+function updateUL() {
+  ulVal.textContent = ulBalance;
+}
+
+function updateStats() {
+  document.getElementById('stat-imgs').textContent    = stats.imgs;
+  document.getElementById('stat-btns').textContent    = stats.btns;
+  document.getElementById('stat-metrics').textContent = stats.metrics;
+  document.getElementById('stat-heads').textContent   = stats.heads;
+}
+
+// ── LOG ──
+function log(html, warn=false) {
+  const el = document.createElement('div');
+  el.className = 'log-entry';
+  el.innerHTML = html;
+  logArea.prepend(el);
+  logCount++;
+  while (logArea.children.length > 40) logArea.removeChild(logArea.lastChild);
+}
+
+// ── FRAGMENT FEED ──
+function addFragment(type, text) {
+  const card = document.createElement('div');
+  card.className = 'fragment-card';
+  card.innerHTML = `<div class="fc-type">${type}</div>${text}`;
+  fragFeed.prepend(card);
+  while (fragFeed.children.length > 6) fragFeed.removeChild(fragFeed.lastChild);
+}
+
+// ── TOGGLES ──
+document.querySelectorAll('.tr-toggle').forEach(t => {
+  t.addEventListener('click', () => {
+    const id = t.dataset.id;
+    activeTransforms[id] = !activeTransforms[id];
+    t.classList.toggle('on', activeTransforms[id]);
+    log(`<span class="le-tag">[SYS]</span> Transformation [${id}] : ${activeTransforms[id] ? 'activée' : 'désactivée'}`);
+  });
+});
+
+// ── EXPORT ──
+document.getElementById('btn-export').addEventListener('click', () => {
+  const elapsed = sessionStart ? Math.floor((Date.now()-sessionStart)/1000) : 0;
+  const report = `RAPPORT DE MUSÉIFICATION — BTM/∿
+══════════════════════════════
+URL : ${currentUrl}
+Session : ${elapsed}s
+UL accumulées : ${ulBalance}
+──────────────────────────────
+Images transformées : ${stats.imgs}
+Boutons recouverts  : ${stats.btns}
+Métriques nécrosées : ${stats.metrics}
+Titres annotés      : ${stats.heads}
+──────────────────────────────
+Toutes les transformations ont été appliquées localement.
+Aucune donnée n'a été envoyée.
+Aucune trace n'a été conservée.
+──────────────────────────────
+Chambre de Compensation Fantôme · ∿ · ${new Date().toISOString()}`;
+
+  const blob = new Blob([report], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `rapport-musee-latence-${Date.now()}.txt`;
+  a.click();
+  log('<span class="le-tag">[CCF]</span> Rapport exporté.');
+});
+
+// ── MODAL ──
+document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('show'));
+
+// ── INITIAL LOG ──
+log('<span class="le-tag">[BTM]</span> Musée de Latence initialisé.');
+log('<span class="le-tag">[CCF]</span> 5 transformations en veille.');
+log('Collez une URL pour commencer la muséification.', false);
+</script>
+</body>
+</html>

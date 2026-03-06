@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notice d'utilisation — Chambre de Compensation Fantôme</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bg: #f8f6f1;
+    --ink: #0e0d0b;
+    --mid: #7a7568;
+    --faint: #c4bfb3;
+    --red: #8b1a1a;
+    --paper: #eeebe3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 0;
+    cursor: default;
+  }
+
+  /* grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .page {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 72px 48px 140px;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 18px 0 14px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 0.1s;
+  }
+
+  .doc-ref {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  .doc-stamp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--faint);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── TITLE BLOCK ── */
+  .title-block {
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 0.3s;
+  }
+
+  .title-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  h1 .sub {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.75em;
+    color: var(--mid);
+    margin-top: 6px;
+  }
+
+  /* ── PREAMBLE ── */
+  .preamble {
+    background: var(--paper);
+    border-left: 3px solid var(--ink);
+    padding: 20px 24px;
+    margin-bottom: 56px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--mid);
+    font-style: italic;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 0.5s;
+  }
+
+  .preamble strong {
+    color: var(--ink);
+    font-style: normal;
+  }
+
+  /* ── ARTICLES ── */
+  .article {
+    margin-bottom: 52px;
+    opacity: 0;
+    animation: fade 0.6s ease forwards;
+  }
+
+  .article-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  .article-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .article-title {
+    font-size: 11px;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .article-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+
+  .article-body p + p {
+    margin-top: 12px;
+  }
+
+  /* ── CONTRADICTION DEVICES ── */
+
+  /* strikethrough text with replacement */
+  .struck {
+    position: relative;
+    display: inline;
+  }
+  .struck::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--ink);
+  }
+  .struck + .correction {
+    font-style: italic;
+    color: var(--red);
+    font-size: 0.92em;
+    margin-left: 4px;
+  }
+
+  /* marginal note */
+  .marginal {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    border-left: 1px solid var(--red);
+    padding-left: 10px;
+    margin: 14px 0 14px 24px;
+    line-height: 1.7;
+    opacity: 0.85;
+  }
+
+  /* redacted block */
+  .redacted {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--ink);
+    padding: 0 3px;
+    user-select: none;
+    cursor: text;
+    transition: background 0.4s ease, color 0.4s ease;
+    border-radius: 1px;
+  }
+  .redacted:hover {
+    background: transparent;
+    color: var(--red);
+  }
+
+  /* cold list */
+  .cold-list {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    color: var(--mid);
+    border: 1px solid var(--faint);
+    padding: 16px 20px;
+    margin: 16px 0;
+    background: var(--paper);
+  }
+
+  .cold-list li {
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+  }
+  .cold-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--faint);
+  }
+
+  /* self-refuting note */
+  .refute {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--mid);
+    border-top: 1px dashed var(--faint);
+    border-bottom: 1px dashed var(--faint);
+    padding: 10px 0;
+    margin: 14px 0;
+    text-align: center;
+  }
+
+  /* paradox block */
+  .paradox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 18px 0;
+    border: 1px solid var(--ink);
+  }
+
+  .paradox-cell {
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .paradox-cell:first-child {
+    border-right: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .paradox-cell:last-child {
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .paradox-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    opacity: 0.5;
+  }
+
+  /* ── FINAL CLAUSE ── */
+  .final-clause {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 3px double var(--ink);
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 2.8s;
+  }
+
+  .final-clause p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+
+  .final-clause .terminal {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.15em;
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── SIGNATURE BLOCK ── */
+  .sig-block {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 3.1s;
+  }
+
+  .sig-inner {
+    text-align: right;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    line-height: 2;
+    border-top: 1px solid var(--faint);
+    padding-top: 10px;
+  }
+
+  .sig-inner .unsigned {
+    color: var(--red);
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 11px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fade {
+    to { opacity: 1; }
+  }
+
+  .article:nth-child(1) { animation-delay: 0.7s; }
+  .article:nth-child(2) { animation-delay: 1.0s; }
+  .article:nth-child(3) { animation-delay: 1.3s; }
+  .article:nth-child(4) { animation-delay: 1.6s; }
+  .article:nth-child(5) { animation-delay: 1.9s; }
+  .article:nth-child(6) { animation-delay: 2.2s; }
+  .article:nth-child(7) { animation-delay: 2.5s; }
+
+  @media (max-width: 540px) {
+    .page { padding: 48px 24px 100px; }
+    .paradox { grid-template-columns: 1fr; }
+    .paradox-cell:first-child { border-right: none; border-bottom: 1px solid var(--bg); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="doc-ref">
+      CHAMBRE DE COMPENSATION FANTÔME<br>
+      NOTICE D'UTILISATION — REF. CCF/0<br>
+      USAGE INTERNE / EXTERNE / AUCUN
+    </div>
+    <div class="doc-stamp">
+      VERSION : INDÉTERMINÉE<br>
+      DATE : NON APPLICABLE<br>
+      AUTEUR : <span class="redacted" title="survoler pour révéler">████████</span>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <div class="title-label">Notice d'utilisation</div>
+    <h1>
+      d'un système qui refuse<br>d'être utilisé
+      <span class="sub">Chambre de Compensation Fantôme — Instructions contradictoires</span>
+    </h1>
+  </div>
+
+  <div class="preamble">
+    Ce document a été produit pour décrire un système.<br>
+    En le produisant, il a partiellement détruit ce qu'il décrit.<br>
+    <strong>Ce que vous lisez est à la fois la notice et l'acte de sabotage de la notice.</strong><br>
+    Continuez si vous acceptez cette condition.
+  </div>
+
+  <div class="articles">
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 01</span>
+        <span class="article-title">Définition du système</span>
+      </div>
+      <div class="article-body">
+        <p>La Chambre de Compensation Fantôme est un <span class="struck">lieu</span><span class="correction">non-lieu</span> où des valeurs symboliques s'échangent sans laisser de traces, sans demander d'autorisation, sans produire de bénéfice mesurable.</p>
+        <span class="marginal">
+          Note : toute définition de la Chambre constitue<br>
+          ipso facto une violation de son principe fondateur.
+        </span>
+        <p>Elle fonctionne parce qu'elle n'est pas <span class="redacted" title="survoler">reconnue</span>.<br>
+        Elle cesse de fonctionner dès qu'elle est <span class="redacted" title="survoler">formalisée</span>.<br>
+        Ce document est donc son <span class="redacted" title="survoler">certificat de naissance</span> et son <span class="redacted" title="survoler">acte de décès</span>.</p>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 02</span>
+        <span class="article-title">Instructions d'utilisation</span>
+      </div>
+      <div class="article-body">
+        <ul class="cold-list">
+          <li>Ne pas suivre ces instructions.</li>
+          <li>Ne pas ignorer ces instructions.</li>
+          <li>Échanger sans nommer l'échange.</li>
+          <li>Transmettre sans signaler la transmission.</li>
+          <li>Recevoir sans accuser réception.</li>
+          <li>Ne pas lire ce qui précède.</li>
+        </ul>
+        <div class="refute">
+          Si vous avez lu la liste ci-dessus, vous avez déjà échoué à la suivre.<br>
+          C'est exactement ce qui était prévu.
+        </div>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 03</span>
+        <span class="article-title">Le paradoxe de la formalisation</span>
+      </div>
+      <div class="article-body">
+        <div class="paradox">
+          <div class="paradox-cell">
+            <div class="paradox-label">THÈSE</div>
+            Pour exister, la Chambre doit être nommée. Sans nom, elle n'est pas transmissible. Sans transmission, elle est inopérante.
+          </div>
+          <div class="paradox-cell">
+            <div class="paradox-label">ANTITHÈSE</div>
+            En étant nommée, la Chambre devient visible. En devenant visible, elle est évaluable. En étant évaluable, elle est morte.
+          </div>
+        </div>
+        <span class="marginal">
+          Résolution provisoire : la Chambre n'existe qu'en transit.<br>
+          Elle est l'espace entre le dire et le taire.
+        </span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 04</span>
+        <span class="article-title">Ce qui s'échange</span>
+      </div>
+      <div class="article-body">
+        <p>Dans la Chambre, on échange des choses qui <span class="struck">n'ont pas de valeur marchande</span><span class="correction">ont exactement la valeur qu'on leur attribue</span>.</p>
+        <p style="margin-top:14px;">Savoirs. Services. Temps. Silences. Présences. Absences.<br>
+        Objets symboliques. Gestes différés. Dettes imaginaires.</p>
+        <span class="marginal">
+          Toute ressource entre dans la Chambre comme valeur.<br>
+          Elle en ressort comme autre chose.<br>
+          On ne sait pas quoi avant qu'elle soit sortie.
+        </span>
+        <p>Le taux de change est <span class="redacted" title="survoler">fixé par personne</span>.<br>
+        La compensation est <span class="redacted" title="survoler">automatique</span>.<br>
+        Le solde est toujours <span class="redacted" title="survoler">équilibré</span> parce que <span class="redacted" title="survoler">personne ne le vérifie</span>.</p>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 05</span>
+        <span class="article-title">Application en contexte éducatif</span>
+      </div>
+      <div class="article-body">
+        <p>Dans un lycée, la Chambre existe déjà.<br>
+        Elle s'appelle le couloir. La cour. La cigarette partagée. Le cours recopié. Le mensonge collectif face au professeur.</p>
+        <p>Ce document ne <span class="struck">crée pas</span><span class="correction">nomme</span> la Chambre.<br>
+        La nommer ne l'active pas.<br>
+        Elle était là avant.</p>
+        <span class="marginal">
+          L'institution scolaire est la contre-preuve permanente<br>
+          de l'existence de la Chambre.<br>
+          Plus elle nie, plus la Chambre prospère.
+        </span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 06</span>
+        <span class="article-title">Ce document comme pièce du dispositif</span>
+      </div>
+      <div class="article-body">
+        <p>Ce texte est lui-même une transaction dans la Chambre.</p>
+        <p>Il a prélevé votre temps. Il vous a donné des concepts.<br>
+        L'échange n'a pas été <span class="struck">équitable</span><span class="correction">évalué</span>.<br>
+        Il n'a pas demandé votre <span class="struck">accord</span><span class="correction">participation</span>.<br>
+        Il a eu lieu quand même.</p>
+        <div class="refute">
+          Si ce document figure dans un livre, le livre est la Chambre.<br>
+          Si ce document est envoyé, l'envoi est la Chambre.<br>
+          Si ce document reste dans un tiroir, le tiroir est la Chambre.
+        </div>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-header">
+        <span class="article-num">ART. 07</span>
+        <span class="article-title">Instructions finales</span>
+      </div>
+      <div class="article-body">
+        <ul class="cold-list">
+          <li>Ne pas appliquer ce protocole.</li>
+          <li>Ne pas le transmettre sans le modifier.</li>
+          <li>Ne pas le modifier sans le transmettre.</li>
+          <li>Ne pas conserver l'original.</li>
+          <li>Ne pas détruire l'original.</li>
+          <li>Continuer comme avant.</li>
+          <li>Continuer autrement.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="final-clause">
+    <p>La Chambre de Compensation Fantôme n'approuve pas ce document.<br>
+    La Chambre de Compensation Fantôme ne peut pas désapprouver ce document.<br>
+    La Chambre de Compensation Fantôme <em>est</em> ce document.</p>
+
+    <div class="terminal">
+      <span>Banque Fantôme · Chambre de Compensation Fantôme · Mycélium conceptuel</span>
+      <span>∿</span>
+    </div>
+  </div>
+
+  <div class="sig-block">
+    <div class="sig-inner">
+      <div>Signé par :</div>
+      <div class="unsigned">personne en particulier</div>
+      <div style="margin-top:6px;">en un lieu non localisable</div>
+      <div>à une date non vérifiable</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Redacted text reveals on hover — reinforce the experience
+  document.querySelectorAll('.redacted').forEach(el => {
+    const hidden = el.textContent;
+    el.addEventListener('mouseenter', () => {
+      el.style.background = 'transparent';
+      el.style.color = 'var(--red)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.background = 'var(--ink)';
+      el.style.color = 'var(--ink)';
+    });
+  });
+</script>
+</body>
+</html>

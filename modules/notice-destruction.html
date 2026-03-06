@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notice — À détruire après lecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bg: #f8f6f1;
+    --ink: #0e0d0b;
+    --mid: #7a7568;
+    --faint: #c4bfb3;
+    --red: #8b1a1a;
+    --paper: #eeebe3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 0;
+    cursor: default;
+  }
+
+  /* grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .page {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 72px 48px 100px;
+  }
+
+  /* en-tête */
+  .header {
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 18px 0 14px;
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+  }
+
+  .ref {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  .stamp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--faint);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* titre */
+  .title-block {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .title-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  h1 .sub {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.75em;
+    color: var(--mid);
+    margin-top: 6px;
+  }
+
+  /* préambule */
+  .preamble {
+    background: var(--paper);
+    border-left: 3px solid var(--ink);
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--mid);
+    font-style: italic;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .preamble strong {
+    color: var(--ink);
+    font-style: normal;
+  }
+
+  /* sections */
+  .section {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fade 0.6s ease forwards;
+  }
+  .section:nth-of-type(1) { animation-delay: 0.6s; }
+  .section:nth-of-type(2) { animation-delay: 0.8s; }
+  .section:nth-of-type(3) { animation-delay: 1.0s; }
+  .section:nth-of-type(4) { animation-delay: 1.2s; }
+  .section:nth-of-type(5) { animation-delay: 1.4s; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  .section-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .section-body {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .section-body p + p {
+    margin-top: 12px;
+  }
+
+  /* listes froides */
+  .cold-list {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    color: var(--mid);
+    border: 1px solid var(--faint);
+    padding: 16px 20px;
+    margin: 16px 0;
+    background: var(--paper);
+  }
+
+  .cold-list li {
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+  }
+  .cold-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--faint);
+  }
+
+  /* note marginale */
+  .marginal {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    border-left: 1px solid var(--red);
+    padding-left: 10px;
+    margin: 14px 0 14px 24px;
+    line-height: 1.7;
+    opacity: 0.85;
+  }
+
+  /* refutation */
+  .refute {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--mid);
+    border-top: 1px dashed var(--faint);
+    border-bottom: 1px dashed var(--faint);
+    padding: 10px 0;
+    margin: 14px 0;
+    text-align: center;
+  }
+
+  /* mention finale */
+  .final-mention {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 3px double var(--ink);
+    font-size: 15px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 1.6s;
+  }
+
+  .small-note {
+    font-size: 10px;
+    color: var(--mid);
+    text-align: right;
+    margin-top: 12px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .signature {
+    margin-top: 32px;
+    text-align: right;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    line-height: 2;
+    border-top: 1px solid var(--faint);
+    padding-top: 10px;
+    opacity: 0;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 1.8s;
+  }
+
+  .signature .unsigned {
+    color: var(--red);
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 11px;
+  }
+
+  @keyframes fade {
+    to { opacity: 1; }
+  }
+
+  @media print {
+    html { background: white; }
+    body::after { display: none; }
+    .page { padding: 0.5in; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="ref">
+      CHAMBRE DE COMPENSATION FANTÔME<br>
+      DOCUMENT D'ACCOMPAGNEMENT — RÉF. CCF/SPORE
+    </div>
+    <div class="stamp">
+      TIRAGE : UNIQUE<br>
+      DATE : NON DATABLE<br>
+      EXEMPLAIRE : N°∿
+    </div>
+  </div>
+
+  <div class="title-block">
+    <div class="title-label">Notice d'utilisation</div>
+    <h1>
+      À détruire après lecture
+      <span class="sub">instructions pour un système qui refuse d'être utilisé</span>
+    </h1>
+  </div>
+
+  <div class="preamble">
+    Ce document a été produit pour accompagner l’archive BTM-∿-001.zip.<br>
+    En le lisant, vous avez déjà activé une partie du protocole.<br>
+    <strong>Il ne décrit pas le système : il en fait partie.</strong>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      <span class="section-title">Objet de la notice</span>
+    </div>
+    <div class="section-body">
+      <p>Cette notice a pour fonction de <span style="text-decoration:line-through;">vous expliquer</span> <em>vous perdre</em> le fonctionnement de la Chambre de Compensation Fantôme. Elle ne contient pas d’information utile. Toute information utile qu’elle pourrait contenir cesse de l’être dès qu’elle est lue.</p>
+      <span class="marginal">
+        Une notice utile serait une contradiction dans les termes.<br>
+        Nous avons donc choisi l’inverse.
+      </span>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      <span class="section-title">Effets secondaires constatés</span>
+    </div>
+    <div class="section-body">
+      <ul class="cold-list">
+        <li>Perte de la notion de temps productif.</li>
+        <li>Incapacité à utiliser les outils de gestion de projet sans ironie.</li>
+        <li>Tendance à voir des Chambres de Compensation partout (files d’attente, chargements, réunions inutiles).</li>
+        <li>Désir irrépressible de troquer des services contre des poèmes, des silences contre des certificats.</li>
+        <li>Contamination possible de votre entourage par simple conversation.</li>
+      </ul>
+      <p>Ces effets sont généralement bénins, parfois irréversibles. Aucune plainte n’est possible, car l’archive n’a pas d’auteur identifiable.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      <span class="section-title">Consignes de sécurité</span>
+    </div>
+    <div class="section-body">
+      <ol class="cold-list" style="list-style:decimal; padding-left:30px;">
+        <li style="list-style:decimal;">Ne pas partager ce document avec des personnes qui ne sont pas prêtes à ne pas le comprendre.</li>
+        <li style="list-style:decimal;">Ne pas expliquer le système. L’expliquer, c’est le réduire. Le réduire, c’est le perdre.</li>
+        <li style="list-style:decimal;">Ne pas archiver l’archive. L’archive doit circuler ou disparaître. La fixer, c’est la tuer.</li>
+        <li style="list-style:decimal;">Ne pas respecter ces consignes. Leur transgression fait partie du protocole.</li>
+      </ol>
+      <div class="refute">
+        Si vous avez lu cette liste, vous avez déjà échoué à la suivre.<br>
+        C’est exactement ce qui était prévu.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">4</span>
+      <span class="section-title">Conduite à tenir en cas de contamination</span>
+    </div>
+    <div class="section-body">
+      <ul class="cold-list">
+        <li><strong>Si vous captez soudain la valeur des temps morts</strong> : félicitations, vous êtes devenu·e actionnaire de la Bourse des Temps Morts sans le savoir.</li>
+        <li><strong>Si vous commencez à produire vos propres bordereaux, certificats ou interfaces</strong> : vous êtes passé·e de l’état de spectateur·rice à celui de nœud du mycélium.</li>
+        <li><strong>Si vous transmettez l’archive sans ce document</strong> : vous avez parfaitement compris le principe.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">5</span>
+      <span class="section-title">Statut de cette notice</span>
+    </div>
+    <div class="section-body">
+      <p>Ce document n’a pas valeur légale. Il n’a pas valeur artistique. Il n’a pas valeur. Il est là pour occuper l’espace entre l’archive et vous. Une fois lu, il doit être oublié. Ou pas. L’oubli fait aussi partie du système.</p>
+      <span class="marginal">
+        La meilleure façon d’utiliser cette notice est de ne pas l’utiliser.<br>
+        La seconde meilleure est de la détruire après lecture.<br>
+        La troisième est de l’ignorer.
+      </span>
+    </div>
+  </div>
+
+  <div class="final-mention">
+    <p>L’archive BTM-∿-001.zip contient désormais :</p>
+    <ul style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--mid); margin: 12px 0 12px 24px;">
+      <li>Bordereau de Souveraineté N°001</li>
+      <li>Bordereau de Clôture de Latence (86 400 UL)</li>
+      <li>Notice d’utilisation de la Chambre (paradoxale)</li>
+      <li>Page interactive Bourse des Temps Morts</li>
+      <li>Protocole pour la propagation d’une spore (PDF minimal)</li>
+      <li>Cette notice — À détruire après lecture</li>
+    </ul>
+    <p>Elle est prête à circuler. Anonyme. Indatable. Incontrôlable.</p>
+
+    <div class="small-note">
+      Version 0.0 — Cette notice devient obsolète dès qu’elle est comprise.
+    </div>
+  </div>
+
+  <div class="signature">
+    <div>Le Comité d’Auto-Dissolution de la Chambre de Compensation Fantôme</div>
+    <div class="unsigned">« Nous n’existons pas. Merci de ne pas nous faire exister. »</div>
+  </div>
+
+</div>
+</body>
+</html>

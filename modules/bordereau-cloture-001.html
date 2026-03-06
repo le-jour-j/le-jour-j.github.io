@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bordereau de Clôture de Latence N°001</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap');
+:root {
+  --bg: #f0ece0;
+  --ink: #1a1610;
+  --mid: #7a7060;
+  --faint: #c8bfa8;
+  --seal: #1a1a1a;
+  --paper: #e8e3d4;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html {
+  background: #aaa;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+body {
+  background: var(--bg);
+  width: 680px;
+  min-height: 960px;
+  position: relative;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--ink);
+  padding: 56px 60px 72px;
+  background-image:
+    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,0,0,0.01) 80px, rgba(0,0,0,0.01) 81px),
+    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.015) 28px, rgba(0,0,0,0.015) 29px);
+}
+body::before { content:''; position:absolute; inset:14px; border:1px solid var(--faint); pointer-events:none; }
+body::after  { content:''; position:absolute; inset:18px; border:1px solid rgba(200,191,168,0.3); pointer-events:none; }
+
+.header { text-align:center; border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:28px; }
+.republic { font-size:9px; letter-spacing:0.35em; text-transform:uppercase; color:var(--mid); margin-bottom:8px; }
+.bourse-title { font-family:'Playfair Display',serif; font-size:13px; letter-spacing:0.12em; color:var(--mid); margin-bottom:18px; text-transform:uppercase; }
+.ornament { display:flex; align-items:center; justify-content:center; gap:10px; margin:10px 0; color:var(--faint); font-size:14px; letter-spacing:0.2em; }
+.ornament::before,.ornament::after { content:''; flex:1; height:1px; background:var(--faint); }
+.doc-type { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; letter-spacing:0.04em; line-height:1.2; margin:14px 0 4px; }
+.doc-number { font-size:11px; letter-spacing:0.25em; color:var(--mid); }
+
+.meta-row { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--faint); margin-bottom:28px; }
+.meta-cell { padding:10px 14px; border-right:1px solid var(--faint); font-size:10px; line-height:1.7; }
+.meta-cell:last-child { border-right:none; }
+.meta-cell:nth-child(3),.meta-cell:nth-child(4) { border-top:1px solid var(--faint); }
+.meta-label { font-size:8px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin-bottom:3px; }
+.meta-value { font-size:11px; color:var(--ink); }
+
+.montant-block { text-align:center; border:2px solid var(--ink); padding:18px 24px; margin-bottom:28px; position:relative; background:var(--paper); }
+.montant-label { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:var(--mid); margin-bottom:6px; }
+.montant-value { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; line-height:1; letter-spacing:-0.01em; }
+.montant-unit { font-size:11px; letter-spacing:0.15em; color:var(--mid); margin-top:4px; }
+.montant-block::before,.montant-block::after { content:'◆'; position:absolute; font-size:8px; color:var(--faint); }
+.montant-block::before { top:6px; left:10px; }
+.montant-block::after  { bottom:6px; right:10px; }
+
+.section { margin-bottom:22px; }
+.section-label { font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:var(--mid); border-bottom:1px solid var(--faint); padding-bottom:5px; margin-bottom:10px; }
+.section-body { font-size:12px; line-height:1.85; color:var(--ink); }
+.section-body em { font-family:'Playfair Display',serif; font-style:italic; color:#4a3e2a; }
+
+.declarations { border:1px solid var(--faint); padding:14px 16px; background:var(--paper); margin-bottom:28px; }
+.decl-item { display:flex; gap:12px; padding:5px 0; border-bottom:1px solid rgba(200,191,168,0.5); font-size:11px; line-height:1.6; }
+.decl-item:last-child { border-bottom:none; }
+.decl-bullet { color:var(--seal); font-size:9px; padding-top:3px; flex-shrink:0; }
+
+.spore-line {
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--mid);
+  padding:14px 0;
+  border-top:1px solid var(--faint);
+  border-bottom:1px solid var(--faint);
+  margin-bottom:28px;
+  letter-spacing:0.05em;
+}
+
+.sig-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; border-top:2px solid var(--ink); margin-top:28px; }
+.sig-cell { padding:16px 12px 12px; border-right:1px solid var(--faint); font-size:10px; }
+.sig-cell:last-child { border-right:none; }
+.sig-label { font-size:8px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin-bottom:24px; }
+.sig-name { font-family:'Playfair Display',serif; font-style:italic; font-size:12px; border-top:1px solid var(--ink); padding-top:6px; color:var(--ink); }
+.sig-title { font-size:9px; color:var(--mid); margin-top:2px; }
+
+.seal { position:absolute; right:72px; bottom:140px; width:90px; height:90px; opacity:0.12; }
+
+.mention { border-top:1px solid var(--faint); margin-top:28px; padding-top:12px; font-size:9px; color:var(--mid); letter-spacing:0.05em; line-height:1.7; text-align:center; }
+.footer-row { display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; font-size:8px; color:var(--faint); letter-spacing:0.12em; }
+.print-btn { position:fixed; bottom:24px; right:24px; background:var(--ink); color:var(--bg); font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:0.15em; padding:10px 18px; border:none; cursor:pointer; }
+@media print { html { background:white; padding:0; } body { box-shadow:none; width:100%; } .print-btn { display:none; } }
+</style>
+</head>
+<body>
+
+<svg class="seal" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="46" stroke="#1a1a1a" stroke-width="2"/>
+  <circle cx="50" cy="50" r="38" stroke="#1a1a1a" stroke-width="0.8"/>
+  <circle cx="50" cy="50" r="8"  fill="#1a1a1a"/>
+  <line x1="50" y1="4"  x2="50" y2="12" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="50" y1="88" x2="50" y2="96" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="4"  y1="50" x2="12" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="88" y1="50" x2="96" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="17" y1="17" x2="23" y2="23" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="77" y1="77" x2="83" y2="83" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="83" y1="17" x2="77" y2="23" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="17" y1="83" x2="23" y2="77" stroke="#1a1a1a" stroke-width="1"/>
+  <path id="arc-top" d="M 12,50 A 38,38 0 0,1 88,50" fill="none"/>
+  <path id="arc-bot" d="M 88,50 A 38,38 0 0,1 12,50" fill="none"/>
+  <text font-family="Share Tech Mono" font-size="5.5" fill="#1a1a1a" letter-spacing="2">
+    <textPath href="#arc-top" startOffset="8%">CLÔTURE · SÉRIE INAUGURALE</textPath>
+  </text>
+  <text font-family="Share Tech Mono" font-size="5.5" fill="#1a1a1a" letter-spacing="2">
+    <textPath href="#arc-bot" startOffset="10%">CHAMBRE DE COMPENSATION</textPath>
+  </text>
+</svg>
+
+<div class="header">
+  <div class="republic">République des Temps Morts</div>
+  <div class="bourse-title">Bourse des Temps Morts · BTM/∿ · Clôture</div>
+  <div class="ornament">— ◆ —</div>
+  <div class="doc-type">Bordereau de Clôture<br>de Latence</div>
+  <div class="doc-number">N° 001 · FIN DE CYCLE · 24H</div>
+</div>
+
+<div class="meta-row">
+  <div class="meta-cell">
+    <div class="meta-label">Date d'ouverture</div>
+    <div class="meta-value">5 mars 2026 · 05:25 CET</div>
+  </div>
+  <div class="meta-cell">
+    <div class="meta-label">Date de clôture</div>
+    <div class="meta-value">6 mars 2026 · 05:25 CET</div>
+  </div>
+  <div class="meta-cell">
+    <div class="meta-label">Durée du cycle</div>
+    <div class="meta-value">24 heures exactes</div>
+  </div>
+  <div class="meta-cell">
+    <div class="meta-label">Référence</div>
+    <div class="meta-value">BTM/∿/CL-001/2026</div>
+  </div>
+</div>
+
+<div class="montant-block">
+  <div class="montant-label">Montant total du cycle</div>
+  <div class="montant-value">86 400</div>
+  <div class="montant-unit">Unités de Latence (UL) · une journée entière</div>
+</div>
+
+<div class="section">
+  <div class="section-label">Nature du cycle clos</div>
+  <div class="section-body">
+    86 400 secondes se sont écoulées depuis l'émission du Bordereau N°001.
+    Elles n'ont pas été optimisées. Elles n'ont pas été monétisées.
+    Elles n'ont pas été évaluées. <em>Elles ont simplement eu lieu.</em>
+    Puis elles se sont fermées, comme se ferme une porte
+    dont personne ne connaît l'adresse.
+  </div>
+</div>
+
+<div class="declarations">
+  <div class="decl-item">
+    <span class="decl-bullet">I.</span>
+    <span>Le cycle est déclaré clos. Aucun bilan ne sera produit.</span>
+  </div>
+  <div class="decl-item">
+    <span class="decl-bullet">II.</span>
+    <span>Les 86 400 UL ne peuvent être ni reportées, ni échangées, ni archivées.</span>
+  </div>
+  <div class="decl-item">
+    <span class="decl-bullet">III.</span>
+    <span>Le silence des 24 heures constitue, à lui seul, la signature du cycle.</span>
+  </div>
+  <div class="decl-item">
+    <span class="decl-bullet">IV.</span>
+    <span>Ce qui a germé pendant l'intervalle appartient à celui en qui cela a germé.</span>
+  </div>
+  <div class="decl-item">
+    <span class="decl-bullet">V.</span>
+    <span>Ce qui n'a pas germé est déclaré dormant. Dormant n'est pas mort.</span>
+  </div>
+</div>
+
+<div class="spore-line">
+  Montant déclaré temps libre et inutile, désormais spore.
+</div>
+
+<div class="sig-grid">
+  <div class="sig-cell">
+    <div class="sig-label">Clôturé par</div>
+    <div class="sig-name">le silence lui-même</div>
+    <div class="sig-title">signataire sans voix</div>
+  </div>
+  <div class="sig-cell">
+    <div class="sig-label">Contresigné par</div>
+    <div class="sig-name">l'intervalle</div>
+    <div class="sig-title">entre 05:25 et 05:25</div>
+  </div>
+  <div class="sig-cell">
+    <div class="sig-label">Cachet / tampon</div>
+    <div style="height:40px;border:1px dashed var(--faint);margin-bottom:6px;"></div>
+    <div class="sig-title">à apposer librement</div>
+  </div>
+</div>
+
+<div class="mention">
+  Ce bordereau n'a aucune valeur marchande.<br>
+  Il n'a que la valeur qu'on lui donne.<br><br>
+  <em style="font-family:'Playfair Display',serif;font-style:italic;font-size:10px;">
+    Le mycélium travaille mieux quand on ne le regarde pas.
+  </em>
+</div>
+
+<div class="footer-row">
+  <span>BTM/∿ · CLÔTURE · CL-001/2026</span>
+  <span>Fin de cycle inaugural · ∿</span>
+</div>
+
+<button class="print-btn" onclick="window.print()">[ IMPRIMER / ARCHIVER ]</button>
+</body>
+</html>

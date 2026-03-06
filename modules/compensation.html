@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chambre de Compensation — Jeanson Péchin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;700;900&family=VT323&family=Crimson+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --abyss: #05040c;
+  --abyss2: #050a05;
+  --vert: #39ff6a;
+  --ambre: #ffb347;
+  --rouge: #ff4444;
+  --vert-dim: rgba(57,255,106,0.15);
+  --vert-mid: rgba(57,255,106,0.4);
+  --ambre-dim: rgba(255,179,71,0.12);
+  --text-muted: rgba(57,255,106,0.5);
+  --border: rgba(57,255,106,0.25);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--abyss);
+  color: var(--vert);
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* CRT effect */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.08) 0px,
+    rgba(0,0,0,0.08) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanMove 8s linear infinite;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+@keyframes scanMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+/* NOISE OVERLAY */
+#noise {
+  position: fixed; inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9997;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* HEADER - COMPTEUR GLOBAL */
+#header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 52px;
+  background: rgba(5,4,12,0.95);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+#header-left {
+  font-family: 'VT323', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+#compteur-global {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  color: var(--vert);
+  text-shadow: 0 0 12px var(--vert);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.85;} }
+
+#header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-link {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s, text-shadow 0.2s;
+  border: none;
+  background: none;
+  cursor: crosshair;
+  font-family: 'Inconsolata', monospace;
+}
+
+.nav-link:hover {
+  color: var(--ambre);
+  text-shadow: 0 0 8px var(--ambre);
+}
+
+/* MAIN LAYOUT */
+#layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: calc(100vh - 52px);
+  margin-top: 52px;
+  gap: 0;
+}
+
+/* COLUMNS */
+.col {
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.col:last-child { border-right: none; }
+
+.col-header {
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(57,255,106,0.03);
+  flex-shrink: 0;
+}
+
+.col-title {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.col-sub {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(57,255,106,0.3);
+  margin-top: 2px;
+}
+
+/* FLUX */
+#flux-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.log-entry {
+  padding: 4px 0;
+  font-size: 11px;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(57,255,106,0.06);
+  animation: logFade 0.4s ease-out;
+}
+
+@keyframes logFade { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
+
+.log-time { color: rgba(57,255,106,0.35); }
+.log-event { color: rgba(57,255,106,0.75); }
+.log-highlight { color: var(--ambre); }
+.log-warn { color: var(--rouge); }
+
+/* DASHBOARD - ACTIFS */
+#dashboard-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Titre artistique */
+#titre-poetique {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+#titre-poetique h1 {
+  font-family: 'Crimson Pro', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+#titre-poetique p {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(57,255,106,0.45);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* ACTIFS */
+.actif-row {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--vert-mid);
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  cursor: crosshair;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  background: rgba(57,255,106,0.02);
+}
+
+.actif-row:hover {
+  background: var(--vert-dim);
+  border-color: var(--vert);
+}
+
+.actif-row.baisse { border-left-color: var(--rouge); }
+.actif-row.baisse .actif-var { color: var(--rouge); }
+
+.actif-infos {}
+.actif-code {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.actif-nom {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--vert);
+  text-transform: uppercase;
+}
+.actif-type {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(57,255,106,0.4);
+}
+
+.actif-spark {
+  width: 80px;
+  height: 24px;
+}
+
+.actif-var {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--vert);
+  min-width: 70px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.actif-ul-badge {
+  position: absolute;
+  top: -1px; right: -1px;
+  font-size: 9px;
+  background: var(--abyss2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* TOOLTIP COÛT */
+.actif-row::before {
+  content: attr(data-cout);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  background: rgba(5,4,12,0.95);
+  border: 1px solid var(--ambre);
+  color: var(--ambre);
+  font-size: 10px;
+  padding: 4px 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  letter-spacing: 0.1em;
+  z-index: 200;
+}
+.actif-row:hover::before { opacity: 1; }
+
+/* SÉPARATEUR */
+.separator {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.separator::after {
+  content: '// ACTIFS EN CIRCULATION';
+  position: absolute;
+  top: -7px;
+  left: 0;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  background: var(--abyss);
+  padding-right: 8px;
+}
+
+/* SESSION STATS */
+#session-stats {
+  margin-top: 20px;
+  border: 1px solid var(--border);
+  padding: 12px;
+  background: var(--ambre-dim);
+}
+.stat-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 0;
+}
+.stat-val { color: var(--ambre); font-family: 'VT323', monospace; font-size: 14px; }
+
+/* CONTRÔLE MYCÉLIEN */
+#controle-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.btn-mycelium {
+  width: 100%;
+  background: var(--abyss);
+  border: 1px solid var(--vert);
+  color: var(--vert);
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 8px;
+  cursor: crosshair;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-mycelium:hover {
+  background: var(--vert-dim);
+  border-color: var(--vert);
+  box-shadow: 0 0 12px rgba(57,255,106,0.2);
+  color: #fff;
+}
+
+.btn-ambre {
+  border-color: var(--ambre);
+  color: var(--ambre);
+}
+.btn-ambre:hover {
+  background: var(--ambre-dim);
+  box-shadow: 0 0 12px rgba(255,179,71,0.2);
+}
+
+.btn-rouge {
+  border-color: var(--rouge);
+  color: var(--rouge);
+}
+.btn-rouge:hover {
+  background: rgba(255,68,68,0.08);
+}
+
+/* CANVAS MINI-RÉSEAU */
+#mini-reseau {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--abyss2);
+}
+
+/* MÉTRIQUES MYCÉLIUM */
+.myc-metric {
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: rgba(57,255,106,0.02);
+}
+.myc-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.myc-val {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: var(--vert);
+  text-shadow: 0 0 8px rgba(57,255,106,0.4);
+}
+
+/* CORRUPTION STATES */
+body.corrupt-1::before { opacity: 1; }
+body.corrupt-2 .log-entry:nth-child(3n) { filter: blur(0.5px); opacity: 0.6; }
+body.corrupt-3 .actif-nom { animation: glitch 4s infinite; }
+
+@keyframes glitch {
+  0%,95%{transform:none;text-shadow:none}
+  96%{transform:translateX(-2px);text-shadow:2px 0 var(--rouge),-2px 0 var(--ambre)}
+  97%{transform:translateX(2px);text-shadow:-2px 0 var(--vert),2px 0 var(--rouge)}
+  98%{transform:none}
+}
+
+/* BORDEREAU MODAL */
+#bordereau-modal {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(5,4,12,0.92);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+#bordereau-modal.open { display: flex; }
+
+#bordereau-inner {
+  border: 1px solid var(--ambre);
+  background: var(--abyss);
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  position: relative;
+}
+
+#bordereau-inner h2 {
+  font-family: 'Crimson Pro', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ambre);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,179,71,0.3);
+  padding-bottom: 12px;
+}
+
+.bordereau-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.b-label { color: var(--text-muted); letter-spacing: 0.08em; }
+.b-val { color: var(--ambre); font-family: 'VT323', monospace; font-size: 15px; }
+
+#tampon {
+  margin-top: 20px;
+  border: 2px solid rgba(57,255,106,0.4);
+  padding: 8px;
+  text-align: center;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(57,255,106,0.5);
+  transform: rotate(-2deg);
+  letter-spacing: 0.08em;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* MYCÉLIUM OVERLAY */
+#mycelium-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(5,4,12,0.97);
+  z-index: 500;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#mycelium-overlay.open { display: flex; }
+
+#mycelium-overlay canvas {
+  width: 90vmin;
+  height: 70vmin;
+  border: 1px solid var(--border);
+}
+
+#myc-close {
+  position: absolute;
+  top: 20px; right: 24px;
+}
+
+#myc-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+}
+
+/* EXTRACTION SCREEN */
+#extraction-screen {
+  display: none;
+  position: fixed; inset: 0;
+  background: var(--abyss);
+  z-index: 800;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+#extraction-screen.open { display: flex; }
+
+#extraction-text {
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: var(--vert);
+  text-shadow: 0 0 10px var(--vert);
+  animation: blink 0.8s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+#extraction-bar {
+  width: 300px;
+  height: 3px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+#extraction-fill {
+  height: 100%;
+  background: var(--vert);
+  width: 0;
+  transition: width 4s cubic-bezier(0.1,0.4,0.8,1);
+  box-shadow: 0 0 8px var(--vert);
+}
+#extraction-msg {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  #layout { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+  .col { min-height: 40vh; border-right: none; border-bottom: 1px solid var(--border); }
+  #header-left, #header-right { display: none; }
+  #compteur-global { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+<div id="noise"></div>
+
+<!-- HEADER -->
+<header id="header">
+  <div id="header-left">SYS/COMPENSATION v0.4 · JEANSON PÉCHIN · RÉSEAU ACTIF</div>
+  <div id="compteur-global">CAPITAL DE LATENCE GLOBAL : 4 837 219 UL · +14 UL/min</div>
+  <nav id="header-right">
+    <a href="#" class="nav-link" onclick="showExtraction('/registre', event)">Registre</a>
+    <a href="#" class="nav-link" onclick="showExtraction('/protocole', event)">Protocole</a>
+    <a href="#" class="nav-link" onclick="showExtraction('/journal', event)">Journal</a>
+    <a href="#" class="nav-link" onclick="showExtraction('/guichet', event)">Guichet</a>
+  </nav>
+</header>
+
+<!-- LAYOUT -->
+<div id="layout">
+
+  <!-- COLONNE 1 : FLUX -->
+  <div class="col">
+    <div class="col-header">
+      <div class="col-title">Flux d'activité</div>
+      <div class="col-sub">Extraction en temps réel</div>
+    </div>
+    <div id="flux-list"></div>
+  </div>
+
+  <!-- COLONNE 2 : DASHBOARD -->
+  <div class="col">
+    <div class="col-header">
+      <div class="col-title">Tableau des actifs cotés</div>
+      <div class="col-sub">Économie parallèle · Unités de Latence</div>
+    </div>
+    <div id="dashboard-body">
+
+      <div id="titre-poetique">
+        <h1>Chambre de<br>Compensation</h1>
+        <p>Un mycélium qui se raconte, périt puis renaît un peu plus loin.<br>
+        Nous formons un passé à tête de doute : collectif et violent.</p>
+      </div>
+
+      <div class="separator"></div>
+
+      <div id="actifs-list"></div>
+
+      <div id="session-stats">
+        <div class="stat-line">
+          <span class="b-label">SESSION EN COURS</span>
+          <span class="stat-val" id="stat-temps">00:00</span>
+        </div>
+        <div class="stat-line">
+          <span class="b-label">UL GÉNÉRÉES (session)</span>
+          <span class="stat-val" id="stat-ul">0 UL</span>
+        </div>
+        <div class="stat-line">
+          <span class="b-label">INTERACTIONS</span>
+          <span class="stat-val" id="stat-inter">0</span>
+        </div>
+        <div class="stat-line">
+          <span class="b-label">TAUX DE CONVERSION</span>
+          <span class="stat-val" id="stat-taux">— UL/min</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COLONNE 3 : CONTRÔLE MYCÉLIEN -->
+  <div class="col">
+    <div class="col-header">
+      <div class="col-title">Contrôle mycélien</div>
+      <div class="col-sub">Navigation spéculative</div>
+    </div>
+    <div id="controle-body">
+
+      <div class="myc-metric">
+        <div class="myc-label">Connexions actives</div>
+        <div class="myc-val" id="myc-connexions">17</div>
+      </div>
+      <div class="myc-metric">
+        <div class="myc-label">Nœuds dans le réseau</div>
+        <div class="myc-val" id="myc-noeuds">42</div>
+      </div>
+
+      <canvas id="mini-reseau" height="140"></canvas>
+
+      <button class="btn-mycelium" onclick="openMycelium()">
+        ↗ Initier la vue réseau
+      </button>
+      <button class="btn-mycelium btn-ambre" onclick="openBordereau()">
+        ⬇ Générer un bordereau
+      </button>
+      <button class="btn-mycelium btn-rouge" onclick="openExtraction2()">
+        ⌛ Clôturer la session
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- EXTRACTION SCREEN -->
+<div id="extraction-screen">
+  <div id="extraction-text">EXTRACTION EN COURS…</div>
+  <div id="extraction-bar"><div id="extraction-fill"></div></div>
+  <div id="extraction-msg">conversion de votre requête en actif</div>
+</div>
+
+<!-- BORDEREAU MODAL -->
+<div id="bordereau-modal">
+  <div id="bordereau-inner">
+    <h2>Bordereau de conversion</h2>
+    <div class="bordereau-line"><span class="b-label">N° DE SESSION</span><span class="b-val" id="b-session">—</span></div>
+    <div class="bordereau-line"><span class="b-label">OPÉRATEUR</span><span class="b-val">VISITEUR ANONYME</span></div>
+    <div class="bordereau-line"><span class="b-label">TEMPS CAPTURÉ</span><span class="b-val" id="b-temps">—</span></div>
+    <div class="bordereau-line"><span class="b-label">UL GÉNÉRÉES</span><span class="b-val" id="b-ul">—</span></div>
+    <div class="bordereau-line"><span class="b-label">INTERACTIONS</span><span class="b-val" id="b-inter">—</span></div>
+    <div class="bordereau-line"><span class="b-label">DATE D'ÉMISSION</span><span class="b-val" id="b-date">—</span></div>
+    <div class="bordereau-line"><span class="b-label">TAUX DE CONVERSION</span><span class="b-val">14 UL/min</span></div>
+    <div id="tampon">LATENCE CONVERTIE — CAPITAL SYMBOLIQUE CRÉDITÉ</div>
+    <div class="modal-btns">
+      <button class="btn-mycelium btn-ambre" onclick="imprimerBordereau()" style="flex:1">Imprimer</button>
+      <button class="btn-mycelium" onclick="closeBordereau()" style="flex:1">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MYCÉLIUM OVERLAY -->
+<div id="mycelium-overlay">
+  <button class="btn-mycelium btn-rouge" id="myc-close" onclick="closeMycelium()" style="width:auto;padding:8px 16px">✕ Fermer le réseau</button>
+  <div id="myc-title">Cartographie mycélienne — réseau des actifs et connexions</div>
+  <canvas id="reseau-canvas"></canvas>
+</div>
+
+<script>
+// ============================================================
+// ÉTAT GLOBAL
+// ============================================================
+const STATE = {
+  sessionStart: Date.now(),
+  ulBase: parseInt(localStorage.getItem('ul_global') || '4837219'),
+  ulRate: 14,
+  interactions: 0,
+  sessionId: Math.floor(Math.random() * 90000) + 10000,
+  corruptLevel: 0,
+};
+
+// ============================================================
+// DONNÉES ACTIFS
+// ============================================================
+const ACTIFS = [
+  { code:'CHQ-001', nom:'Claude Monnaie', type:'Instrument monétaire artisanal', ul:1340, delta:+12, trend:1 },
+  { code:'CHQ-002', nom:'Chéquier Dessiné', type:'Série · feutres enfants · 2023', ul:880, delta:-3, trend:-1 },
+  { code:'TRC-001', nom:'Troc de Trucs', type:'Édition riso · livret auto-édité', ul:520, delta:+7, trend:0.5 },
+  { code:'COV-001', nom:'Covering Maxime', type:'Carcasse Mégane · aérosol · 2024', ul:440, delta:+5, trend:1 },
+  { code:'MQ-001', nom:'Se Faire Bellex', type:'Peinture au maquillage · 2024', ul:310, delta:+2, trend:0.3 },
+  { code:'COM-001', nom:'Coms au Présent', type:'Tickets tombola · OK Confiance', ul:290, delta:-1, trend:-0.5 },
+  { code:'DK-001', nom:'Dunkitude', type:'Catalogue modifié · Belgitude 2021', ul:270, delta:+4, trend:0.8 },
+];
+
+// ============================================================
+// RENDU ACTIFS
+// ============================================================
+const actifsList = document.getElementById('actifs-list');
+
+ACTIFS.forEach((a, i) => {
+  const row = document.createElement('div');
+  row.className = 'actif-row' + (a.delta < 0 ? ' baisse' : '');
+  row.setAttribute('data-cout', `Extraction estimée : ${Math.abs(a.delta) + 2} UL — Procéder ?`);
+  const canvasId = `spark_${i}`;
+  row.innerHTML = `
+    <div class="actif-ul-badge">${a.ul.toLocaleString()} UL</div>
+    <div class="actif-infos">
+      <div class="actif-code">${a.code}</div>
+      <div class="actif-nom">${a.nom}</div>
+      <div class="actif-type">${a.type}</div>
+    </div>
+    <canvas class="actif-spark" id="${canvasId}" height="24"></canvas>
+    <div class="actif-var">${a.delta > 0 ? '▲ +' : '▼ '}${a.delta} UL</div>
+  `;
+  row.addEventListener('click', () => {
+    STATE.interactions++;
+    addLog('consultation actif ' + a.code + ' — recalcul du réseau', 'highlight');
+    showExtraction(null, null, 1200);
+  });
+  actifsList.appendChild(row);
+  setTimeout(() => drawSparkline(canvasId, a.trend, a.delta < 0), 50 + i * 80);
+});
+
+// ============================================================
+// SPARKLINES
+// ============================================================
+function drawSparkline(id, trend, down) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  c.width = c.offsetWidth || 80;
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.strokeStyle = down ? '#ff4444' : '#39ff6a';
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = down ? '#ff4444' : '#39ff6a';
+  ctx.shadowBlur = 3;
+  ctx.beginPath();
+  const pts = 20;
+  for (let i = 0; i < pts; i++) {
+    const x = (i / (pts - 1)) * c.width;
+    const base = c.height / 2;
+    const noise = (Math.random() - 0.5) * 8;
+    const drift = trend * (i / pts) * 6;
+    const y = base - drift + noise;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+// ============================================================
+// LOGS FLUX
+// ============================================================
+const fluxEl = document.getElementById('flux-list');
+const LOG_POOL = [
+  ['connexion visiteur #{N} — latence initiale {R} ms', 'event'],
+  ['+{R2} UL — attention capturée', 'highlight'],
+  ['mise à jour du cours — {R3} actifs en hausse', 'event'],
+  ['latence réseau : {R} ms → conversion en cours', 'event'],
+  ['frais mycéliens prélevés : -{R4} UL', 'warn'],
+  ['nœud CHQ-{N2} activé — propagation réseau', 'event'],
+  ['extraction symbolique complète', 'highlight'],
+  ['calcul du capital de latence : OK', 'event'],
+  ['anomalie détectée : erreur 402 — auto-résolution', 'warn'],
+  ['mutation détectée dans le registre', 'warn'],
+  ['+{R5} UL — scroll profond capturé', 'highlight'],
+];
+
+function addLog(msg, type = 'event') {
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  const now = new Date();
+  const ts = now.toISOString().replace('T', ' ').slice(0, 19);
+  const typeClass = type === 'highlight' ? 'log-highlight' : type === 'warn' ? 'log-warn' : 'log-event';
+  entry.innerHTML = `<span class="log-time">[${ts}]</span> <span class="${typeClass}">${msg}</span>`;
+  fluxEl.appendChild(entry);
+  if (fluxEl.children.length > 120) fluxEl.removeChild(fluxEl.firstChild);
+  fluxEl.scrollTop = fluxEl.scrollHeight;
+}
+
+function randomLog() {
+  const tmpl = LOG_POOL[Math.floor(Math.random() * LOG_POOL.length)];
+  const msg = tmpl[0]
+    .replace('{N}', Math.floor(Math.random() * 9000) + 1000)
+    .replace('{N2}', String(Math.floor(Math.random() * 26)).padStart(3,'0'))
+    .replace('{R}', Math.floor(Math.random() * 200) + 20)
+    .replace('{R2}', Math.floor(Math.random() * 8) + 1)
+    .replace('{R3}', Math.floor(Math.random() * 4) + 1)
+    .replace('{R4}', Math.floor(Math.random() * 3) + 1)
+    .replace('{R5}', Math.floor(Math.random() * 5) + 1);
+  addLog(msg, tmpl[1]);
+}
+
+// Initial logs
+addLog('système initialisé — chambre de compensation en ligne', 'highlight');
+addLog('connexion visiteur #' + STATE.sessionId + ' — latence initiale ' + (Math.floor(Math.random()*80)+20) + ' ms', 'event');
+addLog('+3 UL — attention capturée', 'highlight');
+
+setInterval(randomLog, 3200 + Math.random() * 2000);
+
+// ============================================================
+// COMPTEUR GLOBAL & SESSION
+// ============================================================
+let lastUpdate = Date.now();
+
+function updateCompteur() {
+  const now = Date.now();
+  const deltaSec = (now - lastUpdate) / 1000;
+  lastUpdate = now;
+  const ulDelta = (STATE.ulRate / 60) * deltaSec;
+  STATE.ulBase += ulDelta;
+  localStorage.setItem('ul_global', Math.floor(STATE.ulBase));
+
+  const drift = (Math.random() - 0.5) * 2;
+  STATE.ulRate = Math.max(8, Math.min(22, STATE.ulRate + drift));
+
+  const fmt = Math.floor(STATE.ulBase).toLocaleString('fr-FR');
+  document.getElementById('compteur-global').textContent =
+    `CAPITAL DE LATENCE GLOBAL : ${fmt} UL · +${Math.round(STATE.ulRate)} UL/min`;
+}
+
+function updateSession() {
+  const elapsed = Date.now() - STATE.sessionStart;
+  const sec = Math.floor(elapsed / 1000);
+  const min = Math.floor(sec / 60);
+  const s = String(sec % 60).padStart(2, '0');
+  document.getElementById('stat-temps').textContent = `${min}:${s}`;
+
+  const ulSession = Math.floor((elapsed / 60000) * STATE.ulRate);
+  document.getElementById('stat-ul').textContent = `${ulSession} UL`;
+  document.getElementById('stat-inter').textContent = STATE.interactions;
+  document.getElementById('stat-taux').textContent = `${Math.round(STATE.ulRate)} UL/min`;
+
+  // Corruption progressive
+  if (elapsed > 120000 && STATE.corruptLevel < 1) {
+    STATE.corruptLevel = 1;
+    document.body.classList.add('corrupt-1');
+    addLog('corruption progressive — niveau 1 activé', 'warn');
+  }
+  if (elapsed > 300000 && STATE.corruptLevel < 2) {
+    STATE.corruptLevel = 2;
+    document.body.classList.add('corrupt-2');
+    addLog('corruption niveau 2 — caviardage partiel', 'warn');
+  }
+  if (elapsed > 480000 && STATE.corruptLevel < 3) {
+    STATE.corruptLevel = 3;
+    document.body.classList.add('corrupt-3');
+    addLog('système mutatif activé — niveau maximum', 'warn');
+  }
+}
+
+setInterval(updateCompteur, 800);
+setInterval(updateSession, 1000);
+
+// Sparkline drift dynamique
+setInterval(() => {
+  ACTIFS.forEach((a, i) => {
+    a.delta += (Math.random() - 0.5) * 2;
+    a.delta = Math.round(Math.max(-15, Math.min(20, a.delta)));
+    drawSparkline(`spark_${i}`, a.trend + (Math.random()-0.5)*0.2, a.delta < 0);
+    const rows = actifsList.querySelectorAll('.actif-row');
+    if (rows[i]) {
+      const varEl = rows[i].querySelector('.actif-var');
+      if (varEl) varEl.textContent = (a.delta >= 0 ? '▲ +' : '▼ ') + a.delta + ' UL';
+      rows[i].classList.toggle('baisse', a.delta < 0);
+    }
+  });
+}, 7000);
+
+// ============================================================
+// MINI-RÉSEAU (canvas)
+// ============================================================
+(function initMiniReseau() {
+  const canvas = document.getElementById('mini-reseau');
+  if (!canvas) return;
+
+  function draw() {
+    canvas.width = canvas.offsetWidth;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const nodes = [
+      {x:0.5, y:0.5, label:'CHQ'},
+      {x:0.2, y:0.2, label:'TRC'},
+      {x:0.8, y:0.2, label:'MQ'},
+      {x:0.15, y:0.75, label:'DK'},
+      {x:0.85, y:0.75, label:'COM'},
+      {x:0.5, y:0.85, label:'COV'},
+    ];
+    const edges = [[0,1],[0,2],[0,3],[0,4],[0,5],[1,3],[2,4],[3,5]];
+    const W = canvas.width, H = canvas.height;
+    const t = Date.now() / 2000;
+
+    // edges
+    ctx.strokeStyle = 'rgba(57,255,106,0.15)';
+    ctx.lineWidth = 1;
+    edges.forEach(([a,b]) => {
+      ctx.beginPath();
+      ctx.moveTo(nodes[a].x * W, nodes[a].y * H);
+      ctx.lineTo(nodes[b].x * W, nodes[b].y * H);
+      ctx.stroke();
+    });
+
+    // nodes
+    nodes.forEach((n, i) => {
+      const pulse = 2 + Math.sin(t + i) * 1;
+      ctx.beginPath();
+      ctx.arc(n.x * W, n.y * H, pulse, 0, Math.PI * 2);
+      ctx.fillStyle = i === 0 ? '#39ff6a' : 'rgba(57,255,106,0.5)';
+      ctx.shadowColor = '#39ff6a'; ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(57,255,106,0.4)';
+      ctx.font = '8px Inconsolata';
+      ctx.fillText(n.label, n.x * W + 5, n.y * H + 3);
+    });
+  }
+
+  draw();
+  setInterval(draw, 1500);
+})();
+
+// ============================================================
+// RÉSEAU MYCÉLIUM COMPLET
+// ============================================================
+let mycNodes = [], mycEdges = [], mycAnimId = null;
+
+function openMycelium() {
+  STATE.interactions++;
+  addLog('initiation cartographie mycélienne — extraction des connexions', 'highlight');
+  document.getElementById('mycelium-overlay').classList.add('open');
+  initReseau();
+}
+
+function closeMycelium() {
+  document.getElementById('mycelium-overlay').classList.remove('open');
+  if (mycAnimId) cancelAnimationFrame(mycAnimId);
+}
+
+function initReseau() {
+  const canvas = document.getElementById('reseau-canvas');
+  canvas.width = canvas.offsetWidth || 700;
+  canvas.height = canvas.offsetHeight || 480;
+  const W = canvas.width, H = canvas.height;
+
+  const nodeData = [
+    {id:0, label:'CLAUDE MONNAIE', type:'actif', x:W/2, y:H/2},
+    {id:1, label:'Chéquier', type:'actif', x:W*0.2, y:H*0.3},
+    {id:2, label:'Troc', type:'actif', x:W*0.8, y:H*0.25},
+    {id:3, label:'Covering', type:'actif', x:W*0.75, y:H*0.7},
+    {id:4, label:'Maquillage', type:'actif', x:W*0.25, y:H*0.75},
+    {id:5, label:'Dunkitude', type:'actif', x:W*0.5, y:H*0.15},
+    {id:6, label:'Coms', type:'actif', x:W*0.15, y:H*0.55},
+    {id:7, label:'feutres', type:'materiau', x:W*0.1, y:H*0.2},
+    {id:8, label:'résidence', type:'evenement', x:W*0.9, y:H*0.45},
+    {id:9, label:'Fructôse', type:'institution', x:W*0.6, y:H*0.88},
+    {id:10, label:'aérosol', type:'materiau', x:W*0.85, y:H*0.88},
+    {id:11, label:'vernis', type:'materiau', x:W*0.35, y:H*0.88},
+  ];
+
+  mycNodes = nodeData.map(n => ({
+    ...n,
+    vx: (Math.random()-0.5)*0.4,
+    vy: (Math.random()-0.5)*0.4,
+  }));
+
+  mycEdges = [
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],
+    [1,7],[2,8],[3,10],[4,11],[5,9],[6,9],[3,8],[2,9],
+  ];
+
+  const ctx = canvas.getContext('2d');
+
+  function drawReseau() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Fond abyssal
+    ctx.fillStyle = 'rgba(5,4,12,0.3)';
+    ctx.fillRect(0, 0, W, H);
+
+    // Edges
+    mycEdges.forEach(([a, b]) => {
+      const na = mycNodes[a], nb = mycNodes[b];
+      ctx.beginPath();
+      ctx.moveTo(na.x, na.y);
+      ctx.lineTo(nb.x, nb.y);
+      ctx.strokeStyle = 'rgba(57,255,106,0.12)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    // Nodes
+    const t = Date.now() / 1000;
+    mycNodes.forEach((n, i) => {
+      // physics
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 40 || n.x > W-40) n.vx *= -1;
+      if (n.y < 30 || n.y > H-30) n.vy *= -1;
+
+      const pulse = (i === 0 ? 10 : 5) + Math.sin(t + i) * 2;
+      const colors = { actif:'#39ff6a', materiau:'#ffb347', evenement:'#ff4444', institution:'rgba(57,255,106,0.5)' };
+      const col = colors[n.type] || '#39ff6a';
+
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, pulse, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.shadowColor = col;
+      ctx.shadowBlur = i === 0 ? 16 : 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.font = `${i === 0 ? 11 : 9}px Inconsolata`;
+      ctx.fillText(n.label, n.x + pulse + 4, n.y + 3);
+    });
+
+    mycAnimId = requestAnimationFrame(drawReseau);
+  }
+
+  if (mycAnimId) cancelAnimationFrame(mycAnimId);
+  drawReseau();
+}
+
+// ============================================================
+// BORDEREAU
+// ============================================================
+function openBordereau() {
+  STATE.interactions++;
+  const elapsed = Math.floor((Date.now() - STATE.sessionStart) / 1000);
+  const min = Math.floor(elapsed / 60);
+  const sec = elapsed % 60;
+  const ul = Math.floor((elapsed / 60) * STATE.ulRate);
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR') + ' · ' + now.toLocaleTimeString('fr-FR');
+
+  document.getElementById('b-session').textContent = '#' + STATE.sessionId;
+  document.getElementById('b-temps').textContent = `${min}m ${String(sec).padStart(2,'0')}s`;
+  document.getElementById('b-ul').textContent = ul + ' UL';
+  document.getElementById('b-inter').textContent = STATE.interactions;
+  document.getElementById('b-date').textContent = dateStr;
+
+  document.getElementById('bordereau-modal').classList.add('open');
+  addLog('bordereau de conversion généré — session #' + STATE.sessionId, 'highlight');
+}
+
+function closeBordereau() {
+  document.getElementById('bordereau-modal').classList.remove('open');
+}
+
+function imprimerBordereau() {
+  window.print();
+  addLog('impression bordereau initiée — trace administrative émise', 'highlight');
+}
+
+// ============================================================
+// EXTRACTION SCREEN
+// ============================================================
+function showExtraction(href, e, duration = 2500) {
+  if (e) e.preventDefault();
+  STATE.interactions++;
+  const screen = document.getElementById('extraction-screen');
+  screen.classList.add('open');
+  const fill = document.getElementById('extraction-fill');
+  fill.style.width = '0';
+  const msgs = [
+    'conversion de votre requête en actif',
+    'traitement de la transaction en cours',
+    'estimation de la latence : ' + Math.floor(Math.random()*300+100) + ' ms',
+    'propagation dans le réseau mycélien',
+  ];
+  document.getElementById('extraction-msg').textContent = msgs[Math.floor(Math.random()*msgs.length)];
+
+  setTimeout(() => { fill.style.width = '100%'; }, 50);
+  setTimeout(() => {
+    screen.classList.remove('open');
+    fill.style.width = '0';
+    fill.style.transition = 'none';
+    setTimeout(() => { fill.style.transition = `width ${duration/1000}s cubic-bezier(0.1,0.4,0.8,1)`; }, 50);
+    if (href) window.location.href = href;
+  }, duration);
+}
+
+function openExtraction2() {
+  STATE.interactions++;
+  openBordereau();
+}
+
+// ============================================================
+// MÉTRIQUES MYCÉLIUM (drift)
+// ============================================================
+setInterval(() => {
+  const c = document.getElementById('myc-connexions');
+  const n = document.getElementById('myc-noeuds');
+  if (c) c.textContent = Math.max(10, parseInt(c.textContent) + Math.floor((Math.random()-0.4)*2));
+  if (n) n.textContent = Math.max(30, parseInt(n.textContent) + Math.floor((Math.random()-0.4)*1));
+}, 8000);
+
+// ============================================================
+// SCROLL → UL
+// ============================================================
+document.addEventListener('scroll', () => {
+  STATE.interactions++;
+  if (Math.random() < 0.2) addLog('+' + (Math.floor(Math.random()*3)+1) + ' UL — scroll profond capturé', 'highlight');
+}, { passive: true });
+</script>
+</body>
+</html>

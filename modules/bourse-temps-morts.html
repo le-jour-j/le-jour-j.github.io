@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOURSE DES TEMPS MORTS — BTM/∿</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+:root {
+  --bg: #050a05;
+  --green: #39ff6a;
+  --amber: #ffb347;
+  --red: #ff4444;
+  --dim: #1a2e1a;
+  --mid: #2a4a2a;
+  --faint: #0d1f0d;
+  --text: #c8e6c8;
+  --glow: 0 0 8px rgba(57,255,106,0.4);
+  --glow-amber: 0 0 8px rgba(255,179,71,0.5);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--green);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* scanlines */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.07) 2px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* vignette */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── LAYOUT ── */
+.terminal {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--mid);
+  padding: 10px 16px;
+  background: var(--faint);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: var(--green);
+  text-shadow: var(--glow);
+  letter-spacing: 0.05em;
+}
+
+.logo span {
+  color: var(--amber);
+  text-shadow: var(--glow-amber);
+}
+
+.status-pill {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 2px 8px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  animation: blink-border 2s infinite;
+}
+
+.topbar-right {
+  font-size: 11px;
+  color: #5a8a5a;
+  text-align: right;
+  line-height: 1.6;
+}
+
+#live-clock { color: var(--amber); }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  overflow: hidden;
+  background: var(--dim);
+  border-bottom: 1px solid var(--mid);
+  padding: 6px 0;
+  white-space: nowrap;
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker-scroll 28s linear infinite;
+  padding-left: 100%;
+}
+
+.ticker-item {
+  display: inline-block;
+  margin-right: 40px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.ticker-item .sym { color: var(--amber); }
+.ticker-item .val { color: var(--green); }
+.ticker-item .chg-up { color: #39ff6a; }
+.ticker-item .chg-dn { color: var(--red); }
+
+/* ── MAIN GRID ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 1px solid var(--mid);
+}
+
+/* ── COTE PANEL ── */
+.cote-panel {
+  border-right: 1px solid var(--mid);
+  padding: 20px 16px;
+}
+
+.panel-title {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #5a8a5a;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--dim);
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.cote-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cote-table th {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #3a6a3a;
+  padding: 4px 8px 8px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--dim);
+}
+
+.cote-table td {
+  padding: 7px 8px 7px 0;
+  border-bottom: 1px solid var(--faint);
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.sym-cell { color: var(--amber); letter-spacing: 0.05em; }
+.name-cell { color: var(--text); font-size: 11px; }
+.val-cell { color: var(--green); text-align: right; padding-right: 12px; }
+.chg-cell { font-size: 10px; text-align: right; }
+.chg-cell.up { color: #39ff6a; }
+.chg-cell.dn { color: var(--red); }
+
+.row-flash { animation: flash-row 0.4s ease; }
+
+/* ── CHART AREA ── */
+.chart-area {
+  padding: 20px 16px 10px;
+  position: relative;
+}
+
+.selected-title {
+  font-family: 'VT323', monospace;
+  font-size: 26px;
+  color: var(--green);
+  text-shadow: var(--glow);
+  margin-bottom: 2px;
+}
+
+.selected-sub {
+  font-size: 10px;
+  color: #5a8a5a;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+.selected-val {
+  font-family: 'VT323', monospace;
+  font-size: 42px;
+  color: var(--amber);
+  text-shadow: var(--glow-amber);
+  line-height: 1;
+}
+
+.selected-unit {
+  font-size: 11px;
+  color: #5a8a5a;
+  margin-top: 4px;
+  margin-bottom: 18px;
+}
+
+canvas#sparkline {
+  display: block;
+  width: 100%;
+  height: 90px;
+  margin-bottom: 14px;
+}
+
+/* ── EXCHANGE WIDGET ── */
+.exchange-widget {
+  background: var(--faint);
+  border: 1px solid var(--mid);
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.exchange-title {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #3a6a3a;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.ul-balance {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ul-label { font-size: 10px; color: #5a8a5a; }
+.ul-amount {
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  color: var(--amber);
+  text-shadow: var(--glow-amber);
+}
+.ul-unit { font-size: 10px; color: #5a8a5a; }
+
+.exchange-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exchange-btn {
+  background: transparent;
+  border: 1px solid var(--mid);
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exchange-btn:hover:not(:disabled) {
+  background: var(--dim);
+  border-color: var(--green);
+  color: var(--green);
+  text-shadow: var(--glow);
+}
+
+.exchange-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.exchange-btn .cost {
+  color: var(--amber);
+  font-size: 10px;
+}
+
+/* ── BOTTOM PANELS ── */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--mid);
+}
+
+.bottom-panel {
+  padding: 16px;
+  border-right: 1px solid var(--mid);
+}
+
+.bottom-panel:last-child { border-right: none; }
+
+/* ── ARCHIVE ── */
+.archive-list {
+  max-height: 160px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mid) transparent;
+}
+
+.archive-entry {
+  font-size: 10px;
+  color: #5a8a5a;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--faint);
+  line-height: 1.5;
+  opacity: 0;
+  animation: fade-in 0.4s ease forwards;
+}
+
+.archive-entry .ae-time { color: #3a6a3a; }
+.archive-entry .ae-sym { color: var(--amber); }
+.archive-entry .ae-desc { color: var(--text); }
+
+/* ── LOG ── */
+.log-feed {
+  max-height: 160px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mid) transparent;
+}
+
+.log-line {
+  font-size: 10px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--faint);
+  line-height: 1.5;
+  color: #5a8a5a;
+  opacity: 0;
+  animation: fade-in 0.3s ease forwards;
+}
+
+.log-line .ll-tag { color: var(--green); }
+.log-line .ll-err { color: var(--red); }
+.log-line .ll-warn { color: var(--amber); }
+
+/* ── LATENCY CAPTURE ── */
+.capture-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.capture-desc {
+  font-size: 10px;
+  color: #5a8a5a;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.capture-btn {
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 10px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-shadow: var(--glow);
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.capture-btn:hover {
+  background: rgba(57,255,106,0.08);
+  box-shadow: var(--glow);
+}
+
+.capture-btn:active {
+  background: rgba(57,255,106,0.2);
+}
+
+.capture-result {
+  font-size: 11px;
+  color: var(--amber);
+  min-height: 18px;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #2a4a2a;
+  letter-spacing: 0.12em;
+}
+
+/* ── GLITCH ── */
+.glitch {
+  animation: glitch 0.15s steps(2) forwards;
+}
+
+@keyframes glitch {
+  0%   { text-shadow: 2px 0 var(--red), -2px 0 var(--green); transform: skewX(1deg); }
+  50%  { text-shadow: -2px 0 var(--amber), 2px 0 var(--red); transform: skewX(-1deg); }
+  100% { text-shadow: var(--glow); transform: none; }
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes blink-border {
+  0%, 100% { border-color: var(--green); }
+  50%       { border-color: transparent; }
+}
+
+@keyframes flash-row {
+  0%   { background: rgba(57,255,106,0.15); }
+  100% { background: transparent; }
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg);
+  border: 1px solid var(--green);
+  box-shadow: 0 0 40px rgba(57,255,106,0.2);
+  padding: 28px 32px;
+  max-width: 480px;
+  width: 90%;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.modal-title {
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: var(--amber);
+  text-shadow: var(--glow-amber);
+  margin-bottom: 16px;
+}
+
+.modal-body {
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.modal-body .poem {
+  font-style: italic;
+  color: var(--green);
+  border-left: 2px solid var(--mid);
+  padding-left: 12px;
+  margin: 12px 0;
+  line-height: 1.9;
+  font-size: 12px;
+}
+
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--mid);
+  color: #5a8a5a;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 8px 16px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.15s;
+}
+
+.modal-close:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+@media (max-width: 700px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .bottom-grid { grid-template-columns: 1fr; }
+  .bottom-panel { border-right: none; border-bottom: 1px solid var(--mid); }
+}
+</style>
+</head>
+<body>
+
+<div class="terminal">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo">BTM<span>/∿</span></div>
+      <div class="status-pill">MARCHÉ OUVERT</div>
+    </div>
+    <div class="topbar-right">
+      <div id="live-clock">--:--:--</div>
+      <div>SESSION FANTÔME #<span id="session-id">—</span></div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker-inner">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- COTE TABLE -->
+    <div class="cote-panel">
+      <div class="panel-title">Cotations en temps réel — Unités de Latence (UL)</div>
+      <table class="cote-table">
+        <thead>
+          <tr>
+            <th>SYM</th>
+            <th>ACTIF</th>
+            <th style="text-align:right;padding-right:12px;">VALEUR</th>
+            <th style="text-align:right;">VAR.</th>
+          </tr>
+        </thead>
+        <tbody id="cote-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CHART + EXCHANGE -->
+    <div class="chart-area">
+      <div class="selected-title" id="sel-sym">UL/BTF</div>
+      <div class="selected-sub" id="sel-name">Buffer fantôme / page blanche</div>
+      <div class="selected-val" id="sel-val">—</div>
+      <div class="selected-unit">Unités de Latence</div>
+      <canvas id="sparkline"></canvas>
+
+      <div class="exchange-widget">
+        <div class="exchange-title">Chambre de Compensation — Échanges</div>
+        <div class="ul-balance">
+          <span class="ul-label">SOLDE</span>
+          <span class="ul-amount" id="ul-display">0</span>
+          <span class="ul-unit">UL</span>
+        </div>
+        <div class="exchange-options" id="exchange-options">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM PANELS -->
+  <div class="bottom-grid">
+
+    <!-- CAPTURE -->
+    <div class="bottom-panel">
+      <div class="panel-title">Capturer une latence</div>
+      <div class="capture-area">
+        <div class="capture-desc">
+          Mesurez le temps mort entre votre intention et votre action.<br>
+          Chaque milliseconde devient une Unité de Latence.
+        </div>
+        <button class="capture-btn" id="capture-start">▶ DÉMARRER MESURE</button>
+        <button class="capture-btn" id="capture-stop" style="display:none;border-color:var(--amber);color:var(--amber)">■ ARRÊTER + CONVERTIR</button>
+        <div class="capture-result" id="capture-result"></div>
+      </div>
+    </div>
+
+    <!-- ARCHIVE -->
+    <div class="bottom-panel">
+      <div class="panel-title">Archive des échanges</div>
+      <div class="archive-list" id="archive-list">
+        <div class="archive-entry" style="opacity:0.4;font-size:10px;color:#2a4a2a;">
+          — archive vide —
+        </div>
+      </div>
+    </div>
+
+    <!-- LOG -->
+    <div class="bottom-panel">
+      <div class="panel-title">Journal système</div>
+      <div class="log-feed" id="log-feed"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>BOURSE DES TEMPS MORTS · BTM/∿ · CHAMBRE DE COMPENSATION FANTÔME</span>
+    <span>SESSION ÉPHÉMÈRE · NON ARCHIVÉE · NON ÉVALUÉE</span>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">—</div>
+    <div class="modal-body" id="modal-body"></div>
+    <button class="modal-close" id="modal-close">[ FERMER / ARCHIVER ]</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const ACTIFS = [
+  { sym:'BTF', name:'Buffer fantôme',         base:247,  unit:'ms écran vide' },
+  { sym:'ERC', name:'Erreur 404 contemplée',  base:831,  unit:'ms d\'existence nulle' },
+  { sym:'GLC', name:'Glitch non signalé',     base:58,   unit:'frames perdues' },
+  { sym:'LAT', name:'Latence réseau pure',    base:142,  unit:'ms suspendues' },
+  { sym:'BUG', name:'Bug sans ticket',        base:1204, unit:'ms ignorées' },
+  { sym:'SLC', name:'Silence du serveur',     base:3700, unit:'ms d\'attente' },
+  { sym:'CUR', name:'Curseur qui charge',     base:92,   unit:'frames fantômes' },
+  { sym:'NTF', name:'Notif non lue',          base:19,   unit:'UL dormantes' },
+];
+
+// Exchange catalog
+const EXCHANGES = [
+  { cost:5,  label:'Haïku généré depuis la latence',    tag:'HAI' },
+  { cost:12, label:'Enregistrement de 3s de silence',   tag:'SIL' },
+  { cost:25, label:'Fragment narratif du buffer',        tag:'FRG' },
+  { cost:50, label:'Certificat de temps mort officiel', tag:'CRT' },
+  { cost:99, label:'Archive glitch personnelle',         tag:'ARC' },
+];
+
+// Haiku pool
+const HAIKUS = [
+  ["Le curseur tourne —", "personne ne voit le vide", "qui attend derrière."],
+  ["Erreur 404 :", "la page n'a jamais existé.", "Tu l'as cherchée quand même."],
+  ["Trois secondes grises.", "Le réseau hésite, puis cède.", "L'intention reste."],
+  ["Le bug n'est pas lu.", "Il vit dans un ticket mort.", "Quelqu'un attend encore."],
+  ["Silence du serveur —", "plus long que prévu, moins long", "que ton indifférence."],
+  ["Le buffer se remplit.", "Ce qu'on y verse n'a pas", "de nom dans le système."],
+];
+
+const FRAGMENTS = [
+  "Il y avait 847 millisecondes entre le clic et la réponse. Personne n'a compté. Le système a compté. Les deux choses sont vraies.",
+  "Le glitch est apparu à 14:32:07. Il a duré 3 frames. La caméra ne filmait pas. La mémoire RAM a tout vu et tout effacé.",
+  "Le curseur a tourné 4,2 secondes avant de disparaître. Dans cet intervalle, une décision a été suspendue. Elle n'a jamais été reprise.",
+  "Le serveur a répondu avec un délai de 2341ms. Ce retard contenait, peut-être, l'équivalent d'une hésitation humaine.",
+  "L'erreur était là depuis 73 jours. Elle n'avait pas de ticket. Elle n'avait pas d'auteur. Elle fonctionnait parfaitement.",
+];
+
+const CERT_LINES = [
+  "Certifie que le porteur a observé, mesuré et converti",
+  "un temps mort numérique en Unités de Latence.",
+  "Cet échange n'a pas été évalué.",
+  "Sa valeur est indéterminée.",
+  "La Chambre de Compensation Fantôme l'enregistre sans le comptabiliser.",
+];
+
+// ── STATE ──
+let prices = ACTIFS.map(a => ({ ...a, val: a.base, history: [a.base], chg: 0 }));
+let selected = 0;
+let ulBalance = 0;
+let archiveCount = 0;
+let captureStart = null;
+let captureActive = false;
+
+// ── DOM refs ──
+const tbody      = document.getElementById('cote-tbody');
+const tickerEl   = document.getElementById('ticker-inner');
+const selSym     = document.getElementById('sel-sym');
+const selName    = document.getElementById('sel-name');
+const selVal     = document.getElementById('sel-val');
+const ulDisplay  = document.getElementById('ul-display');
+const exchOpts   = document.getElementById('exchange-options');
+const archList   = document.getElementById('archive-list');
+const logFeed    = document.getElementById('log-feed');
+const captureBtn = document.getElementById('capture-start');
+const stopBtn    = document.getElementById('capture-stop');
+const capResult  = document.getElementById('capture-result');
+const modal      = document.getElementById('modal-overlay');
+const modalTitle = document.getElementById('modal-title');
+const modalBody  = document.getElementById('modal-body');
+const canvas     = document.getElementById('sparkline');
+const ctx        = canvas.getContext('2d');
+const sessionId  = document.getElementById('session-id');
+
+// ── INIT ──
+sessionId.textContent = Math.random().toString(36).slice(2,8).toUpperCase();
+
+// clock
+setInterval(() => {
+  document.getElementById('live-clock').textContent =
+    new Date().toLocaleTimeString('fr-FR', {hour12:false});
+}, 500);
+
+// ── RENDER COTE TABLE ──
+function renderTable() {
+  tbody.innerHTML = '';
+  prices.forEach((p, i) => {
+    const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.innerHTML = `
+      <td class="sym-cell">${p.sym}</td>
+      <td class="name-cell">${p.name}</td>
+      <td class="val-cell">${p.val}</td>
+      <td class="chg-cell ${p.chg >= 0 ? 'up':'dn'}">${p.chg >= 0 ? '▲':'▼'} ${Math.abs(p.chg).toFixed(1)}%</td>
+    `;
+    if (i === selected) tr.style.background = 'rgba(57,255,106,0.06)';
+    tr.addEventListener('click', () => { selected = i; renderAll(); });
+    tbody.appendChild(tr);
+  });
+}
+
+// ── RENDER SPARKLINE ──
+function renderSparkline() {
+  const p = prices[selected];
+  const W = canvas.offsetWidth * window.devicePixelRatio || 300;
+  const H = 90 * window.devicePixelRatio || 90;
+  canvas.width = W; canvas.height = H;
+  const hist = p.history.slice(-40);
+  const mn = Math.min(...hist) * 0.97;
+  const mx = Math.max(...hist) * 1.03;
+  const xStep = W / (hist.length - 1);
+  ctx.clearRect(0,0,W,H);
+
+  // gradient fill
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0, 'rgba(57,255,106,0.15)');
+  grad.addColorStop(1, 'rgba(57,255,106,0)');
+  ctx.beginPath();
+  hist.forEach((v, i) => {
+    const x = i * xStep;
+    const y = H - ((v - mn) / (mx - mn)) * H * 0.85 - H * 0.05;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+
+  // line
+  ctx.beginPath();
+  ctx.strokeStyle = '#39ff6a';
+  ctx.lineWidth = 1.5 / window.devicePixelRatio;
+  ctx.shadowBlur = 6; ctx.shadowColor = '#39ff6a';
+  hist.forEach((v, i) => {
+    const x = i * xStep;
+    const y = H - ((v - mn) / (mx - mn)) * H * 0.85 - H * 0.05;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+// ── RENDER SELECTED INFO ──
+function renderSelected() {
+  const p = prices[selected];
+  selSym.textContent  = `${p.sym}/UL`;
+  selName.textContent = p.name + ' · ' + p.unit;
+  selVal.textContent  = p.val;
+  selVal.classList.add('glitch');
+  setTimeout(() => selVal.classList.remove('glitch'), 200);
+}
+
+// ── RENDER EXCHANGE OPTIONS ──
+function renderExchange() {
+  exchOpts.innerHTML = '';
+  ulDisplay.textContent = ulBalance;
+  EXCHANGES.forEach(e => {
+    const btn = document.createElement('button');
+    btn.className = 'exchange-btn';
+    btn.disabled = ulBalance < e.cost;
+    btn.innerHTML = `<span>${e.label}</span><span class="cost">${e.cost} UL</span>`;
+    btn.addEventListener('click', () => doExchange(e));
+    exchOpts.appendChild(btn);
+  });
+}
+
+// ── RENDER TICKER ──
+function renderTicker() {
+  const items = prices.map(p =>
+    `<span class="ticker-item">
+      <span class="sym">${p.sym}</span>
+      <span class="val"> ${p.val}</span>
+      <span class="${p.chg >= 0 ? 'chg-up':'chg-dn'}"> ${p.chg >= 0 ? '▲':'▼'}${Math.abs(p.chg).toFixed(1)}%</span>
+    </span>`
+  ).join('');
+  tickerEl.innerHTML = items + items; // duplicate for seamless loop
+}
+
+function renderAll() {
+  renderTable();
+  renderSelected();
+  renderSparkline();
+  renderExchange();
+}
+
+// ── PRICE UPDATE (every ~1.8s) ──
+setInterval(() => {
+  prices.forEach((p, i) => {
+    const drift  = (Math.random() - 0.48) * p.base * 0.025;
+    const newVal = Math.max(1, Math.round(p.val + drift));
+    const prevVal = p.val;
+    p.chg = ((newVal - p.base) / p.base) * 100;
+    p.val = newVal;
+    p.history.push(newVal);
+    if (p.history.length > 80) p.history.shift();
+
+    // flash changed row
+    if (newVal !== prevVal && tbody.rows[i]) {
+      tbody.rows[i].classList.remove('row-flash');
+      void tbody.rows[i].offsetWidth;
+      tbody.rows[i].classList.add('row-flash');
+    }
+  });
+
+  renderAll();
+  renderTicker();
+}, 1800);
+
+// ── LOG ──
+function log(msg, type='info') {
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  const tag = type === 'err' ? 'll-err' : type === 'warn' ? 'll-warn' : 'll-tag';
+  const prefix = type === 'err' ? '[ERR]' : type === 'warn' ? '[WRN]' : '[SYS]';
+  const t = new Date().toLocaleTimeString('fr-FR',{hour12:false});
+  line.innerHTML = `<span class="${tag}">${prefix}</span> ${t} — ${msg}`;
+  logFeed.prepend(line);
+  while (logFeed.children.length > 30) logFeed.removeChild(logFeed.lastChild);
+}
+
+// ── ARCHIVE ──
+function addArchive(sym, desc) {
+  if (archiveCount === 0) archList.innerHTML = '';
+  archiveCount++;
+  const entry = document.createElement('div');
+  entry.className = 'archive-entry';
+  const t = new Date().toLocaleTimeString('fr-FR',{hour12:false});
+  entry.innerHTML = `<span class="ae-time">${t}</span> <span class="ae-sym">${sym}</span> — <span class="ae-desc">${desc}</span>`;
+  archList.prepend(entry);
+  while (archList.children.length > 20) archList.removeChild(archList.lastChild);
+}
+
+// ── CAPTURE ──
+captureBtn.addEventListener('click', () => {
+  captureStart = performance.now();
+  captureActive = true;
+  captureBtn.style.display = 'none';
+  stopBtn.style.display = 'block';
+  capResult.textContent = '◉ mesure en cours...';
+  log('Mesure de latence démarrée.', 'warn');
+});
+
+stopBtn.addEventListener('click', () => {
+  if (!captureActive) return;
+  const elapsed = Math.round(performance.now() - captureStart);
+  captureActive = false;
+  captureBtn.style.display = 'block';
+  stopBtn.style.display = 'none';
+
+  const earned = Math.floor(elapsed / 10);
+  ulBalance += earned;
+  capResult.textContent = `+${earned} UL capturées (${elapsed}ms)`;
+  renderExchange();
+  addArchive('CAP', `${elapsed}ms → +${earned} UL`);
+  log(`Latence capturée : ${elapsed}ms → +${earned} UL`, 'info');
+
+  // glitch effect on balance
+  ulDisplay.classList.add('glitch');
+  setTimeout(() => ulDisplay.classList.remove('glitch'), 200);
+});
+
+// ── EXCHANGE ──
+function doExchange(e) {
+  if (ulBalance < e.cost) return;
+  ulBalance -= e.cost;
+  renderExchange();
+  addArchive(e.tag, e.label);
+  log(`Échange : [${e.tag}] — coût ${e.cost} UL`, 'info');
+
+  // show modal with content
+  let title = '', body = '';
+
+  if (e.tag === 'HAI') {
+    const h = HAIKUS[Math.floor(Math.random() * HAIKUS.length)];
+    title = 'HAÏKU DE LATENCE';
+    body = `<p style="font-size:11px;color:#5a8a5a;margin-bottom:12px;">Généré depuis ${prices[selected].val} UL de ${prices[selected].name}.</p>
+            <div class="poem">${h[0]}<br>${h[1]}<br>${h[2]}</div>
+            <p style="font-size:10px;color:#3a6a3a;margin-top:12px;">Ce haïku n'a pas d'auteur. Il appartient à la Chambre.</p>`;
+  } else if (e.tag === 'SIL') {
+    title = 'ENREGISTREMENT : SILENCE';
+    body = `<p style="font-size:11px;color:#5a8a5a;margin-bottom:12px;">3 secondes extraites du buffer ${prices[selected].sym}.</p>
+            <p style="font-size:22px;letter-spacing:0.5em;text-align:center;color:#2a4a2a;padding:20px 0;">· · ·</p>
+            <p style="font-size:10px;color:#3a6a3a;">Ce silence a duré exactement ${Math.floor(Math.random()*1000+2000)}ms avant d'être capturé.<br>Il ne sera pas rejoué.</p>`;
+  } else if (e.tag === 'FRG') {
+    const f = FRAGMENTS[Math.floor(Math.random() * FRAGMENTS.length)];
+    title = 'FRAGMENT NARRATIF';
+    body = `<p style="font-size:11px;color:#5a8a5a;margin-bottom:14px;">Extrait du buffer ${prices[selected].sym} · ${prices[selected].val} UL.</p>
+            <div class="poem" style="font-style:normal;font-size:12px;">${f}</div>`;
+  } else if (e.tag === 'CRT') {
+    title = 'CERTIFICAT DE TEMPS MORT';
+    const id = Math.random().toString(36).slice(2,10).toUpperCase();
+    body = `<p style="font-size:10px;color:#3a6a3a;margin-bottom:12px;">N° ${id} · SESSION ${sessionId.textContent}</p>
+            <div class="poem" style="font-style:normal;font-size:11px;line-height:2;">
+              ${CERT_LINES.join('<br>')}
+            </div>
+            <p style="font-size:10px;color:#3a6a3a;margin-top:12px;">Signature : <em style="color:#5a8a5a;">personne en particulier</em></p>`;
+  } else if (e.tag === 'ARC') {
+    title = 'ARCHIVE GLITCH PERSONNELLE';
+    const errs = ['TypeError: undefined is not a function',
+                  'ReferenceError: latence is not defined',
+                  'NetworkError: Failed to fetch (silence)',
+                  'RangeError: Maximum call stack exceeded',
+                  'SyntaxError: Unexpected token ∿'];
+    const chosen = errs[Math.floor(Math.random()*errs.length)];
+    body = `<p style="font-size:11px;color:#5a8a5a;margin-bottom:12px;">Votre archive personnelle de glitchs non résolus.</p>
+            <div class="poem" style="font-style:normal;font-size:11px;color:var(--red);line-height:2;">
+              ${chosen}<br>
+              at &lt;phantom&gt;:${Math.floor(Math.random()*999)}:${Math.floor(Math.random()*99)}<br>
+              at Chambre.compenser (btm.js:∞)
+            </div>
+            <p style="font-size:10px;color:#3a6a3a;margin-top:12px;">Cette erreur n'a pas de ticket. Elle vous appartient maintenant.</p>`;
+  }
+
+  modalTitle.textContent = title;
+  modalBody.innerHTML = body;
+  modal.classList.add('show');
+}
+
+document.getElementById('modal-close').addEventListener('click', () => {
+  modal.classList.remove('show');
+});
+
+// ── SYSTEM LOGS (ambient) ──
+const ambientLogs = [
+  ['Pic de latence détecté sur BTF (+34ms).', 'warn'],
+  ['Buffer GLC saturé — 3 frames perdues.', 'err'],
+  ['Synchronisation Chambre : offset +0.003s.', 'info'],
+  ['Nouvelle entrée archive : SLC/session-∿.', 'info'],
+  ['Erreur non loguée absorbée par le mycélium.', 'warn'],
+  ['Connexion fantôme établie — nœud inconnu.', 'info'],
+  ['BUG/ticket absent : durée de vie prolongée.', 'warn'],
+  ['Compensation automatique : solde rétabli.', 'info'],
+  ['Glitch NTF : notification sans contenu.', 'warn'],
+  ['Latence SLC dépasse seuil symbolique.', 'err'],
+];
+
+let logIdx = 0;
+setInterval(() => {
+  if (Math.random() > 0.4) {
+    const [msg, type] = ambientLogs[logIdx % ambientLogs.length];
+    log(msg, type);
+    logIdx++;
+  }
+}, 3200);
+
+// ── INITIAL RENDER ──
+renderAll();
+renderTicker();
+log('Bourse des Temps Morts initialisée.', 'info');
+log('Chambre de Compensation Fantôme en ligne.', 'info');
+log('Aucune donnée ne sera conservée.', 'warn');
+</script>
+</body>
+</html>

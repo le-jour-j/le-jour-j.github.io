@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chambre de Compensation Fantôme</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #111;
+            color: #eee;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #222;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+        .resource-box {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #000;
+            border: 1px dashed #555;
+        }
+        .resource {
+            font-size: 1.2em;
+        }
+        .val {
+            font-weight: bold;
+            color: #0f0;
+        }
+        .btn-main {
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .btn-main:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+        .upgrades {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .upgrade-card {
+            background-color: #333;
+            border: 1px solid #555;
+            padding: 15px;
+            text-align: left;
+        }
+        .upgrade-card h3 {
+            margin-top: 0;
+            color: #ddd;
+        }
+        .upgrade-card p {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .btn-upgrade {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #777;
+            padding: 8px 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .btn-upgrade:hover:not(:disabled) {
+            background-color: #666;
+        }
+        .btn-upgrade:disabled {
+            color: #555;
+            border-color: #333;
+            cursor: not-allowed;
+        }
+        #log {
+            margin-top: 30px;
+            height: 120px;
+            overflow-y: auto;
+            background-color: #000;
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.9em;
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>La Chambre de Compensation Fantôme</h1>
+    <p>Protocole de Minmaxing : transformez l'ennui, l'échec et le vide en actifs poétiques.</p>
+
+    <div class="resource-box">
+        <div class="resource">Temps Mort : <span id="res-temps" class="val">0</span></div>
+        <div class="resource">Lingots Administratifs : <span id="res-lingots" class="val">0</span></div>
+        <div class="resource">Jetons Noirs : <span id="res-jetons" class="val">0</span></div>
+    </div>
+
+    <button class="btn-main" onclick="mineTemps()">Extraire du Temps Mort</button>
+
+    <div class="upgrades">
+        <div class="upgrade-card">
+            <h3>Zone de Latence</h3>
+            <p>Génère 1 Temps Mort / sec en exploitant l'attente (permanences, files d'attente).</p>
+            <p>Coût : <span id="cost-latence">10</span> Temps Mort</p>
+            <button class="btn-upgrade" id="btn-latence" onclick="buyLatence()">Acquérir</button>
+            <p>Infrastructures actives : <span id="count-latence">0</span></p>
+        </div>
+
+        <div class="upgrade-card">
+            <h3>Presse à Compacter</h3>
+            <p>Convertit 5 Temps Mort en 1 Lingot Administratif / sec (via le recyclage de formulaires et contrôles ratés).</p>
+            <p>Coût : <span id="cost-presse">50</span> Temps Mort</p>
+            <button class="btn-upgrade" id="btn-presse" onclick="buyPresse()">Acquérir</button>
+            <p>Infrastructures actives : <span id="count-presse">0</span></p>
+        </div>
+
+        <div class="upgrade-card">
+            <h3>Banque Fantôme</h3>
+            <p>Échange 2 Lingots Administratifs contre 1 Jeton Noir / sec. L'économie parallèle se met en marche.</p>
+            <p>Coût : <span id="cost-banque">10</span> Lingots Administratifs</p>
+            <button class="btn-upgrade" id="btn-banque" onclick="buyBanque()">Acquérir</button>
+            <p>Infrastructures actives : <span id="count-banque">0</span></p>
+        </div>
+
+        <div class="upgrade-card">
+            <h3>Spore Conceptuelle</h3>
+            <p>Multiplie toute la production globale par 2. La propagation virale est inévitable.</p>
+            <p>Coût : <span id="cost-spore">20</span> Jetons Noirs</p>
+            <button class="btn-upgrade" id="btn-spore" onclick="buySpore()">Propager</button>
+            <p>Infrastructures actives : <span id="count-spore">0</span></p>
+        </div>
+    </div>
+
+    <div id="log">
+        <div style="color: #fff">>> Initialisation du protocole... La récolte de l'invisible commence.</div>
+    </div>
+</div>
+
+<script>
+    // Variables de ressources
+    let temps = 0;
+    let lingots = 0;
+    let jetons = 0;
+
+    // Bâtiments
+    let latenceCount = 0;
+    let presseCount = 0;
+    let banqueCount = 0;
+    let sporeCount = 0;
+
+    // Coûts de base
+    let costs = {
+        latence: 10,
+        presse: 50,
+        banque: 10,
+        spore: 20
+    };
+
+    function log(msg) {
+        const logBox = document.getElementById('log');
+        logBox.innerHTML += `<div>>> ${msg}</div>`;
+        logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    function updateUI() {
+        // Affichage des ressources
+        document.getElementById('res-temps').innerText = Math.floor(temps);
+        document.getElementById('res-lingots').innerText = Math.floor(lingots);
+        document.getElementById('res-jetons').innerText = Math.floor(jetons);
+
+        // Affichage des coûts
+        document.getElementById('cost-latence').innerText = Math.floor(costs.latence);
+        document.getElementById('cost-presse').innerText = Math.floor(costs.presse);
+        document.getElementById('cost-banque').innerText = Math.floor(costs.banque);
+        document.getElementById('cost-spore').innerText = Math.floor(costs.spore);
+
+        // Affichage du nombre de bâtiments
+        document.getElementById('count-latence').innerText = latenceCount;
+        document.getElementById('count-presse').innerText = presseCount;
+        document.getElementById('count-banque').innerText = banqueCount;
+        document.getElementById('count-spore').innerText = sporeCount;
+
+        // Désactivation des boutons si le coût n'est pas atteint
+        document.getElementById('btn-latence').disabled = temps < costs.latence;
+        document.getElementById('btn-presse').disabled = temps < costs.presse;
+        document.getElementById('btn-banque').disabled = lingots < costs.banque;
+        document.getElementById('btn-spore').disabled = jetons < costs.spore;
+    }
+
+    function mineTemps() {
+        temps += 1 * Math.pow(2, sporeCount);
+        updateUI();
+    }
+
+    function buyLatence() {
+        if (temps >= costs.latence) {
+            temps -= costs.latence;
+            latenceCount++;
+            costs.latence *= 1.5;
+            log("Nouvelle Zone de Latence acquise. L'ennui institutionnel se transforme en ressource.");
+            updateUI();
+        }
+    }
+
+    function buyPresse() {
+        if (temps >= costs.presse) {
+            temps -= costs.presse;
+            presseCount++;
+            costs.presse *= 1.5;
+            log("Presse à compacter installée. Vous coulez la bureaucratie en

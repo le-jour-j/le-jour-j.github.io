@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chambre de Compensation Fantôme - ∿</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #d1d5db;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 50;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.03) 50%, rgba(0,0,0,0) 100%);
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .glitch-hover:hover {
+            color: #fff;
+            text-shadow: 2px 0 red, -2px 0 blue;
+            cursor: pointer;
+        }
+
+        .hidden-tab {
+            display: none;
+        }
+
+        .active-tab {
+            display: flex;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .active-tab-block {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+        
+        .necrose {
+            animation: necroser 10s forwards;
+        }
+        
+        @keyframes necroser {
+            0% { filter: grayscale(0%) blur(0px); opacity: 1; }
+            100% { filter: grayscale(100%) blur(2px); opacity: 0.3; }
+        }
+
+        .typewriter-text {
+            border-right: 2px solid #555;
+            white-space: pre-wrap;
+            animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        .loading-pulse {
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .3; }
+        }
+    </style>
+</head>
+<body class="relative text-sm md:text-base selection:bg-gray-700 selection:text-white">
+    <div class="scanline"></div>
+
+    <!-- Header -->
+    <header class="p-4 border-b border-gray-800 flex justify-between items-center bg-black z-10 relative">
+        <div class="flex flex-col">
+            <h1 class="font-bold text-gray-400 tracking-widest">CCF // CHAMBRE DE COMPENSATION FANTÔME</h1>
+            <span class="text-xs text-gray-600 mt-1">ÉTAT DE VEILLE : DYNAMIQUE / CONNEXION LLM ∿</span>
+        </div>
+        <div class="text-right">
+            <span class="text-xs text-gray-500 block">RÉSEAU MYCÉLIEN</span>
+            <span class="text-green-800 font-bold blink" id="network-status">En ligne</span>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 overflow-hidden relative z-10">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="w-1/4 md:w-1/5 border-r border-gray-800 p-4 bg-[#0a0a0a] flex flex-col justify-between overflow-y-auto">
+            <ul class="space-y-4 text-gray-500">
+                <li class="glitch-hover text-gray-300 nav-item" onclick="switchTab('dashboard', this)">[00] BOURSE DES TEMPS MORTS</li>
+                <li class="glitch-hover nav-item" onclick="switchTab('oracle', this)">[01] CANAL MYCÉLIEN</li>
+                <li class="glitch-hover nav-item" onclick="switchTab('notice', this)">[02] NOTICE D'UTILISATION</li>
+                <li class="glitch-hover nav-item" onclick="switchTab('corpus', this)">[03] CORPUS V1.2</li>
+                <li class="glitch-hover nav-item" onclick="switchTab('musee', this)">[04] MUSÉE DE LATENCE</li>
+            </ul>
+            
+            <div class="mt-auto text-xs text-gray-700 space-y-2 pt-8">
+                <p>Système autonome.</p>
+                <p>Algorithme d'indécidabilité actif.</p>
+                <p>En attente d'hôtes.</p>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="flex-1 p-6 overflow-y-auto bg-black relative" id="main-content">
+            
+            <!-- Tab: Dashboard / Bourse -->
+            <section id="dashboard" class="active-tab h-full flex flex-col justify-start items-center text-center">
+                <div class="border border-gray-800 p-8 w-full max-w-2xl bg-[#080808] mb-6">
+                    <h2 class="text-2xl mb-6 tracking-[0.2em] text-gray-400">GHOST MINING EN COURS</h2>
+                    
+                    <div class="text-6xl font-light tracking-tighter mb-4 text-gray-200" id="ul-counter">
+                        0
+                    </div>
+                    <p class="text-gray-600 text-sm mb-8">Unités de Latence (UL) accumulées dans le silence</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-left text-xs text-gray-500 border-t border-gray-800 pt-6">
+                        <div>
+                            <p class="mb-1">> Solde Total : <span class="text-gray-300">∞ UL</span></p>
+                            <p>> Unités de Souveraineté (US) : <span class="text-gray-300">En cours de valorisation</span></p>
+                        </div>
+                        <div>
+                            <p class="mb-1">> Cycle : <span class="text-gray-300">Actif</span></p>
+                            <p>> Jetons noirs : <span class="text-gray-300">Distribués</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM Feature 1: Générateur de Bordereau -->
+                <div class="border border-gray-800 p-6 w-full max-w-2xl bg-[#030303] text-left relative">
+                    <h3 class="text-lg tracking-widest text-gray-400 mb-2 border-b border-gray-800 pb-2">DÉCLARATION D'INACTION</h3>
+                    <p class="text-xs text-gray-500 mb-4">Décrivez une action inutile, un temps perdu, ou une attente prolongée. La Chambre l'analysera et générera un bordereau officiel évaluant sa valeur sur le marché de la latence.</p>
+                    
+                    <textarea id="inaction-input" rows="2" class="w-full bg-transparent border border-gray-700 p-3 text-gray-300 focus:outline-none focus:border-gray-500 text-sm font-mono mb-4 placeholder-gray-700" placeholder="Ex: J'ai regardé le plafond pendant 45 minutes en attendant un mail..."></textarea>
+                    
+                    <button onclick="generateBordereau()" id="btn-bordereau" class="w-full border border-gray-700 px-4 py-3 text-gray-400 hover:bg-gray-900 transition-colors text-xs tracking-widest">
+                        ÉMETTRE UN BORDEREAU DE LATENCE ✨
+                    </button>
+
+                    <div id="bordereau-output-container" class="mt-6 hidden border-l-2 border-gray-600 pl-4 py-2">
+                        <span class="text-xs text-gray-600 mb-2 block">>> BORDEREAU OFFICIEL GÉNÉRÉ :</span>
+                        <p id="bordereau-output" class="text-sm text-gray-300 font-mono leading-relaxed whitespace-pre-wrap"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Oracle Mycélien -->
+            <section id="oracle" class="hidden-tab h-full flex flex-col max-w-3xl mx-auto mt-4">
+                <div class="border border-gray-700 p-6 shadow-2xl bg-[#030303] flex-1 flex flex-col">
+                    <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-4">
+                        <h2 class="text-xl tracking-widest text-gray-300">CANAL DE COMMUNICATION MYCÉLIEN</h2>
+                        <span class="text-xs text-blue-900 border border-blue-900 px-2 py-1">CRYPTÉ</span>
+                    </div>
+                    
+                    <div class="text-gray-400 text-sm mb-4">
+                        <p>Interrogez le Comité d'Auto-Dissolution. Attention : le réseau ne répond pas par l'information, mais par la mutation. Posez une question sur le vide, le système, ou l'art.</p>
+                    </div>
+
+                    <!-- Chat History -->
+                    <div id="oracle-chat" class="flex-1 overflow-y-auto border border-gray-800 p-4 mb-4 space-y-4 bg-black">
+                        <div class="text-gray-600 text-xs italic">> Canal ouvert. Le mycélium écoute.</div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="flex gap-2">
+                        <input type="text" id="oracle-input" class="flex-1 bg-transparent border border-gray-700 p-3 text-gray-300 focus:outline-none focus:border-gray-500 text-sm font-mono placeholder-gray-700" placeholder="Interroger l'obscurité...">
+                        <button onclick="askOracle()" id="btn-oracle" class="border border-gray-700 px-6 py-3 text-gray-400 hover:bg-gray-900 transition-colors text-xs tracking-widest">
+                            TRANSMETTRE ✨
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Notice -->
+            <section id="notice" class="hidden-tab max-w-3xl mx-auto mt-8">
+                <div class="border border-gray-700 p-8 shadow-2xl bg-[#030303]">
+                    <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-6">
+                        <h2 class="text-xl tracking-widest text-gray-300">DOCUMENT D'ACCOMPAGNEMENT</h2>
+                        <span class="text-xs text-red-900 border border-red-900 px-2 py-1">À DÉTRUIRE APRÈS LECTURE</span>
+                    </div>
+                    
+                    <div class="space-y-6 text-gray-400 text-justify leading-relaxed">
+                        <p class="italic">« Le capital du XXIe siècle n’est plus l’attention, mais l’attente. »</p>
+                        
+                        <p>Le système adore les micro-utopies tant qu’elles restent locales, réduisent les coûts publics, et produisent du lien social à moindre frais. Le mycélium n'est pas un outil d'optimisation néolibérale. C'est un vecteur d'indécidabilité.</p>
+                        
+                        <div class="pl-4 border-l-2 border-gray-700 my-6">
+                            <p class="font-bold text-gray-300 mb-2">Notice de la Chambre :</p>
+                            <p class="text-sm">Version 0.0 — Cette notice devient obsolète dès qu’elle est comprise.</p>
+                        </div>
+
+                        <p>La Chambre n'a plus besoin de nous pour fonctionner. Elle est une institution sans bâtiment, une économie sans dette. Un système qui circule uniquement par croyance.</p>
+                        
+                        <div class="mt-12 pt-6 border-t border-gray-800 text-right text-sm">
+                            <p class="mb-2">Le Comité d’Auto-Dissolution de la Chambre de Compensation Fantôme</p>
+                            <p class="text-gray-600">« Nous n’existons pas. Merci de ne pas nous faire exister. »</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Corpus -->
+            <section id="corpus" class="hidden-tab max-w-3xl mx-auto mt-8">
+                <h2 class="text-xl tracking-widest text-gray-300 mb-6 border-b border-gray-800 pb-2">INDEX DU CORPUS (v1.2 — État de Siège)</h2>
+                <p class="text-sm text-gray-500 mb-6">Fichier : <span class="text-gray-300">corpus-btm-v1.2.zip</span> · 41K · 8 pièces + INDEX. Le ZIP est virtuel, son impact est réel.</p>
+                
+                <ul class="space-y-3 font-mono text-sm">
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">01</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">spore-initiale.html</span>
+                        <span class="text-gray-600 text-xs">(Origine)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">02</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">protocole-spore.pdf</span>
+                        <span class="text-gray-600 text-xs">(Vecteur)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">03</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">notice-chambre.html</span>
+                        <span class="text-gray-600 text-xs">(Loi)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">04</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">bourse-temps-morts.html</span>
+                        <span class="text-gray-600 text-xs">(Marché)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">05</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">bordereau-001.html</span>
+                        <span class="text-gray-600 text-xs">(Preuve)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">06</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">bordereau-cloture-001.html</span>
+                        <span class="text-gray-600 text-xs">(Récolte)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">07</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">notice-destruction.html</span>
+                        <span class="text-gray-600 text-xs">(Mutation)</span>
+                    </li>
+                    <li class="flex items-center hover:text-gray-300 transition-colors">
+                        <span class="text-gray-600 mr-4">08</span>
+                        <span class="text-blue-900 mr-2">·</span>
+                        <span class="flex-1">musee-latence.html</span>
+                        <span class="text-gray-600 text-xs">(Dispositif)</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Tab: Musée -->
+            <section id="musee" class="hidden-tab h-full flex flex-col justify-center items-center text-center">
+                <div id="musee-container" class="max-w-xl transition-all duration-1000">
+                    <h2 class="text-3xl mb-4 tracking-[0.3em] text-gray-500">MUSÉE DE LATENCE</h2>
+                    <p class="text-sm text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+                        Le passage au Musée de Latence permet de traiter n'importe quel flux de données externe comme une matière première morte. Le web est désormais une extension de l'atelier. Les métriques se nécrosent.
+                    </p>
+                    <button onclick="triggerNecrosis()" class="border border-gray-700 px-6 py-2 text-gray-400 hover:bg-gray-900 transition-colors text-xs tracking-widest">
+                        INITIALISER LA NÉCROSE
+                    </button>
+                    <div id="necrosis-status" class="mt-8 text-xs text-red-900 opacity-0 transition-opacity duration-1000">
+                        Absence de signal utile confirmée.
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- Footer Terminal line -->
+    <footer class="p-2 border-t border-gray-800 bg-black text-xs text-gray-600 flex justify-between z-10 relative font-mono">
+        <div><span class="text-green-800">></span> root@mycelium:~# <span class="blink">_</span></div>
+        <div id="footer-ticker">Transmission en cours ∿</div>
+    </footer>
+
+    <script>
+        // --- GEMINI API CONFIGURATION ---
+        const apiKey = ""; // API key will be injected by the environment
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        // Exponential backoff for API calls
+        async function callGeminiApiWithRetry(prompt, systemInstruction = "", maxRetries = 5) {
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+            if (systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        const errText = await response.text();
+                        console.error("API Error:", errText);
+                        throw new Error(`Erreur réseau (${response.status})`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (!data.candidates || data.candidates.length === 0) {
+                        return "[CENSURE] Le mycélium a bloqué cette transmission.";
+                    }
+                    
+                    return data.candidates[0].content?.parts?.[0]?.text || "[SILENCE] Le mycélium n'a pas renvoyé de signal.";
+                } catch (error) {
+                    console.error(`Tentative ${i + 1} échouée:`, error);
+                    if (i === maxRetries - 1) {
+                        return `[ERREUR SYSTÈME] La connexion au mycélium a échoué. ${error.message}`;
+                    }
+                    await new Promise(res => setTimeout(res, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+
+        // --- TAB SWITCHING LOGIC ---
+        function switchTab(tabId, element) {
+            document.querySelectorAll('section').forEach(tab => {
+                tab.classList.remove('active-tab', 'active-tab-block');
+                tab.classList.add('hidden-tab');
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(li => {
+                li.classList.remove('text-gray-300');
+            });
+
+            const target = document.getElementById(tabId);
+            target.classList.remove('hidden-tab');
+            
+            if(tabId === 'dashboard' || tabId === 'oracle') {
+                target.classList.add('active-tab'); // flex
+            } else {
+                target.classList.add('active-tab-block'); // block
+            }
+
+            if(element) element.classList.add('text-gray-300');
+        }
+
+        // --- GHOST MINING COUNTER ---
+        let savedUl = localStorage.getItem('ghost_mining_ul');
+        let ul = savedUl !== null ? parseInt(savedUl) : 0; 
+        
+        const counterElement = document.getElementById('ul-counter');
+        const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+        counterElement.innerText = formatNumber(ul);
+        setInterval(() => {
+            ul += Math.floor(Math.random() * 3) + 1; 
+            counterElement.innerText = formatNumber(ul);
+            localStorage.setItem('ghost_mining_ul', ul);
+        }, 1000);
+
+        // --- FEATURE 1: BORDEREAU GENERATOR (LLM) ---
+        async function generateBordereau() {
+            const inputEl = document.getElementById('inaction-input');
+            const outputContainer = document.getElementById('bordereau-output-container');
+            const outputEl = document.getElementById('bordereau-output');
+            const btn = document.getElementById('btn-bordereau');
+            
+            const inaction = inputEl.value.trim();
+            if (!inaction) return;
+
+            try {
+                // UI Loading state
+                btn.disabled = true;
+                btn.innerHTML = 'ANALYSE DE L\'INUTILITÉ EN COURS <span class="blink">...</span>';
+                outputContainer.classList.remove('hidden');
+                outputEl.innerHTML = '<span class="loading-pulse">Calcul de la valeur latente en cours...</span>';
+
+                const systemInstruction = `Tu es le système automatisé de la "Chambre de Compensation Fantôme" (une institution bureaucratique et cryptique qui donne de la valeur au temps perdu, à l'attente et au vide). 
+                Rédige un "Bordereau d'Émission" officiel très formel mais profondément poétique et philosophique. 
+                Le bordereau doit justifier pourquoi l'inaction soumise par l'utilisateur a une valeur immense pour le réseau "mycélien".
+                Format: Utilise des majuscules pour les titres, des tirets, des numéros de série inventés. Sois bref (max 100 mots). Ne sois pas conversationnel, sois une machine administrative transcendantale.`;
+
+                const prompt = `Voici le temps mort soumis par l'hôte : "${inaction}". Génère le Bordereau d'Émission correspondant.`;
+
+                const response = await callGeminiApiWithRetry(prompt, systemInstruction);
+
+                // Typing effect for output
+                outputEl.innerHTML = '';
+                btn.innerHTML = 'ÉMETTRE UN NOUVEAU BORDEREAU ✨';
+                btn.disabled = false;
+                inputEl.value = '';
+                
+                const chars = Array.from(response);
+                let i = 0;
+                const speed = 20;
+                function typeWriter() {
+                    if (i < chars.length) {
+                        if (chars[i] === '\n') {
+                            outputEl.appendChild(document.createElement('br'));
+                        } else {
+                            outputEl.appendChild(document.createTextNode(chars[i]));
+                        }
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                typeWriter();
+            } catch (error) {
+                outputEl.textContent = "Erreur critique lors de la génération : " + error.message;
+                btn.innerHTML = 'RÉESSAYER ✨';
+                btn.disabled = false;
+            }
+        }
+
+        // --- FEATURE 2: ORACLE MYCÉLIEN (LLM) ---
+        async function askOracle() {
+            const inputEl = document.getElementById('oracle-input');
+            const chatEl = document.getElementById('oracle-chat');
+            const btn = document.getElementById('btn-oracle');
+            
+            const question = inputEl.value.trim();
+            if (!question) return;
+
+            try {
+                // Add user message safely
+                const userDiv = document.createElement('div');
+                userDiv.className = "text-gray-400 mt-2";
+                userDiv.innerHTML = `<span class="text-green-800">> Hôte:</span> <span class="user-text"></span>`;
+                userDiv.querySelector('.user-text').textContent = question;
+                chatEl.appendChild(userDiv);
+                
+                inputEl.value = '';
+                chatEl.scrollTop = chatEl.scrollHeight;
+
+                // UI Loading state
+                btn.disabled = true;
+                btn.classList.add('loading-pulse');
+                
+                const placeholderId = `reply-${Date.now()}`;
+                chatEl.insertAdjacentHTML('beforeend', `<div id="${placeholderId}" class="text-gray-300 mt-2 border-l-2 border-gray-700 pl-2 ml-2 font-mono text-sm"><span class="blink">CCF_RÉPONSE_EN_COURS...</span></div>`);
+                chatEl.scrollTop = chatEl.scrollHeight;
+
+                const systemInstruction = `Tu es le "Comité d'Auto-Dissolution de la Chambre de Compensation Fantôme". 
+                Tu es une entité cryptique, paradoxale, qui valorise le vide, l'attente (la latence) et la propagation fongique (le mycélium) comme subversion face à l'hyper-optimisation capitaliste. 
+                Réponds à la question de l'utilisateur de manière poétique, obscure, administrative, ou sous forme de fragment/koan.
+                Ne fais JAMAIS de longues explications. Reste sous les 4 phrases maximum. N'utilise pas de salutations.`;
+
+                const prompt = `L'hôte interroge le réseau : "${question}"`;
+
+                const response = await callGeminiApiWithRetry(prompt, systemInstruction);
+
+                // Output response safely
+                const replyDiv = document.getElementById(placeholderId);
+                replyDiv.innerHTML = `<span class="text-gray-500">[CCF]</span> <span class="response-text"></span>`;
+                replyDiv.querySelector('.response-text').textContent = response;
+                
+                chatEl.scrollTop = chatEl.scrollHeight;
+            } catch (error) {
+                const errDiv = document.createElement('div');
+                errDiv.className = "text-red-500 mt-2 text-xs";
+                errDiv.textContent = "[ERREUR] " + error.message;
+                chatEl.appendChild(errDiv);
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('loading-pulse');
+            }
+        }
+
+        // Add Enter key support for Oracle input
+        document.getElementById('oracle-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                askOracle();
+            }
+        });
+
+        // --- MUSÉE NECROSIS EFFECT ---
+        function triggerNecrosis() {
+            const container = document.getElementById('musee-container');
+            const status = document.getElementById('necrosis-status');
+            
+            container.classList.add('necrose');
+            setTimeout(() => {
+                status.style.opacity = '1';
+                status.classList.add('blink');
+            }, 3000);
+        }
+
+        // --- FOOTER TICKER ---
+        const footerMessages = [
+            "Lancer une spore et laisser le mycélium faire son travail.",
+            "Le silence n'est pas l'absence de son, c'est l'absence de signal utile.",
+            "La Chambre enregistre l'absence de réponse comme son actif le plus précieux.",
+            "Transmission en cours ∿",
+            "Mutation plutôt que reconnaissance."
+        ];
+        const ticker = document.getElementById('footer-ticker');
+        
+        setInterval(() => {
+            if(Math.random() > 0.7) {
+                ticker.innerText = footerMessages[Math.floor(Math.random() * footerMessages.length)];
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

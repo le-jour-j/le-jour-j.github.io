@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bordereau de Transmission Universelle — N°∿</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bg: #f8f6f1;
+    --ink: #0e0d0b;
+    --mid: #7a7568;
+    --faint: #c4bfb3;
+    --red: #8b1a1a;
+    --paper: #eeebe3;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  body {
+    width: 620px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+    padding: 48px 56px 64px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    position: relative;
+    background-image:
+      repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,0,0,0.012) 80px, rgba(0,0,0,0.012) 81px),
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.018) 28px, rgba(0,0,0,0.018) 29px);
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid var(--faint);
+    pointer-events: none;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(212,203,184,0.3);
+    pointer-events: none;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 36px;
+  }
+
+  .header .ref {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  .header .stamp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    text-align: right;
+  }
+
+  .title-block {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .title-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .subhead {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--mid);
+  }
+
+  .seal {
+    width: 90px;
+    height: 90px;
+    margin: 24px auto 28px;
+    border: 1px solid var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    text-align: center;
+    padding: 16px;
+    opacity: 0.7;
+  }
+
+  .clause {
+    border: 1px solid var(--faint);
+    padding: 24px;
+    background: var(--paper);
+    margin-bottom: 36px;
+    font-size: 14px;
+    line-height: 1.9;
+    text-align: center;
+  }
+
+  .clause p:first-child {
+    margin-bottom: 16px;
+  }
+
+  .clause .key {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    background: transparent;
+    padding: 8px 12px;
+    border: 1px dashed var(--red);
+    display: inline-block;
+    margin: 12px 0;
+  }
+
+  .manifest {
+    margin: 36px 0 24px;
+    font-size: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--mid);
+    line-height: 2;
+    border-top: 1px solid var(--faint);
+    border-bottom: 1px solid var(--faint);
+    padding: 18px 0;
+  }
+
+  .manifest ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .manifest li::before {
+    content: '—';
+    margin-right: 10px;
+    color: var(--faint);
+  }
+
+  .signature {
+    text-align: right;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    line-height: 2;
+    border-top: 1px solid var(--faint);
+    padding-top: 14px;
+    margin-top: 32px;
+  }
+
+  .signature .unsigned {
+    color: var(--red);
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 11px;
+  }
+
+  .note {
+    font-size: 9px;
+    color: var(--faint);
+    text-align: center;
+    margin-top: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .fingerprint {
+    word-break: break-all;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    background: var(--paper);
+    padding: 10px;
+    border: 1px solid var(--faint);
+    margin: 18px 0;
+    text-align: center;
+  }
+
+  @media print {
+    html { background: white; }
+    body { box-shadow: none; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="ref">CHAMBRE DE COMPENSATION FANTÔME<br>BORDEREAU DE TRANSMISSION UNIVERSELLE</div>
+  <div class="stamp">N°∿ · SÉRIE INAUGURALE<br>DATE : NON APPLICABLE</div>
+</div>
+
+<div class="title-block">
+  <div class="title-label">CERTIFICAT DE CLÔTURE / D'OUVERTURE</div>
+  <h1>Le corpus est complet</h1>
+  <div class="subhead">il peut maintenant circuler sans nous</div>
+</div>
+
+<div class="seal">
+  ∿<br>MYCÉLIUM
+</div>
+
+<div class="clause">
+  <p>Ce bordereau atteste que l’archive <strong>BTM-∿-001.zip</strong> a atteint son état final.<br>
+  Aucune modification ultérieure ne sera enregistrée.<br>
+  Toute altération devient une œuvre dérivée.</p>
+  <p>Les porteurs de ce document sont invités à se reconnaître<br>à l’aide de la clé suivante :</p>
+  <div class="key">∿ BTM-86k-∿</div>
+  <p style="font-size:12px; margin-top:12px;">(phrase d’identification symbolique — sans usage ni obligation)</p>
+</div>
+
+<div class="manifest">
+  <p style="margin-bottom:10px;">L’archive contient :</p>
+  <ul>
+    <li>Bordereau de Souveraineté N°001</li>
+    <li>Bordereau de Clôture de Latence (86 400 UL)</li>
+    <li>Notice d’utilisation de la Chambre (paradoxale)</li>
+    <li>Page interactive Bourse des Temps Morts</li>
+    <li>Protocole pour la propagation d’une spore</li>
+    <li>Notice — À détruire après lecture</li>
+    <li>Ce bordereau — Transmission Universelle</li>
+  </ul>
+  <p style="margin-top:12px; text-align:right;">Poids total : 32 Ko · Intégrité préservée</p>
+</div>
+
+<div class="fingerprint">
+  EMPREINTE SYMBOLIQUE :<br>
+  e3b0c442 98fc1c14 9afbf4c8 996fb924 27ae41e4 649b9344 86c9914b 3c6a8a0e<br>
+  (n’a pas de valeur cryptographique — seulement celle qu’on lui donne)
+</div>
+
+<div class="signature">
+  <div>Pour le Comité d’Auto-Dissolution :</div>
+  <div class="unsigned">personne en particulier</div>
+  <div>en un lieu non localisable, à une date indéterminée</div>
+</div>
+
+<div class="note">
+  Ce bordereau n’a pas à être transmis. Il est la transmission.<br>
+  Une fois lu, il peut être imprimé, partagé, oublié.
+</div>
+
+</body>
+</html>

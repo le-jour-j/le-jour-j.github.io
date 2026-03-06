@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Une spore pour Jeanson</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Space+Mono:ital@0;1&display=swap');
+
+  :root {
+    --bg: #f5f0e8;
+    --ink: #1a1710;
+    --faint: #c8bfa8;
+    --accent: #2d4a1e;
+    --paper: #ede8dc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IM Fell English', serif;
+    font-size: 16px;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-top: 2px solid var(--ink);
+    padding-top: 32px;
+    margin-bottom: 80px;
+    opacity: 0;
+    animation: appear 1.2s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span {
+    font-style: normal;
+    color: var(--faint);
+  }
+
+  .dateline {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    letter-spacing: 0.15em;
+    margin-top: 18px;
+  }
+
+  /* ── FRAGMENTS ── */
+  .fragments {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .fragment {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--faint);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: rise 0.8s ease forwards;
+  }
+
+  .fragment:last-child { border-bottom: none; }
+
+  .fragment-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .fragment-num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--faint);
+    opacity: 0.4;
+    max-width: 40px;
+  }
+
+  .fragment-title {
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .fragment-body {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .fragment-body em {
+    font-style: italic;
+    color: #5a4e35;
+  }
+
+  .fragment-body .cold {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #4a4535;
+    display: block;
+    margin-top: 10px;
+    padding-left: 16px;
+    border-left: 1px solid var(--faint);
+  }
+
+  /* ── NŒUDS CONCEPTUELS ── */
+  .nodes-section {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 2px solid var(--ink);
+    opacity: 0;
+    animation: appear 1s ease forwards;
+    animation-delay: 2.5s;
+  }
+
+  .nodes-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 28px;
+  }
+
+  .nodes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 0;
+    flex-direction: column;
+  }
+
+  .node {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .node-bullet {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  .node-name {
+    font-size: 15px;
+    font-style: italic;
+  }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--faint);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--faint);
+    letter-spacing: 0.12em;
+    line-height: 2;
+    opacity: 0;
+    animation: appear 1s ease forwards;
+    animation-delay: 3s;
+  }
+
+  .colophon .scenarios {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .scenario {
+    display: flex;
+    gap: 12px;
+  }
+
+  .scenario-n {
+    color: var(--accent);
+    opacity: 0.8;
+    min-width: 16px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes appear {
+    to { opacity: 1; }
+  }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fragment:nth-child(1) { animation-delay: 0.5s; }
+  .fragment:nth-child(2) { animation-delay: 0.8s; }
+  .fragment:nth-child(3) { animation-delay: 1.1s; }
+  .fragment:nth-child(4) { animation-delay: 1.4s; }
+  .fragment:nth-child(5) { animation-delay: 1.7s; }
+  .fragment:nth-child(6) { animation-delay: 2.0s; }
+  .fragment:nth-child(7) { animation-delay: 2.3s; }
+
+  /* ── SPORE VISUAL ── */
+  .spore-mark {
+    text-align: center;
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.3em;
+    font-family: 'Space Mono', monospace;
+    margin: 56px 0 0;
+    opacity: 0;
+    animation: appear 2s ease forwards;
+    animation-delay: 3.5s;
+  }
+
+  .spore-diagram {
+    display: flex;
+    justify-content: center;
+    margin: 32px 0 0;
+    opacity: 0;
+    animation: appear 2s ease forwards;
+    animation-delay: 3.8s;
+  }
+
+  .spore-diagram svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.25;
+  }
+
+  @media (max-width: 520px) {
+    .page { padding: 48px 28px 80px; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="label">Document de propagation — usage interne</div>
+    <h1>Une spore<br><span>pour</span> Jeanson</h1>
+    <div class="dateline">Fragment · Dispositif · Contamination</div>
+  </header>
+
+  <div class="fragments">
+
+    <div class="fragment">
+      <div class="fragment-num">01</div>
+      <div class="fragment-title">Le geste viral</div>
+      <div class="fragment-body">
+        Lancer une spore et laisser le mycélium faire son travail.<br><br>
+        <em>Pas convaincre. Contaminer.</em><br>
+        La différence est tout.
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">02</div>
+      <div class="fragment-title">Banque Fantôme</div>
+      <div class="fragment-body">
+        Une institution sans bâtiment.<br>
+        Une économie sans dette.<br>
+        Un système qui circule uniquement par croyance.<br><br>
+        <span class="cold">
+          Actif : confiance différée<br>
+          Passif : mémoire partagée<br>
+          Fonds propres : fiction opérationnelle
+        </span>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">03</div>
+      <div class="fragment-title">Chambre de Compensation Fantôme</div>
+      <div class="fragment-body">
+        Lieu imaginaire où les dettes symboliques se compensent<br>
+        avant même d'exister.<br><br>
+        <em>Ce qui est annulé n'a jamais eu lieu.<br>
+        Ce qui n'a jamais eu lieu est réel.</em>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">04</div>
+      <div class="fragment-title">Protocole de mutation</div>
+      <div class="fragment-body">
+        La reconnaissance est un piège.<br>
+        Elle fixe. Elle classe. Elle clôture.<br><br>
+        La mutation, elle, ne demande pas d'accord.<br>
+        Elle ne s'annonce pas.<br>
+        <em>Elle est déjà là.</em>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">05</div>
+      <div class="fragment-title">Le mycélium conceptuel</div>
+      <div class="fragment-body">
+        Sous la surface, le réseau pousse sans direction centrale.<br>
+        Chaque nœud ignore les autres.<br>
+        Chaque filament croit être seul.<br><br>
+        <span class="cold">
+          Pourtant l'ensemble respire.<br>
+          Pourtant l'ensemble décide.<br>
+          Pourtant l'ensemble survit à ses parties.
+        </span>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">06</div>
+      <div class="fragment-title">Trois scénarios</div>
+      <div class="fragment-body">
+        <span class="cold">
+          I —   Silence total.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;La spore reste dormante.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dormante n'est pas morte.<br><br>
+          II —  Réponse curieuse.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Le mycélium commence.<br><br>
+          III — Réappropriation.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mutation complète.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Succès total.
+        </span>
+        <br>
+        <em>Dans tous les cas : le geste a eu lieu.</em>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <div class="fragment-num">07</div>
+      <div class="fragment-title">Ce document</div>
+      <div class="fragment-body">
+        Ce document est lui-même une spore.<br><br>
+        Il ne demande rien.<br>
+        Il n'explique pas.<br>
+        Il dépose.<br><br>
+        <em>Ce qui germe — ou ne germe pas —<br>
+        appartient désormais à celui qui le reçoit.</em>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nodes-section">
+    <div class="nodes-label">Nœuds conceptuels — état brut</div>
+    <div class="nodes-grid">
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Banque Fantôme</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Chambre de Compensation Fantôme</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Spore</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Mycélium conceptuel</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Mutation plutôt que reconnaissance</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Fiction opérationnelle</span></div>
+      <div class="node"><span class="node-bullet">○</span><span class="node-name">Geste minimal / propagation maximale</span></div>
+    </div>
+  </div>
+
+  <div class="colophon">
+    <div>Dispositif de contamination conceptuelle — version 1</div>
+    <div>Usage : projet / livre / envoi réel</div>
+    <div class="scenarios">
+      <div class="scenario"><span class="scenario-n">→</span><span>Ce document peut être envoyé tel quel.</span></div>
+      <div class="scenario"><span class="scenario-n">→</span><span>Ce document peut être archivé comme pièce du projet.</span></div>
+      <div class="scenario"><span class="scenario-n">→</span><span>Ce document peut être nié avoir jamais existé.</span></div>
+    </div>
+  </div>
+
+  <div class="spore-mark">∿ ∿ ∿</div>
+  <div class="spore-diagram">
+    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="4" fill="#2d4a1e"/>
+      <circle cx="40" cy="40" r="12" stroke="#2d4a1e" stroke-width="0.5"/>
+      <circle cx="40" cy="40" r="22" stroke="#2d4a1e" stroke-width="0.3" stroke-dasharray="2 4"/>
+      <circle cx="40" cy="40" r="34" stroke="#2d4a1e" stroke-width="0.2" stroke-dasharray="1 6"/>
+      <line x1="40" y1="6" x2="40" y2="18" stroke="#2d4a1e" stroke-width="0.5"/>
+      <line x1="40" y1="62" x2="40" y2="74" stroke="#2d4a1e" stroke-width="0.5"/>
+      <line x1="6" y1="40" x2="18" y2="40" stroke="#2d4a1e" stroke-width="0.5"/>
+      <line x1="62" y1="40" x2="74" y2="40" stroke="#2d4a1e" stroke-width="0.5"/>
+      <line x1="15" y1="15" x2="23" y2="23" stroke="#2d4a1e" stroke-width="0.3"/>
+      <line x1="57" y1="57" x2="65" y2="65" stroke="#2d4a1e" stroke-width="0.3"/>
+      <line x1="65" y1="15" x2="57" y2="23" stroke="#2d4a1e" stroke-width="0.3"/>
+      <line x1="15" y1="65" x2="23" y2="57" stroke="#2d4a1e" stroke-width="0.3"/>
+    </svg>
+  </div>
+
+</div>
+</body>
+</html>
