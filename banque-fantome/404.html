@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+
+<head>
+    <script>
+        const path = window.location.pathname;
+        const base = '/banque-fantome';
+        const route = path.replace(base, '') || '/';
+        sessionStorage.setItem('redirect', route);
+        window.location.replace(base + '/');
+    </script>
+</head>
+
+</html>
