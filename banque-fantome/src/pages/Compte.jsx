@@ -6,6 +6,44 @@ import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import Notif from '../components/Notif'
 
+function ChangerMdp() {
+  const [mdp, setMdp]         = useState('')
+  const [confirm, setConfirm] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg]         = useState(null)
+
+  async function submit() {
+    if (mdp.length < 6) { setMsg({ t: 'err', m: 'Min 6 caractères' }); return }
+    if (mdp !== confirm) { setMsg({ t: 'err', m: 'Les mots de passe ne correspondent pas' }); return }
+    setLoading(true)
+    const { error } = await supabase.auth.updateUser({ password: mdp })
+    setLoading(false)
+    if (error) setMsg({ t: 'err', m: error.message })
+    else { setMsg({ t: 'ok', m: 'Mot de passe changé !' }); setMdp(''); setConfirm('') }
+  }
+
+  return (
+    <div style={{ maxWidth: 400 }}>
+      <div className="field">
+        <label>Nouveau mot de passe</label>
+        <input type="password" value={mdp} onChange={e => setMdp(e.target.value)} placeholder="••••••••" />
+      </div>
+      <div className="field">
+        <label>Confirmer</label>
+        <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="••••••••" />
+      </div>
+      {msg && (
+        <div style={{ color: msg.t === 'ok' ? '#1a7a1a' : 'var(--rouge)', fontSize: '.82rem', fontWeight: 500, marginBottom: '1rem' }}>
+          {msg.m}
+        </div>
+      )}
+      <button className="btn btn-outline" onClick={submit} disabled={loading}>
+        {loading ? '…' : 'Changer le mot de passe'}
+      </button>
+    </div>
+  )
+}
+
 export default function Compte() {
   const { user } = useAuth()
   const navigate  = useNavigate()
@@ -81,7 +119,14 @@ export default function Compte() {
               ))}
             </div>
         }
+
+        {/* Changer mot de passe */}
+        <div style={{ marginTop: '3rem', borderTop: '2px solid var(--gris-bord)', paddingTop: '2rem' }}>
+          <h3 style={{ marginBottom: '1.5rem' }}>Changer de mot de passe</h3>
+          <ChangerMdp />
+        </div>
       </div>
+
       {selected && <ObjetModal objet={selected} onClose={() => setSelected(null)} />}
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
     </div>
