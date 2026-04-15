@@ -22,11 +22,12 @@ export default function ObjetCard({ objet, onClick }) {
         }
       </div>
       <div className="card-body">
+        {objet.categorie && <span className="tag" style={{ alignSelf: 'flex-start' }}>{objet.categorie}</span>}
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 80)}{objet.description?.length > 80 ? '…' : ''}</div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '.4rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '.4rem', gap: '.75rem' }}>
           <span className="card-user">par {objet.pseudo || 'Anonyme'}</span>
-          <span style={{ fontSize: '.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: statutColor }}>{objet.statut || 'disponible'}</span>
+          <span style={{ fontSize: '.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: statutColor, textAlign: 'right' }}>{objet.statut || 'disponible'}</span>
         </div>
       </div>
     </div>

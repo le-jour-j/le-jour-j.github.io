@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
@@ -124,7 +124,7 @@ export default function Messages() {
             {loading
               ? <div className="loader">chargement<span className="blink">_</span></div>
               : conversations.length === 0
-                ? <div style={{ color: 'var(--grey)', fontFamily: 'var(--vt)', fontSize: '1.3rem', padding: '2rem 0' }}>
+                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--vt)', fontSize: '1.3rem', padding: '2rem 0' }}>
                     AUCUN MESSAGE
                   </div>
                 : conversations.map(c => {
@@ -136,19 +136,19 @@ export default function Messages() {
                         onClick={() => setSelected(c)}
                         style={{
                           padding: '1rem',
-                          borderBottom: '1px solid var(--border)',
+                          borderBottom: '1px solid var(--gris-bord)',
                           cursor: 'crosshair',
-                          background: isActive ? 'var(--ink)' : c.unread > 0 ? 'var(--accent_light)' : 'var(--paper)',
-                          color: isActive ? 'var(--paper)' : 'var(--ink)',
+                          background: isActive ? 'var(--noir)' : c.unread > 0 ? 'rgba(255, 230, 109, 0.28)' : 'var(--blanc)',
+                          color: isActive ? 'var(--blanc)' : 'var(--noir)',
                           transition: 'background .1s',
                         }}
                       >
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.3rem' }}>
                           <strong style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{c.pseudo}</strong>
-                          {c.unread > 0 && <span style={{ background: 'var(--red)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
+                          {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
                         </div>
-                        {c.objetTitre && <div style={{ fontSize: '.7rem', color: isActive ? 'var(--grey)' : 'var(--grey)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
-                        <div style={{ fontSize: '.8rem', color: isActive ? '#ccc' : 'var(--grey)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {c.objetTitre && <div style={{ fontSize: '.7rem', color: isActive ? 'var(--gris)' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
+                        <div style={{ fontSize: '.8rem', color: isActive ? '#ccc' : 'var(--gris)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {c.last}
                         </div>
                       </div>
@@ -159,14 +159,14 @@ export default function Messages() {
 
           {/* ── THREAD ── */}
           {selected && (
-            <div style={{ background: 'var(--paper)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', height: '60vh' }}>
+            <div style={{ background: 'var(--blanc)', border: '1px solid var(--gris-bord)', display: 'flex', flexDirection: 'column', height: '60vh' }}>
               {/* Header */}
-              <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--border)', background: 'var(--ink)', color: 'var(--paper)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--gris-bord)', background: 'var(--noir)', color: 'var(--blanc)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{selected.pseudo}</div>
-                  {selected.objetTitre && <div style={{ fontSize: '.7rem', color: 'var(--grey)' }}>re: {selected.objetTitre}</div>}
+                  {selected.objetTitre && <div style={{ fontSize: '.7rem', color: 'var(--gris)' }}>re: {selected.objetTitre}</div>}
                 </div>
-                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--grey)', cursor: 'crosshair', fontSize: '1.2rem' }}>✕</button>
+                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'crosshair', fontSize: '1.2rem' }}>✕</button>
               </div>
 
               {/* Messages */}
@@ -177,16 +177,16 @@ export default function Messages() {
                     <div key={m.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMine ? 'flex-end' : 'flex-start' }}>
                       <div style={{
                         maxWidth: '75%',
-                        background: isMine ? 'var(--ink)' : 'var(--bg2)',
-                        color: isMine ? 'var(--paper)' : 'var(--ink)',
+                        background: isMine ? 'var(--noir)' : 'var(--gris-clair)',
+                        color: isMine ? 'var(--blanc)' : 'var(--noir)',
                         padding: '.6rem .9rem',
-                        border: '1px solid var(--border)',
+                        border: '1px solid var(--gris-bord)',
                         fontFamily: 'var(--type)',
                         lineHeight: 1.6,
                       }}>
                         {m.contenu}
                       </div>
-                      <div style={{ fontSize: '.65rem', color: 'var(--grey)', marginTop: '.2rem' }}>
+                      <div style={{ fontSize: '.65rem', color: 'var(--gris)', marginTop: '.2rem' }}>
                         {new Date(m.created_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                       </div>
                     </div>
@@ -195,15 +195,15 @@ export default function Messages() {
               </div>
 
               {/* Répondre */}
-              <div style={{ padding: '.8rem', borderTop: '1px solid var(--border)', display: 'flex', gap: '.6rem' }}>
+              <div style={{ padding: '.8rem', borderTop: '1px solid var(--gris-bord)', display: 'flex', gap: '.6rem' }}>
                 <textarea
                   value={reply}
                   onChange={e => setReply(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply() } }}
                   placeholder="Votre message… (Entrée pour envoyer)"
-                  style={{ flex: 1, resize: 'none', height: 60, background: 'var(--bg2)', border: '1px solid var(--border)', padding: '.5rem', fontFamily: 'var(--mono)', fontSize: '.85rem', color: 'var(--ink)', outline: 'none' }}
+                  style={{ flex: 1, resize: 'none', height: 60, background: 'var(--gris-clair)', border: '1px solid var(--gris-bord)', padding: '.5rem', fontFamily: 'var(--mono)', fontSize: '.85rem', color: 'var(--noir)', outline: 'none' }}
                 />
-                <button className="btn btn-solid" onClick={sendReply} disabled={sending} style={{ alignSelf: 'flex-end' }}>
+                <button className="btn btn-noir" onClick={sendReply} disabled={sending} style={{ alignSelf: 'flex-end' }}>
                   {sending ? '…' : '→'}
                 </button>
               </div>

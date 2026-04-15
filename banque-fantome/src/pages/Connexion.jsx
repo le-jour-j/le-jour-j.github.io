@@ -88,7 +88,7 @@ export default function Connexion() {
 
           <div className="field">
             <label>Pseudo</label>
-            <input value={pseudo} onChange={e => setPseudo(e.target.value)} placeholder="ex: collector_picardie" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
+            <input value={pseudo} onChange={e => setPseudo(e.target.value)} placeholder="ex: operateur_fantome" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
             {errors.pseudo && <span className="error-msg">{errors.pseudo}</span>}
           </div>
 

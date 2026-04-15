@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './components/AuthContext'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -7,6 +7,7 @@ import Deposer from './pages/Deposer'
 import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
+import Senrichir from './pages/Senrichir'
 
 export default function App() {
   return (
@@ -15,7 +16,9 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/"           element={<Home />} />
-          <Route path="/inventaire" element={<Inventaire />} />
+          <Route path="/market"     element={<Inventaire />} />
+          <Route path="/inventaire" element={<Navigate to="/market" replace />} />
+          <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/deposer"    element={<Deposer />} />
           <Route path="/connexion"  element={<Connexion />} />
           <Route path="/compte"     element={<Compte />} />

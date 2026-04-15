@@ -35,7 +35,8 @@ export default function Navbar() {
           </NavLink>
           <ul className="nav-links">
             <li><NavLink to="/" end>Accueil</NavLink></li>
-            <li><NavLink to="/inventaire">Inventaire</NavLink></li>
+            <li><NavLink to="/market">Market</NavLink></li>
+            <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             <li><NavLink to="/deposer">Déposer</NavLink></li>
             {user ? <>
               <li>
@@ -54,7 +55,7 @@ export default function Navbar() {
       </nav>
       <div className="ticker-wrap">
         <span className="ticker">
-          ◈ BANQUE FANTÔME — INSTITUTION ARTISTIQUE MOBILE DE TROC ◈ CAPITAL INITIAL : 300 CHÈQUES DESSINÉS + 50 CARTES VERNIES ◈ CHAQUE OBJET A UNE HISTOIRE ◈ DÉPOSEZ · ÉCHANGEZ · CIRCULEZ ◈ TRANSACTIONS EN COURS ◈ VOS OBJETS SONT DES ACTIFS ◈ &nbsp;
+          ◈ BANQUE FANTÔME — INSTITUTION ARTISTIQUE DE CIRCULATION ◈ OUVREZ UN COMPTE ◈ FABRIQUEZ VOTRE FAUX ARGENT ARTISTIQUE ◈ TÉLÉCHARGEZ DES BILLETS À COLORIER ◈ DÉPOSEZ · ÉCHANGEZ · FAITES CIRCULER ◈ CHAQUE OBJET PEUT DEVENIR UN ACTIF NARRATIF ◈ &nbsp;
         </span>
       </div>
     </>

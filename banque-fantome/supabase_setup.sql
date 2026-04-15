@@ -17,6 +17,7 @@ create table if not exists objets (
   description text not null,
   histoire    text,
   lieu        text,
+  categorie   text default 'objet',
   image_path  text,
   pseudo      text,
   user_id     uuid references auth.users(id) on delete set null,
@@ -60,3 +61,8 @@ create policy "storage_insert" on storage.objects
 
 create policy "storage_delete" on storage.objects
   for delete using (bucket_id = 'objets' and auth.uid()::text = (storage.foldername(name))[1]);
+
+
+-- Mise à jour pour projets déjà existants
+alter table if exists objets add column if not exists categorie text default 'objet';
+update objets set categorie = 'objet' where categorie is null;

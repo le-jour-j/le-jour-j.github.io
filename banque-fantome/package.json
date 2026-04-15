@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "node ./node_modules/vite/dist/node/cli.js",
+    "build": "node ./node_modules/vite/dist/node/cli.js build",
+    "preview": "node ./node_modules/vite/dist/node/cli.js preview"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",

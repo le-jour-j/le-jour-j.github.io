@@ -40,21 +40,21 @@ export default function MessageModal({ objet, onClose }) {
         {done
           ? <div style={{ textAlign: 'center', padding: '2rem 0' }}>
               <div className="stamp ok" style={{ fontSize: '1.4rem', marginBottom: '1rem' }}>Message envoyé</div>
-              <p style={{ fontFamily: 'var(--type)', color: 'var(--ink2)', lineHeight: 1.7 }}>
+              <p style={{ fontFamily: 'var(--sans)', color: 'var(--gris-fonce)', lineHeight: 1.7 }}>
                 {objet.pseudo} recevra votre proposition.<br />
                 Suivez la réponse dans <strong>Mes messages</strong>.
               </p>
-              <button className="btn btn-ink" style={{ marginTop: '1.5rem' }} onClick={() => { onClose(); navigate('/messages') }}>
+              <button className="btn btn-noir" style={{ marginTop: '1.5rem' }} onClick={() => { onClose(); navigate('/messages') }}>
                 → Voir mes messages
               </button>
             </div>
           : <>
-              <h3 style={{ fontFamily: 'var(--type)', marginBottom: '.4rem' }}>Proposer un échange</h3>
+              <h3 style={{ fontFamily: 'var(--sans)', marginBottom: '.4rem' }}>Proposer un échange</h3>
               <div style={{ fontSize: '.75rem', color: 'var(--grey)', marginBottom: '1.2rem', textTransform: 'uppercase', letterSpacing: '.1em' }}>
                 à {objet.pseudo} · re: {objet.titre}
               </div>
               {!user &&
-                <p style={{ fontFamily: 'var(--type)', color: 'var(--red)', marginBottom: '1rem', fontSize: '.9rem' }}>
+                <p style={{ fontFamily: 'var(--sans)', color: 'var(--red)', marginBottom: '1rem', fontSize: '.9rem' }}>
                   Vous devez être connecté pour envoyer un message.
                 </p>
               }
@@ -69,7 +69,7 @@ export default function MessageModal({ objet, onClose }) {
                 />
               </div>
               <button
-                className="btn btn-solid"
+                className="btn btn-noir"
                 onClick={user ? send : () => navigate('/connexion')}
                 disabled={sending}
                 style={{ width: '100%' }}
