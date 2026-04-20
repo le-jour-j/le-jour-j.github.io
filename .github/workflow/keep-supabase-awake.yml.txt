@@ -2,7 +2,6 @@ name: Keep Supabase Awake
 
 on:
   schedule:
-    # Mardi et vendredi à 09:17 UTC
     - cron: '17 9 * * 2,5'
   workflow_dispatch:
 
@@ -10,7 +9,7 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST API
+      - name: Ping Supabase
         run: |
           curl -L -sS \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
