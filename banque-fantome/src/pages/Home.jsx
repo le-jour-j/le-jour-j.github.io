@@ -29,10 +29,10 @@ export default function Home() {
     <div>
       <section className="hero hero-light">
         <div className="container">
-          <div className="hero-eyebrow">Institution artistique de circulation, de troc et de faux argent</div>
+          <div className="hero-eyebrow">Institution de circulation, de troc et de faux argent</div>
           <h1 className="hero-title">BANQUE<br/><span>FANTÔME</span></h1>
           <p className="hero-sub">
-            La Banque Fantôme propose d'ouvrir un compte, de fabriquer sa propre monnaie artistique et d'obtenir des objets, des œuvres ou des services présents dans le market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
+            La Banque Fantôme propose d'ouvrir un compte, de fabriquer sa propre monnaie et d'obtenir des objets, des œuvres ou des services présents dans le market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
           <div className="hero-actions">
             <Link to="/connexion"><button className="btn btn-jaune">→ Ouvrir un compte</button></Link>
@@ -74,7 +74,7 @@ export default function Home() {
               <div>
                 <div className="info-drawer-title">Ici, vous créez votre monnaie et vous achetez avec.</div>
                 <p>
-                  La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs fabriquent leurs propres billets, les activent comme monnaie artistique puis les utilisent pour obtenir un objet, une œuvre ou un service déposé sur le site. La banque s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
+                  La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs fabriquent leurs propres billets, les activent comme monnaie puis les utilisent pour obtenir un objet, une œuvre ou un service déposé sur le site. La banque s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
                 </p>
               </div>
             </div>
@@ -90,7 +90,7 @@ export default function Home() {
             <div className="card">
               <h3 style={{ marginBottom: '.8rem' }}>2. Fabriquer son argent</h3>
               <p style={{ color: 'var(--gris-fonce)', lineHeight: 1.7 }}>
-                Des billets à imprimer et colorier servent de monnaie artistique pour acheter dans le market.
+                Des billets à imprimer et colorier servent de monnaie pour acheter dans le market.
               </p>
             </div>
             <div className="card">
@@ -156,7 +156,7 @@ export default function Home() {
       <section style={{ background: 'var(--jaune)', padding: '3rem 0' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
           <div>
-            <div style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', fontWeight: 700, letterSpacing: '.2em', marginBottom: '.5rem' }}>FAUX ARGENT ARTISTIQUE</div>
+            <div style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', fontWeight: 700, letterSpacing: '.2em', marginBottom: '.5rem' }}>FAUX ARGENT</div>
             <p style={{ fontSize: '1rem', fontWeight: 500, maxWidth: 650, lineHeight: 1.7 }}>
               Imprimez les billets, fabriquez votre propre réserve, puis utilisez-la pour obtenir un élément du market. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
             </p>

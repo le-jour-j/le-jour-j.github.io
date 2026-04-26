@@ -210,3 +210,57 @@ nav { background: var(--blanc); border-bottom: 1px solid var(--gris-bord); posit
   .lightbox-nav { width: 40px; height: 40px; font-size: 1.6rem; }
   .lightbox-counter { bottom: .5rem; }
 }
+
+/* S'ENRICHIR */
+.enrichir-billet-button {
+  border: 0;
+  padding: 0;
+  display: block;
+  cursor: zoom-in;
+  text-align: left;
+}
+.enrichir-billet-button:focus-visible {
+  outline: 3px solid var(--jaune);
+  outline-offset: -3px;
+}
+.enrichir-zoom-tag {
+  border: 0;
+  cursor: zoom-in;
+  font-family: var(--sans);
+}
+.prompt-list {
+  display: grid;
+  gap: 1rem;
+}
+.prompt-card {
+  background: var(--blanc);
+  border: 2px solid var(--gris-bord);
+  padding: 1.2rem;
+}
+.prompt-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .9rem;
+  flex-wrap: wrap;
+}
+.prompt-card-head h3 {
+  margin: 0;
+}
+.prompt-card textarea {
+  width: 100%;
+  min-height: 145px;
+  border: 2px solid var(--gris-bord);
+  background: var(--gris-clair);
+  color: var(--gris-fonce);
+  font-family: var(--mono);
+  font-size: .78rem;
+  line-height: 1.55;
+  padding: .9rem;
+  resize: vertical;
+}
+@media (max-width: 640px) {
+  .prompt-card { padding: 1rem; }
+  .prompt-card textarea { min-height: 220px; font-size: .72rem; }
+}

@@ -127,7 +127,7 @@ export default function Deposer() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: 900 }}>
           <div>
             <p style={{ color: 'var(--gris)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.92rem' }}>
-              Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il entre dans le circuit de la Banque Fantôme et peut être obtenu contre de la monnaie artistique produite par les joueurs.
+              Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il entre dans le circuit de la Banque Fantôme et peut être obtenu contre de la monnaie produite par les joueurs.
             </p>
             <div className="field">
               <label>Images (8 max, 5 Mo chacune)</label>
