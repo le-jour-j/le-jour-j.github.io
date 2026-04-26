@@ -29,8 +29,8 @@ export default function Home() {
     <div>
       <section className="hero hero-light">
         <div className="container">
-          <div className="hero-eyebrow">Institution de circulation, de troc et de faux argent</div>
-          <h1 className="hero-title">BANQUE<br/><span>FANTÔME</span></h1>
+          <div className="hero-eyebrow">On va faire du pognon</div>
+          <h1 className="hero-title">BANQUE<br /><span>FANTÔME</span></h1>
           <p className="hero-sub">
             La Banque Fantôme propose d'ouvrir un compte, de fabriquer sa propre monnaie et d'obtenir des objets, des œuvres ou des services présents dans le market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
