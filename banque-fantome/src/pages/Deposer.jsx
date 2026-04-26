@@ -92,7 +92,7 @@ export default function Deposer() {
     <div style={{ padding: '3rem 0 5rem' }}>
       <div className="container">
         <div className="section-head"><h2>Déposer dans le market</h2></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: 900 }}>
+        <div className="page-grid-2">
           <div>
             <p style={{ color: 'var(--gris)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.92rem' }}>
               Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il entre dans le circuit de la Banque Fantôme et peut être obtenu contre de la monnaie artistique produite par les joueurs.

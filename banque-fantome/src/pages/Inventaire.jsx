@@ -47,14 +47,14 @@ export default function Inventaire() {
           <span className="count">{total} entrée{total !== 1 ? 's' : ''}</span>
         </div>
 
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.2rem', alignItems: 'center' }}>
+        <div className="market-toolbar" style={{ marginBottom: '1.2rem' }}>
           <div className="field" style={{ margin: 0, flex: '1 1 220px' }}>
             <input placeholder="Rechercher dans le market…" value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', marginBottom: '.8rem', alignItems: 'center' }}>
-          <span className="count" style={{ minWidth: 80 }}>Catégories</span>
+        <div className="filter-row" style={{ marginBottom: '.8rem' }}>
+          <span className="count filter-label">Catégories</span>
           {CATEGORIES.map(c => (
             <button key={c} className={`btn ${categorie === c ? 'btn-noir' : 'btn-outline'}`}
               style={{ fontSize: '.72rem', padding: '.35rem .9rem' }} onClick={() => setCategorie(c)}>
@@ -63,8 +63,8 @@ export default function Inventaire() {
           ))}
         </div>
 
-        <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', marginBottom: '2.5rem', alignItems: 'center' }}>
-          <span className="count" style={{ minWidth: 80 }}>Statuts</span>
+        <div className="filter-row" style={{ marginBottom: '2.5rem' }}>
+          <span className="count filter-label">Statuts</span>
           {STATUTS.map(s => (
             <button key={s} className={`btn ${statut === s ? 'btn-noir' : 'btn-outline'}`}
               style={{ fontSize: '.72rem', padding: '.35rem .9rem' }} onClick={() => setStatut(s)}>
