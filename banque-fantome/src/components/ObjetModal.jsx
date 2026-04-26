@@ -1,19 +1,15 @@
 import { useState } from 'react'
-import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from './AuthContext'
 import MessageModal from './MessageModal'
-
-function getImgUrl(path) {
-  if (!path) return null
-  const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path)
-  return data.publicUrl
-}
+import ImageLightbox from './ImageLightbox'
+import { getObjetImageUrls } from '../utils/images'
 
 export default function ObjetModal({ objet, onClose }) {
   const { user } = useAuth()
   const [showMsg, setShowMsg] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(null)
   if (!objet) return null
-  const imgUrl = objet.image_path ? getImgUrl(objet.image_path) : null
+  const imgUrls = getObjetImageUrls(objet)
   const isOwn = user && objet.user_id === user.id
 
   return (
@@ -24,9 +20,16 @@ export default function ObjetModal({ objet, onClose }) {
           <span className="stamp stamp-jaune" style={{ marginBottom: '1rem', display: 'inline-block' }}>
             #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
           </span>
-          {imgUrl &&
-            <div style={{ width: '100%', aspectRatio: '4/3', overflow: 'hidden', marginBottom: '1.2rem', background: 'var(--gris-clair)', border: '2px solid var(--gris-bord)' }}>
-              <img src={imgUrl} alt={objet.titre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          {!!imgUrls.length &&
+            <div style={{ marginBottom: '1.2rem' }}>
+              <div className={`modal-media-grid ${imgUrls.length === 1 ? 'single' : ''}`}>
+                {imgUrls.map((url, index) => (
+                  <button key={url + index} type="button" className="modal-media-item" onClick={() => setLightboxIndex(index)} aria-label={`Voir l'image ${index + 1} en grand`}>
+                    <img src={url} alt={`${objet.titre} ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </button>
+                ))}
+              </div>
+              {imgUrls.length > 1 && <div className="modal-media-hint">Cliquer sur une image pour l’agrandir.</div>}
             </div>
           }
           {objet.categorie && <div style={{ marginBottom: '.8rem' }}><span className="tag">{objet.categorie}</span></div>}
@@ -53,6 +56,15 @@ export default function ObjetModal({ objet, onClose }) {
         </div>
       </div>
       {showMsg && <MessageModal objet={objet} onClose={() => setShowMsg(false)} />}
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={imgUrls}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onPrev={() => setLightboxIndex(i => (i - 1 + imgUrls.length) % imgUrls.length)}
+          onNext={() => setLightboxIndex(i => (i + 1) % imgUrls.length)}
+        />
+      )}
     </>
   )
 }

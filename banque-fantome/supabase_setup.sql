@@ -19,6 +19,7 @@ create table if not exists objets (
   lieu        text,
   categorie   text default 'objet',
   image_path  text,
+  image_paths text[],
   pseudo      text,
   user_id     uuid references auth.users(id) on delete set null,
   statut      text default 'disponible',   -- disponible | réservé | échangé
@@ -66,3 +67,6 @@ create policy "storage_delete" on storage.objects
 -- Mise à jour pour projets déjà existants
 alter table if exists objets add column if not exists categorie text default 'objet';
 update objets set categorie = 'objet' where categorie is null;
+
+alter table if exists objets add column if not exists image_paths text[];
+update objets set image_paths = array[image_path] where image_path is not null and (image_paths is null or array_length(image_paths, 1) is null);

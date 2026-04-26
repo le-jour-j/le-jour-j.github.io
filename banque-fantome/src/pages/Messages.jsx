@@ -117,14 +117,14 @@ export default function Messages() {
           {unread > 0 && <span className="stamp warn" style={{ fontSize: '.8rem' }}>{unread} non lu{unread > 1 ? 's' : ''}</span>}
         </div>
 
-        <div className={`messages-layout ${selected ? '' : 'is-collapsed'}`}>
+        <div style={{ display: 'grid', gridTemplateColumns: selected ? '300px 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
 
           {/* ── LISTE CONVERSATIONS ── */}
           <div>
             {loading
               ? <div className="loader">chargement<span className="blink">_</span></div>
               : conversations.length === 0
-                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--mono)', fontSize: '1.3rem', padding: '2rem 0' }}>
+                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--vt)', fontSize: '1.3rem', padding: '2rem 0' }}>
                     AUCUN MESSAGE
                   </div>
                 : conversations.map(c => {
@@ -144,7 +144,7 @@ export default function Messages() {
                         }}
                       >
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.3rem' }}>
-                          <strong style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{c.pseudo}</strong>
+                          <strong style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{c.pseudo}</strong>
                           {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
                         </div>
                         {c.objetTitre && <div style={{ fontSize: '.7rem', color: isActive ? 'var(--gris)' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
@@ -159,11 +159,11 @@ export default function Messages() {
 
           {/* ── THREAD ── */}
           {selected && (
-            <div className="thread-panel">
+            <div style={{ background: 'var(--blanc)', border: '1px solid var(--gris-bord)', display: 'flex', flexDirection: 'column', height: '60vh' }}>
               {/* Header */}
               <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--gris-bord)', background: 'var(--noir)', color: 'var(--blanc)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{selected.pseudo}</div>
+                  <div style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{selected.pseudo}</div>
                   {selected.objetTitre && <div style={{ fontSize: '.7rem', color: 'var(--gris)' }}>re: {selected.objetTitre}</div>}
                 </div>
                 <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'crosshair', fontSize: '1.2rem' }}>✕</button>
@@ -175,12 +175,13 @@ export default function Messages() {
                   const isMine = m.expediteur_id === user.id
                   return (
                     <div key={m.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMine ? 'flex-end' : 'flex-start' }}>
-                      <div className="thread-bubble" style={{
+                      <div style={{
+                        maxWidth: '75%',
                         background: isMine ? 'var(--noir)' : 'var(--gris-clair)',
                         color: isMine ? 'var(--blanc)' : 'var(--noir)',
                         padding: '.6rem .9rem',
                         border: '1px solid var(--gris-bord)',
-                        fontFamily: 'var(--sans)',
+                        fontFamily: 'var(--type)',
                         lineHeight: 1.6,
                       }}>
                         {m.contenu}
@@ -194,13 +195,13 @@ export default function Messages() {
               </div>
 
               {/* Répondre */}
-              <div className="cta-row" style={{ padding: '.8rem', borderTop: '1px solid var(--gris-bord)' }}>
+              <div style={{ padding: '.8rem', borderTop: '1px solid var(--gris-bord)', display: 'flex', gap: '.6rem' }}>
                 <textarea
                   value={reply}
                   onChange={e => setReply(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply() } }}
                   placeholder="Votre message… (Entrée pour envoyer)"
-                  style={{ flex: 1, minWidth: 0, resize: 'none', height: 60, background: 'var(--gris-clair)', border: '1px solid var(--gris-bord)', padding: '.5rem', fontFamily: 'var(--mono)', fontSize: '.85rem', color: 'var(--noir)', outline: 'none' }}
+                  style={{ flex: 1, resize: 'none', height: 60, background: 'var(--gris-clair)', border: '1px solid var(--gris-bord)', padding: '.5rem', fontFamily: 'var(--mono)', fontSize: '.85rem', color: 'var(--noir)', outline: 'none' }}
                 />
                 <button className="btn btn-noir" onClick={sendReply} disabled={sending} style={{ alignSelf: 'flex-end' }}>
                   {sending ? '…' : '→'}

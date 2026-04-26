@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
@@ -10,8 +10,8 @@ export default function Deposer() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet' })
-  const [file, setFile] = useState(null)
-  const [preview, setPreview] = useState(null)
+  const [files, setFiles] = useState([])
+  const [previews, setPreviews] = useState([])
   const [drag, setDrag] = useState(false)
   const [loading, setLoading] = useState(false)
   const [notif, setNotif] = useState(null)
@@ -20,11 +20,38 @@ export default function Deposer() {
 
   function set(k, v) { setForm(f => ({ ...f, [k]: v })) }
 
-  function handleFile(f) {
-    if (!f) return
-    if (!f.type.startsWith('image/')) { setNotif({ msg: 'Fichier image uniquement', type: 'err' }); return }
-    if (f.size > 5 * 1024 * 1024) { setNotif({ msg: 'Image max 5 Mo', type: 'err' }); return }
-    setFile(f); setPreview(URL.createObjectURL(f))
+  useEffect(() => {
+    return () => previews.forEach(url => URL.revokeObjectURL(url))
+  }, [previews])
+
+  function handleFiles(incoming) {
+    const selected = Array.from(incoming || [])
+    if (!selected.length) return
+    const valid = []
+    for (const f of selected) {
+      if (!f.type.startsWith('image/')) {
+        setNotif({ msg: 'Fichiers image uniquement', type: 'err' })
+        continue
+      }
+      if (f.size > 5 * 1024 * 1024) {
+        setNotif({ msg: 'Chaque image doit faire moins de 5 Mo', type: 'err' })
+        continue
+      }
+      valid.push(f)
+    }
+    if (!valid.length) return
+    const nextFiles = [...files, ...valid].slice(0, 8)
+    if (files.length + valid.length > 8) setNotif({ msg: 'Maximum 8 images par dépôt', type: 'err' })
+    previews.forEach(url => URL.revokeObjectURL(url))
+    setFiles(nextFiles)
+    setPreviews(nextFiles.map(file => URL.createObjectURL(file)))
+  }
+
+  function removeFile(index) {
+    const nextFiles = files.filter((_, i) => i !== index)
+    previews.forEach(url => URL.revokeObjectURL(url))
+    setFiles(nextFiles)
+    setPreviews(nextFiles.map(file => URL.createObjectURL(file)))
   }
 
   function validate() {
@@ -45,14 +72,15 @@ export default function Deposer() {
         const { data: profile } = await supabase.from('profiles').select('pseudo').eq('id', user.id).single()
         if (profile?.pseudo) pseudo = profile.pseudo
       }
-      let image_path = null
-      if (file) {
+      const image_paths = []
+      for (const file of files) {
         const ext = file.name.split('.').pop()
         const name = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`
         const { error: upErr } = await supabase.storage.from(STORAGE_BUCKET).upload(name, file, { cacheControl: '3600', upsert: false })
         if (upErr) throw upErr
-        image_path = name
+        image_paths.push(name)
       }
+      const image_path = image_paths[0] || null
       const payload = {
         titre: form.titre.trim(),
         description: form.description.trim(),
@@ -60,6 +88,7 @@ export default function Deposer() {
         lieu: form.lieu.trim() || null,
         categorie: form.categorie,
         image_path,
+        image_paths: image_paths.length ? image_paths : null,
         pseudo,
         user_id: user?.id || null,
         statut: 'disponible',
@@ -68,6 +97,9 @@ export default function Deposer() {
       if (insErr) {
         if (insErr.message?.toLowerCase().includes('categorie')) {
           throw new Error("La colonne 'categorie' manque dans Supabase. Exécute la mise à jour SQL fournie avec le projet.")
+        }
+        if (insErr.message?.toLowerCase().includes('image_paths')) {
+          throw new Error("La colonne 'image_paths' manque dans Supabase. Exécute la mise à jour SQL fournie avec le projet pour activer plusieurs images.")
         }
         throw insErr
       }
@@ -92,23 +124,30 @@ export default function Deposer() {
     <div style={{ padding: '3rem 0 5rem' }}>
       <div className="container">
         <div className="section-head"><h2>Déposer dans le market</h2></div>
-        <div className="page-grid-2">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: 900 }}>
           <div>
             <p style={{ color: 'var(--gris)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.92rem' }}>
               Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il entre dans le circuit de la Banque Fantôme et peut être obtenu contre de la monnaie artistique produite par les joueurs.
             </p>
             <div className="field">
-              <label>Image (max 5 Mo)</label>
+              <label>Images (8 max, 5 Mo chacune)</label>
               <div className={`upload-zone ${drag ? 'drag' : ''}`}
                 onDragOver={e => { e.preventDefault(); setDrag(true) }}
                 onDragLeave={() => setDrag(false)}
-                onDrop={e => { e.preventDefault(); setDrag(false); handleFile(e.dataTransfer.files[0]) }}
+                onDrop={e => { e.preventDefault(); setDrag(false); handleFiles(e.dataTransfer.files) }}
                 onClick={() => inputRef.current.click()}
               >
-                <input ref={inputRef} type="file" accept="image/*" onChange={e => handleFile(e.target.files[0])} />
-                {preview
-                  ? <img src={preview} alt="aperçu" style={{ maxHeight: 200, maxWidth: '100%', display: 'block', margin: '0 auto' }} />
-                  : <><span className="uz-icon">📷</span><span className="uz-text">Cliquez ou glissez une image</span></>
+                <input ref={inputRef} type="file" accept="image/*" multiple onChange={e => handleFiles(e.target.files)} />
+                {previews.length
+                  ? <div className="upload-previews">
+                      {previews.map((src, index) => (
+                        <div key={src + index} className="upload-preview-item">
+                          <img src={src} alt={`aperçu ${index + 1}`} />
+                          <button type="button" className="upload-preview-remove" onClick={e => { e.stopPropagation(); removeFile(index) }}>✕</button>
+                        </div>
+                      ))}
+                    </div>
+                  : <><span className="uz-icon">📷</span><span className="uz-text">Cliquez ou glissez une ou plusieurs images</span></>
                 }
               </div>
             </div>

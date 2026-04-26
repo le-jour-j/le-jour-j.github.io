@@ -1,15 +1,10 @@
 import { useState } from 'react'
-import { supabase, STORAGE_BUCKET } from '../lib/supabase'
-
-function getImgUrl(path) {
-  if (!path) return null
-  const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path)
-  return data.publicUrl
-}
+import { getObjetImageUrls } from '../utils/images'
 
 export default function ObjetCard({ objet, onClick }) {
   const [imgErr, setImgErr] = useState(false)
-  const imgUrl = objet.image_path ? getImgUrl(objet.image_path) : null
+  const imgUrls = getObjetImageUrls(objet)
+  const imgUrl = imgUrls[0] || null
   const statutColor = objet.statut === 'échangé' ? '#1a7a1a' : objet.statut === 'réservé' ? '#E63946' : 'var(--gris)'
 
   return (
@@ -20,6 +15,7 @@ export default function ObjetCard({ objet, onClick }) {
           ? <img src={imgUrl} alt={objet.titre} onError={() => setImgErr(true)} />
           : <div className="no-img">BF</div>
         }
+        {imgUrls.length > 1 && <span className="img-count-badge">+{imgUrls.length - 1}</span>}
       </div>
       <div className="card-body">
         {objet.categorie && <span className="tag" style={{ alignSelf: 'flex-start' }}>{objet.categorie}</span>}
