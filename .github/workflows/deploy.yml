@@ -36,10 +36,12 @@ jobs:
       - name: Prepare site
         run: |
           mkdir public-build
-          cp -R ./* public-build/
-          rm -rf public-build/.git
-          rm -rf public-build/.github
-          rm -rf public-build/tour-de-phrance
+          rsync -av ./ public-build/ \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude "public-build" \
+            --exclude "tour-de-phrance"
+
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
           echo "jeansonpechin.com" > public-build/CNAME
