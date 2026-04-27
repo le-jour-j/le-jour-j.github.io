@@ -1,0 +1,5 @@
+v7
+- Correction des liens PDF dans l'onglet Guide.
+- Renommage des PDF sans accents ni apostrophes pour éviter les liens cassés sur GitHub Pages.
+- Mise à jour de src/data/documents.js.
+- Ajout de @vitejs/plugin-react dans package.json si absent.

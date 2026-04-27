@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: #2d3748;
+  background: #0a0812;
+}
+
+html, body, #root { min-height: 100%; margin: 0; }
+button, input { font: inherit; }
+
+.app-root { min-height: 100vh; background: #0a0812; }
+.main-nav {
+  max-width: 600px;
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #111;
+  border-bottom: 1px solid #333;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+}
+.brand {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.nav-tabs button {
+  border: 1px solid #333;
+  background: transparent;
+  color: #bbb;
+  padding: 6px 9px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.nav-tabs button.active {
+  background: #e8eef8;
+  color: #111;
+  border-color: #e8eef8;
+}
+.page-shell {
+  max-width: 600px;
+  min-height: calc(100vh - 45px);
+  margin: 0 auto;
+  background: #eef2f8;
+  padding: 16px;
+}
+.page-card {
+  background: #e0eaf5;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 18px;
+  border-radius: 2px;
+}
+.eyebrow {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #718096;
+  margin: 0 0 10px;
+}
+h1 {
+  margin: 0 0 14px;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.doc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+.doc-card {
+  display: grid;
+  gap: 4px;
+  text-decoration: none;
+  color: inherit;
+  background: #eef2f8;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 12px;
+  border-radius: 2px;
+}
+.doc-card span {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.doc-card strong { font-size: 14px; }
+.doc-card small { color: #f6845e; font-size: 12px; }
+@media (max-width: 480px) {
+  .main-nav { align-items: flex-start; flex-direction: column; }
+  .nav-tabs { justify-content: flex-start; }
+  h1 { font-size: 24px; }
+}
+
+
+.notice-card,
+.account-card,
+.page-note {
+  background: #eef2f8;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 12px;
+  margin: 14px 0;
+  border-radius: 2px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: #4a5568;
+}
+
+.auth-form input,
+.comment-form textarea {
+  width: 100%;
+  border: 1px solid #333;
+  background: #eef2f8;
+  color: #2d3748;
+  border-radius: 2px;
+  padding: 10px;
+  font: inherit;
+}
+
+.auth-form input:focus,
+.comment-form textarea:focus {
+  outline: 2px solid #f6845e;
+  outline-offset: 1px;
+}
+
+.primary-button,
+.plain-button,
+.comment-form button {
+  border: 1px solid #333;
+  background: #111;
+  color: #eee;
+  border-radius: 2px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.plain-button {
+  margin-top: 12px;
+  background: transparent;
+  color: #2d3748;
+}
+
+.primary-button:disabled,
+.comment-form button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.form-message,
+.comment-status {
+  font-size: 12px;
+  color: #718096;
+}
+
+.sync-strip {
+  padding: 0 18px 12px;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: #718096;
+  letter-spacing: 0.05em;
+}
+
+.comment-box {
+  margin: 10px 0 12px;
+  padding: 10px;
+  background: rgba(238, 242, 248, 0.7);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 2px;
+}
+
+.comment-box-header {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.comment-box-header span {
+  font-family: "DM Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #718096;
+}
+
+.comment-box-header strong {
+  font-size: 12px;
+  color: #2d3748;
+}
+
+.comment-form {
+  display: grid;
+  gap: 8px;
+}
+
+.comment-form textarea {
+  min-height: 64px;
+  resize: vertical;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.comment-form button {
+  justify-self: start;
+  padding: 7px 10px;
+  font-size: 11px;
+}
+
+.comment-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.comment-item {
+  background: #e0eaf5;
+  border-left: 3px solid #f6845e;
+  padding: 8px 9px;
+}
+
+.comment-item p {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0 0 5px;
+}
+
+.comment-item small {
+  color: #718096;
+  font-size: 10px;
+}
+
+
+.auth-mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0 8px;
+}
+
+.auth-mode-tabs button {
+  border: 1px solid #333;
+  background: transparent;
+  color: #2d3748;
+  border-radius: 2px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.auth-mode-tabs button.active {
+  background: #111;
+  color: #eee;
+}

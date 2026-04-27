@@ -1,0 +1,5 @@
+cat > tour-de-phrance/.gitignore <<'EOF'
+node_modules/
+dist/
+.env.local
+EOF

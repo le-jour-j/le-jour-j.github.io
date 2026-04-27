@@ -1,0 +1,5 @@
+v10
+- Ajout de src/config/supabaseConfig.js pour pouvoir pousser le src sans dépendre de .env.local.
+- src/lib/supabaseClient.js utilise d'abord supabaseConfig.js, puis .env.local en secours.
+- Ajout du workflow .github/workflows/keep-supabase-awake.yml.
+- Aucune modification des lieux, tronçons, commentaires ou authentification.
