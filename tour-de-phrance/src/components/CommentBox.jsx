@@ -112,7 +112,10 @@ export default function CommentBox({ targetType, targetId, title, user }) {
   }
 
   return (
-    <div className="comment-box">
+    <div
+      className="comment-box"
+      onClick={(event) => event.stopPropagation()}
+    >
       <div className="comment-box-header">
         <span>{label}</span>
         <strong>{title}</strong>
