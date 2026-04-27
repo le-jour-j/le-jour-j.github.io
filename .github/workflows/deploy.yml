@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install Tour de Phrance
         working-directory: ./tour-de-phrance
@@ -36,10 +36,13 @@ jobs:
       - name: Prepare site
         run: |
           mkdir public-build
-          rsync -av --exclude=".git" --exclude=".github" ./ public-build/
+          cp -R ./* public-build/
+          rm -rf public-build/.git
+          rm -rf public-build/.github
           rm -rf public-build/tour-de-phrance
           mkdir -p public-build/tour-de-phrance
-          cp -r tour-de-phrance/dist/* public-build/tour-de-phrance/
+          cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
+          echo "jeansonpechin.com" > public-build/CNAME
 
       - uses: actions/configure-pages@v4
 
