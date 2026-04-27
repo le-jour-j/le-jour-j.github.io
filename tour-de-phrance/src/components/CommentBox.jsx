@@ -44,7 +44,7 @@ export default function CommentBox({ targetType, targetId, title, user }) {
     async function loadComments() {
       const { data, error } = await supabase
         .from("comments")
-        .select("id, target_type, target_id, body, created_at, author_id, profiles:pseudo")
+        .select("id, target_type, target_id, body, created_at, author_id")
         .eq("target_type", targetType)
         .eq("target_id", targetId)
         .order("created_at", { ascending: false })
@@ -98,7 +98,7 @@ export default function CommentBox({ targetType, targetId, title, user }) {
         body: clean,
         author_id: user.id,
       })
-      .select("id, target_type, target_id, body, created_at, author_id, profiles:pseudo")
+      .select("id, target_type, target_id, body, created_at, author_id")
       .single();
 
     if (error) {
@@ -146,7 +146,7 @@ export default function CommentBox({ targetType, targetId, title, user }) {
             <article key={comment.id} className="comment-item">
               <p>{comment.body}</p>
               <small>
-                {comment.profiles?.pseudo || comment.local ? "note locale" : "contributeur·ice"} · {new Date(comment.created_at).toLocaleDateString("fr-FR")}
+                {comment.local ? "note locale" : "contributeur·ice"} · {new Date(comment.created_at).toLocaleDateString("fr-FR")}
               </small>
             </article>
           ))}
