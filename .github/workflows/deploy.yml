@@ -1,0 +1,50 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Tour de Phrance
+        working-directory: ./tour-de-phrance
+        run: npm install
+
+      - name: Build Tour de Phrance
+        working-directory: ./tour-de-phrance
+        run: npm run build
+
+      - name: Prepare site
+        run: |
+          mkdir public-build
+          rsync -av --exclude=".git" --exclude=".github" ./ public-build/
+          rm -rf public-build/tour-de-phrance
+          mkdir -p public-build/tour-de-phrance
+          cp -r tour-de-phrance/dist/* public-build/tour-de-phrance/
+
+      - uses: actions/configure-pages@v4
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public-build
+
+      - uses: actions/deploy-pages@v4
