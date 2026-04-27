@@ -5,7 +5,7 @@ import { RAW_LOCATIONS } from "./data/locations.js";
 import { RAW_ITINERARIES } from "./data/itineraries.js";
 
 // ─── GOOGLE MAPS API KEY ──────────────────────────────────────────────────────
-import { GOOGLE_MAPS_API_KEY } from "../config/googleMapsConfig";
+import { GOOGLE_MAPS_API_KEY } from "./config/googleMapsConfig.js";
 
 const apiKey = GOOGLE_MAPS_API_KEY;
 
