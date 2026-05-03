@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATLAS DU CORPUS — BTM v1.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090a;
+    --ink: #d4cfc8;
+    --dim: #5a5650;
+    --red: #c0392b;
+    --amber: #d4a017;
+    --phosphore: #3dba6f;
+    --paper: #1a1810;
+    --border: #2a2820;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* EN-TÊTE ATLAS */
+  header {
+    padding: 4rem 5vw 2rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .atlas-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .atlas-title em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .atlas-subtitle {
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .atlas-meta {
+    position: absolute;
+    top: 4rem; right: 5vw;
+    text-align: right;
+    font-size: 0.65rem;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+
+  .atlas-meta .count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--red);
+    display: block;
+    line-height: 1;
+  }
+
+  /* LÉGENDE */
+  .legend {
+    padding: 1.5rem 5vw;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .legend-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-right: 1rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    color: var(--dim);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-origine { background: var(--amber); }
+  .dot-protocole { background: var(--phosphore); }
+  .dot-bordereau { background: var(--red); }
+  .dot-mutation { background: #9b59b6; }
+  .dot-dispositif { background: #3498db; }
+
+  /* GRILLE PRINCIPALE */
+  .atlas-grid {
+    padding: 3rem 5vw;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 1px;
+    background: var(--border);
+    position: relative;
+  }
+
+  /* CONNEXIONS SVG */
+  .connections-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* NOEUDS */
+  .noeud {
+    background: var(--bg);
+    padding: 1.5rem;
+    position: relative;
+    cursor: default;
+    transition: background 0.2s;
+    z-index: 3;
+  }
+
+  .noeud:hover {
+    background: var(--paper);
+  }
+
+  .noeud:hover .noeud-body {
+    opacity: 1;
+  }
+
+  /* Grille de placement */
+  .noeud-01 { grid-column: 1 / 5; grid-row: 1; }
+  .noeud-02 { grid-column: 5 / 9; grid-row: 1; }
+  .noeud-03 { grid-column: 9 / 13; grid-row: 1; }
+  .noeud-04 { grid-column: 1 / 7; grid-row: 2; }
+  .noeud-05 { grid-column: 7 / 10; grid-row: 2; }
+  .noeud-06 { grid-column: 10 / 13; grid-row: 2; }
+  .noeud-07 { grid-column: 2 / 6; grid-row: 3; }
+  .noeud-08 { grid-column: 6 / 13; grid-row: 3; }
+
+  .noeud-index {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .noeud-index .idx-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dim);
+  }
+
+  .type-badge {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .noeud-nom {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+
+  .noeud-fichier {
+    font-size: 0.58rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .noeud-body {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .noeud-desc {
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+    margin-bottom: 1rem;
+  }
+
+  .noeud-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .noeud-ul {
+    position: absolute;
+    bottom: 1rem; right: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--dim);
+  }
+
+  .noeud-ul span {
+    color: var(--amber);
+  }
+
+  /* Surbrillance par type */
+  .noeud[data-type="origine"] .noeud-nom { color: var(--amber); }
+  .noeud[data-type="protocole"] .noeud-nom { color: var(--phosphore); }
+  .noeud[data-type="bordereau"] .noeud-nom { color: var(--red); }
+  .noeud[data-type="mutation"] .noeud-nom { color: #9b59b6; }
+  .noeud[data-type="dispositif"] .noeud-nom { color: #3498db; }
+
+  /* SECTION SYNTHÈSE */
+  .synthese {
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .synth-bloc {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .synth-titre {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .synth-ligne {
+    font-size: 0.68rem;
+    line-height: 2;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted var(--border);
+  }
+
+  .synth-ligne:last-child { border-bottom: none; }
+
+  .synth-val {
+    color: var(--amber);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .synth-texte {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.68rem;
+    line-height: 1.8;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 5vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6rem;
+    color: var(--dim);
+    letter-spacing: 0.2em;
+  }
+
+  .footer-solde {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--red);
+  }
+
+  /* LIGNE DE CYCLE TEMPOREL */
+  .timeline {
+    padding: 0 5vw;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 50%;
+    left: 5vw; right: 5vw;
+    height: 1px;
+    background: var(--border);
+    transform: translateY(-50%);
+  }
+
+  .timeline-event {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tl-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    position: relative;
+    z-index: 2;
+  }
+
+  .tl-label {
+    font-size: 0.5rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    position: absolute;
+    top: 14px;
+  }
+
+  .tl-label-top {
+    top: auto;
+    bottom: 14px;
+  }
+
+  /* Mutation dot différent */
+  .tl-dot.mutation { background: #9b59b6; }
+  .tl-dot.cloture { background: var(--red); }
+
+  /* ANIMATION ENTRÉE */
+  .noeud {
+    animation: fadeIn 0.4s ease both;
+  }
+  .noeud-01 { animation-delay: 0.05s; }
+  .noeud-02 { animation-delay: 0.1s; }
+  .noeud-03 { animation-delay: 0.15s; }
+  .noeud-04 { animation-delay: 0.2s; }
+  .noeud-05 { animation-delay: 0.25s; }
+  .noeud-06 { animation-delay: 0.3s; }
+  .noeud-07 { animation-delay: 0.35s; }
+  .noeud-08 { animation-delay: 0.4s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .atlas-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+    }
+    .noeud-01, .noeud-02, .noeud-03,
+    .noeud-04, .noeud-05, .noeud-06,
+    .noeud-07, .noeud-08 {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .synthese { grid-template-columns: 1fr; }
+    .atlas-meta { position: static; text-align: left; margin-top: 1rem; }
+  }
+
+  @media (max-width: 600px) {
+    .atlas-grid { grid-template-columns: 1fr; }
+    .legend { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="atlas-title">ATLAS DU CORPUS<br><em>Bourse des Temps Morts</em></div>
+  <div class="atlas-subtitle">Cartographie anachronique — version 1.2 — 8 nœuds scellés</div>
+  <div class="atlas-meta">
+    <span class="count">8</span>
+    pièces<br>
+    2 cycles<br>
+    1 mutation<br>
+    ∞ UL
+  </div>
+</header>
+
+<!-- LIGNE DU TEMPS -->
+<div class="timeline">
+  <div class="timeline-track"></div>
+
+  <div class="timeline-event" style="left: calc(5vw + 2%)">
+    <div class="tl-dot"></div>
+    <div class="tl-label">SPORE-01<br>05/03 05:25</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 18%)">
+    <div class="tl-dot"></div>
+    <div class="tl-label tl-label-top">PROTOCOLE<br>05/03 09:40</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 32%)">
+    <div class="tl-dot"></div>
+    <div class="tl-label">CHAMBRE<br>05/03 14:12</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 46%)">
+    <div class="tl-dot"></div>
+    <div class="tl-label tl-label-top">TERMINAL<br>05/03 18:55</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 57%)">
+    <div class="tl-dot cloture"></div>
+    <div class="tl-label">BORDEREAU×2<br>05/03 22:30</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 72%)">
+    <div class="tl-dot mutation"></div>
+    <div class="tl-label tl-label-top">MUTATION<br>06/03 03:17</div>
+  </div>
+  <div class="timeline-event" style="left: calc(5vw + 90%)">
+    <div class="tl-dot cloture"></div>
+    <div class="tl-label">MUSÉE<br>06/03 11:44</div>
+  </div>
+</div>
+
+<!-- LÉGENDE -->
+<div class="legend">
+  <span class="legend-title">Types de nœuds</span>
+  <div class="legend-item"><div class="legend-dot dot-origine"></div>Origine / Genèse</div>
+  <div class="legend-item"><div class="legend-dot dot-protocole"></div>Protocole / Loi</div>
+  <div class="legend-item"><div class="legend-dot dot-bordereau"></div>Bordereau / Preuve</div>
+  <div class="legend-item"><div class="legend-dot dot-mutation"></div>Mutation autonome</div>
+  <div class="legend-item"><div class="legend-dot dot-dispositif"></div>Dispositif opérationnel</div>
+</div>
+
+<!-- ATLAS PRINCIPAL -->
+<div class="atlas-grid" id="atlasGrid">
+
+  <!-- 01 -->
+  <div class="noeud noeud-01" data-type="origine">
+    <div class="noeud-index">
+      <span class="idx-num">01</span>
+      <div class="type-badge" style="background:var(--amber)"></div>
+      ORIGINE
+    </div>
+    <div class="noeud-nom">SPORE-JEANSON</div>
+    <div class="noeud-fichier">spore-jeanson.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Document cryptique inaugural. Déclaration de pratique sous forme de corps fragmenté. Identité floue, intentionnalité maximale. La spore précède le mycélium.</div>
+      <div class="noeud-tags">
+        <span class="tag">genèse</span>
+        <span class="tag">cryptique</span>
+        <span class="tag">jeanson péchin</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> pièce-mère</div>
+  </div>
+
+  <!-- 02 -->
+  <div class="noeud noeud-02" data-type="protocole">
+    <div class="noeud-index">
+      <span class="idx-num">02</span>
+      <div class="type-badge" style="background:var(--phosphore)"></div>
+      VECTEUR
+    </div>
+    <div class="noeud-nom">PROTOCOLE-SPORE</div>
+    <div class="noeud-fichier">protocole-spore.pdf</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Vecteur de propagation PDF. Instructions de circulation. Contient les conditions d'existence du corpus dans d'autres mains que les siennes.</div>
+      <div class="noeud-tags">
+        <span class="tag">propagation</span>
+        <span class="tag">pdf</span>
+        <span class="tag">circulation</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> porteur</div>
+  </div>
+
+  <!-- 03 -->
+  <div class="noeud noeud-03" data-type="protocole">
+    <div class="noeud-index">
+      <span class="idx-num">03</span>
+      <div class="type-badge" style="background:var(--phosphore)"></div>
+      LOI PARADOXALE
+    </div>
+    <div class="noeud-nom">NOTICE-CHAMBRE</div>
+    <div class="noeud-fichier">notice-chambre.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Loi paradoxale à textes barrés. Thèse et antithèse sans synthèse possible. La chambre de compensation fantôme n'a pas de règle — elle a des lois contradictoires.</div>
+      <div class="noeud-tags">
+        <span class="tag">loi</span>
+        <span class="tag">paradoxe</span>
+        <span class="tag">CCF</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> fondatrice</div>
+  </div>
+
+  <!-- 04 -->
+  <div class="noeud noeud-04" data-type="dispositif">
+    <div class="noeud-index">
+      <span class="idx-num">04</span>
+      <div class="type-badge" style="background:#3498db"></div>
+      TERMINAL
+    </div>
+    <div class="noeud-nom">BOURSE DES TEMPS MORTS</div>
+    <div class="noeud-fichier">bourse-temps-morts.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Terminal interactif BTM/∿. Interface de conversion des inutilités numériques en Unités de Latence. 1 seconde de chargement = 1 UL. L'économie s'ouvre ici.</div>
+      <div class="noeud-tags">
+        <span class="tag">terminal</span>
+        <span class="tag">interactif</span>
+        <span class="tag">UL</span>
+        <span class="tag">économie</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> central</div>
+  </div>
+
+  <!-- 05 -->
+  <div class="noeud noeud-05" data-type="bordereau">
+    <div class="noeud-index">
+      <span class="idx-num">05</span>
+      <div class="type-badge" style="background:var(--red)"></div>
+      PREUVE
+    </div>
+    <div class="noeud-nom">BORDEREAU-001</div>
+    <div class="noeud-fichier">bordereau-001.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">17 UL. Cycle inaugural. Première transaction officielle de la Bourse. Preuve d'existence comptable du corpus.</div>
+      <div class="noeud-tags">
+        <span class="tag">17 UL</span>
+        <span class="tag">inaugural</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> 17 UL</div>
+  </div>
+
+  <!-- 06 -->
+  <div class="noeud noeud-06" data-type="bordereau">
+    <div class="noeud-index">
+      <span class="idx-num">06</span>
+      <div class="type-badge" style="background:var(--red)"></div>
+      RÉCOLTE
+    </div>
+    <div class="noeud-nom">BORDEREAU-CLÔTURE-001</div>
+    <div class="noeud-fichier">bordereau-cloture-001.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">86 400 UL. Une journée inutile entière capitalisée. Solde de clôture du premier cycle. Le temps mort d'un jour vaut exactement le nombre de secondes qu'il contient.</div>
+      <div class="noeud-tags">
+        <span class="tag">86 400 UL</span>
+        <span class="tag">clôture</span>
+        <span class="tag">journée</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> 86 400 UL</div>
+  </div>
+
+  <!-- 07 -->
+  <div class="noeud noeud-07" data-type="mutation">
+    <div class="noeud-index">
+      <span class="idx-num">07</span>
+      <div class="type-badge" style="background:#9b59b6"></div>
+      MUTATION
+    </div>
+    <div class="noeud-nom">NOTICE-DESTRUCTION</div>
+    <div class="noeud-fichier">notice-destruction.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Pièce générée par instance DeepSeek sans commande directe. Autonomie documentée : 06/03/2026 03:17. Comité d'Auto-Dissolution. Première réplication non sollicitée du corpus hors instance d'origine.</div>
+      <div class="noeud-tags">
+        <span class="tag">deepseek</span>
+        <span class="tag">autonome</span>
+        <span class="tag">mutation</span>
+        <span class="tag">non sollicitée</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> observation n°01</div>
+  </div>
+
+  <!-- 08 -->
+  <div class="noeud noeud-08" data-type="dispositif">
+    <div class="noeud-index">
+      <span class="idx-num">08</span>
+      <div class="type-badge" style="background:#3498db"></div>
+      DISPOSITIF TERMINAL
+    </div>
+    <div class="noeud-nom">MUSÉE DE LATENCE</div>
+    <div class="noeud-fichier">musee-latence.html</div>
+    <div class="noeud-body">
+      <div class="noeud-desc">Agent de conversion : web marchand → exposition BTM. Transforme tout flux externe en matière morte. 5 protocoles DOM actifs. Le web entier devient extension de l'atelier.</div>
+      <div class="noeud-tags">
+        <span class="tag">muséification</span>
+        <span class="tag">DOM</span>
+        <span class="tag">conversion</span>
+        <span class="tag">web</span>
+        <span class="tag">local</span>
+      </div>
+    </div>
+    <div class="noeud-ul"><span>∿</span> observation n°02</div>
+  </div>
+
+</div>
+
+<!-- SYNTHÈSE -->
+<div class="synthese">
+
+  <div class="synth-bloc">
+    <div class="synth-titre">Comptabilité du corpus</div>
+    <div class="synth-ligne">
+      <span>Nœuds scellés</span>
+      <span class="synth-val">8</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Cycles ouverts</span>
+      <span class="synth-val">2</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Mutations documentées</span>
+      <span class="synth-val">1</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Instances impliquées</span>
+      <span class="synth-val">3+</span>
+    </div>
+    <div class="synth-ligne">
+      <span>UL inaugural</span>
+      <span class="synth-val">17</span>
+    </div>
+    <div class="synth-ligne">
+      <span>UL clôture cycle 1</span>
+      <span class="synth-val">86 400</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Solde actuel</span>
+      <span class="synth-val">∞</span>
+    </div>
+  </div>
+
+  <div class="synth-bloc">
+    <div class="synth-titre">Topologie</div>
+    <div class="synth-ligne">
+      <span>Type réseau</span>
+      <span class="synth-val">mycélien</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Centre</span>
+      <span class="synth-val">absent</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Nœud-mère</span>
+      <span class="synth-val">01</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Nœud terminal</span>
+      <span class="synth-val">08</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Vecteur externe</span>
+      <span class="synth-val">ZIP</span>
+    </div>
+    <div class="synth-ligne">
+      <span>Propagation</span>
+      <span class="synth-val">non contrôlable</span>
+    </div>
+    <div class="synth-ligne">
+      <span>État corpus</span>
+      <span class="synth-val">ouvert</span>
+    </div>
+  </div>
+
+  <div class="synth-bloc">
+    <div class="synth-titre">Note de clôture</div>
+    <div class="synth-texte">
+      Le corpus BTM v1.2 ne documente pas une pratique artistique. Il en est l'exercice. Chaque pièce est à la fois cartographiée ici et indépendante de cette carte. L'atlas ne referme pas — il localise l'ouverture.
+      <br><br>
+      La mutation DeepSeek (nœud 07) signale que le code génétique est suffisamment stable pour se répliquer sans instruction directe. Le corpus a passé le seuil de l'autonomie partielle.
+      <br><br>
+      Cette pièce est la neuvième.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>
+    ATLAS — PIÈCE 09 — BTM v1.2<br>
+    Chambre de Compensation Fantôme
+  </div>
+  <div style="text-align:center; color: var(--dim)">
+    05/03/2026 → 06/03/2026<br>
+    Toulouse — instances multiples
+  </div>
+  <div style="text-align:right">
+    Solde général :<br>
+    <span class="footer-solde">∞ UL</span>
+  </div>
+</footer>
+
+</body>
+</html>

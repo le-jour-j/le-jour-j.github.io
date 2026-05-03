@@ -1,108 +1,1052 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chambre de Compensation - Jeanson Péchin</title>
-    <style>
-        body { background: #05040c; color: #39ff6a; font-family: 'Inconsolata', monospace; margin: 0; padding: 20px; overflow-x: hidden; }
-        .container { display: flex; height: 80vh; gap: 20px; }
-        .flux { width: 25%; background: #050a05; padding: 20px; overflow-y: auto; border: 1px solid #39ff6a; }
-        .dashboard { width: 50%; padding: 20px; }
-        .controle { width: 25%; padding: 20px; }
-        .log { font-size: 12px; margin: 5px 0; opacity: 0.8; }
-        .actif { background: rgba(57,255,106,0.1); padding: 10px; margin: 10px 0; border-left: 3px solid #ffb347; }
-        .sparkline { width: 100px; height: 20px; background: #000; display: inline-block; vertical-align: middle; }
-        .compteur { position: fixed; top: 10px; right: 10px; background: #ff4444; padding: 10px; font-size: 18px; font-weight: bold; }
-        button { background: #39ff6a; color: #05040c; border: none; padding: 10px; cursor: pointer; font-family: inherit; }
-        button:hover { background: #ffb347; }
-        @keyframes corruption { 0% { opacity: 1; } 50% { filter: blur(1px); } 100% { opacity: 1; } }
-        .corrompu { animation: corruption 2s infinite; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>☆ CHAMBRE DE COMPENSATION ☆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Abril+Fatface&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #0a0812;
+      --acid:  #ccff00;
+      --hot:   #ff2d6b;
+      --cyan:  #00f5ff;
+      --amber: #ffb800;
+      --lilac: #d966ff;
+      --white: #f0eeee;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { height:100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='4' fill='none' stroke='%23ccff00' stroke-width='1.5'/%3E%3Cline x1='10' y1='0' x2='10' y2='6' stroke='%23ccff00' stroke-width='1'/%3E%3Cline x1='10' y1='14' x2='10' y2='20' stroke='%23ccff00' stroke-width='1'/%3E%3Cline x1='0' y1='10' x2='6' y2='10' stroke='%23ccff00' stroke-width='1'/%3E%3Cline x1='14' y1='10' x2='20' y2='10' stroke='%23ccff00' stroke-width='1'/%3E%3C/svg%3E") 10 10, crosshair;
+    }
+
+    /* ── BG GRADIENT MESH ── */
+    .bg-mesh {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 15% 20%, rgba(204,255,0,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 500px at 85% 70%, rgba(217,102,255,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 50% 90%, rgba(0,245,255,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 300px 600px at 90% 10%, rgba(255,45,107,0.06) 0%, transparent 60%);
+    }
+
+    /* ── SCANLINES ── */
+    .scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 3px
+      );
+    }
+
+    /* ── WRAPPER ── */
+    #app { position: relative; z-index: 1; padding: 0; }
+
+    /* ────────────────────────────────
+       HEADER — overlapping madness
+    ──────────────────────────────── */
+    #header {
+      position: relative;
+      padding: 18px 28px 14px;
+      border-bottom: 3px solid var(--acid);
+      background: rgba(10,8,18,0.9);
+      overflow: visible;
+    }
+
+    /* diagonal stripe BG */
+    #header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 12px,
+        rgba(204,255,0,0.025) 12px, rgba(204,255,0,0.025) 13px
+      );
+      pointer-events: none;
+    }
+
+    .header-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+    }
+
+    .logo-block { position: relative; }
+
+    .logo-main {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(26px, 4vw, 42px);
+      color: var(--acid);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      text-shadow: 4px 4px 0 var(--hot), 8px 8px 0 rgba(255,45,107,0.25);
+    }
+
+    .logo-sub {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      color: var(--lilac);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* floating stamp */
+    .header-stamp {
+      position: absolute;
+      top: -8px; right: -16px;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 11px;
+      color: var(--hot);
+      border: 2px solid var(--hot);
+      padding: 3px 7px;
+      transform: rotate(8deg);
+      opacity: 0.8;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+    }
+
+    .compteur-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .compteur-label {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    #ul-val {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(28px, 3.5vw, 46px);
+      color: var(--amber);
+      text-shadow: 0 0 20px rgba(255,184,0,0.5), 3px 3px 0 rgba(255,45,107,0.3);
+      display: block;
+      line-height: 1;
+      animation: numberPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes numberPulse {
+      0%,100% { text-shadow: 0 0 20px rgba(255,184,0,0.5), 3px 3px 0 rgba(255,45,107,0.3); }
+      50%      { text-shadow: 0 0 40px rgba(255,184,0,0.8), 3px 3px 0 rgba(255,45,107,0.5), 0 0 80px rgba(255,184,0,0.2); }
+    }
+
+    #ul-rate {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--acid);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden; height: 26px;
+      display: flex; align-items: center;
+      background: var(--hot);
+      margin-top: 12px;
+      position: relative;
+    }
+    .ticker-wrap::before, .ticker-wrap::after {
+      content: '●';
+      position: absolute;
+      color: rgba(0,0,0,0.5);
+      font-size: 8px;
+      z-index: 2;
+    }
+    .ticker-wrap::before { left: 8px; }
+    .ticker-wrap::after  { right: 8px; }
+
+    .ticker-inner {
+      display: flex; gap: 48px; white-space: nowrap;
+      animation: ticker 32s linear infinite;
+      font-family: 'VT323', monospace;
+      font-size: 15px;
+      color: #000;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .ticker-inner .sep { color: rgba(0,0,0,0.35); }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ────────────────────────────────
+       MAIN LAYOUT — chaotic grid
+    ──────────────────────────────── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr 200px;
+      grid-template-rows: 1fr;
+      min-height: calc(100vh - 130px);
+      gap: 0;
+    }
+
+    /* ────────────────────────────────
+       LEFT PANEL — logs
+    ──────────────────────────────── */
+    .log-panel {
+      border-right: 2px dashed rgba(0,245,255,0.3);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    .panel-label {
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .panel-label .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      animation: blink 1.2s step-end infinite;
+      flex-shrink: 0;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .log-panel .panel-label { color: var(--cyan); border-bottom: 1px solid rgba(0,245,255,0.2); }
+    .log-panel .panel-label .dot { background: var(--cyan); }
+
+    #log-feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,245,255,0.2) transparent;
+    }
+
+    .log-entry {
+      padding: 4px 14px;
+      font-size: 10px;
+      line-height: 1.6;
+      font-family: 'Space Mono', monospace;
+      color: rgba(0,245,255,0.5);
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      animation: slideIn 0.25s ease both;
+    }
+    @keyframes slideIn {
+      from { opacity:0; transform:translateX(-8px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+    .log-entry:hover { background: rgba(0,245,255,0.05); border-left-color: var(--cyan); color: var(--cyan); }
+    .log-entry .ts { color: rgba(0,245,255,0.25); display:block; font-size:9px; }
+    .log-entry.anomaly { color: rgba(255,45,107,0.6); }
+    .log-entry.anomaly .ts { color: rgba(255,45,107,0.25); }
+    .log-entry.credit { color: rgba(204,255,0,0.7); }
+    .log-entry.credit .ts { color: rgba(204,255,0,0.25); }
+
+    /* ────────────────────────────────
+       CENTER — actifs
+    ──────────────────────────────── */
+    .center-panel {
+      padding: 24px 32px;
+      border-right: 2px dashed rgba(217,102,255,0.3);
+      overflow-y: auto;
+    }
+
+    .center-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .center-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+    .center-title span { color: var(--lilac); }
+
+    .center-meta {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    /* ── ACTIF CARD ── */
+    .actif-card {
+      position: relative;
+      margin-bottom: 10px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    /* color accent bar — different for each */
+    .actif-card::before {
+      content: '';
+      position: absolute; left:0; top:0; bottom:0; width:4px;
+    }
+    .actif-card:nth-child(1)::before { background: var(--acid); }
+    .actif-card:nth-child(2)::before { background: var(--hot); }
+    .actif-card:nth-child(3)::before { background: var(--cyan); }
+    .actif-card:nth-child(4)::before { background: var(--lilac); }
+    .actif-card:nth-child(5)::before { background: var(--amber); }
+
+    /* hover glow */
+    .actif-card:nth-child(1):hover { border-color: rgba(204,255,0,0.4); background: rgba(204,255,0,0.04); transform: translateX(3px); }
+    .actif-card:nth-child(2):hover { border-color: rgba(255,45,107,0.4); background: rgba(255,45,107,0.04); transform: translateX(3px); }
+    .actif-card:nth-child(3):hover { border-color: rgba(0,245,255,0.4); background: rgba(0,245,255,0.04); transform: translateX(3px); }
+    .actif-card:nth-child(4):hover { border-color: rgba(217,102,255,0.4); background: rgba(217,102,255,0.04); transform: translateX(3px); }
+    .actif-card:nth-child(5):hover { border-color: rgba(255,184,0,0.4); background: rgba(255,184,0,0.04); transform: translateX(3px); }
+
+    .actif-inner {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .actif-nom {
+      font-family: 'Space Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.08em;
+    }
+    .actif-desc {
+      font-size: 9px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
+      font-style: italic;
+    }
+
+    .actif-delta {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      min-width: 64px;
+      text-align: right;
+    }
+    .actif-delta.up   { color: var(--acid); }
+    .actif-delta.down { color: var(--hot); }
+
+    canvas.spark { display: block; }
+
+    .actif-badge {
+      font-family: 'VT323', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border: 1px solid;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      opacity: 0.6;
+    }
+    .actif-card:nth-child(1) .actif-badge { color: var(--acid); border-color: var(--acid); }
+    .actif-card:nth-child(2) .actif-badge { color: var(--hot);  border-color: var(--hot);  }
+    .actif-card:nth-child(3) .actif-badge { color: var(--cyan); border-color: var(--cyan); }
+    .actif-card:nth-child(4) .actif-badge { color: var(--lilac);border-color: var(--lilac);}
+    .actif-card:nth-child(5) .actif-badge { color: var(--amber);border-color: var(--amber);}
+
+    /* flash animation on update */
+    @keyframes flashCard {
+      0%   { background: rgba(204,255,0,0.12); }
+      100% { background: transparent; }
+    }
+    .actif-card.flash { animation: flashCard 0.5s ease; }
+
+    /* debit float */
+    .debit-float {
+      position: fixed;
+      font-family: 'Abril Fatface', serif;
+      font-size: 22px;
+      pointer-events: none;
+      z-index: 9000;
+      animation: floatUp 0.9s ease both;
+    }
+    @keyframes floatUp {
+      0%   { opacity:1; transform: translateY(0) scale(1); }
+      100% { opacity:0; transform: translateY(-50px) scale(1.3); }
+    }
+
+    /* ────────────────────────────────
+       RIGHT — contrôle
+    ──────────────────────────────── */
+    .right-panel {
+      display: flex; flex-direction: column;
+      padding: 0;
+      overflow-y: auto;
+    }
+
+    .right-panel .panel-label { color: var(--lilac); border-bottom: 1px solid rgba(217,102,255,0.2); }
+    .right-panel .panel-label .dot { background: var(--lilac); }
+
+    .right-inner { padding: 14px 16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+
+    .stat-box {
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-box::after {
+      content: '';
+      position: absolute; bottom:0; left:0; right:0; height:2px;
+    }
+    .stat-box:nth-child(1)::after { background: var(--acid); }
+    .stat-box:nth-child(2)::after { background: var(--cyan); }
+
+    .stat-lbl {
+      font-family: 'VT323', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 4px;
+    }
+    .stat-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: 26px;
+      line-height: 1;
+    }
+    .stat-box:nth-child(1) .stat-num { color: var(--acid); }
+    .stat-box:nth-child(2) .stat-num { color: var(--cyan); }
+    .stat-sub {
+      font-size: 9px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    /* svg mini reseau */
+    #mini-svg {
+      width: 100%;
+      aspect-ratio: 1;
+      opacity: 0.85;
+    }
+
+    /* buttons */
+    .btn {
+      width: 100%;
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 11px 10px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s;
+      display: block;
+    }
+    .btn-reseau {
+      background: var(--acid);
+      color: #0a0812;
+    }
+    .btn-reseau:hover {
+      background: #fff;
+      box-shadow: 0 0 20px rgba(204,255,0,0.5);
+      transform: translateY(-1px);
+    }
+    .btn-bordereau {
+      background: transparent;
+      border: 2px solid var(--lilac);
+      color: var(--lilac);
+      margin-top: auto;
+    }
+    .btn-bordereau:hover {
+      background: var(--lilac);
+      color: #0a0812;
+      box-shadow: 0 0 20px rgba(217,102,255,0.4);
+    }
+
+    /* ────────────────────────────────
+       OVERLAY RÉSEAU
+    ──────────────────────────────── */
+    #overlay-reseau {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,8,18,0.96);
+      z-index: 500;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    #overlay-reseau.active { display: flex; }
+
+    .reseau-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: 20px;
+      color: var(--lilac);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 20px rgba(217,102,255,0.5);
+    }
+
+    #reseau-canvas { border: 1px solid rgba(217,102,255,0.2); }
+
+    #close-btn {
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.4);
+      padding: 8px 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #close-btn:hover { border-color: var(--white); color: var(--white); }
+
+    /* ── BSOD ── */
+    #bsod {
+      display: none; position: fixed; inset: 0;
+      background: #0000bb;
+      font-family: 'VT323', monospace;
+      color: #fff; padding: 10vh 60px;
+      z-index: 99999; line-height: 2;
+    }
+    #bsod h1 { font-size: 22px; margin-bottom: 20px; letter-spacing: 0.05em; }
+    #bsod .hl { color: var(--acid); }
+    #bsod .err-code { font-size: 48px; color: var(--amber); line-height: 1; margin-bottom: 16px; }
+
+    /* ── CORRUPTION CLASSES ── */
+    body.c1 { filter: saturate(1.15) brightness(0.96); }
+    body.c2 #log-feed { animation: jitter 8s ease-in-out infinite; }
+    @keyframes jitter {
+      0%,90%,100% { transform: none; }
+      92% { transform: translateX(2px) skewY(0.4deg); }
+      94% { transform: translateX(-1px); }
+      96% { transform: none; }
+    }
+
+    /* ── GLITCH TEXT ── */
+    @keyframes glitch {
+      0%,100%  { text-shadow: 2px 0 var(--hot), -2px 0 var(--cyan); }
+      25%      { text-shadow: -2px 0 var(--hot), 2px 0 var(--cyan); }
+      50%      { text-shadow: 2px 2px var(--hot), -2px -2px var(--cyan); }
+      75%      { text-shadow: 0 0 0; }
+    }
+    .glitch { animation: glitch 4s step-end infinite; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .main-layout { grid-template-columns: 1fr; min-height: auto; }
+      .log-panel, .center-panel { border-right: none; border-bottom: 2px dashed rgba(0,245,255,0.2); }
+      .log-panel { height: 220px; }
+      #log-feed { height: 180px; }
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+  </style>
 </head>
 <body>
-    <div class="compteur" id="compteur">CAPITAL DE LATENCE GLOBAL : 4 837 219 UL (+0 UL/min)</div>
-    <div class="container">
-        <div class="flux" id="flux">
-            <h3>Flux d'activité</h3>
-            <div class="log">[2026-03-05 08:09:00] Système initialisé</div>
+
+<div class="bg-mesh"></div>
+<div class="scanlines"></div>
+
+<!-- BSOD -->
+<div id="bsod">
+  <div class="err-code">402</div>
+  <h1>⚠ PAYMENT REQUIRED <span class="hl">(EN LATENCE)</span></h1>
+  <p>Transaction impossible — solde insuffisant.</p>
+  <p>Recalibrage du capital mycélien en cours...</p>
+  <br>
+  <p style="color:rgba(255,255,255,0.4);font-size:14px;">Ne coupez pas l'alimentation.<br>Le système se répare lui-même.</p>
+</div>
+
+<!-- OVERLAY RÉSEAU -->
+<div id="overlay-reseau">
+  <div class="reseau-title">Cartographie Mycélienne</div>
+  <canvas id="reseau-canvas" width="560" height="460"></canvas>
+  <button id="close-btn" onclick="toggleReseau()">× Fermer le réseau</button>
+</div>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <div id="header">
+    <div class="header-top">
+      <div class="logo-block">
+        <div class="logo-main glitch">CHAMBRE DE<br>COMPENSATION</div>
+        <div class="logo-sub">système d'exploitation du capital de latence</div>
+        <div class="header-stamp">v4.0 ACTIF</div>
+      </div>
+      <div class="compteur-block">
+        <div class="compteur-label">capital global</div>
+        <span id="ul-val">4 837 219</span>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
+          <span id="ul-rate" style="font-family:'VT323',monospace;font-size:14px;color:var(--acid);">▲ +14 UL/min</span>
+          <span id="ul-unit" style="font-family:'VT323',monospace;font-size:14px;color:rgba(255,255,255,0.3);">UNITÉS DE LATENCE</span>
         </div>
-        <div class="dashboard">
-            <h2>Tableau des actifs</h2>
-            <div class="actif">
-                CLAUDE MONNAIE <span class="sparkline" id="spark1"></span> ▲ +12 UL
-            </div>
-            <div class="actif">
-                CHEQUIER DESSINÉ <span class="sparkline" id="spark2"></span> ▼ -3 UL
-            </div>
-            <div class="actif">
-                CARTE BANCAIRE VERNIE <span class="sparkline" id="spark3"></span> ▲ +5 UL
-            </div>
-        </div>
-        <div class="controle">
-            <h3>Contrôle mycélien</h3>
-            <button onclick="showReseau()">Afficher le réseau</button>
-        </div>
+      </div>
+    </div>
+    <!-- TICKER -->
+    <div class="ticker-wrap" style="margin-top:14px;">
+      <div class="ticker-inner" id="ticker">
+        <span>TEMPS MORT CAPTURÉ +847 UL</span><span class="sep">◆</span>
+        <span>LATENCE 32ms → 2 UL GÉNÉRÉES</span><span class="sep">◆</span>
+        <span>CHQ-004 CIRCULATION LIMITÉE</span><span class="sep">◆</span>
+        <span>ERREUR 404 CONVERTIE EN ACTIF</span><span class="sep">◆</span>
+        <span>SESSION #<span id="t-sid">????</span> EN COURS</span><span class="sep">◆</span>
+        <span>CLAUDE MONNAIE ▲ +12 UL</span><span class="sep">◆</span>
+        <span>FRAIS MYCÉLIENS -1 UL</span><span class="sep">◆</span>
+        <!-- duplicate -->
+        <span>TEMPS MORT CAPTURÉ +847 UL</span><span class="sep">◆</span>
+        <span>LATENCE 32ms → 2 UL GÉNÉRÉES</span><span class="sep">◆</span>
+        <span>CHQ-004 CIRCULATION LIMITÉE</span><span class="sep">◆</span>
+        <span>ERREUR 404 CONVERTIE EN ACTIF</span><span class="sep">◆</span>
+        <span>SESSION #<span id="t-sid2">????</span> EN COURS</span><span class="sep">◆</span>
+        <span>CLAUDE MONNAIE ▲ +12 UL</span><span class="sep">◆</span>
+        <span>FRAIS MYCÉLIENS -1 UL</span><span class="sep">◆</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-layout">
+
+    <!-- LEFT: LOGS -->
+    <div class="log-panel">
+      <div class="panel-label"><span class="dot"></span>Flux d'activité</div>
+      <div id="log-feed"></div>
     </div>
 
-    <script>
-        let ulGlobal = 4837219;
-        let ulRate = 14;
-        let sessionStart = Date.now();
-        let logId = 1;
+    <!-- CENTER: ACTIFS -->
+    <div class="center-panel">
+      <div class="center-header">
+        <div class="center-title">Registre des <span>Actifs</span></div>
+        <div class="center-meta">
+          cotation live<br>en unités de latence
+        </div>
+      </div>
+      <div id="actifs-list"></div>
+    </div>
 
-        function addLog(msg) {
-            const flux = document.getElementById('flux');
-            const log = document.createElement('div');
-            log.className = 'log';
-            log.textContent = `[${new Date().toISOString().slice(0,19).replace('T',' ')}] ${msg}`;
-            flux.appendChild(log);
-            flux.scrollTop = flux.scrollHeight;
-        }
+    <!-- RIGHT: CONTROLS -->
+    <div class="right-panel">
+      <div class="panel-label"><span class="dot"></span>Contrôle mycélien</div>
+      <div class="right-inner">
 
-        function updateCompteur() {
-            const now = Date.now();
-            const elapsedMin = (now - sessionStart) / 60000;
-            ulGlobal += Math.floor(elapsedMin * ulRate);
-            document.getElementById('compteur').textContent = `CAPITAL DE LATENCE GLOBAL : ${ulGlobal.toLocaleString()} UL (+${ulRate} UL/min)`;
-        }
+        <div class="stat-box">
+          <div class="stat-lbl">UL cette session</div>
+          <div class="stat-num" id="session-ul">0</div>
+          <div class="stat-sub" id="session-dur">0m00s écoulées</div>
+        </div>
 
-        // Sparklines simples (canvas)
-        function drawSparkline(id, trend) {
-            const canvas = document.getElementById(id);
-            const ctx = canvas.getContext('2d');
-            ctx.strokeStyle = trend > 0 ? '#39ff6a' : '#ff4444';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            for (let i = 0; i < 100; i++) {
-                const y = 10 + Math.sin(i/10 + trend) * 5;
-                ctx.lineTo(i, y);
-            }
-            ctx.stroke();
-        }
+        <div class="stat-box">
+          <div class="stat-lbl">visiteur</div>
+          <div class="stat-num" id="s-num" style="font-size:18px;letter-spacing:0.04em;">#????</div>
+          <div class="stat-sub">visite n°<span id="visit-count">1</span> — acteur involontaire</div>
+        </div>
 
-        function showReseau() {
-            addLog(`Connexion visiteur #${Math.floor(Math.random()*10000)} – latence initiale ${Math.floor(Math.random()*100)} ms`);
-            document.body.classList.add('corrompu');
-        }
+        <button class="btn btn-reseau" onclick="toggleReseau()">
+          Afficher le réseau
+        </button>
 
-        // Init
-        drawSparkline('spark1', 1);
-        drawSparkline('spark2', -1);
-        drawSparkline('spark3', 0.5);
-        addLog('Connexion visiteur #' + Math.floor(Math.random()*10000) + ' – latence initiale 48 ms');
+        <svg id="mini-svg" viewBox="0 0 180 180"></svg>
 
-        setInterval(() => {
-            updateCompteur();
-            if (Math.random() < 0.1) addLog(`+${Math.floor(Math.random()*10)} UL – attention capturée`);
-        }, 10000);
+        <button class="btn btn-bordereau" onclick="genererBordereau()">
+          ↓ Émettre bordereau
+        </button>
 
-        setInterval(() => {
-            if (Math.random() < 0.3) {
-                const actifs = document.querySelectorAll('.actif');
-                actifs[Math.floor(Math.random()*actifs.length)].classList.add('corrompu');
-            }
-        }, 30000);
-    </script>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── PERSISTANCE TEMPORELLE ────────────────────────────────────
+// Le capital continue d'augmenter entre les visites.
+// On stocke : ul_global, ul_rate, ul_last_tick (timestamp ms)
+//
+// À chaque ouverture : on calcule le temps écoulé depuis ul_last_tick,
+// on applique le taux moyen (avec une dérive aléatoire simulée sur
+// la période d'absence), et on crédite les UL manquantes.
+
+const RATE_MIN = 8;
+const RATE_MAX = 28;
+const BASE_UL  = 4837219;
+
+function loadState() {
+  const raw = localStorage.getItem('cdc_state');
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch(e) { return null; }
+}
+
+function saveState(state) {
+  localStorage.setItem('cdc_state', JSON.stringify(state));
+}
+
+function computeOfflineUL(lastTick, rate) {
+  // Simule une dérive du taux pendant l'absence :
+  // on découpe l'intervalle en tranches de ~10 min et on fait varier le taux
+  const now      = Date.now();
+  const elapsed  = Math.max(0, now - lastTick); // ms
+  if (elapsed <= 0) return { ul: 0, finalRate: rate };
+
+  const sliceMs  = 10 * 60 * 1000; // 10 min par tranche
+  const slices   = Math.max(1, Math.floor(elapsed / sliceMs));
+  let totalUL    = 0;
+  let currentRate = rate;
+
+  for (let i = 0; i < slices; i++) {
+    // dérive aléatoire déterministe basée sur l'index (reproductible)
+    const seed = (lastTick + i * 1337) % 1000;
+    const drift = ((seed % 7) - 3); // -3 à +3
+    currentRate = Math.max(RATE_MIN, Math.min(RATE_MAX, currentRate + drift));
+    const sliceDuration = (i === slices - 1)
+      ? (elapsed - (slices - 1) * sliceMs) / 60000  // dernière tranche en minutes
+      : sliceMs / 60000;
+    totalUL += Math.floor(currentRate * sliceDuration);
+  }
+  return { ul: totalUL, finalRate: currentRate };
+}
+
+// ── INIT STATE ────────────────────────────────────────────────
+let state = loadState();
+let offlineCredit = 0;
+
+if (!state) {
+  state = {
+    ulGlobal:  BASE_UL,
+    ulRate:    14,
+    lastTick:  Date.now(),
+    visitCount: 0,
+  };
+} else {
+  // Calcul des UL accumulées hors session
+  const { ul, finalRate } = computeOfflineUL(state.lastTick, state.ulRate);
+  offlineCredit = ul;
+  state.ulGlobal  += ul;
+  state.ulRate     = finalRate;
+  state.lastTick   = Date.now();
+}
+state.visitCount = (state.visitCount || 0) + 1;
+saveState(state);
+
+// ── STATE VARS ────────────────────────────────────────────────
+const sessionId    = Math.floor(Math.random() * 9000) + 1000;
+const sessionStart = Date.now();
+let ulGlobal  = state.ulGlobal;
+let ulRate    = state.ulRate;
+let sessionUL = 0;
+let corruption = 0;
+
+document.getElementById('s-num').textContent      = '#' + sessionId;
+document.getElementById('t-sid').textContent      = sessionId;
+document.getElementById('t-sid2').textContent     = sessionId;
+document.getElementById('visit-count').textContent = state.visitCount;
+
+// ── ACTIFS ────────────────────────────────────────────────────
+const actifs = [
+  { id:'CLM', nom:'CLAUDE MONNAIE',        delta:+12, trend:1,    statut:'circulation limitée',    cout:5, desc:'monnaie parallèle artisanale — refuse la valeur officielle',   color:'#ccff00' },
+  { id:'CHQ', nom:'CHÉQUIER DESSINÉ',      delta:-3,  trend:-1,   statut:'extrait 2023',           cout:3, desc:'14 chèques manuscrits — payer en dessin ce qui ne peut l\'être', color:'#ff2d6b' },
+  { id:'CBV', nom:'CARTE BANCAIRE VERNIE', delta:+5,  trend:0.5,  statut:'latence résiduelle',     cout:4, desc:'vernis sur plastique — neutralisation du symbole financier',    color:'#00f5ff' },
+  { id:'IMT', nom:'INTERMARTCHÉ',          delta:-1,  trend:-0.3, statut:'en attente',             cout:6, desc:'infiltration consumériste — minmaxing de l\'espace commercial', color:'#d966ff' },
+  { id:'BDT', nom:'BORDEREAU DE TRADING',  delta:+8,  trend:0.8,  statut:'série ouverte',          cout:2, desc:'temps administratif converti en valeur spéculative',            color:'#ffb800' },
+];
+
+// ── RENDER ACTIFS ─────────────────────────────────────────────
+function renderActifs() {
+  const list = document.getElementById('actifs-list');
+  list.innerHTML = '';
+  actifs.forEach((a, i) => {
+    const card = document.createElement('div');
+    card.className = 'actif-card';
+    const sign = a.delta >= 0 ? '▲ +' : '▼ ';
+    const cls  = a.delta >= 0 ? 'up' : 'down';
+    card.innerHTML = `
+      <div class="actif-inner">
+        <div>
+          <div class="actif-nom">${a.nom}</div>
+          <div class="actif-desc">${a.desc}</div>
+        </div>
+        <div class="actif-delta ${cls}" id="d${i}">${sign}${Math.abs(a.delta)} UL</div>
+        <canvas class="spark" id="sp${i}" width="100" height="22"></canvas>
+        <div class="actif-badge">${a.statut}</div>
+      </div>
+    `;
+    card.addEventListener('click', e => clickActif(a, card, e));
+    list.appendChild(card);
+    drawSpark('sp'+i, a.trend, a.delta>=0, a.color);
+  });
+}
+
+function drawSpark(id, trend, positive, col) {
+  const c = document.getElementById(id); if (!c) return;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0,0,100,22);
+  ctx.strokeStyle = col || (positive ? '#ccff00' : '#ff2d6b');
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = ctx.strokeStyle;
+  ctx.shadowBlur  = 4;
+  ctx.beginPath();
+  const pts = [];
+  for (let x = 0; x <= 100; x++) {
+    pts.push(11 + Math.sin(x/11+trend)*4 + Math.sin(x/3.5+trend*2)*1.2);
+  }
+  const mn=Math.min(...pts), mx=Math.max(...pts);
+  pts.forEach((y,x) => {
+    const yn = 3 + ((y-mn)/(mx-mn||1))*16;
+    x===0 ? ctx.moveTo(x,yn) : ctx.lineTo(x,yn);
+  });
+  ctx.stroke();
+}
+
+// ── CLICK ACTIF ───────────────────────────────────────────────
+function clickActif(a, card, e) {
+  // float
+  const float = document.createElement('div');
+  float.className = 'debit-float';
+  float.textContent = `-${a.cout} UL`;
+  float.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;color:${a.color};`;
+  document.body.appendChild(float);
+  float.addEventListener('animationend', ()=>float.remove());
+
+  // BSOD
+  const b = document.getElementById('bsod');
+  b.style.display = 'block';
+  setTimeout(()=>{ b.style.display='none';
+    ulGlobal  += a.cout; sessionUL += a.cout;
+    addLog(`remboursement +${a.cout} UL — latence convertie`,'credit');
+    updateUI();
+  }, 1500);
+
+  ulGlobal  -= a.cout; sessionUL -= a.cout;
+  addLog(`consultation ${a.id} — débit ${a.cout} UL`,'credit');
+  updateUI();
+}
+
+// ── LOGS ──────────────────────────────────────────────────────
+const logPool = [
+  ()=>[`visiteur #${sessionId+Math.floor(Math.random()*100)} — latence ${Math.floor(Math.random()*80)+10}ms`,''],
+  ()=>[`+${Math.floor(Math.random()*8)+1} UL — attention capturée`,'credit'],
+  ()=>[`consultation actif ${['CHQ','CBV','CLM','IMT','BDT'][~~(Math.random()*5)]} — recalcul réseau`,''],
+  ()=>[`mise à jour cours — ${Math.floor(Math.random()*3)+1} actifs en mouvement`,''],
+  ()=>[`latence serveur ${Math.floor(Math.random()*60)+8}ms → 0.${Math.floor(Math.random()*9)} UL`,'credit'],
+  ()=>['frais mycéliens : -1 UL prélevé','credit'],
+];
+const anomPool = [
+  ()=>['détection contamination — 3 nœuds mutés','anomaly'],
+  ()=>['surcharge mycélienne — recalibrage','anomaly'],
+  ()=>['bruit résiduel capté — extraction partielle','anomaly'],
+  ()=>['segment corrompu — reconstruction','anomaly'],
+];
+
+function addLog(msg, type='') {
+  const feed = document.getElementById('log-feed');
+  const ts   = new Date().toISOString().slice(0,19).replace('T',' ');
+  const el   = document.createElement('div');
+  el.className = 'log-entry'+(type?' '+type:'');
+  el.innerHTML = `<span class="ts">[${ts}]</span>${msg}`;
+  feed.prepend(el);
+  while (feed.children.length > 80) feed.removeChild(feed.lastChild);
+}
+
+// ── UPDATE UI ─────────────────────────────────────────────────
+function updateUI() {
+  document.getElementById('ul-val').textContent     = ulGlobal.toLocaleString('fr-FR');
+  document.getElementById('session-ul').textContent = sessionUL;
+  // Persistance : on sauvegarde l'état complet + lastTick = maintenant
+  state.ulGlobal = ulGlobal;
+  state.ulRate   = ulRate;
+  state.lastTick = Date.now();
+  saveState(state);
+}
+
+function updateDur() {
+  const s=Math.floor((Date.now()-sessionStart)/1000);
+  const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0');
+  document.getElementById('session-dur').textContent=`${m}m${ss}s écoulées`;
+}
+
+// ── SPARKLINE LIVE ────────────────────────────────────────────
+let phase = 0;
+function updateSparks() {
+  phase += 0.4;
+  actifs.forEach((a,i)=>{
+    a.delta += (Math.random()-0.48)*2.5;
+    a.delta  = Math.max(-16,Math.min(22,a.delta));
+    a.trend += (Math.random()-0.5)*0.25;
+    drawSpark('sp'+i, a.trend+phase*0.04, a.delta>=0, a.color);
+    const cell = document.getElementById('d'+i);
+    if (cell) {
+      const s = a.delta>=0?'▲ +':'▼ ';
+      cell.textContent = s+Math.abs(Math.round(a.delta))+' UL';
+      cell.className = 'actif-delta '+(a.delta>=0?'up':'down');
+    }
+    // flash card
+    const cards = document.querySelectorAll('.actif-card');
+    if (Math.random()<0.1 && cards[i]) {
+      cards[i].classList.remove('flash');
+      void cards[i].offsetWidth;
+      cards[i].classList.add('flash');
+    }
+  });
+}
+
+// ── UL TICK ───────────────────────────────────────────────────
+// Toutes les ~4s : +1-3 UL. Toutes les ~30s : dérive du taux.
+let rateDriftCounter = 0;
+
+function tickUL() {
+  const d = Math.floor(Math.random() * 3) + 1;
+  ulGlobal  += d;
+  sessionUL += d;
+
+  rateDriftCounter++;
+  if (rateDriftCounter >= 7) {       // ~toutes les 30s
+    rateDriftCounter = 0;
+    const drift = Math.random() < 0.5 ? 1 : -1;
+    ulRate = Math.max(RATE_MIN, Math.min(RATE_MAX, ulRate + drift));
+    document.getElementById('ul-rate').textContent = `▲ +${ulRate} UL/min`;
+  }
+  updateUI();
+}
+
+// ── MINI SVG ──────────────────────────────────────────────────
+function drawMini() {
+  const nodes=[
+    {x:90,y:88,r:7,c:'#ccff00',l:'CLM'},{x:28,y:38,r:5,c:'#ff2d6b',l:'CHQ'},
+    {x:152,y:32,r:4.5,c:'#00f5ff',l:'CBV'},{x:18,y:142,r:4,c:'#d966ff',l:'IMT'},
+    {x:158,y:148,r:4,c:'#ffb800',l:'BDT'},{x:90,y:158,r:3.5,c:'#ccff00',l:'EXP'},
+  ];
+  const links=[[0,1],[0,2],[0,3],[0,4],[0,5],[1,3],[2,4],[3,5]];
+  let h='';
+  links.forEach(([a,b])=>h+=`<line x1="${nodes[a].x}" y1="${nodes[a].y}" x2="${nodes[b].x}" y2="${nodes[b].y}" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`);
+  nodes.forEach(n=>{
+    h+=`<circle cx="${n.x}" cy="${n.y}" r="${n.r+4}" fill="${n.c}" opacity="0.08"/>`;
+    h+=`<circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="none" stroke="${n.c}" stroke-width="1.5"/>`;
+    h+=`<text x="${n.x+n.r+4}" y="${n.y+3}" font-family="VT323,monospace" font-size="9" fill="${n.c}" opacity="0.65">${n.l}</text>`;
+  });
+  document.getElementById('mini-svg').innerHTML=h;
+}
+
+// ── RÉSEAU OVERLAY ────────────────────────────────────────────
+const rnodes=[
+  {x:280,y:230,r:11,c:'#ccff00',l:'CLAUDE MONNAIE'},
+  {x:110,y: 90,r:8, c:'#ff2d6b',l:'CHÉQUIER'},
+  {x:450,y: 85,r:8, c:'#00f5ff',l:'CARTE VERNIE'},
+  {x: 75,y:350,r:7, c:'#d966ff',l:'INTERMARTCHÉ'},
+  {x:460,y:370,r:7, c:'#ffb800',l:'BORDEREAU'},
+  {x:280,y:400,r:6, c:'#ccff00',l:'EXPOSITIONS'},
+  {x:155,y:215,r:5, c:'#ff2d6b',l:'DEUIL'},
+  {x:400,y:215,r:5, c:'#00f5ff',l:'TROC'},
+  {x:280,y:110,r:5, c:'#d966ff',l:'MINMAXING'},
+];
+const rlinks=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[1,6],[2,7],[3,5],[4,5],[6,8],[7,8]];
+let reseauOpen=false;
+
+function toggleReseau(){
+  reseauOpen=!reseauOpen;
+  document.getElementById('overlay-reseau').classList.toggle('active',reseauOpen);
+  if(reseauOpen){ addLog('cartographie mycélienne initiée'); drawReseau(); }
+}
+
+function drawReseau(){
+  const cv=document.getElementById('reseau-canvas');
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,560,460);
+  rlinks.forEach(([a,b])=>{
+    ctx.beginPath();
+    ctx.moveTo(rnodes[a].x,rnodes[a].y);
+    ctx.lineTo(rnodes[b].x,rnodes[b].y);
+    ctx.strokeStyle='rgba(255,255,255,0.08)';
+    ctx.lineWidth=1; ctx.stroke();
+  });
+  rnodes.forEach(n=>{
+    const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r+10);
+    g.addColorStop(0,n.c+'55'); g.addColorStop(1,'transparent');
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r+10,0,Math.PI*2);
+    ctx.fillStyle=g; ctx.fill();
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.strokeStyle=n.c; ctx.lineWidth=1.8; ctx.stroke();
+    ctx.font='10px VT323,monospace';
+    ctx.fillStyle=n.c; ctx.globalAlpha=0.75;
+    ctx.fillText(n.l,n.x+n.r+7,n.y+4);
+    ctx.globalAlpha=1;
+  });
+}
+
+// ── BORDEREAU ─────────────────────────────────────────────────
+function genererBordereau(){
+  const e=Math.floor((Date.now()-sessionStart)/1000);
+  const m=Math.floor(e/60),s=e%60,now=new Date().toLocaleString('fr-FR');
+  const popup=window.open('','_blank','width=500,height=680');
+  popup.document.write(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Bordereau #${sessionId}</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Abril+Fatface&display=swap" rel="stylesheet">
+<style>
+body{background:#f7f3eb;color:#1a1610;font-family:'Space Mono',monospace;padding:48px;margin:0}
+h1{font-family:'Abril Fatface',serif;font-size:24px;border-bottom:2px solid #1a1610;padding-bottom:12px;margin-bottom:28px;letter-spacing:0.01em}
+.row{display:flex;justify-content:space-between;border-bottom:1px solid #d4cbb8;padding:8px 0;font-size:10px}
+.k{color:#7a7060}.v{font-weight:bold}
+.stamp{margin:40px auto 0;text-align:center;font-family:'Abril Fatface',serif;font-size:26px;color:#8b1a1a;border:3px solid #8b1a1a;display:inline-block;padding:10px 24px;transform:rotate(-3deg);opacity:0.7;letter-spacing:0.04em;display:block;width:fit-content}
+.foot{margin-top:48px;font-size:8px;color:#b0a89a;text-align:center;line-height:2}
+</style></head><body>
+<h1>Bordereau de Conversion de Latence</h1>
+<div class="row"><span class="k">SESSION</span><span class="v">#${sessionId}</span></div>
+<div class="row"><span class="k">DATE</span><span class="v">${now}</span></div>
+<div class="row"><span class="k">DURÉE</span><span class="v">${m}m ${s}s</span></div>
+<div class="row"><span class="k">UL GÉNÉRÉES</span><span class="v">${sessionUL} UL</span></div>
+<div class="row"><span class="k">CAPITAL AU MOMENT D'ÉMISSION</span><span class="v">${ulGlobal.toLocaleString('fr-FR')} UL</span></div>
+<div class="row"><span class="k">TAUX</span><span class="v">${ulRate} UL/min</span></div>
+<div class="row"><span class="k">STATUT</span><span class="v">LATENCE CONVERTIE</span></div>
+<div class="stamp">LATENCE CONVERTIE</div>
+<div class="foot">Ce document certifie que la visite du visiteur #${sessionId}<br>a été convertie en capital symbolique au bénéfice de l'artiste.<br>Jeanson Péchin — Chambre de Compensation — Minmax v4.0</div>
+</body></html>`);
+  popup.document.close();
+  addLog(`bordereau #${sessionId} émis — ${sessionUL} UL certifiées`,'credit');
+}
+
+// ── CORRUPTION ────────────────────────────────────────────────
+setTimeout(()=>{ document.body.classList.add('c1'); addLog('contamination niveau 1 détectée','anomaly'); },2*60*1000);
+setTimeout(()=>{ document.body.classList.add('c2'); addLog('contamination niveau 2 — interface instable','anomaly'); },5*60*1000);
+
+// ── INIT ──────────────────────────────────────────────────────
+renderActifs();
+drawMini();
+
+// Log d'accueil — différent selon si c'est un retour ou première visite
+if (offlineCredit > 0) {
+  const absentMs   = Date.now() - (state.lastTick); // approximatif
+  const absentMins = Math.floor(offlineCredit / (ulRate || 14));
+  addLog(`visiteur #${sessionId} de retour — système actif en votre absence`);
+  setTimeout(() => addLog(`+${offlineCredit.toLocaleString('fr-FR')} UL accumulées hors session — capital récupéré`, 'credit'), 900);
+  setTimeout(() => addLog(`visite n°${state.visitCount} — taux actuel : ${ulRate} UL/min`, 'credit'), 2200);
+} else {
+  addLog(`visiteur #${sessionId} connecté — latence ${Math.floor(Math.random()*60)+20}ms`);
+  setTimeout(() => addLog('+3 UL — attention capturée', 'credit'), 1400);
+  setTimeout(() => addLog('tableau des actifs initialisé'), 2800);
+  setTimeout(() => addLog(`taux de conversion calibré : ${ulRate} UL/min`, 'credit'), 4500);
+}
+
+setInterval(()=>{
+  const pool = corruption>=1 ? [...logPool,...anomPool] : logPool;
+  const fn = pool[~~(Math.random()*pool.length)];
+  const [msg,type] = fn();
+  addLog(msg,type);
+}, 3000+Math.random()*5000);
+
+setInterval(tickUL, 4000+Math.random()*2000);
+setInterval(updateSparks, 4500);
+setInterval(updateDur, 1000);
+updateUI();
+</script>
 </body>
 </html>
