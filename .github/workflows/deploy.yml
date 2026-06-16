@@ -36,11 +36,12 @@ jobs:
       - name: Prepare site
         run: |
           mkdir public-build
-          rsync -av ./ public-build/ \
-            --exclude ".git" \
-            --exclude ".github" \
-            --exclude "public-build" \
-            --exclude "tour-de-phrance"
+            rsync -av ./ public-build/ \
+      --exclude ".git" \
+      --exclude ".github" \
+      --exclude "public-build" \
+      --exclude "tour-de-phrance" \
+      --exclude "index.html"
 
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
