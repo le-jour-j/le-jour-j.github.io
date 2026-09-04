@@ -1,4 +1,4 @@
-import{r as p,j as e}from"./index-VdswX1Rl.js";const N=`
+import{r as p,j as e}from"./index-Bu4s2274.js";const N=`
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Comfortaa:wght@400;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {

@@ -1,4 +1,4 @@
-import{r as l,j as t,A as X,B as ie}from"./index-B3kDfjU0.js";const re=10,ae=15,le=2,se=2,de=5,ce=7,R=ie.flatMap(p=>p.images||[]),b=X.flatMap(p=>(p.pistes||[]).map(T=>({...T,albumId:p.id}))),P=()=>t.jsxs("div",{style:{width:"100%",height:"100%",background:"#2a2a2a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"10px",overflow:"hidden"},children:[t.jsx("style",{children:`
+import{r as l,j as t,A as X,B as ie}from"./index-Bu4s2274.js";const re=10,ae=15,le=2,se=2,de=5,ce=7,R=ie.flatMap(p=>p.images||[]),b=X.flatMap(p=>(p.pistes||[]).map(T=>({...T,albumId:p.id}))),P=()=>t.jsxs("div",{style:{width:"100%",height:"100%",background:"#2a2a2a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"10px",overflow:"hidden"},children:[t.jsx("style",{children:`
             @keyframes tradeEq {
                 0% { transform: scaleY(0.2); background: #ff4444; }
                 50% { background: #f6a623; }
