@@ -40,8 +40,7 @@ jobs:
             --exclude ".git" \
             --exclude ".github" \
             --exclude "public-build" \
-            --exclude "tour-de-phrance" \
-            --exclude "index.html"
+            --exclude "tour-de-phrance"
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
           echo "jeansonpechin.com" > public-build/CNAME
