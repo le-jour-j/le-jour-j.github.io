@@ -1,4 +1,4 @@
-import{r as i,j as e,A as ne,B as me}from"./index-CksuTq4J.js";const ge=10,he=15,ye=2,be=2,ve=5,je=7,Se=2,Ee=.25,we=15e3,w=me.flatMap(p=>p.images||[]),b=ne.flatMap(p=>(p.pistes||[]).map(P=>({...P,albumId:p.id,albumCover:p.cover}))),te=w[0]||null,N=()=>e.jsxs("div",{style:{width:"100%",height:"100%",background:"#2a2a2a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"10px",overflow:"hidden"},children:[e.jsx("style",{children:`
+import{r as i,j as e,A as ne,B as me}from"./index-CUXcVEGN.js";const ge=10,he=15,ye=2,be=2,ve=5,je=7,Se=2,Ee=.25,we=15e3,w=me.flatMap(p=>p.images||[]),b=ne.flatMap(p=>(p.pistes||[]).map(P=>({...P,albumId:p.id,albumCover:p.cover}))),te=w[0]||null,N=()=>e.jsxs("div",{style:{width:"100%",height:"100%",background:"#2a2a2a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"10px",overflow:"hidden"},children:[e.jsx("style",{children:`
             @keyframes tradeEq {
                 0% { transform: scaleY(0.2); background: #ff4444; }
                 50% { background: #f6a623; }
