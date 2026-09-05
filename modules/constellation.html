@@ -122,7 +122,7 @@ canvas{position:fixed;inset:0;z-index:0;}
 
 <div id="hud">
   <span class="hud-l">Chambre de Compensation Fantôme · BTM/∿ · Constellation v2</span>
-  <span class="hud-r" id="hud-r">12 nœuds · ∿</span>
+  <span class="hud-r" id="hud-r">11 nœuds · ∿</span>
 </div>
 
 <div id="legend">
@@ -330,7 +330,7 @@ canvas.addEventListener('mousemove', e=>{
     document.getElementById('hud-r').textContent='pièce '+found.id+' · '+found.role;
   } else {
     tip.style.opacity='0';
-    document.getElementById('hud-r').textContent='12 nœuds · ∿';
+    document.getElementById('hud-r').textContent='11 nœuds · ∿';
   }
 });
 
@@ -348,9 +348,13 @@ canvas.addEventListener('touchend', e=>{
   e.preventDefault();
   const t2=e.changedTouches[0];
   const mx=t2.clientX, my=t2.clientY;
+  // Zone visuelle inchangée (r ~= scale*0.75) mais zone de détection tactile
+  // généreuse : au moins 22px de rayon (~44px de cible), norme d'accessibilité
+  // tactile, quelle que soit la petitesse de `scale` sur un écran étroit.
+  const hitRadius = Math.max(scale*2.8, 22);
   NODES.forEach(n=>{
     const p=nodePos(n);
-    if(Math.hypot(mx-p.x,my-p.y)<scale*2.8) openNode(n);
+    if(Math.hypot(mx-p.x,my-p.y)<hitRadius) openNode(n);
   });
 },{passive:false});
 

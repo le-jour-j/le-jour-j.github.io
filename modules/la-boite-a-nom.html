@@ -36,6 +36,26 @@
             margin: 0 auto;
         }
 
+        /* Indice visuel qu'il y a du contenu à faire défiler plus bas :
+           sans ça, sur mobile, la catégorie "Groupes" seule à l'écran ne
+           laisse rien deviner des 3 autres catégories en dessous. */
+        .scroll-hint {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 64px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 50;
+        }
+
+        .scroll-hint.visible {
+            opacity: 1;
+        }
+
         .box {
             background: var(--container-bg);
             padding: 20px;
@@ -192,6 +212,8 @@
         </div>
     </div>
 
+    <div class="scroll-hint" id="scrollHint"></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
@@ -270,6 +292,17 @@
         }
 
         ['groupes', 'prenoms', 'oiseaux', 'entreprises'].forEach(initBox);
+
+        // Affiche le dégradé tant qu'il reste du contenu à faire défiler en dessous.
+        const scrollHint = document.getElementById('scrollHint');
+        const updateScrollHint = () => {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const remaining = scrollable - window.scrollY;
+            scrollHint.classList.toggle('visible', remaining > 4);
+        };
+        window.addEventListener('scroll', updateScrollHint, { passive: true });
+        window.addEventListener('resize', updateScrollHint);
+        updateScrollHint();
     </script>
 </body>
 
