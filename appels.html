@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appels à projets — Jeanson Péchin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #161a22;
+    --surface2: #1e2430;
+    --border: #2a3040;
+    --gold: #f0c040;
+    --gold-dim: #a07a1a;
+    --green: #3ddc84;
+    --orange: #ff7c3a;
+    --blue: #60a0f0;
+    --text: #e8eaf0;
+    --text-muted: #7a8099;
+    --tag-bg: #222840;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 2rem 1.5rem 4rem;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .logo-line { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.5rem; }
+  .subtitle { color: var(--text-muted); font-size: 0.9rem; }
+  .subtitle strong { color: var(--text); }
+
+  .legend { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1rem; padding: 0.8rem 1rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-gold { background: var(--gold); }
+  .dot-green { background: var(--green); }
+  .dot-orange { background: var(--orange); }
+  .dot-blue { background: var(--blue); }
+
+  .legend2 { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 0.8rem 1rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 2rem; column-count: 2; column-gap: 2rem; }
+  .toc-title { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.7rem; column-span: all; }
+  .toc a { display: flex; justify-content: space-between; gap: 0.5rem; color: var(--gold); text-decoration: none; font-size: 0.8rem; padding: 0.15rem 0; opacity: 0.85; transition: opacity 0.1s; }
+  .toc a:hover { opacity: 1; text-decoration: underline; }
+  .toc-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; flex-shrink: 0; opacity: 0.7; }
+  .toc-date.urgent { color: var(--orange); opacity: 1; }
+  .toc-date.soon { color: var(--gold); opacity: 1; }
+  .toc-date.ok { color: var(--green); opacity: 1; }
+  .toc .toc-section { color: var(--text-muted); font-size: 0.68rem; margin-top: 0.7rem; margin-bottom: 0.2rem; font-style: italic; }
+  .toc-mode { font-family: 'Space Mono', monospace; font-size: 0.6rem; margin-right: 0.4rem; opacity: 0.8; }
+  .toc-mode.direct { color: var(--green); }
+  .toc-mode.invent { color: var(--gold); }
+
+  .section-title { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem 1.4rem 1.8rem; margin-bottom: 1rem; position: relative; transition: border-color 0.15s; }
+  .card:hover { border-color: #3a4560; }
+  .urgency-bar { width: 4px; border-radius: 10px 0 0 10px; position: absolute; left: 0; top: 0; bottom: 0; }
+  .priority-hot .urgency-bar { background: var(--gold); }
+  .priority-good .urgency-bar { background: var(--green); }
+  .priority-watch .urgency-bar { background: var(--orange); }
+  .priority-employ .urgency-bar { background: var(--blue); }
+
+  .card-top { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.8rem; }
+  .card-meta { flex: 1; }
+  .mode-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15rem 0.55rem; border-radius: 20px; margin-bottom: 0.5rem; }
+  .mode-direct { background: #12301f; color: var(--green); border: 1px solid #1e4a30; }
+  .mode-invent { background: #2a2410; color: var(--gold); border: 1px solid #4a3a10; }
+  .card-type { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .card-title { font-size: 1.05rem; font-weight: 600; line-height: 1.3; margin-bottom: 0.2rem; }
+  .card-location { font-size: 0.8rem; color: var(--text-muted); }
+  .deadline-badge { flex-shrink: 0; text-align: right; }
+  .deadline-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
+  .deadline-date { font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; }
+  .deadline-date.urgent { color: var(--orange); }
+  .deadline-date.soon { color: var(--gold); }
+  .deadline-date.ok { color: var(--green); }
+
+  .card-body { font-size: 0.875rem; color: #b0b8cc; line-height: 1.65; margin-bottom: 0.9rem; }
+  .card-body strong { color: var(--text); }
+  .card-detail { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.9rem; padding: 0.6rem 0.9rem; background: var(--surface2); border-radius: 6px; line-height: 1.55; }
+  .card-detail strong { color: var(--text); }
+
+  .why { background: var(--surface2); border-left: 3px solid var(--gold-dim); border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; font-size: 0.82rem; color: #c8b070; margin-bottom: 0.9rem; line-height: 1.5; }
+  .why::before { content: '↳ '; opacity: 0.6; }
+
+  .card-footer { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .tag { background: var(--tag-bg); color: var(--text-muted); font-size: 0.7rem; font-family: 'Space Mono', monospace; padding: 0.2rem 0.6rem; border-radius: 4px; letter-spacing: 0.05em; }
+  .budget-tag { background: #1a2a1a; color: var(--green); font-size: 0.7rem; font-family: 'Space Mono', monospace; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; }
+  .card-link { margin-left: auto; color: var(--gold); font-size: 0.78rem; text-decoration: none; font-family: 'Space Mono', monospace; opacity: 0.8; transition: opacity 0.1s; }
+  .card-link:hover { opacity: 1; text-decoration: underline; }
+
+  .warning-note { background: #1a1408; border: 1px solid #4a3a10; border-radius: 8px; padding: 0.9rem 1.2rem; font-size: 0.82rem; color: #c8a840; margin-bottom: 0.9rem; }
+  .warning-note::before { content: '⚠ '; }
+
+  footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+
+  @media (max-width: 600px) {
+    .card-top { flex-direction: column; gap: 0.5rem; }
+    .deadline-badge { text-align: left; }
+    h1 { font-size: 1.4rem; }
+    .toc { column-count: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-line">Banque Fantôme / Jeanson Péchin</div>
+  <h1>Appels à projets &amp; opportunités</h1>
+  <p class="subtitle">Mis à jour le 4 septembre 2026 · <strong>Indisponibilité : mi-sept. 2026 → mi-jan. 2027</strong> · Trié par deadline dans chaque niveau · Les deadlines dépassées ont été déplacées dans « à surveiller »</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot dot-gold"></div> Très pertinent — priorité</div>
+  <div class="legend-item"><div class="dot dot-green"></div> Intéressant — à évaluer</div>
+  <div class="legend-item"><div class="dot dot-blue"></div> Poste enseignant</div>
+  <div class="legend-item"><div class="dot dot-orange"></div> À surveiller / passé</div>
+</div>
+
+<div class="legend2">
+  <div class="legend-item"><span class="mode-badge mode-direct" style="margin-bottom:0;">Envoi direct</span> pas de thème imposé — un dossier/projet existant suffit, à peine adapté</div>
+  <div class="legend-item"><span class="mode-badge mode-invent" style="margin-bottom:0;">À concevoir</span> thème imposé — nécessite un projet écrit sur mesure avant de candidater</div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Sommaire — par niveau de pertinence puis deadline</div>
+
+  <div class="toc-section">🔥 Très pertinents</div>
+  <a href="#mad-moselle"><span class="toc-mode invent">✎</span>Résidence CTEAC — Mad &amp; Moselle <span class="toc-date urgent">06.09</span></a>
+  <a href="#neste-barousse"><span class="toc-mode invent">✎</span>Résidence de médiation — Neste Barousse <span class="toc-date urgent">06.09</span></a>
+  <a href="#bocage-bressuirais"><span class="toc-mode invent">✎</span>Résidence territoriale — Bocage Bressuirais <span class="toc-date urgent">07.09</span></a>
+  <a href="#chateau-thierry"><span class="toc-mode invent">✎</span>Résidence-mission CLEA — Château-Thierry <span class="toc-date soon">13.09</span></a>
+  <a href="#la-rochelle"><span class="toc-mode invent">✎</span>Résidence action culturelle — La Rochelle <span class="toc-date soon">15.09</span></a>
+  <a href="#digne-les-bains"><span class="toc-mode direct">✓</span>Résidence de recherche — Digne-les-Bains <span class="toc-date soon">15.09</span></a>
+  <a href="#faites-campagne"><span class="toc-mode invent">✎</span>Faites Campagne ! — lycées agricoles AuRA <span class="toc-date soon">18.09</span></a>
+  <a href="#le6b"><span class="toc-mode direct">✓</span>Expositions 2027 — Le 6b, Saint-Denis <span class="toc-date ok">27.09</span></a>
+  <a href="#moulin-got"><span class="toc-mode direct">✓</span>Résidence Moulin du Got <span class="toc-date ok">30.09</span></a>
+  <a href="#nancy"><span class="toc-mode invent">✎</span>1% Collège Plateau de Haye — Nancy <span class="toc-date ok">30.09</span></a>
+  <a href="#usine-utopik"><span class="toc-mode direct">✓</span>Résidence Usine Utopik — Tessy Bocage <span class="toc-date ok">11.11</span></a>
+  <a href="#rhizome"><span class="toc-mode invent">✎</span>Résidence Rhizome / MJC Torcy <span class="toc-date ok">30.11</span></a>
+  <a href="#rhizome-expo"><span class="toc-mode invent">✎</span>Exposition Rhizome / Château des Charmettes <span class="toc-date ok">30.11</span></a>
+
+  <div class="toc-section">✅ Intéressants</div>
+  <a href="#lechelle"><span class="toc-mode direct">✓</span>Résidence L'Échelle — Marseille <span class="toc-date ok">à contacter</span></a>
+  <a href="#banjul-gambie"><span class="toc-mode direct">✓</span>Résidence Alliance Française — Banjul, Gambie <span class="toc-date soon">15.09</span></a>
+  <a href="#grand-quevilly"><span class="toc-mode invent">✎</span>Œuvre jardin du souvenir — Grand-Quevilly <span class="toc-date ok">25.09</span></a>
+  <a href="#maison-pop"><span class="toc-mode invent">✎</span>Fabrique à l'œuvre — Maison Pop Montreuil <span class="toc-date ok">30.09</span></a>
+  <a href="#bigger-splash"><span class="toc-mode direct">✓</span>Bigger Splash — RN13BIS <span class="toc-date ok">30.09</span></a>
+  <a href="#issy"><span class="toc-mode invent">✎</span>1% Groupe scolaire — Issy-les-Moulineaux <span class="toc-date ok">05.10</span></a>
+  <a href="#beauvais-enseignant">Enseignant·e dessin — Beauvais <span class="toc-date ok">05.10</span></a>
+  <a href="#pas-de-calais"><span class="toc-mode invent">✎</span>Résidences en collèges — Pas-de-Calais (x7) <span class="toc-date ok">07.10</span></a>
+  <a href="#medicis-racines"><span class="toc-mode invent">✎</span>Bourse Médicis « Racines » <span class="toc-date ok">31.10</span></a>
+  <a href="#lucon-mondes-invisibles"><span class="toc-mode direct">✓</span>Expo « Mondes invisibles » — Luçon <span class="toc-date ok">01.11</span></a>
+  <a href="#equisoain"><span class="toc-mode direct">✓</span>Résidence Equisoain — Espagne <span class="toc-date ok">01.12</span></a>
+
+  <div class="toc-section">📅 À surveiller / deadlines passées (19)</div>
+  <a href="#euroregio">Eurorégion Pyrénées-Méditerranée <span class="toc-date urgent">passée</span></a>
+  <a href="#oif">Soutien mobilité OIF <span class="toc-date urgent">passée</span></a>
+  <a href="#adra">ADRA — protocole artothèques <span class="toc-date urgent">passée</span></a>
+  <a href="#ensad-dijon">Poste design graphique — ENSAD Dijon <span class="toc-date urgent">passée</span></a>
+  <a href="#mille-formes">Bulle aux bébés — mille formes <span class="toc-date urgent">passée</span></a>
+  <a href="#martell">Fondation Martell — Cognac <span class="toc-date urgent">passée</span></a>
+  <a href="#terrasson">Résidence Terrasson (Dordogne) <span class="toc-date urgent">passée</span></a>
+  <a href="#gravure-cambrai">Poste gravure — ESAC Cambrai <span class="toc-date urgent">passée</span></a>
+  <a href="#afiac-fiac">Résidence AFIAC — Fiac <span class="toc-date urgent">passée</span></a>
+  <a href="#trenair">Résidence TrenAir — Slovaquie <span class="toc-date urgent">passée</span></a>
+  <a href="#nopoto">Bourse NOPOTO <span class="toc-date urgent">passée</span></a>
+  <a href="#van-eyck">Villa van Eyck — Maastricht <span class="toc-date urgent">passée</span></a>
+  <a href="#vezouze">CTEAC Vezouze en Piémont <span class="toc-date urgent">passée</span></a>
+  <a href="#frac-auvergne">Acquisition FRAC Auvergne <span class="toc-date urgent">passée</span></a>
+  <a href="#creation-en-cours">Création en cours — Ateliers Médicis <span class="toc-date urgent">passée</span></a>
+  <a href="#chapelle-uzes">Chapelle en résidence — Uzès <span class="toc-date urgent">passée</span></a>
+  <a href="#feneon">Prix Fénéon 2026 <span class="toc-date urgent">passée</span></a>
+  <a href="#pac-marseille">Exposition PAC Marseille <span class="toc-date urgent">passée</span></a>
+  <a href="#saif-muses">Prix collectif SAIF / Les Muses <span class="toc-date urgent">passée</span></a>
+</div>
+
+
+<!-- ══════════════════════════════════════ -->
+<div class="section-title">🔥 Très pertinents — triés par deadline</div>
+
+<!-- 06.09 Mad & Moselle -->
+<div class="card priority-hot" id="mad-moselle">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — thème Mémoire(s)</span>
+      <div class="card-type">Résidence territoriale EAC</div>
+      <div class="card-title">Résidence CTEAC — Communauté de Communes Mad &amp; Moselle</div>
+      <div class="card-location">Grand Est</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date urgent">06.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de territoire EAC, thématique <strong>Mémoire(s)</strong>. Année scolaire 2026-2027. Hébergement, repas et déplacements pris en charge.
+  </div>
+  <div class="why">Format CTEAC parfaitement dans le registre de Jeanson. La thématique Mémoire(s) résonne avec la Banque Fantôme : les objets échangés deviennent des traces, des récits, une mémoire collective du territoire. Aucune contrainte géographique mentionnée. Dans 2 jours — dossier à sortir vite.</div>
+  <div class="card-footer">
+    <span class="budget-tag">10 000 € + hébergement + frais</span>
+    <span class="tag">EAC</span>
+    <span class="tag">Mémoire(s)</span>
+    <span class="tag">territoire</span>
+    <a class="card-link" href="https://www.culture.gouv.fr/regions/drac-grand-est/aides/appels-a-projets-de-la-drac-grand-est" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 06.09 Neste Barousse -->
+<div class="card priority-hot" id="neste-barousse">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — jeune public local</span>
+      <div class="card-type">Résidence de médiation</div>
+      <div class="card-title">Résidence de médiation — Communauté de Communes Neste Barousse</div>
+      <div class="card-location">Hautes-Pyrénées — 1h30 de Toulouse</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date urgent">06.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence en 3 phases (immersion → ateliers scolaires/périscolaires → restitution publique), 6 semaines réparties dans l'année, à destination des habitants et surtout des jeunes du territoire pyrénéen. Réservée aux artistes ne résidant pas dans les Hautes-Pyrénées.
+  </div>
+  <div class="why">Format médiation/territoire/jeunes exactement dans le cœur de métier de Jeanson, et un territoire à 1h30 de Toulouse — logistique idéale. Budget correct pour une petite structure. Deadline dans 2 jours : dossier probablement léger vu le format (note d'intention + portfolio), à tenter si le temps le permet.</div>
+  <div class="card-footer">
+    <span class="budget-tag">6 000 € + 1 000 € matériel</span>
+    <span class="tag">médiation</span>
+    <span class="tag">jeune public</span>
+    <span class="tag">Pyrénées</span>
+    <a class="card-link" href="https://neste-barousse.fr/appel-a-candidature-residence-de-mediation-pour-plasticien-ou-plasticienne/" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 07.09 Bocage Bressuirais -->
+<div class="card priority-hot" id="bocage-bressuirais">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — friche industrielle</span>
+      <div class="card-type">Résidence territoriale EAC</div>
+      <div class="card-title">Résidence territoriale — Friche Suire, Bocage Bressuirais</div>
+      <div class="card-location">Saint-Aubin-du-Plain (Deux-Sèvres)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date urgent">07.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de <strong>9 à 11 semaines (200h de présence)</strong> entre novembre 2026 et juillet 2027, autour d'une friche industrielle. Participation des habitants, transmission intergénérationnelle, réappropriation du site. Hébergement, déplacements et repas pris en charge.
+  </div>
+  <div class="why">Format EAC territorial dans le cœur de métier de Jeanson. La Banque Fantôme peut s'adapter parfaitement à une friche industrielle — valeur, troc, objets en circulation dans un lieu en transformation. Rémunération excellente.</div>
+  <div class="warning-note">Résidence débutant dès novembre 2026 — pendant l'indisponibilité. Vérifier si le démarrage peut être repoussé à janvier 2027 (la résidence court jusqu'en juillet 2027).</div>
+  <div class="card-footer">
+    <span class="budget-tag">12 000 € + hébergement + repas</span>
+    <span class="tag">EAC</span>
+    <span class="tag">friche industrielle</span>
+    <span class="tag">habitants</span>
+    <a class="card-link" href="https://reseau-astre.org/media/pages/annonces/residence-territoire-agglo-bocage-bressuirois/4051a417ae-1783692045/en-savoir-plus.pdf" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 13.09 Château-Thierry -->
+<div class="card priority-hot" id="chateau-thierry">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — nature/vivant/imaginaire</span>
+      <div class="card-type">Résidence-mission CLEA</div>
+      <div class="card-title">Résidence-mission « Nature, vivant et imaginaire » — CLEA Château-Thierry</div>
+      <div class="card-location">Communauté d'Agglomération de la Région de Château-Thierry (02)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date soon">13.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence-mission CLEA classique — toutes disciplines. Travail avec les habitants autour de la <strong>biodiversité, des paysages, des récits du territoire, des liens arts/sciences</strong>. Résidence de février à mai 2027, hors indisponibilité.
+  </div>
+  <div class="why">Format résidence-mission CLEA identique à celui déjà mené par Jeanson (Saint-Omer, Avesnois, et la mission Beauvaisis en cours). Le thème nature/vivant est à retravailler mais la logique de circulation de valeur de la Banque Fantôme peut se transposer sur les ressources et récits du territoire (troc de biodiversité, monnaie-portrait du vivant local).</div>
+  <div class="card-footer">
+    <span class="budget-tag">12 000 € net (18 000 € en duo/trio)</span>
+    <span class="tag">CLEA</span>
+    <span class="tag">habitants</span>
+    <span class="tag">écologie</span>
+    <a class="card-link" href="https://www.culture.gouv.fr/catalogue-des-demarches-et-subventions/appels-a-projet-partenaires/residence-mission-nature-vivant-et-imaginaire-artistes-communaute-d-agglomeration-de-la-region-de-chateau-thierry-02" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 15.09 La Rochelle -->
+<div class="card priority-hot" id="la-rochelle">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — quartier prioritaire</span>
+      <div class="card-type">Résidence d'action culturelle et territoriale</div>
+      <div class="card-title">Résidence d'action culturelle et territoriale — DRAC Nouvelle-Aquitaine</div>
+      <div class="card-location">Quartiers prioritaires — La Rochelle</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date soon">15.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de <strong>6 à 12 mois, 140 à 160h d'interventions</strong> auprès des habitants d'un quartier prioritaire. Toutes disciplines, priorité aux artistes-auteurs.
+  </div>
+  <div class="why">Format territoire + habitants dans le cœur de métier de Jeanson, avec un excellent niveau de financement pour la durée. Nécessite construire une proposition spécifique au quartier visé, mais le protocole Banque Fantôme (achat/vente/mise en relation) s'y transpose naturellement.</div>
+  <div class="card-footer">
+    <span class="budget-tag">15 000 €</span>
+    <span class="tag">quartier prioritaire</span>
+    <span class="tag">6-12 mois</span>
+    <a class="card-link" href="https://www.culture.gouv.fr/catalogue-des-demarches-et-subventions/appels-a-projet-partenaires/residence-d-artistes-en-quartiers-prioritaires-de-la-ville-la-rochelle-17-2026-2027" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 15.09 Digne-les-Bains -->
+<div class="card priority-hot" id="digne-les-bains">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — recherche libre</span>
+      <div class="card-type">Résidence de recherche</div>
+      <div class="card-title">Résidence de recherche — Pôle artistique et muséal de Digne-les-Bains (Ambulo / Le Cairn)</div>
+      <div class="card-location">Digne-les-Bains (Alpes-de-Haute-Provence)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date soon">15.09.2026, 12h</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de recherche <strong>sans obligation de production ni d'exposition</strong> — restitution publique de forme libre décidée avec le Pôle. Minimum 6 semaines sur l'année. Logement dans une maison semi-troglodyte de 65 m².
+  </div>
+  <div class="why">Aucun thème imposé : c'est exactement le format « recherche libre » où Jeanson peut approfondir Minmax ou la mécanique de la Banque Fantôme sans avoir à réinventer un projet sur mesure. Dossier standard : note d'intention, portfolio, CV.</div>
+  <div class="card-detail">
+    <strong>Dossier :</strong> note d'intention · portfolio · CV · attestation d'affiliation sécurité sociale des artistes-auteurs.<br>
+    <strong>Contact :</strong> contact.cairn@ambulo.fr
+  </div>
+  <div class="card-footer">
+    <span class="budget-tag">5 000 € honoraires + frais</span>
+    <span class="tag">recherche libre</span>
+    <span class="tag">sans obligation de production</span>
+    <a class="card-link" href="https://www.cairncentredart.org/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<!-- 18.09 Faites Campagne -->
+<div class="card priority-hot" id="faites-campagne">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — transitions agricoles</span>
+      <div class="card-type">Résidence en lycée agricole</div>
+      <div class="card-title">Faites Campagne ! saison 2 — Campagne Première</div>
+      <div class="card-location">Auvergne-Rhône-Alpes (5 établissements)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date soon">18.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    3 semaines dans un lycée agricole, <strong>25h d'ateliers avec les élèves</strong>, restitution publique sur le territoire. Hébergement pris en charge par l'établissement. Thème : transitions agricoles et alimentaires. Permis B et véhicule obligatoires.
+  </div>
+  <div class="why">Format transmission/territoire/jeunes dans le cœur de métier de Jeanson. La logique d'échange, de valeur et de ce qui « circule » de la Banque Fantôme peut répondre à la thématique agricole de façon originale. Résidence à planifier en 2027, hors indisponibilité.</div>
+  <div class="card-footer">
+    <span class="budget-tag">3 500 € tout compris</span>
+    <span class="tag">lycée agricole</span>
+    <span class="tag">ateliers élèves</span>
+    <span class="tag">hébergement fourni</span>
+    <a class="card-link" href="https://www.campagnepremiere.com/faites-campagne-saison-deux" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 27.09 Le 6b -->
+<div class="card priority-hot" id="le6b">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — proposition libre</span>
+      <div class="card-type">Exposition collective</div>
+      <div class="card-title">Expositions 2027 — Le 6b</div>
+      <div class="card-location">Saint-Denis (Seine-Saint-Denis)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">27.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    4 projets d'expositions collectives sélectionnés pour <strong>avril–septembre 2027</strong>. 10 jours de résidence de création + montage, 10 jours d'ouverture aux publics, 4 jours de démontage. Salle de 220 m² + espaces de production. Médiation et programmation attendues en complément.
+  </div>
+  <div class="why">Le 6b est un lieu majeur du réseau artistique francilien. Pas de thème imposé : Jeanson peut proposer directement un dispositif Banque Fantôme (guichet, échanges, ateliers de fabrication de monnaie avec les publics) — la logique de co-production et de médiation correspond à l'esprit du lieu. Hors indisponibilité.</div>
+  <div class="card-footer">
+    <span class="budget-tag">2 000 € co-production</span>
+    <span class="tag">220 m²</span>
+    <span class="tag">collectif bienvenu</span>
+    <span class="tag">médiation</span>
+    <a class="card-link" href="https://www.le6b.fr" target="_blank">le6b.fr →</a>
+  </div>
+</div>
+
+<!-- 30.09 Moulin du Got -->
+<div class="card priority-hot" id="moulin-got">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — technique, pas de thème</span>
+      <div class="card-type">Résidence arts graphiques</div>
+      <div class="card-title">Résidence Moulin du Got</div>
+      <div class="card-location">Saint-Léonard-de-Noblat (Haute-Vienne)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence dédiée au <strong>papier, à l'impression, à la typographie, à la gravure, au gaufrage et aux arts graphiques</strong>. 6 semaines fractionnables entre le <strong>19 octobre 2026 et le 27 février 2027</strong>. Transport pris en charge (3 A/R).
+  </div>
+  <div class="why">Vocabulaire technique parfaitement aligné : risographie, édition, chéquiers, papier autocopiant, bordereaux. Pas de thème imposé — le dossier Claude Monnaie peut être envoyé quasi tel quel. Les semaines peuvent être concentrées sur janvier-février 2027, bien après la fin de l'indisponibilité.</div>
+  <div class="card-footer">
+    <span class="budget-tag">3 000 € + transport</span>
+    <span class="tag">risographie</span>
+    <span class="tag">édition</span>
+    <span class="tag">papier</span>
+    <a class="card-link" href="https://www.moulindugot.com/_files/ugd/660e0c_bb11b034d87a4fbf8800c0327807f787.pdf" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 30.09 Nancy 1% -->
+<div class="card priority-hot" id="nancy">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — mémoire scolaire participative</span>
+      <div class="card-type">1% artistique</div>
+      <div class="card-title">Collège Plateau de Haye — Nancy</div>
+      <div class="card-location">Nancy (Meurthe-et-Moselle)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.09.2026 — 16h</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Œuvre pour un nouveau collège écoresponsable dans un parc arboré. L'appel valorise explicitement la <strong>contribution des élèves à la conception</strong>, la mémoire collective, laisser sa propre empreinte — démarche participative centrale. L'œuvre peut investir intérieur et extérieur. Indemnité 1 500 € pour les 2 non-retenus (3 candidats max).
+  </div>
+  <div class="why">C'est le vocabulaire exact de Jeanson : participation des usagers à la conception, mémoire collective, transmission. La Banque Fantôme reformatée comme protocole de mémoire scolaire — chaque élève y laisse une trace, un échange — serait une réponse naturelle et originale. Budget solide, indemnité en cas de non-sélection.</div>
+  <div class="card-footer">
+    <span class="budget-tag">82 132 € TTC (+ 1 500 € indemnité)</span>
+    <span class="tag">participatif élèves</span>
+    <span class="tag">mémoire collective</span>
+    <span class="tag">marché public</span>
+    <a class="card-link" href="https://www.xmarches.fr/entreprise/detailConsultation.php?key=41025" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 11.11 Usine Utopik -->
+<div class="card priority-hot" id="usine-utopik">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — résidence libre</span>
+      <div class="card-type">Résidence longue avec exposition</div>
+      <div class="card-title">Résidence arts plastiques 2027 — Usine Utopik</div>
+      <div class="card-location">Tessy Bocage (Normandie) — milieu rural</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">11.11.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de <strong>54 jours (45 de présence obligatoire)</strong> du 24 août au 15 octobre 2027, dans d'anciennes serres horticoles de 1 500 m². Logement fourni, exposition intégrée en fin de résidence, fascicule édité avec texte critique. Ouverture aux publics 3 après-midis/semaine + 3 demi-journées de médiation.
+  </div>
+  <div class="why">Résidence longue et structurante, avec exposition, édition et texte critique — exactement ce dont Jeanson a besoin pour formaliser et diffuser la Banque Fantôme à une nouvelle échelle. Pas de thème imposé. Dates bien hors indisponibilité (août–oct 2027).</div>
+  <div class="card-footer">
+    <span class="budget-tag">2 250 € + 1 500 € production</span>
+    <span class="tag">54 jours</span>
+    <span class="tag">exposition intégrée</span>
+    <span class="tag">fascicule édité</span>
+    <span class="tag">logement fourni</span>
+    <a class="card-link" href="mailto:usineutopik@gmail.com">usineutopik@gmail.com →</a>
+  </div>
+</div>
+
+<!-- 30.11 Rhizome résidence -->
+<div class="card priority-hot" id="rhizome">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — adapter au public scolaire</span>
+      <div class="card-type">Résidence sans hébergement</div>
+      <div class="card-title">Pôle Rhizome / MJC André Philip</div>
+      <div class="card-location">Torcy (Seine-et-Marne)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.11.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de <strong>2,5 mois avec atelier dédié</strong>, dates modulables entre novembre et mai. Démarche expérimentale et participative en lien avec le territoire, notamment avec les publics scolaires.
+  </div>
+  <div class="why">Calendrier idéal : résidence placée de janvier à mai 2027, hors indisponibilité. Format participatif/scolaire dans son cœur de métier. À combiner avec l'exposition Rhizome ci-dessous.</div>
+  <div class="card-footer">
+    <span class="budget-tag">4 200 € + 850 € production</span>
+    <span class="tag">participatif</span>
+    <span class="tag">scolaire</span>
+    <a class="card-link" href="mailto:rhizomemjc@gmail.com">rhizomemjc@gmail.com →</a>
+  </div>
+</div>
+
+<!-- 30.11 Rhizome expo -->
+<div class="card priority-hot" id="rhizome-expo">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — à combiner avec Rhizome</span>
+      <div class="card-type">Exposition accompagnée</div>
+      <div class="card-title">Accompagnement exposition — Rhizome / Château des Charmettes</div>
+      <div class="card-location">Torcy — Château des Charmettes</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.11.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Invitation d'un·e artiste à <strong>exposer un mois au Château des Charmettes</strong> (mai-juin), lieu prêté par la ville de Torcy. Prise en charge des frais de monstration. Même deadline que la résidence Rhizome — à combiner dans un même dossier.
+  </div>
+  <div class="why">À déposer en parallèle de la résidence Rhizome : même structure, même deadline, même contact. Un dossier peut viser les deux dispositifs simultanément.</div>
+  <div class="card-footer">
+    <span class="budget-tag">700 € monstration</span>
+    <span class="tag">exposition mai-juin</span>
+    <span class="tag">à combiner avec résidence</span>
+    <a class="card-link" href="mailto:rhizomemjc@gmail.com">rhizomemjc@gmail.com →</a>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════ -->
+<div class="section-title">✅ Intéressants — triés par deadline</div>
+
+<!-- Pas de deadline — L'Échelle Marseille -->
+<div class="card priority-good" id="lechelle">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — pas de thème</span>
+      <div class="card-type">Résidence espace public / édition</div>
+      <div class="card-title">Résidence L'Échelle — Cité des Arts de la Rue</div>
+      <div class="card-location">Marseille</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">à contacter</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de recherche-création pour <strong>l'espace public</strong>, dans un atelier collectif croisant art urbain, scénographie et <strong>édition</strong>. Accès à un atelier d'édition dédié. Per diem 600 €, transport 500 €, production 500 €. Hébergement possible à la Cité des Arts de la Rue.
+  </div>
+  <div class="why">L'atelier d'édition est directement dans la pratique de Jeanson. Le croisement art urbain + édition correspond à sa façon de travailler entre espace public et objet imprimé. Pas de deadline annoncée — à contacter directement pour se positionner.</div>
+  <div class="card-footer">
+    <span class="budget-tag">1 000 € + 600 € per diem + 500 € transport + 500 € production</span>
+    <span class="tag">atelier édition</span>
+    <span class="tag">espace public</span>
+    <span class="tag">Marseille</span>
+    <a class="card-link" href="https://www.lacitedesartsdelarue.net/lechelle/" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 15.09 Banjul Gambie -->
+<div class="card priority-good" id="banjul-gambie">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — pas de thème</span>
+      <div class="card-type">Résidence internationale</div>
+      <div class="card-title">Résidence de recherche et de création — Alliance Française de Banjul</div>
+      <div class="card-location">Banjul, Gambie</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date soon">15.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de 1 à 3 mois (priorité 2 mois) à la Maison des artistes Musa Ngum, en plein cœur de l'Alliance Française de Banjul. Favorise le dialogue interculturel et l'ancrage territorial.
+  </div>
+  <div class="why">Pas de thème imposé — projet de recherche ou de création libre. Budget très modeste (21 €/jour + 500 € production max) mais voyage et hébergement pris en charge : une expérience internationale à bas risque financier, transposable pour une version « Banque Fantôme » en contexte ouest-africain.</div>
+  <div class="card-footer">
+    <span class="budget-tag">21 €/jour + jusqu'à 500 € production</span>
+    <span class="tag">international</span>
+    <span class="tag">voyage + logement pris en charge</span>
+    <a class="card-link" href="https://drive.google.com/file/d/19_miGdsb2qAyU4nxAQhwPMDWeKATwZNL/view" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 25.09 Grand Quevilly -->
+<div class="card priority-good" id="grand-quevilly">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — nouveau registre</span>
+      <div class="card-type">Commande artistique</div>
+      <div class="card-title">Œuvre jardin du souvenir — Cimetière de Grand-Quevilly</div>
+      <div class="card-location">Grand-Quevilly (Seine-Maritime, Normandie)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">25.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Conception d'une proposition artistique pour un <strong>jardin du souvenir de cimetière</strong> (espace de dispersion de cendres et de recueillement). Toute forme artistique acceptée. Des ateliers participatifs ont déjà été menés en amont avec les habitants. Logement possible, repas pris en charge le midi.
+  </div>
+  <div class="why">Hors pratique habituelle de Jeanson, mais la dimension participative est forte et la liberté formelle est totale. Budget solide pour un projet qui peut être pensé comme un protocole de mémoire collective — territoire proche de la Banque Fantôme, mais demande un vrai travail d'écriture pour ce registre nouveau (deuil, recueillement).</div>
+  <div class="card-footer">
+    <span class="budget-tag">20 000 – 30 000 €</span>
+    <span class="tag">participatif</span>
+    <span class="tag">mémoire collective</span>
+    <span class="tag">forme libre</span>
+    <a class="card-link" href="https://www.cnap.fr/sites/default/files/cahier%20des%20charges%20oeuvre%20jardin%20du%20souvenir.pdf" target="_blank">Cahier des charges →</a>
+  </div>
+</div>
+
+<!-- 30.09 Maison Pop -->
+<div class="card priority-good" id="maison-pop">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — trouver un binôme</span>
+      <div class="card-type">Résidence binôme artiste + commissaire</div>
+      <div class="card-title">Fabrique à l'œuvre — Maison Populaire de Montreuil</div>
+      <div class="card-location">Montreuil (Seine-Saint-Denis)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence pour un binôme <strong>commissaire d'exposition + artiste arts visuels</strong>. Co-construction avec l'équipe sur toutes les phases : conception, création, médiation, communication. Ateliers avec les publics partenaires.
+  </div>
+  <div class="why">À explorer si Jeanson peut s'associer à un·e commissaire de son réseau. Budget et dimension médiation correspondent bien à sa pratique, mais nécessite d'abord de trouver le binôme.</div>
+  <div class="card-footer">
+    <span class="budget-tag">5 000 € honoraires + 15 000 € production</span>
+    <span class="tag">binôme</span>
+    <span class="tag">médiation</span>
+    <a class="card-link" href="https://www.maisonpop.fr/appel-a-candidature-residence-d-action-artistique-et-territoriale" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 30.09 Bigger Splash -->
+<div class="card priority-good" id="bigger-splash">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — si éligible</span>
+      <div class="card-type">Soutien pluriannuel</div>
+      <div class="card-title">Bigger Splash — RN13BIS</div>
+      <div class="card-location">Normandie</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">30.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Aide de <strong>30 000 € sur 3 ans</strong> pour développer une démarche artistique dans la durée. <strong>Condition : résider en Normandie OU être diplômé d'une école normande depuis moins de 10 ans.</strong>
+  </div>
+  <div class="why">Budget exceptionnel, pas de thème imposé (démarche artistique générale). Éligibilité à confirmer — Jeanson est à Toulouse (Beaux-Arts de Paris) : à vérifier avant d'investir dans le dossier.</div>
+  <div class="warning-note">Éligibilité à confirmer : réservé aux artistes résidant en Normandie OU diplômés d'une école normande depuis moins de 10 ans.</div>
+  <div class="card-footer">
+    <span class="budget-tag">30 000 € / 3 ans</span>
+    <span class="tag">éligibilité à confirmer</span>
+    <a class="card-link" href="https://rn13bis.fr/actions/bigger-splash/bigger-splash-2026" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 05.10 Issy -->
+<div class="card priority-good" id="issy">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — participatif scolaire</span>
+      <div class="card-type">1% artistique</div>
+      <div class="card-title">Groupe scolaire des Épinettes — Issy-les-Moulineaux</div>
+      <div class="card-location">Issy-les-Moulineaux (Hauts-de-Seine)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">05.10.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Œuvre pérenne pour un groupe scolaire (7 classes maternelles + 11 élémentaires + équipement socio-culturel) dans un quartier en transition urbaine. Valorise <strong>dimension collective et éducative, médiation scolaire, dialogue architecture-nature</strong>. Installation prévue été 2027. Indemnité 5 000 € pour les non-retenus (5 candidats max).
+  </div>
+  <div class="why">La dimension participative, éducative et multiculturelle est dans l'ADN de Jeanson. L'indemnité de 5 000 € même sans être lauréat justifie l'investissement du dossier. Procédure marché public lourde mais budget exceptionnel.</div>
+  <div class="card-footer">
+    <span class="budget-tag">148 766 € HT (+ 5 000 € indemnité)</span>
+    <span class="tag">marché public</span>
+    <span class="tag">médiation scolaire</span>
+    <span class="tag">pérenne</span>
+    <a class="card-link" href="https://marches.maximilien.fr/entreprise/consultation/943106?orgAcronyme=o3m" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 05.10 Beauvais enseignant -->
+<div class="card priority-employ" id="beauvais-enseignant">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Poste enseignant</div>
+      <div class="card-title">Enseignant·e dessin et expression plastique — Pôle Unifié de l'Enseignement Artistique du Beauvaisis</div>
+      <div class="card-location">Beauvais (Oise)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">05.10.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Poste à temps complet, <strong>20h hebdomadaires</strong>. Enseignement du dessin auprès d'enfants, adolescents et adultes, dans le cadre de l'éducation artistique et culturelle (EAC).
+  </div>
+  <div class="why">Synergie directe avec la résidence-mission CLEA+ Banque Fantôme en cours au Beauvaisis : implantation locale déjà amorcée, réseau d'écoles et de structures déjà en construction sur place. À évaluer selon son appétence pour un poste régulier post-résidence.</div>
+  <div class="card-footer">
+    <span class="tag">dessin</span>
+    <span class="tag">20h/semaine</span>
+    <span class="tag">synergie Beauvaisis</span>
+    <a class="card-link" href="https://www.emploi-territorial.fr/offre/o060260806000551-une-enseignant-dessin-expression-plastique" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 07.10 Pas-de-Calais -->
+<div class="card priority-good" id="pas-de-calais">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — adapter au collège</span>
+      <div class="card-type">Résidences en collèges</div>
+      <div class="card-title">Résidences artistiques de création en collèges 2027-2028</div>
+      <div class="card-location">7 territoires du Pas-de-Calais (Arrageois, Artois, Audomarois, Boulonnais, Calaisis, Montreuillois-Ternois, Lens-Hénin)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">07.10.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Immersion dans un collège, implication des collégiens dans le processus de création via ateliers de pratique et temps de médiation. Toutes disciplines. Enveloppe plafonnée à <strong>8 000 €</strong>.
+  </div>
+  <div class="why">Jeanson a déjà un ancrage dans cette zone (CLEA Saint-Omer, Avesnois, MiAA Calais) — un réseau régional à réactiver. 7 territoires possibles, donc plusieurs tentatives possibles avec un même socle de dossier.</div>
+  <div class="card-footer">
+    <span class="budget-tag">jusqu'à 8 000 €</span>
+    <span class="tag">collège</span>
+    <span class="tag">réseau régional existant</span>
+    <a class="card-link" href="https://www.pasdecalais.fr/appel-projets-residences-artistiques-de-creation-en-colleges-annee-scolaire-2027-2028" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 31.10 Médicis Racines -->
+<div class="card priority-good" id="medicis-racines">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-invent">À concevoir — thème ouvert « Racines »</span>
+      <div class="card-type">Bourse de création</div>
+      <div class="card-title">Bourse Médicis — thématique « Racines »</div>
+      <div class="card-location">Clichy-sous-Bois / Montfermeil (Seine-Saint-Denis)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">31.10.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Bourse de soutien à la création locale, arts visuels et écriture. Deux lauréat·es accompagné·es par des mentors de janvier à juin 2027. Thème volontairement ouvert : origines, attaches, héritage, ce qui ancre et ce qui relie.
+  </div>
+  <div class="why">Le thème « Racines » est suffisamment ouvert pour y loger la Banque Fantôme (la monnaie comme trace, héritage et ancrage territorial) sans repartir de zéro, mais demande un texte de candidature qui fasse explicitement le lien.</div>
+  <div class="card-footer">
+    <span class="tag">thème ouvert</span>
+    <span class="tag">mentorat</span>
+    <a class="card-link" href="https://www.ateliersmedicis.fr/article/appel-candidatures-bourse-medicis-2-32969" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 01.11 Luçon mondes invisibles -->
+<div class="card priority-good" id="lucon-mondes-invisibles">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — résonance thématique naturelle</span>
+      <div class="card-type">Exposition thématique</div>
+      <div class="card-title">Appel à exposition — « Mondes invisibles » — Galerie Henri Vrignaud</div>
+      <div class="card-location">Luçon (Vendée)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">01.11.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Deux artistes sélectionné·es pour exposer ensemble du 15 janvier au 30 avril 2027, sur le thème « Mondes invisibles ». Photographie, peinture, dessin, sculpture, installation. Attention particulière aux artistes de Vendée ou département limitrophe.
+  </div>
+  <div class="why">Le nom même de la Banque Fantôme — l'invisible, le spectral, ce qui circule sans se voir — colle directement au thème : la Banque Fantôme peut être envoyée quasiment telle quelle, en insistant sur cet aspect. Priorité donnée aux artistes vendéens joue contre lui, et la rémunération reste modeste (500 €).</div>
+  <div class="card-footer">
+    <span class="budget-tag">500 € droits de monstration</span>
+    <span class="tag">résonance « fantôme »/invisible</span>
+    <span class="tag">priorité Vendée</span>
+    <a class="card-link" href="https://www.vendeedusud.com/espace-pro/la-distylerie/appel-candidatures/" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+<!-- 01.12 Equisoain -->
+<div class="card priority-good" id="equisoain">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <span class="mode-badge mode-direct">Envoi direct — pas de thème</span>
+      <div class="card-type">Résidence internationale</div>
+      <div class="card-title">Résidence Equisoain — printemps 2027</div>
+      <div class="card-location">Navarre, Espagne — 2h de Toulouse</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline</div>
+      <div class="deadline-date ok">01.12.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    15 jours de résidence du 1er au 15 juin 2027 dans une tour-maison bioclimatique du 15e siècle en Navarre. Studio de 119 m², terrasse de 77 m². Pour les artistes internationaux : <strong>lettre d'invitation fournie</strong> pour monter un dossier Culture Moves Europe.
+  </div>
+  <div class="why">Pampelune est à 2h de Toulouse. Juin 2027 est hors indisponibilité. La lettre d'invitation permet de solliciter des fonds de mobilité européens — à combiner éventuellement avec le soutien OIF (édition suivante).</div>
+  <div class="card-footer">
+    <span class="tag">autofinancement à monter</span>
+    <span class="tag">Culture Moves Europe</span>
+    <span class="tag">2h de Toulouse</span>
+    <a class="card-link" href="https://equisoain.com/en/art-residency/" target="_blank">Offre complète →</a>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════ -->
+<div class="section-title">📅 À surveiller / deadlines passées (19)</div>
+
+<div class="card priority-watch" id="euroregio">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Coopération culturelle — deadline passée</div>
+      <div class="card-title">Appel eurorégional — Pyrénées-Méditerranée</div>
+      <div class="card-location">Occitanie / Catalogne / Îles Baléares</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">03.09.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Soutien à des projets de coopération culturelle eurorégionale (création, médiation, édition). Occitanie éligible. À surveiller pour la prochaine édition — une Banque Fantôme méditerranéenne reste une piste solide.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://euroregio.eu/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="oif">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Soutien mobilité — deadline passée</div>
+      <div class="card-title">Soutien mobilité artistes — OIF / Francophonie</div>
+      <div class="card-location">Espace francophone international</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">31.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Subvention mobilité jusqu'à 5 000 € dans l'espace francophone. À surveiller pour la prochaine édition, notamment pour un déplacement Québec/UQAM ou Fonderie Darling.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://www.francophonie.org/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="adra">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Projet artistique — deadline passée</div>
+      <div class="card-title">Œuvre protocolaire pour les artothèques — ADRA</div>
+      <div class="card-location">France (réseau national — 30+ artothèques)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">31.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Œuvre réactivable par des non-professionnels, protocole imprimable, encadrable (70x50 ou 60x40 cm), 3 000 €. Match parfait avec Faux-fric/Banque Fantôme — à surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://adra-artotheques.com/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="ensad-dijon">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Poste enseignant — deadline passée</div>
+      <div class="card-title">Enseignant·e design graphique — ENSAD Dijon</div>
+      <div class="card-location">Dijon</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">31.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Poste à 50% en design graphique. À surveiller si un poste similaire ressort.
+  </div>
+  <div class="card-footer">
+    <span class="tag">poste passé</span>
+    <a class="card-link" href="https://www.ensad-dijon.fr/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="mille-formes">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Commande artistique — deadline passée</div>
+      <div class="card-title">Dispositif « Bulle aux bébés » — mille formes Montpellier</div>
+      <div class="card-location">Montpellier</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">24.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Dispositif artistique itinérant pour enfants 0-2 ans, 12 000 €. À surveiller pour la prochaine saison.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://www.montpellier.fr/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="martell">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence de recherche — deadline passée</div>
+      <div class="card-title">Résidence Création &amp; Transitions — Fondation Martell</div>
+      <div class="card-location">Cognac (Charente)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">23.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence de recherche libre, toutes disciplines, 375 €/semaine + 2 500 € production. À surveiller pour la prochaine session.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://www.fondationdentreprisemartell.com/appel-a-projets/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="terrasson">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence de création — deadline passée</div>
+      <div class="card-title">Résidence de création — Terrasson</div>
+      <div class="card-location">Terrasson (Dordogne)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">17.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence territoire + médiation, 10 000 € + 3 900 € médiation, thème « Entre deux rives ». À surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://residencesartistes.fr/deposer-candidature-terrasson.html" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="gravure-cambrai">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Poste enseignant — deadline passée</div>
+      <div class="card-title">Professeur·e en gravure — ESAC Cambrai</div>
+      <div class="card-location">Cambrai (Nord)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">05.08.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Poste 12h/semaine en gravure, contrat 1 an renouvelable. À surveiller si un poste similaire ressort.
+  </div>
+  <div class="card-footer">
+    <span class="tag">poste passé</span>
+    <a class="card-link" href="https://www.emploi-territorial.fr/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="afiac-fiac">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence artistique — deadline passée</div>
+      <div class="card-title">Résidences de création 2027 — AFIAC</div>
+      <div class="card-location">Fiac (Tarn) — réservé Occitanie</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">31.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    3 semaines de résidence 2027, réservé Occitanie, structure déjà connue de Jeanson (Castres 2024). À surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <span class="tag">Occitanie</span>
+    <a class="card-link" href="https://press.afiac.org/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="trenair">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence internationale — deadline passée</div>
+      <div class="card-title">Résidence TrenAir — Trencín, Slovaquie</div>
+      <div class="card-location">Trencín, Slovaquie</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">31.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence Capitale européenne de la culture 2026, 1 300 € tout compris. À surveiller si reconduite en 2027.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://www.trencin2026.eu/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="nopoto">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Bourse — deadline passée</div>
+      <div class="card-title">Bourse NOPOTO</div>
+      <div class="card-location">France</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">30.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Bourse de 1 500 € pour finaliser un projet déjà engagé. À surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="http://nopoto.fr/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="van-eyck">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence internationale — deadline passée</div>
+      <div class="card-title">Résidence Villa van Eyck — Jan van Eyck Academie</div>
+      <div class="card-location">Maastricht, Pays-Bas</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">26.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence prestigieuse janv-déc 2027, lab Printing &amp; Publishing. À surveiller pour la prochaine édition — profil parfait.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <span class="tag">prestige</span>
+    <a class="card-link" href="https://institutfrancais.nl/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="vezouze">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence territoriale EAC — deadline passée</div>
+      <div class="card-title">Résidence CTEAC — Vezouze en Piémont</div>
+      <div class="card-location">Communauté de Communes de Vezouze en Piémont (54)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">26.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence territoire EAC, 10 000 € + 2 000 € frais, thème transition énergétique. À surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://www.ccvp.fr/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="frac-auvergne">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Acquisition en collection publique — deadline passée</div>
+      <div class="card-title">Commission d'acquisition — FRAC Auvergne</div>
+      <div class="card-location">Clermont-Ferrand</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">24.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Appel à propositions spontanées d'acquisitions/dons, jusqu'à 5 œuvres. À surveiller — ce type d'appel à candidature spontanée revient régulièrement, se renseigner directement auprès du FRAC.
+  </div>
+  <div class="card-footer">
+    <span class="tag">candidature spontanée possible</span>
+    <a class="card-link" href="https://fracauvergne.fr/la-collection/comite-technique-dacquisition/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="creation-en-cours">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence — deadline passée</div>
+      <div class="card-title">Création en cours — Ateliers Médicis</div>
+      <div class="card-location">France (zones prioritaires, rural)</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">20.07.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence recherche-création auprès d'une classe de CM, 11 000 €. À surveiller pour l'édition 2027 — profil parfait.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition 2027</span>
+    <a class="card-link" href="https://www.ateliersmedicis.fr/label/creation-en-cours-679" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="chapelle-uzes">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Résidence — deadline passée</div>
+      <div class="card-title">La Chapelle en résidence — Pays d'Uzès</div>
+      <div class="card-location">Uzès (30) — proche Toulouse</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">30.06.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Résidence 8 semaines mars–oct 2027, 6 000 €, médiation territoriale. À surveiller pour la prochaine édition — territoire à 2h de Toulouse, excellente adéquation.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition 2028</span>
+    <span class="tag">Occitanie</span>
+    <a class="card-link" href="https://www.ccpaysduzes.fr/culture/residences-d-artistes/16-culture/92-la-chapelle-en-residence.html" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="feneon">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Prix — deadline passée</div>
+      <div class="card-title">Prix Fénéon 2026</div>
+      <div class="card-location">France</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">26.06.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Prix pour artiste plasticien·ne de moins de 35 ans, 2 000 €. À surveiller pour l'édition 2027.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition 2027</span>
+    <span class="tag">moins de 35 ans</span>
+    <a class="card-link" href="https://chancelleriedesuniversitesdeparis.wiin.io" target="_blank">Site →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="pac-marseille">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Exposition — deadline passée</div>
+      <div class="card-title">Exposition collective — Lieu PAC Marseille</div>
+      <div class="card-location">Marseille</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">21.06.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Expo œuvres déjà produites, 3 000 €. À surveiller pour la prochaine édition.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition suivante</span>
+    <a class="card-link" href="https://p-a-c.fr/" target="_blank">p-a-c.fr →</a>
+  </div>
+</div>
+
+<div class="card priority-watch" id="saif-muses">
+  <div class="urgency-bar"></div>
+  <div class="card-top">
+    <div class="card-meta">
+      <div class="card-type">Prix collectif — deadline passée</div>
+      <div class="card-title">Prix de l'engagement collectif — SAIF / Les Muses</div>
+      <div class="card-location">France</div>
+    </div>
+    <div class="deadline-badge">
+      <div class="deadline-label">Deadline passée</div>
+      <div class="deadline-date urgent">07.06.2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    Prix pour collectifs d'artistes pour le bien commun. Cosmos Merguez ou Pôle Fromage seraient candidats naturels. À surveiller pour 2027.
+  </div>
+  <div class="card-footer">
+    <span class="tag">édition 2027</span>
+    <span class="tag">collectif</span>
+    <a class="card-link" href="https://www.festival-lesmuses.fr/prix-ce-qui-nous-lie-appel-a-candidatures/" target="_blank">Site →</a>
+  </div>
+</div>
+
+<footer>
+  Mis à jour le 4 septembre 2026 · Jeanson Péchin · jeansonpechin.com · banque-fantome.jeansonpechin.com
+</footer>
+
+</body>
+</html>
