@@ -1,4 +1,4 @@
-import{r,j as e}from"./index-B4XTSGb-.js";const $=`
+import{r,j as e}from"./index-CksuTq4J.js";const $=`
 @import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:#9999AA;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 1px,transparent 1px,transparent 20px),repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 1px,transparent 1px,transparent 20px);min-height:100vh}
