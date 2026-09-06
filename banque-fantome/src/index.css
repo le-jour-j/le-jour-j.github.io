@@ -80,6 +80,10 @@ nav { background: var(--blanc); border-bottom: 1px solid var(--gris-bord); posit
 .field input:focus, .field textarea:focus, .field select:focus { background: var(--blanc); border-color: var(--jaune); border-bottom-color: var(--noir); }
 .field textarea { resize: vertical; min-height: 100px; }
 .error-msg { color: var(--rouge); font-size: .78rem; margin-top: .2rem; font-weight: 500; }
+.meta-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--gris); }
+.texte-aide { color: var(--gris); font-size: .9rem; line-height: 1.6; }
+.caption-gris { font-size: .7rem; color: var(--gris); }
+.lien-texte { background: none; border: none; color: var(--noir); cursor: pointer; font-weight: 700; text-decoration: underline; font-family: var(--sans); }
 
 /* CARDS */
 .card { background: var(--blanc); border: 2px solid var(--gris-bord); padding: 1.8rem; transition: border-color .15s, transform .15s; }

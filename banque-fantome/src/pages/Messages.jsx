@@ -147,7 +147,7 @@ export default function Messages() {
                           <strong style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{c.pseudo}</strong>
                           {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
                         </div>
-                        {c.objetTitre && <div style={{ fontSize: '.7rem', color: isActive ? 'var(--gris)' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
+                        {c.objetTitre && <div className="caption-gris" style={{ marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
                         <div style={{ fontSize: '.8rem', color: isActive ? '#ccc' : 'var(--gris)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {c.last}
                         </div>
@@ -164,7 +164,7 @@ export default function Messages() {
               <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--gris-bord)', background: 'var(--noir)', color: 'var(--blanc)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{selected.pseudo}</div>
-                  {selected.objetTitre && <div style={{ fontSize: '.7rem', color: 'var(--gris)' }}>re: {selected.objetTitre}</div>}
+                  {selected.objetTitre && <div className="caption-gris">re: {selected.objetTitre}</div>}
                 </div>
                 <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
               </div>
@@ -186,7 +186,7 @@ export default function Messages() {
                       }}>
                         {m.contenu}
                       </div>
-                      <div style={{ fontSize: '.65rem', color: 'var(--gris)', marginTop: '.2rem' }}>
+                      <div className="caption-gris" style={{ marginTop: '.2rem' }}>
                         {new Date(m.created_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                       </div>
                     </div>

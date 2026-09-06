@@ -96,7 +96,7 @@ export default function Connexion() {
 
         {/* Formulaire */}
         <div style={{ background: 'var(--blanc)', padding: '2rem', border: '2px solid var(--noir)', borderTop: 'none' }}>
-          <p style={{ fontSize: '.88rem', color: 'var(--gris)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
+          <p className="texte-aide" style={{ marginBottom: '1.8rem' }}>
             {mode === 'login' && 'Identifiez-vous pour déposer des objets et gérer vos échanges.'}
             {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo — vous devenez opérateur de la Banque.'}
             {mode === 'reset' && 'Entrez votre pseudo, votre code de récupération, puis votre nouveau mot de passe.'}
@@ -138,14 +138,14 @@ export default function Connexion() {
 
           <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '.82rem', color: 'var(--gris)', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
             {mode === 'login' && <>
-              <span>Pas de compte ? <button onClick={() => setMode('register')} style={{ background: 'none', border: 'none', color: 'var(--noir)', cursor: 'pointer', fontWeight: 700, textDecoration: 'underline', fontFamily: 'var(--sans)' }}>En créer un</button></span>
-              <span>Mot de passe oublié ? <button onClick={() => setMode('reset')} style={{ background: 'none', border: 'none', color: 'var(--noir)', cursor: 'pointer', fontWeight: 700, textDecoration: 'underline', fontFamily: 'var(--sans)' }}>Le changer</button></span>
+              <span>Pas de compte ? <button className="lien-texte" onClick={() => setMode('register')}>En créer un</button></span>
+              <span>Mot de passe oublié ? <button className="lien-texte" onClick={() => setMode('reset')}>Le changer</button></span>
             </>}
             {mode === 'register' && (
-              <span>Déjà un compte ? <button onClick={() => setMode('login')} style={{ background: 'none', border: 'none', color: 'var(--noir)', cursor: 'pointer', fontWeight: 700, textDecoration: 'underline', fontFamily: 'var(--sans)' }}>Se connecter</button></span>
+              <span>Déjà un compte ? <button className="lien-texte" onClick={() => setMode('login')}>Se connecter</button></span>
             )}
             {mode === 'reset' && (
-              <span><button onClick={() => setMode('login')} style={{ background: 'none', border: 'none', color: 'var(--noir)', cursor: 'pointer', fontWeight: 700, textDecoration: 'underline', fontFamily: 'var(--sans)' }}>← Retour à la connexion</button></span>
+              <span><button className="lien-texte" onClick={() => setMode('login')}>← Retour à la connexion</button></span>
             )}
           </div>
         </div>

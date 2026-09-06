@@ -34,13 +34,13 @@ export default function ObjetModal({ objet, onClose }) {
           }
           {objet.categorie && <div style={{ marginBottom: '.8rem' }}><span className="tag">{objet.categorie}</span></div>}
           <h3 style={{ marginBottom: '.5rem' }}>{objet.titre}</h3>
-          <div style={{ fontSize: '.72rem', fontWeight: 700, color: 'var(--gris)', textTransform: 'uppercase', letterSpacing: '.12em', marginBottom: '1rem' }}>
+          <div className="meta-label" style={{ marginBottom: '1rem' }}>
             Déposé par {objet.pseudo || 'Anonyme'} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
           </div>
           <p style={{ lineHeight: 1.7, marginBottom: '1.2rem', color: 'var(--noir)' }}>{objet.description}</p>
           {objet.histoire &&
             <div style={{ borderTop: '2px solid var(--gris-bord)', paddingTop: '1rem', marginTop: '.5rem' }}>
-              <div style={{ fontSize: '.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.12em', color: 'var(--gris)', marginBottom: '.5rem' }}>Histoire</div>
+              <div className="meta-label" style={{ marginBottom: '.5rem' }}>Histoire</div>
               <p style={{ lineHeight: 1.7, color: 'var(--noir)', fontStyle: 'italic' }}>{objet.histoire}</p>
             </div>
           }

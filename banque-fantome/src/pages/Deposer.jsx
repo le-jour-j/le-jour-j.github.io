@@ -114,7 +114,7 @@ export default function Deposer() {
     <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3rem', textAlign: 'center' }}>
       <div>
         <div style={{ fontFamily: 'var(--bebas)', fontSize: '3rem', marginBottom: '1rem' }}>Accès refusé</div>
-        <p style={{ color: 'var(--gris)', marginBottom: '1.5rem' }}>Vous devez être connecté pour déposer une entrée dans le market.</p>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Vous devez être connecté pour déposer une entrée dans le market.</p>
         <Link to="/connexion"><button className="btn btn-noir">Se connecter →</button></Link>
       </div>
     </div>
@@ -126,7 +126,7 @@ export default function Deposer() {
         <div className="section-head"><h2>Déposer dans le market</h2></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: 900 }}>
           <div>
-            <p style={{ color: 'var(--gris)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.92rem' }}>
+            <p className="texte-aide" style={{ marginBottom: '2rem' }}>
               Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il entre dans le circuit de la Banque Fantôme et peut être obtenu contre de la monnaie produite par les joueurs.
             </p>
             <div className="field">
