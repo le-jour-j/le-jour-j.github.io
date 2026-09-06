@@ -40,8 +40,8 @@ jobs:
       - name: Build Banque Fantôme
         working-directory: ./banque-fantome
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.BANQUE_FANTOME_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.BANQUE_FANTOME_SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Prepare site
