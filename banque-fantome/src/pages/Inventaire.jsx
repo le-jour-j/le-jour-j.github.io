@@ -21,18 +21,7 @@ export default function Inventaire() {
     if (statut !== 'tous') q = q.eq('statut', statut)
     if (categorie !== 'toutes') q = q.eq('categorie', categorie)
     if (search.trim()) q = q.ilike('titre', `%${search.trim()}%`)
-    q.then(({ data, count, error }) => {
-      if (error && categorie !== 'toutes' && error.message?.toLowerCase().includes('categorie')) {
-        supabase.from('objets').select('*', { count: 'exact' }).order('created_at', { ascending: false }).then(({ data: fallback, count: fallbackCount }) => {
-          let filtered = fallback || []
-          if (statut !== 'tous') filtered = filtered.filter(o => o.statut === statut)
-          if (search.trim()) filtered = filtered.filter(o => o.titre?.toLowerCase().includes(search.trim().toLowerCase()))
-          setObjets(filtered)
-          setTotal(filtered.length || fallbackCount || 0)
-          setLoading(false)
-        })
-        return
-      }
+    q.then(({ data, count }) => {
       setObjets(data || [])
       setTotal(count || 0)
       setLoading(false)

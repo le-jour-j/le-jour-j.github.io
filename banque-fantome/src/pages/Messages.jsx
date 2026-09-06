@@ -147,7 +147,7 @@ export default function Messages() {
                           <strong style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{c.pseudo}</strong>
                           {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
                         </div>
-                        {c.objetTitre && <div className="caption-gris" style={{ marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
+                        {c.objetTitre && <div className="caption-gris" style={{ color: isActive ? '#ccc' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
                         <div style={{ fontSize: '.8rem', color: isActive ? '#ccc' : 'var(--gris)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {c.last}
                         </div>

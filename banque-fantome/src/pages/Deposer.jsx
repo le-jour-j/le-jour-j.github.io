@@ -94,15 +94,7 @@ export default function Deposer() {
         statut: 'disponible',
       }
       const { error: insErr } = await supabase.from('objets').insert(payload)
-      if (insErr) {
-        if (insErr.message?.toLowerCase().includes('categorie')) {
-          throw new Error("La colonne 'categorie' manque dans Supabase. Exécute la mise à jour SQL fournie avec le projet.")
-        }
-        if (insErr.message?.toLowerCase().includes('image_paths')) {
-          throw new Error("La colonne 'image_paths' manque dans Supabase. Exécute la mise à jour SQL fournie avec le projet pour activer plusieurs images.")
-        }
-        throw insErr
-      }
+      if (insErr) throw insErr
       setNotif({ msg: 'Entrée déposée dans le market.', type: 'ok' })
       setTimeout(() => navigate('/market'), 1500)
     } catch (e) {
