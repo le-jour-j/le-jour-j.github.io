@@ -33,6 +33,17 @@ jobs:
         working-directory: ./tour-de-phrance
         run: npm run build
 
+      - name: Install Banque Fantôme
+        working-directory: ./banque-fantome
+        run: npm install
+
+      - name: Build Banque Fantôme
+        working-directory: ./banque-fantome
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build
+
       - name: Prepare site
         run: |
           mkdir public-build
@@ -40,9 +51,12 @@ jobs:
             --exclude ".git" \
             --exclude ".github" \
             --exclude "public-build" \
-            --exclude "tour-de-phrance"
+            --exclude "tour-de-phrance" \
+            --exclude "banque-fantome"
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
+          mkdir -p public-build/banque-fantome
+          cp -R banque-fantome/dist/* public-build/banque-fantome/
           echo "jeansonpechin.com" > public-build/CNAME
 
       - uses: actions/configure-pages@v4
