@@ -50,11 +50,11 @@ export default function MessageModal({ objet, onClose }) {
             </div>
           : <>
               <h3 style={{ fontFamily: 'var(--sans)', marginBottom: '.4rem' }}>Proposer un échange</h3>
-              <div style={{ fontSize: '.75rem', color: 'var(--grey)', marginBottom: '1.2rem', textTransform: 'uppercase', letterSpacing: '.1em' }}>
+              <div style={{ fontSize: '.75rem', color: 'var(--gris)', marginBottom: '1.2rem', textTransform: 'uppercase', letterSpacing: '.1em' }}>
                 à {objet.pseudo} · re: {objet.titre}
               </div>
               {!user &&
-                <p style={{ fontFamily: 'var(--sans)', color: 'var(--red)', marginBottom: '1rem', fontSize: '.9rem' }}>
+                <p style={{ fontFamily: 'var(--sans)', color: 'var(--rouge)', marginBottom: '1rem', fontSize: '.9rem' }}>
                   Vous devez être connecté pour envoyer un message.
                 </p>
               }

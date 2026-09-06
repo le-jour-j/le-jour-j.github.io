@@ -124,7 +124,7 @@ export default function Messages() {
             {loading
               ? <div className="loader">chargement<span className="blink">_</span></div>
               : conversations.length === 0
-                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--vt)', fontSize: '1.3rem', padding: '2rem 0' }}>
+                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--bebas)', fontSize: '1.3rem', padding: '2rem 0' }}>
                     AUCUN MESSAGE
                   </div>
                 : conversations.map(c => {
@@ -137,14 +137,14 @@ export default function Messages() {
                         style={{
                           padding: '1rem',
                           borderBottom: '1px solid var(--gris-bord)',
-                          cursor: 'crosshair',
+                          cursor: 'pointer',
                           background: isActive ? 'var(--noir)' : c.unread > 0 ? 'rgba(255, 230, 109, 0.28)' : 'var(--blanc)',
                           color: isActive ? 'var(--blanc)' : 'var(--noir)',
                           transition: 'background .1s',
                         }}
                       >
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.3rem' }}>
-                          <strong style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{c.pseudo}</strong>
+                          <strong style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{c.pseudo}</strong>
                           {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
                         </div>
                         {c.objetTitre && <div style={{ fontSize: '.7rem', color: isActive ? 'var(--gris)' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
@@ -163,10 +163,10 @@ export default function Messages() {
               {/* Header */}
               <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--gris-bord)', background: 'var(--noir)', color: 'var(--blanc)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontFamily: 'var(--type)', fontSize: '1rem' }}>{selected.pseudo}</div>
+                  <div style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{selected.pseudo}</div>
                   {selected.objetTitre && <div style={{ fontSize: '.7rem', color: 'var(--gris)' }}>re: {selected.objetTitre}</div>}
                 </div>
-                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'crosshair', fontSize: '1.2rem' }}>✕</button>
+                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
               </div>
 
               {/* Messages */}
@@ -181,7 +181,7 @@ export default function Messages() {
                         color: isMine ? 'var(--blanc)' : 'var(--noir)',
                         padding: '.6rem .9rem',
                         border: '1px solid var(--gris-bord)',
-                        fontFamily: 'var(--type)',
+                        fontFamily: 'var(--sans)',
                         lineHeight: 1.6,
                       }}>
                         {m.contenu}
