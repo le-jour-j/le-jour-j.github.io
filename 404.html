@@ -17,7 +17,15 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
 
   <link rel="manifest" href="/site.webmanifest" />
-  <script type="module" crossorigin src="/assets/index-CkcZF8et.js"></script>
+  <script>
+    // Deep-link SPA banque-fantome : GitHub Pages n'a pas de rewrite serveur,
+    // donc on redirige /banque-fantome/<route> vers l'app en gardant la route visée.
+    if (location.pathname.startsWith('/banque-fantome/')) {
+      sessionStorage.setItem('bf-redirect', location.pathname.replace('/banque-fantome', '') + location.search + location.hash)
+      location.replace('/banque-fantome/')
+    }
+  </script>
+  <script type="module" crossorigin src="/assets/index-CHnWAy5V.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-BokUHoNR.css">
 </head>
 
