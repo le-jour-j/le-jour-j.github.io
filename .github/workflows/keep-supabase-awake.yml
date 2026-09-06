@@ -12,6 +12,6 @@ jobs:
       - name: Ping Supabase
         run: |
           curl -L -sS \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/objets?select=id&limit=1"
+            -H "apikey: ${{ secrets.BANQUE_FANTOME_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.BANQUE_FANTOME_SUPABASE_ANON_KEY }}" \
+            "${{ secrets.BANQUE_FANTOME_SUPABASE_URL }}/rest/v1/objets?select=id&limit=1"
