@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
+import RecoveryCodeReveal from '../components/RecoveryCodeReveal'
+import { generateRecoveryCode, hashRecoveryCode } from '../utils/recoveryCode'
 
 function fakeEmail(pseudo) {
   return `${pseudo.toLowerCase().replace(/[^a-z0-9]/g, '_')}@banquefantome.local`
@@ -14,18 +16,25 @@ export default function Connexion() {
   const [mode, setMode]         = useState('login') // 'login' | 'register' | 'reset'
   const [pseudo, setPseudo]     = useState('')
   const [mdp, setMdp]           = useState('')
+  const [code, setCode]         = useState('')
   const [nouveauMdp, setNouveauMdp] = useState('')
   const [loading, setLoad]      = useState(false)
   const [notif, setNotif]       = useState(null)
   const [errors, setErrors]     = useState({})
+  const [revealCode, setRevealCode] = useState(null)
 
   if (user) { navigate('/compte'); return null }
 
   function validate() {
     const e = {}
     if (!pseudo.trim() || pseudo.trim().length < 3) e.pseudo = 'Pseudo requis (min 3 caractères)'
-    if (mode !== 'reset' && (!mdp || mdp.length < 6)) e.mdp = 'Mot de passe requis (min 6 caractères)'
-    if (mode === 'reset' && (!nouveauMdp || nouveauMdp.length < 6)) e.nouveauMdp = 'Min 6 caractères'
+    if (mode === 'login' || mode === 'register') {
+      if (!mdp || mdp.length < 6) e.mdp = 'Mot de passe requis (min 6 caractères)'
+    }
+    if (mode === 'reset') {
+      if (!code.trim()) e.code = 'Code de récupération requis'
+      if (!nouveauMdp || nouveauMdp.length < 6) e.nouveauMdp = 'Min 6 caractères'
+    }
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -38,9 +47,12 @@ export default function Connexion() {
       if (mode === 'register') {
         const { data, error } = await supabase.auth.signUp({ email, password: mdp })
         if (error) throw error
-        if (data.user) await supabase.from('profiles').upsert({ id: data.user.id, pseudo: pseudo.trim() })
-        setNotif({ msg: 'Compte créé ! Bienvenue.', type: 'ok' })
-        setTimeout(() => navigate('/'), 1200)
+        if (data.user) {
+          const recoveryCode = generateRecoveryCode()
+          const recoveryHash = await hashRecoveryCode(recoveryCode)
+          await supabase.from('profiles').upsert({ id: data.user.id, pseudo: pseudo.trim(), recovery_code_hash: recoveryHash })
+          setRevealCode(recoveryCode)
+        }
 
       } else if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email, password: mdp })
@@ -49,13 +61,17 @@ export default function Connexion() {
         setTimeout(() => navigate('/'), 1000)
 
       } else if (mode === 'reset') {
-        // Connexion avec l'ancien mdp puis changement
-        const { error: loginErr } = await supabase.auth.signInWithPassword({ email, password: mdp })
-        if (loginErr) throw new Error('Pseudo ou mot de passe actuel incorrect.')
-        const { error: updateErr } = await supabase.auth.updateUser({ password: nouveauMdp })
-        if (updateErr) throw updateErr
-        setNotif({ msg: 'Mot de passe changé ! Connexion en cours…', type: 'ok' })
-        setTimeout(() => navigate('/'), 1500)
+        const { data, error: fnErr } = await supabase.functions.invoke('reset-password', {
+          body: { pseudo: pseudo.trim(), code: code.trim(), newPassword: nouveauMdp },
+        })
+        if (fnErr) {
+          let msg = 'Pseudo ou code incorrect.'
+          try { const body = await fnErr.context.json(); if (body?.error) msg = body.error } catch {}
+          throw new Error(msg)
+        }
+        const { error: loginErr } = await supabase.auth.signInWithPassword({ email, password: nouveauMdp })
+        if (loginErr) throw loginErr
+        setRevealCode(data.newCode)
       }
     } catch (e) {
       const msg = e.message?.includes('already registered') ? 'Ce pseudo est déjà pris.'
@@ -83,7 +99,7 @@ export default function Connexion() {
           <p style={{ fontSize: '.88rem', color: 'var(--gris)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
             {mode === 'login' && 'Identifiez-vous pour déposer des objets et gérer vos échanges.'}
             {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo — vous devenez opérateur de la Banque.'}
-            {mode === 'reset' && 'Entrez votre pseudo, votre mot de passe actuel, puis votre nouveau mot de passe.'}
+            {mode === 'reset' && 'Entrez votre pseudo, votre code de récupération, puis votre nouveau mot de passe.'}
           </p>
 
           <div className="field">
@@ -92,11 +108,18 @@ export default function Connexion() {
             {errors.pseudo && <span className="error-msg">{errors.pseudo}</span>}
           </div>
 
-          <div className="field">
-            <label>{mode === 'reset' ? 'Mot de passe actuel' : 'Mot de passe'}</label>
-            <input type="password" value={mdp} onChange={e => setMdp(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
-            {errors.mdp && <span className="error-msg">{errors.mdp}</span>}
-          </div>
+          {mode === 'reset'
+            ? <div className="field">
+                <label>Code de récupération</label>
+                <input value={code} onChange={e => setCode(e.target.value)} placeholder="XXXX-XXXX-XXXX" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
+                {errors.code && <span className="error-msg">{errors.code}</span>}
+              </div>
+            : <div className="field">
+                <label>Mot de passe</label>
+                <input type="password" value={mdp} onChange={e => setMdp(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
+                {errors.mdp && <span className="error-msg">{errors.mdp}</span>}
+              </div>
+          }
 
           {mode === 'reset' && (
             <div className="field">
@@ -128,6 +151,7 @@ export default function Connexion() {
         </div>
       </div>
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
+      {revealCode && <RecoveryCodeReveal code={revealCode} onConfirm={() => navigate('/')} />}
     </div>
   )
 }
