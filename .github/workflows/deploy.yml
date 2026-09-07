@@ -52,12 +52,20 @@ jobs:
             --exclude ".github" \
             --exclude "public-build" \
             --exclude "tour-de-phrance" \
-            --exclude "banque-fantome"
+            --exclude "banque-fantome" \
+            --exclude "scripts"
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
           mkdir -p public-build/banque-fantome
           cp -R banque-fantome/dist/* public-build/banque-fantome/
           echo "jeansonpechin.com" > public-build/CNAME
+
+      - name: Injecte le hack SPA banque-fantome dans 404.html
+        # Le 404.html source est resynchronise sur index.html par le pipeline
+        # du site portfolio racine (autre process) et perd cette injection a
+        # chaque fois : on la refait donc ici, sur le fichier de sortie, a
+        # chaque build de ce workflow.
+        run: node scripts/inject-bf-redirect.cjs public-build/404.html
 
       - uses: actions/configure-pages@v4
 

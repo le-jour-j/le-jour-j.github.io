@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import ImageLightbox from '../components/ImageLightbox'
 
+const BASE = import.meta.env.BASE_URL
 const billets = [
-  '/images/billet/billet-a-colorier-001.jpg',
-  '/images/billet/billet-a-colorier-002.png',
-  '/images/billet/billet-a-colorier-003.png',
-  '/images/billet/billet-a-colorier-004.png',
-  '/images/billet/billet-a-colorier-005.png',
-  '/images/billet/billet-a-colorier-006.png',
-  '/images/billet/billet-a-colorier-007.png',
-  '/images/billet/billet-a-colorier-008.jpg',
-  '/images/billet/billet-a-colorier-009.jpg',
-  '/images/billet/billet-a-colorier-010.jpg',
-  '/images/billet/billet-a-colorier-011.jpg',
-  '/images/billet/billet-a-colorier-012.jpg',
-  '/images/billet/billet-a-colorier-013.jpg',
+  `${BASE}images/billet/billet-a-colorier-001.jpg`,
+  `${BASE}images/billet/billet-a-colorier-002.png`,
+  `${BASE}images/billet/billet-a-colorier-003.png`,
+  `${BASE}images/billet/billet-a-colorier-004.png`,
+  `${BASE}images/billet/billet-a-colorier-005.png`,
+  `${BASE}images/billet/billet-a-colorier-006.png`,
+  `${BASE}images/billet/billet-a-colorier-007.png`,
+  `${BASE}images/billet/billet-a-colorier-008.jpg`,
+  `${BASE}images/billet/billet-a-colorier-009.jpg`,
+  `${BASE}images/billet/billet-a-colorier-010.jpg`,
+  `${BASE}images/billet/billet-a-colorier-011.jpg`,
+  `${BASE}images/billet/billet-a-colorier-012.jpg`,
+  `${BASE}images/billet/billet-a-colorier-013.jpg`,
 ]
 
 const prompts = [

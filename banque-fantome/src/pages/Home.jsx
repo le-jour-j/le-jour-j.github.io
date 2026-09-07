@@ -4,13 +4,14 @@ import { supabase } from '../lib/supabase'
 import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 
+const BASE = import.meta.env.BASE_URL
 const visuels = [
-  '/images/visuels/visuels-001.png',
-  '/images/visuels/visuels-002.png',
-  '/images/visuels/visuels-003.png',
-  '/images/visuels/visuels-004.png',
-  '/images/visuels/visuels-005.png',
-  '/images/visuels/visuels-006.png',
+  `${BASE}images/visuels/visuels-001.png`,
+  `${BASE}images/visuels/visuels-002.png`,
+  `${BASE}images/visuels/visuels-003.png`,
+  `${BASE}images/visuels/visuels-004.png`,
+  `${BASE}images/visuels/visuels-005.png`,
+  `${BASE}images/visuels/visuels-006.png`,
 ]
 
 export default function Home() {
