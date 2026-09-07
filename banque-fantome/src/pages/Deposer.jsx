@@ -3,13 +3,14 @@ import { useNavigate, Link } from 'react-router-dom'
 import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
+import { RARETES, VALEURS } from '../utils/rarete'
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
 export default function Deposer() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet' })
+  const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', valeur: '' })
   const [files, setFiles] = useState([])
   const [previews, setPreviews] = useState([])
   const [drag, setDrag] = useState(false)
@@ -87,6 +88,8 @@ export default function Deposer() {
         histoire: form.histoire.trim() || null,
         lieu: form.lieu.trim() || null,
         categorie: form.categorie,
+        rarete: form.rarete,
+        valeur: form.valeur ? Number(form.valeur) : null,
         image_path,
         image_paths: image_paths.length ? image_paths : null,
         pseudo,
@@ -151,6 +154,19 @@ export default function Deposer() {
                 {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               {errors.categorie && <span className="error-msg">{errors.categorie}</span>}
+            </div>
+            <div className="field">
+              <label>Rareté</label>
+              <select value={form.rarete} onChange={e => set('rarete', e.target.value)}>
+                {RARETES.map(r => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label>Valeur</label>
+              <select value={form.valeur} onChange={e => set('valeur', e.target.value)}>
+                <option value="">non précisé</option>
+                {VALEURS.map(v => <option key={v} value={v}>{v} billets</option>)}
+              </select>
             </div>
             <div className="field">
               <label>Titre *</label>

@@ -32,7 +32,10 @@ export default function ObjetModal({ objet, onClose }) {
               {imgUrls.length > 1 && <div className="modal-media-hint">Cliquer sur une image pour l’agrandir.</div>}
             </div>
           }
-          {objet.categorie && <div style={{ marginBottom: '.8rem' }}><span className="tag">{objet.categorie}</span></div>}
+          <div style={{ marginBottom: '.8rem', display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+            {objet.categorie && <span className="tag">{objet.categorie}</span>}
+            <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>
+          </div>
           <h3 style={{ marginBottom: '.5rem' }}>{objet.titre}</h3>
           <div className="meta-label" style={{ marginBottom: '1rem' }}>
             Déposé par {objet.pseudo || 'Anonyme'} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
@@ -46,6 +49,7 @@ export default function ObjetModal({ objet, onClose }) {
           }
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '.8rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <span className="stamp stamp-vert">{objet.statut || 'disponible'}</span>
+            {!!objet.valeur && <span className="meta-label">Valeur estimée : {objet.valeur} billets</span>}
             {objet.lieu && <span className="tag">📍 {objet.lieu}</span>}
             {!isOwn && objet.user_id &&
               <button className="btn btn-jaune" style={{ marginLeft: 'auto', fontSize: '.8rem' }} onClick={() => setShowMsg(true)}>

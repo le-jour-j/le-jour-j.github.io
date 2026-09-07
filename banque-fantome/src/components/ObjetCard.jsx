@@ -10,6 +10,7 @@ export default function ObjetCard({ objet, onClick }) {
   return (
     <div className="objet-card" onClick={() => onClick && onClick(objet)}>
       <span className="card-num">#{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}</span>
+      {!!objet.valeur && <span className="card-valeur">{objet.valeur} billets</span>}
       <div className="img-wrap">
         {imgUrl && !imgErr
           ? <img src={imgUrl} alt={objet.titre} onError={() => setImgErr(true)} />
@@ -18,7 +19,10 @@ export default function ObjetCard({ objet, onClick }) {
         {imgUrls.length > 1 && <span className="img-count-badge">+{imgUrls.length - 1}</span>}
       </div>
       <div className="card-body">
-        {objet.categorie && <span className="tag" style={{ alignSelf: 'flex-start' }}>{objet.categorie}</span>}
+        <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap', alignSelf: 'flex-start' }}>
+          {objet.categorie && <span className="tag">{objet.categorie}</span>}
+          <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>
+        </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 80)}{objet.description?.length > 80 ? '…' : ''}</div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '.4rem', gap: '.75rem' }}>

@@ -24,6 +24,8 @@ create table if not exists objets (
   pseudo      text,
   user_id     uuid references auth.users(id) on delete set null,
   statut      text default 'disponible',   -- disponible | réservé | échangé
+  rarete      text default 'commun',       -- commun | rare | precieux | exceptionnel
+  valeur      integer,                     -- valeur symbolique en billets, nullable
   numero      int generated always as identity,
   created_at  timestamptz default now()
 );
@@ -72,3 +74,8 @@ update objets set categorie = 'objet' where categorie is null;
 
 alter table if exists objets add column if not exists image_paths text[];
 update objets set image_paths = array[image_path] where image_path is not null and (image_paths is null or array_length(image_paths, 1) is null);
+
+alter table if exists objets add column if not exists rarete text default 'commun';
+update objets set rarete = 'commun' where rarete is null;
+
+alter table if exists objets add column if not exists valeur integer;
