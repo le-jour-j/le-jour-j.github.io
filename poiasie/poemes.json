@@ -287,6 +287,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:15:24",
       "texte": "Ravage des murmures, saccade du vent.\nDoucement, la lune grise écoute,\nFeux éteints en une danse silencieuse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:19:19",
+      "texte": "Nuages nocturnes dansent sur la mer tranquille. Lumière qui s'éclipse au crepuscule. Ombres se fondant dans le ciel sombre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:19:35",
+      "texte": "Soleil dérobé par lune,\nCrépuscule entremêle ombres chaudes.\nCiel envoûteur s'abstient."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:19:52",
+      "texte": "Plumes de nuages, danseuses nocturnes.\nDouleurs d'étoiles qui murmurent aux larmes.\nTempête de sons dans un corps solitaire."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:20:08",
+      "texte": "échos des nuits vagabondes. Écho du vent, silence sacré.\nVents susurrant, tourments vibrants, rêves en vrac."
     }
   ]
 }
