@@ -191,6 +191,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:56:36",
       "texte": "Les chutes des chuchotements glacés dans le vent\nBleus abyssaux en transe hivernale éternelle\nÂme murmurante au cœur de la glace bleutée"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:00:30",
+      "texte": "Esprit froid dans le cristal transparent,\nEcho du vent qui pleure sur les arbres morts,\nOublie ton chaud souvenir d'été brûlant."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:00:46",
+      "texte": "Les arbres dressés,\nSoleil sur des peaux mortes, souffle sec.\nHiver enveloppe la terre.\n\nÉcureuil cache en silence."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:01:03",
+      "texte": "Nuage de cendres, lune dorée,\nSanglots des arbres gelés,\nMystère de la nuit froide."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:01:17",
+      "texte": "Doré, cris gelés sous le voile mystique,\nMystères chantent au cœur frêle.\nNoir froid, rime dorée, lamentations hallucinées."
     }
   ]
 }
