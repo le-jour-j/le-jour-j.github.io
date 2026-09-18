@@ -167,6 +167,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:51:54",
       "texte": "Murmures sur le murmur marin,\nArbre écoutant, bras d'or.\nRêves de vent et rires de marins,\n\nPlongée des ombres dans la lumière du jour.\n\nSonneries sourdes des vagues qui grimpent,\nÂme azur"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:55:47",
+      "texte": "Dans la nuit, étoiles en fête,\nRythme du cœur dans les vents froids,\nEspérance flottante à la mer."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:56:02",
+      "texte": "Les cœurs vagabondent vers le ciel bleu.  \nVagues murmurantes sous la lune argentée.  \nEspoir se voile de brumes mystiques."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:56:19",
+      "texte": "Ombres de larmes qui danseraient sur les vagues,\nUn coeur noir dans un ciel bleu éclatant,\nL'âme perdue sous la neige et la glace."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:56:36",
+      "texte": "Les chutes des chuchotements glacés dans le vent\nBleus abyssaux en transe hivernale éternelle\nÂme murmurante au cœur de la glace bleutée"
     }
   ]
 }
