@@ -70,5 +70,40 @@
         "texte": "Sous le soleil de mai, chuchotements et fleurs dansent."
       }
     ]
+  },
+  {
+    "id": "20260918-221355",
+    "date": "2026-09-18 22:13",
+    "vers": []
+  },
+  {
+    "id": "20260918-222753",
+    "date": "2026-09-18 22:27",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:28:10",
+        "texte": "Soleil s'éteint dans les bras des nuages,\nDoux soupirs de l'au-delà se font sentir,\nDans le ciel du crépuscule, une flamme rose éclate."
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:28:38",
+        "texte": "Lune se lève sur les prairies dorées.  \nRuisseau murmure sous la lune argentée.  \nLe cœur s'est tue."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:29:06",
+        "texte": "Dormant oiseaux dans un nuage de violette,\nPommier en flammes aux pieds du chateau perdu,\nAube rose qui hante les sommets noirs."
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:29:32",
+        "texte": "Flou chant des ombres, murmures du vent. Échos enlacés dans le silence noir.\n\nSoleil couchant, éclats dorés sur la pierre sombre. Danse délicate de la lumière naissante."
+      }
+    ]
   }
 ]
