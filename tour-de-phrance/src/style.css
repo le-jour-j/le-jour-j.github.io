@@ -280,3 +280,214 @@ p {
   background: #111;
   color: #eee;
 }
+
+/* ── Reset et règles globales (auparavant injectées par l'onglet Carte) ── */
+*, *::before, *::after { box-sizing: border-box; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #f6845e; outline-offset: 2px; }
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Onglet Carte ── */
+.roadtrip-root {
+  width: 100%;
+  min-height: 100%;
+  background: #0a0812;
+  font-family: "DM Sans", system-ui, sans-serif;
+  position: relative;
+}
+.roadtrip-column { max-width: 600px; margin: 0 auto; background: #eef2f8; min-height: 100%; }
+.mobile-toggle {
+  width: 100%; padding: 10px 16px;
+  background: #111; border: 1px solid #333; color: #ccc;
+  font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: 0.1em;
+  cursor: pointer; text-align: center;
+}
+.sticky-header {
+  position: sticky; top: 0; z-index: 100;
+  background: #e8eef8; border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  background: #e0eaf5; border: 1px solid #333; border-radius: 2px; padding: 9px 14px;
+}
+.search-box input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-size: 13.5px; color: #2d3748; min-width: 0;
+}
+.search-clear { background: none; border: none; cursor: pointer; color: #a0aec0; font-size: 16px; padding: 0; line-height: 1; }
+.empty-state { text-align: center; padding: 50px 20px; color: #a0aec0; font-family: "DM Mono", monospace; font-size: 13px; }
+.map-notice { font-size: 10.5px; color: #718096; font-family: "DM Mono", monospace; margin: -6px 0 10px; }
+.maps-button {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 13px; border-radius: 2px;
+  background: linear-gradient(135deg, #f6845e 0%, #f2c94c 100%);
+  color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  text-decoration: none; margin-bottom: 14px;
+}
+.roadtrip-footer {
+  position: sticky; bottom: 0; width: 100%; padding: 12px 16px;
+  background: #e8eef8; border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px; z-index: 50;
+}
+.footer-count { font-family: "DM Mono", monospace; font-size: 10px; color: #a0aec0; letter-spacing: 0.05em; }
+.footer-button {
+  padding: 7px 14px; border-radius: 2px; background: transparent; border: 1px solid #333;
+  color: #718096; cursor: pointer; font-size: 12px; font-weight: 500;
+}
+.footer-button:disabled { opacity: 0.4; cursor: not-allowed; }
+.footer-button.danger { background: #fee2e2; border-color: #fee2e2; color: #dc2626; font-weight: 700; }
+
+/* ── Ligne lieu ── */
+.location-row {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 10px 12px; border-radius: 2px; margin-bottom: 2px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.location-name { font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; }
+.region-tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10.5px; font-family: "DM Mono", monospace;
+  padding: 2px 7px; border-radius: 2px; letter-spacing: 0.02em; font-weight: 500;
+}
+.location-address { font-size: 11px; color: #a0aec0; margin-top: 3px; font-family: "DM Mono", monospace; letter-spacing: 0.01em; }
+.location-description { font-size: 12px; color: #4a5568; line-height: 1.45; margin: 5px 0 0; }
+.location-overlap { font-size: 10.5px; color: #a0aec0; font-style: italic; }
+
+/* ── Pastilles d'état et sélecteur ── */
+.status-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.status-picker { position: relative; }
+.status-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1.5px dashed #a0aec0; background: white; color: #4a5568;
+  border-radius: 2px; padding: 5px 9px; cursor: pointer; font-size: 11.5px; font-weight: 600;
+}
+.status-chip.has-status { border-style: solid; }
+.status-chip.open { box-shadow: 0 0 0 2px rgba(246,132,94,0.35); }
+.status-chip-book { font-family: "DM Mono", monospace; font-size: 10px; opacity: 0.8; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.status-menu {
+  margin-top: 6px; padding: 10px; background: #fff; border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 2px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); width: min(100%, 420px);
+  position: relative; z-index: 5;
+}
+.status-menu-title { font-family: "DM Mono", monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #718096; margin-bottom: 8px; }
+.status-menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.status-option {
+  border: 1.5px solid; border-radius: 2px; padding: 7px 8px; cursor: pointer;
+  font-size: 11.5px; font-weight: 600; text-align: left; line-height: 1.2;
+}
+.status-option.current { box-shadow: inset 0 0 0 2px currentColor; }
+.status-note {
+  width: 100%; margin-top: 8px; border: 1px solid #cbd5e0; background: #f7fafc;
+  border-radius: 2px; padding: 7px 8px; font-size: 11.5px;
+}
+.status-menu-footer { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.status-link { background: none; border: none; padding: 0; color: #718096; font-size: 11px; cursor: pointer; text-decoration: underline; }
+.status-history { list-style: none; margin: 8px 0 0; padding: 8px 0 0; border-top: 1px solid rgba(0,0,0,0.08); font-size: 11px; display: grid; gap: 4px; }
+.status-history small { color: #a0aec0; }
+.status-history em { color: #4a5568; }
+
+/* ── Barre des livres ── */
+.book-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 0 18px 10px; }
+.book-bar-label { font-family: "DM Mono", monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; margin-right: 4px; }
+.book-chip {
+  border: 1px solid #333; background: transparent; color: #2d3748;
+  border-radius: 2px; padding: 5px 9px; cursor: pointer; font-size: 11.5px; font-weight: 600;
+  max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.book-chip.active { background: #111; color: #eee; }
+.book-chip.add { border-style: dashed; color: #718096; font-weight: 500; }
+.book-add-form { display: flex; gap: 4px; }
+.book-add-form input { border: 1px solid #333; background: #fff; border-radius: 2px; padding: 5px 8px; font-size: 11.5px; width: 160px; }
+.book-add-form button { border: 1px solid #333; background: #111; color: #eee; border-radius: 2px; padding: 5px 8px; cursor: pointer; font-size: 11.5px; }
+
+/* ── Panneau Mes livres ── */
+.books-list { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 8px; }
+.books-item {
+  background: #eef2f8; border: 1px solid rgba(0,0,0,0.08); border-left: 3px solid transparent;
+  padding: 10px 12px; border-radius: 2px; display: grid; gap: 6px;
+}
+.books-item.active { border-left-color: #f6845e; }
+.books-item-main { display: grid; gap: 2px; }
+.books-item-main small { color: #718096; font-size: 11px; }
+.books-item-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.books-item-actions .plain-button { margin-top: 0; padding: 5px 9px; font-size: 11px; }
+.plain-button.danger { color: #dc2626; border-color: #dc2626; }
+.books-edit-form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.books-edit-form input { flex: 1; min-width: 160px; border: 1px solid #333; border-radius: 2px; padding: 7px 9px; }
+.books-edit-form .plain-button { margin-top: 0; }
+
+/* ── Métadonnées des lieux (refonte 2026) ── */
+.location-row.is-target { background: linear-gradient(90deg, rgba(104,216,192,0.10), transparent 60%); }
+.meta-tag {
+  font-family: "DM Mono", monospace; font-size: 9.5px; letter-spacing: 0.04em;
+  padding: 2px 6px; border-radius: 2px; font-weight: 600; text-transform: uppercase;
+  cursor: help;
+}
+.location-type { text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
+.location-fieldnote {
+  font-size: 11.5px; line-height: 1.45; margin: 4px 0 0; padding: 5px 8px;
+  background: #fdf6dc; border-left: 2px solid #f2c94c; color: #6b5a14;
+}
+.location-link {
+  display: inline-block; margin-top: 5px; font-size: 11px;
+  font-family: "DM Mono", monospace; color: #f6845e; text-decoration: none;
+}
+.location-link:hover { text-decoration: underline; }
+.targets-filter {
+  display: flex; align-items: center; gap: 7px; margin-top: 9px;
+  font-size: 11.5px; color: #4a5568; cursor: pointer;
+}
+.targets-filter input { margin: 0; cursor: pointer; accent-color: #f6845e; }
+
+/* ── Catalogue ── */
+.cat-stats { font-family: "DM Mono", monospace; font-size: 11px; color: #718096; letter-spacing: 0.04em; margin: 0 0 14px; }
+.cat-search { display: flex; align-items: center; gap: 8px; background: #eef2f8; border: 1px solid #333; border-radius: 2px; padding: 8px 12px; margin-bottom: 16px; }
+.cat-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: #2d3748; font: inherit; font-size: 14px; }
+.cat-search input:focus { outline: none; }
+.cat-search button { background: none; border: 0; color: #718096; font-size: 18px; line-height: 1; cursor: pointer; padding: 0; }
+.cat-list { display: grid; gap: 12px; }
+.cat-book { background: #eef2f8; border: 1px solid rgba(0,0,0,0.08); border-left: 3px solid #f6845e; padding: 14px; border-radius: 2px; }
+.cat-book-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.cat-book h2 { font-size: 18px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 3px; }
+.cat-by { font-family: "DM Mono", monospace; font-size: 11px; color: #718096; margin: 0; letter-spacing: 0.02em; }
+.cat-count { text-align: right; flex: none; }
+.cat-count b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: #f6845e; line-height: 1; }
+.cat-count span { font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #a0aec0; }
+.cat-desc { font-size: 13.5px; line-height: 1.5; margin: 9px 0 0; color: #4a5568; }
+.cat-cities { font-family: "DM Mono", monospace; font-size: 11px; color: #718096; margin: 9px 0 0; line-height: 1.6; }
+.cat-toggle { margin-top: 10px; background: none; border: 0; padding: 0; color: #f6845e; font: inherit; font-size: 12.5px; cursor: pointer; text-decoration: underline; }
+.cat-places { list-style: none; margin: 10px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(0,0,0,0.08); display: grid; gap: 8px; }
+.cat-places li { font-size: 13px; line-height: 1.4; color: #718096; }
+.cat-places a { color: #2d3748; font-weight: 600; text-decoration: none; border-bottom: 1px solid #cbd5e0; }
+.cat-places a:hover { border-color: #f6845e; color: #f6845e; }
+.cat-places small { display: block; font-family: "DM Mono", monospace; font-size: 10.5px; color: #a0aec0; margin-top: 2px; }
+.cat-link { display: inline-block; margin-top: 11px; font-family: "DM Mono", monospace; font-size: 11px; color: #f6845e; text-decoration: none; }
+.cat-link:hover { text-decoration: underline; }
+
+/* ── « En vente ici » sur une fiche de lieu ── */
+.location-sold {
+  font-size: 12px; line-height: 1.45; margin: 5px 0 0; padding: 5px 8px;
+  background: #e8f9f4; border-left: 2px solid #68d8c0; color: #2d7d6a;
+}
+
+/* ── Fiche livre ── */
+.book-form { margin: 0; }
+.book-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.book-form label small { display: block; color: #a0aec0; font-size: 11px; font-weight: 400; margin-top: 1px; }
+.book-form textarea { width: 100%; border: 1px solid #333; background: #eef2f8; color: #2d3748; border-radius: 2px; padding: 9px; font: inherit; font-size: 13px; resize: vertical; }
+.book-form textarea:focus { outline: 2px solid #f6845e; outline-offset: 1px; }
+.book-flag { font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; background: #ede8e0; color: #718096; padding: 2px 5px; border-radius: 2px; margin-left: 7px; font-weight: 600; vertical-align: 2px; }
+.book-desc { font-size: 12.5px; line-height: 1.45; color: #4a5568; margin: 5px 0 0; }
+
+/* ── Pseudo public ── */
+.pseudo-form { display: grid; gap: 7px; margin: 14px 0 4px; padding-top: 13px; border-top: 1px solid rgba(0,0,0,0.08); }
+.pseudo-form label { display: grid; gap: 3px; font-size: 12px; color: #4a5568; }
+.pseudo-form label small { color: #a0aec0; font-size: 11px; line-height: 1.45; }
+.pseudo-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.pseudo-row input { flex: 1; min-width: 150px; border: 1px solid #333; background: #eef2f8; color: #2d3748; border-radius: 2px; padding: 9px 10px; font: inherit; font-size: 13px; }
+.pseudo-row input:focus { outline: 2px solid #f6845e; outline-offset: 1px; }
+.pseudo-row .primary-button { flex: none; }

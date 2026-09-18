@@ -1,0 +1,18 @@
+v11 — livres et passages (12/09/2026)
+- Le cochage se fait par LIVRE et non plus par compte : un compte peut suivre
+  plusieurs éditions, chacune avec sa progression (barre « Livre suivi »,
+  onglet Compte → Mes livres).
+- Une coche devient un PASSAGE avec un résultat : déposé, refusé, ne prend pas
+  ce type d'objet, fermé ce jour-là, à relancer, passé sans précision — plus
+  une note facultative. L'historique par lieu est conservé (relances).
+- Deux compteurs : lieux où le livre est passé / lieux où il est en dépôt.
+- À la connexion, les passages notés sans compte sont fusionnés dans le compte
+  (plus d'écrasement du local par le distant).
+- Les descriptions des lieux sont affichées.
+- Données : 3 faux doublons « Librairie Lame » retirés ; tronçon 15 renommé
+  « Autour de Dijon » ; champ visited inutilisé supprimé.
+- Technique : versions npm figées (React 18.3, Vite 5.4) ; styles globaux
+  rapatriés dans style.css ; fichiers *_old supprimés ; .gitignore réparé ;
+  avertissement quand l'aperçu carte tronque un tronçon > 10 étapes.
+- Supabase : exécuter supabase/migration_v11_livres_passages.sql (tables
+  books, checkins, profiles.is_admin, migration des anciennes coches).

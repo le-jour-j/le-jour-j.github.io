@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
-import { useVisited } from "./hooks/useVisited.js";
+import StatusPicker from "./components/StatusPicker.jsx";
+import { statusInfo } from "./lib/statuses.js";
+import { typeLabel, FIT_LABELS, STATUS_LABELS } from "./lib/placeMeta.js";
 import CommentBox from "./components/CommentBox.jsx";
 import { RAW_LOCATIONS } from "./data/locations.js";
 import { RAW_ITINERARIES } from "./data/itineraries.js";
 
 // ─── GOOGLE MAPS API KEY ──────────────────────────────────────────────────────
 import { GOOGLE_MAPS_API_KEY } from "./config/googleMapsConfig.js";
-
-const apiKey = GOOGLE_MAPS_API_KEY;
 
 
 // ─── CONSTANTS ───────────────────────────────────────────────────────────────
@@ -61,8 +61,8 @@ const REGION_COLORS = {
   "nouvelle-aquitaine": { bg: "#fffaf0", text: "#7b341e", dot: "#fbb6ce" },
 };
 
-function getRegionStyle(id) {
-  const region = id.replace(/-\d+$/, "");
+function getRegionStyle(loc) {
+  const region = (typeof loc === "string" ? loc.replace(/-\d+$/, "") : loc?.region) || "";
   return REGION_COLORS[region] || { bg: "#f7f8fa", text: "#4a5568", dot: "#a0aec0" };
 }
 
@@ -108,98 +108,117 @@ const IconMap = () => (
   </svg>
 );
 
-const IconCheck = () => (
-  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-    <path d="M1.5 5.5L4.5 8.5L9.5 2.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const IconPin = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-  </svg>
-);
 
 // ─── LOCATION ROW ─────────────────────────────────────────────────────────────
-function LocationRow({ loc, isVisited, onToggle, isOverlap, user }) {
-  const rs = getRegionStyle(loc.id);
+function LocationRow({ loc, books, activeBook, tour, isOverlap, user, sold }) {
+  const rs = getRegionStyle(loc);
+  // Pastilles : une par livre. Sans livre (mode local vierge) : une pastille
+  // générique qui créera le livre par défaut au premier résultat choisi.
+  const pickerBooks = books.length > 0 ? books : [null];
+  const activeLatest = activeBook ? tour.latest(activeBook.id, loc.id) : null;
+  const activeInfo = activeLatest ? statusInfo(activeLatest.status) : null;
+  const fit = FIT_LABELS[loc.fit];
+  const state = STATUS_LABELS[loc.status];
+
+  async function handlePick(bookId, placeId, status, note) {
+    let id = bookId;
+    if (!id) {
+      const created = await tour.ensureBook();
+      id = created?.id;
+    }
+    if (id) await tour.addCheckin(id, placeId, status, note);
+  }
 
   return (
     <div
-      onClick={() => !isOverlap && onToggle(loc.id)}
+      className={"location-row" + (loc.fit === "oui" ? " is-target" : "")}
       style={{
-        display: "flex", alignItems: "flex-start", gap: "11px",
-        padding: "10px 12px",
-        borderRadius: C.radiusSm,
-        cursor: isOverlap ? "default" : "pointer",
         opacity: isOverlap ? 0.38 : 1,
-        background: isVisited ? C.visited : "transparent",
-        borderLeft: isVisited ? `3px solid ${C.visitedBorder}` : "3px solid transparent",
-        transition: "background 0.2s ease, border-color 0.2s ease",
-        marginBottom: "2px",
+        background: activeInfo ? activeInfo.bg : "transparent",
+        borderLeft: activeInfo ? `3px solid ${activeInfo.color}` : "3px solid transparent",
       }}
     >
-      {/* Checkbox */}
-      {!isOverlap && (
-        <div style={{
-          width: "20px", height: "20px", flexShrink: 0, marginTop: "2px",
-          borderRadius: "2px",
-          border: isVisited ? "none" : `2px solid ${C.textMuted}`,
-          background: isVisited ? C.accentMint : "white",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "all 0.2s ease",
-          boxShadow: isVisited ? `0 2px 8px ${C.accentMint}55` : "none",
-        }}>
-          {isVisited && <IconCheck />}
-        </div>
-      )}
-
-      {/* Content */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "7px", flexWrap: "wrap" }}>
-          <span style={{
-            fontFamily: "var(--font-main, sans-serif)",
-            fontSize: "13.5px", fontWeight: "600",
-            color: isVisited ? C.visitedText : C.textPrimary,
-            textDecoration: isVisited ? "line-through" : "none",
-            letterSpacing: "-0.01em",
-            transition: "color 0.2s",
-          }}>
+          <span className="location-name" style={{ color: activeInfo ? activeInfo.color : C.textPrimary }}>
             {loc.name}
           </span>
           {loc.city && (
-            <span style={{
-              display: "inline-flex", alignItems: "center", gap: "3px",
-              fontSize: "10.5px", fontFamily: "var(--font-mono, monospace)",
-              color: rs.text, background: rs.bg,
-              padding: "2px 7px", borderRadius: "2px",
-              letterSpacing: "0.02em", fontWeight: "500",
-            }}>
+            <span className="region-tag" style={{ color: rs.text, background: rs.bg }}>
               <span style={{ color: rs.dot, fontSize: "8px" }}>●</span>
               {loc.city}
             </span>
           )}
+          {!isOverlap && fit && loc.fit !== "possible" && (
+            <span className="meta-tag" style={{ color: fit.color, background: fit.bg }} title={fit.title}>
+              {fit.short}
+            </span>
+          )}
+          {!isOverlap && state && (
+            <span className="meta-tag" style={{ color: state.color, background: state.bg }} title={state.title}>
+              {state.short}
+            </span>
+          )}
         </div>
-        {loc.address && loc.address !== "..." && !isOverlap && (
-          <div style={{
-            fontSize: "11px", color: C.textMuted, marginTop: "3px",
-            fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.01em",
-          }}>
-            {loc.address}
+
+        {!isOverlap && (loc.type || loc.address) && (
+          <div className="location-address">
+            {loc.type && <span className="location-type">{typeLabel(loc.type)}</span>}
+            {loc.address && loc.address !== "..." && (
+              <>
+                {loc.type && " · "}
+                {loc.address}
+                {loc.verified_address === false && <span title="Adresse non vérifiée sur le web"> (à vérifier)</span>}
+              </>
+            )}
           </div>
         )}
+
+        {loc.description && !isOverlap && (
+          <p className="location-description">{loc.description}</p>
+        )}
+
+        {!isOverlap && sold && sold.length > 0 && (
+          <p className="location-sold">
+            En vente ici : {sold.map((s) => s.book_title).join(", ")}
+          </p>
+        )}
+
+        {!isOverlap && loc.website && (
+          <a
+            className="location-link"
+            href={loc.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Site du lieu ↗
+          </a>
+        )}
+
         {isOverlap && (
-          <div style={{ fontSize: "10.5px", color: C.textMuted, fontStyle: "italic", fontFamily: "var(--font-main, sans-serif)" }}>
-            Relais depuis l'étape précédente
+          <div className="location-overlap">Relais depuis l'étape précédente</div>
+        )}
+
+        {!isOverlap && (
+          <div className="status-row">
+            {pickerBooks.map((b) => (
+              <StatusPicker
+                key={b ? b.id : "none"}
+                book={b}
+                placeId={loc.id}
+                current={b ? tour.latest(b.id, loc.id) : null}
+                history={b ? tour.historyFor(b.id, loc.id) : []}
+                onPick={handlePick}
+                onUndo={tour.undoLatest}
+                compact={books.length <= 1}
+              />
+            ))}
           </div>
         )}
+
         {!isOverlap && (
-          <CommentBox
-            targetType="location"
-            targetId={loc.id}
-            title={loc.name}
-            user={user}
-          />
+          <CommentBox targetType="location" targetId={loc.id} title={loc.name} user={user} />
         )}
       </div>
     </div>
@@ -250,7 +269,7 @@ function MapThumbnail({ stops, locMap }) {
 }
 
 // ─── TRONCON CARD ─────────────────────────────────────────────────────────────
-function TronconCard({ troncon, locMap, visited, onToggle, tronconIndex, user }) {
+function TronconCard({ troncon, locMap, books, activeBook, tour, tronconIndex, user, targetsOnly, byPlace }) {
   const [open, setOpen] = useState(false);
   const stops = troncon.stops;
   const overlapId = tronconIndex > 0 ? stops[0] : null;
@@ -260,94 +279,70 @@ function TronconCard({ troncon, locMap, visited, onToggle, tronconIndex, user })
   );
 
   const visitableIds = stops.filter(id => id !== overlapId);
-  const visitedCount = visitableIds.filter(id => visited[id]).length;
+  const targetCount = visitableIds.filter(id => locMap[id]?.fit === "oui").length;
+  const shownLocs = targetsOnly
+    ? locs.filter(l => l.id === overlapId || l.fit === "oui")
+    : locs;
   const total = visitableIds.length;
-  const progress = total > 0 ? visitedCount / total : 0;
-  const allDone = visitedCount === total && total > 0;
+  const passedCount = activeBook ? visitableIds.filter(id => tour.latest(activeBook.id, id)).length : 0;
+  const depositedCount = activeBook ? visitableIds.filter(id => tour.latest(activeBook.id, id)?.status === "deposited").length : 0;
+  const progress = total > 0 ? passedCount / total : 0;
+  const allDone = passedCount === total && total > 0;
 
-  const mapsUrl = useMemo(() => buildMapsUrl(stops, locMap), [stops]);
+  const mapsUrl = useMemo(() => buildMapsUrl(stops, locMap), [stops, locMap]);
 
   const startCity = locs[0]?.city || locs[0]?.name || "?";
   const endCity = locs[locs.length - 1]?.city || locs[locs.length - 1]?.name || "?";
-
-  // Collect region tags visible in this troncon
-  const regions = [...new Set(
-    visitableIds.map(id => id.replace(/-\d+$/, ""))
-      .filter(r => REGION_COLORS[r])
-  )].slice(0, 3);
 
   return (
     <div style={{
       marginBottom: "10px",
       borderRadius: C.radius,
-      border: allDone
-        ? `1.5px solid ${C.accentMint}`
-        : `1.5px solid ${C.cardBorder}`,
+      border: allDone ? `1.5px solid ${C.accentMint}` : `1.5px solid ${C.cardBorder}`,
       background: C.card,
-      boxShadow: open ? C.shadowHover : C.shadow,
       overflow: "hidden",
-      transition: "box-shadow 0.25s ease, border-color 0.3s ease",
+      transition: "border-color 0.3s ease",
     }}>
-
-      {/* ── Header ── */}
       <button
         onClick={() => setOpen(o => !o)}
         style={{
           width: "100%", padding: "14px 16px",
           display: "flex", alignItems: "center", gap: "13px",
-          background: "none", border: "none", cursor: "pointer",
-          textAlign: "left",
+          background: "none", border: "none", cursor: "pointer", textAlign: "left",
         }}
       >
-        {/* Number badge */}
         <div style={{
-          width: "38px", height: "38px", flexShrink: 0,
-          borderRadius: "2px",
+          width: "38px", height: "38px", flexShrink: 0, borderRadius: "2px",
           background: allDone
             ? `linear-gradient(135deg, ${C.accentMint}, #4ec5a8)`
             : `linear-gradient(135deg, #fef3ee, #fde8dc)`,
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontFamily: "var(--font-mono, monospace)",
-          fontSize: "12px", fontWeight: "700",
-          color: allDone ? "white" : C.accent,
-          letterSpacing: "0.03em",
-          boxShadow: allDone ? `0 3px 12px ${C.accentMint}55` : "none",
+          fontFamily: "var(--font-mono, monospace)", fontSize: "12px", fontWeight: "700",
+          color: allDone ? "white" : C.accent, letterSpacing: "0.03em",
         }}>
           {String(tronconIndex + 1).padStart(2, "0")}
         </div>
 
-        {/* Info */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{
-            fontFamily: "var(--font-main, sans-serif)",
-            fontSize: "14px", fontWeight: "700",
+            fontFamily: "var(--font-main, sans-serif)", fontSize: "14px", fontWeight: "700",
             color: C.textPrimary, letterSpacing: "-0.02em",
-            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            marginBottom: "5px",
+            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginBottom: "5px",
           }}>
             {startCity} → {endCity}
           </div>
-          {/* Progress bar */}
           <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-            <div style={{
-              flex: 1, height: "5px",
-              background: "#c8d4e8",
-              borderRadius: "2px", overflow: "hidden",
-            }}>
+            <div style={{ flex: 1, height: "5px", background: "#c8d4e8", borderRadius: "2px", overflow: "hidden" }}>
               <div style={{
                 width: `${progress * 100}%`, height: "100%",
                 background: allDone
                   ? `linear-gradient(90deg, ${C.accentMint}, #4ec5a8)`
                   : `linear-gradient(90deg, ${C.progressStart}, ${C.progressEnd})`,
-                borderRadius: "2px",
-                transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)",
+                borderRadius: "2px", transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)",
               }} />
             </div>
-            <span style={{
-              fontFamily: "var(--font-mono, monospace)",
-              fontSize: "10px", color: C.textMuted, flexShrink: 0,
-            }}>
-              {visitedCount}/{total}
+            <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "10px", color: C.textMuted, flexShrink: 0 }}>
+              {passedCount}/{total}{depositedCount > 0 ? ` · ${depositedCount} déposé${depositedCount > 1 ? "s" : ""}` : ""}{targetCount > 0 ? ` · ${targetCount} cible${targetCount > 1 ? "s" : ""}` : ""}
             </span>
           </div>
         </div>
@@ -357,57 +352,35 @@ function TronconCard({ troncon, locMap, visited, onToggle, tronconIndex, user })
         </div>
       </button>
 
-      {/* ── Expanded body ── */}
       {open && (
         <div style={{ borderTop: `1px solid ${C.cardBorder}`, padding: "14px 14px 10px" }}>
-
-          {/* Map thumbnail */}
           <MapThumbnail stops={stops} locMap={locMap} />
+          {stops.length > 10 && GOOGLE_MAPS_API_KEY && (
+            <div className="map-notice">
+              L'aperçu ne montre que les 10 premières étapes ; le bouton ci-dessous ouvre l'itinéraire complet.
+            </div>
+          )}
 
-          {/* Maps button */}
           {mapsUrl && (
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex", alignItems: "center", justifyContent: "center",
-                gap: "8px",
-                width: "100%", padding: "13px",
-                borderRadius: C.radiusSm,
-                background: `linear-gradient(135deg, ${C.progressStart} 0%, ${C.accentAlt} 100%)`,
-                color: "white",
-                fontFamily: "var(--font-main, sans-serif)",
-                fontSize: "13px", fontWeight: "700",
-                letterSpacing: "0.04em", textTransform: "uppercase",
-                textDecoration: "none",
-                boxShadow: `0 6px 20px ${C.accent}44`,
-                marginBottom: "14px",
-                transition: "transform 0.15s ease, box-shadow 0.15s ease",
-              }}
-            >
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="maps-button">
               <IconMap />
               Lancer l'itinéraire
             </a>
           )}
 
-          <CommentBox
-            targetType="route"
-            targetId={troncon.id}
-            title={`${startCity} → ${endCity}`}
-            user={user}
-          />
+          <CommentBox targetType="route" targetId={troncon.id} title={`${startCity} → ${endCity}`} user={user} />
 
-          {/* Location list */}
           <div>
-            {locs.map((loc, idx) => (
+            {shownLocs.map((loc, idx) => (
               <LocationRow
                 key={loc.id + idx}
                 loc={loc}
-                isVisited={!!visited[loc.id]}
-                onToggle={onToggle}
+                books={books}
+                activeBook={activeBook}
+                tour={tour}
                 isOverlap={loc.id === overlapId}
                 user={user}
+                sold={byPlace?.[loc.id]}
               />
             ))}
           </div>
@@ -417,73 +390,102 @@ function TronconCard({ troncon, locMap, visited, onToggle, tronconIndex, user })
   );
 }
 
+// ─── BOOK BAR ────────────────────────────────────────────────────────────────
+function BookBar({ books, activeBook, onSelect, onCreate }) {
+  const [adding, setAdding] = useState(false);
+  const [title, setTitle] = useState("");
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!title.trim()) return;
+    await onCreate(title);
+    setTitle("");
+    setAdding(false);
+  }
+
+  return (
+    <div className="book-bar">
+      <span className="book-bar-label">Livre suivi</span>
+      {books.map((b) => (
+        <button
+          key={b.id}
+          type="button"
+          className={"book-chip" + (activeBook?.id === b.id ? " active" : "")}
+          onClick={() => onSelect(b.id)}
+        >
+          {b.title}
+        </button>
+      ))}
+      {adding ? (
+        <form onSubmit={submit} className="book-add-form">
+          <input
+            autoFocus
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Titre du livre"
+            maxLength={120}
+          />
+          <button type="submit">OK</button>
+          <button type="button" onClick={() => { setAdding(false); setTitle(""); }}>×</button>
+        </form>
+      ) : (
+        <button type="button" className="book-chip add" onClick={() => setAdding(true)} title="Ajouter un livre">
+          + livre
+        </button>
+      )}
+    </div>
+  );
+}
+
 // ─── GLOBAL PROGRESS ──────────────────────────────────────────────────────────
-function GlobalProgress({ visitedCount, total }) {
-  const pct = total > 0 ? (visitedCount / total) * 100 : 0;
+function GlobalProgress({ passedCount, depositedCount, total, bookTitle }) {
+  const pct = total > 0 ? (passedCount / total) * 100 : 0;
   const segments = 5;
   const filled = Math.round((pct / 100) * segments);
 
   return (
-    <div style={{ padding: "22px 18px 16px" }}>
-      {/* Title row */}
-      <div style={{
-        display: "flex", alignItems: "flex-end",
-        justifyContent: "space-between", marginBottom: "14px",
-      }}>
+    <div style={{ padding: "22px 18px 12px" }}>
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "14px" }}>
         <div>
           <div style={{
-            fontFamily: "var(--font-mono, monospace)",
-            fontSize: "9.5px", letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: C.accent, marginBottom: "5px",
+            fontFamily: "var(--font-mono, monospace)", fontSize: "9.5px", letterSpacing: "0.18em",
+            textTransform: "uppercase", color: C.accent, marginBottom: "5px",
           }}>
-            Tour de Phrance · GR-Routier
+            Tour de Phrance · GR-Routier{bookTitle ? ` · ${bookTitle}` : ""}
           </div>
           <div style={{
-            fontFamily: "var(--font-main, sans-serif)",
-            fontSize: "26px", fontWeight: "800",
+            fontFamily: "var(--font-main, sans-serif)", fontSize: "26px", fontWeight: "800",
             color: C.textPrimary, letterSpacing: "-0.03em", lineHeight: "1",
           }}>
-            {visitedCount}
+            {passedCount}
             <span style={{ fontSize: "15px", fontWeight: "500", color: C.textMuted, marginLeft: "4px" }}>
               / {total} lieux
             </span>
           </div>
+          <div style={{ fontSize: "11px", color: C.visitedText, fontFamily: "var(--font-mono, monospace)", marginTop: "4px" }}>
+            {depositedCount} en dépôt
+          </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{
-            fontFamily: "var(--font-main, sans-serif)",
-            fontSize: "28px", fontWeight: "800", letterSpacing: "-0.03em",
+            fontFamily: "var(--font-main, sans-serif)", fontSize: "28px", fontWeight: "800", letterSpacing: "-0.03em",
             background: `linear-gradient(135deg, ${C.progressStart}, ${C.progressEnd})`,
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>
             {pct.toFixed(1)}%
-          </div>
-          <div style={{ fontSize: "10px", color: C.textMuted, fontFamily: "var(--font-mono, monospace)" }}>
-            ~{Math.round(pct * 98)} km
           </div>
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div style={{
-        height: "10px",
-        background: "#ede8e0",
-        borderRadius: "2px", overflow: "hidden",
-        position: "relative",
-      }}>
+      <div style={{ height: "10px", background: "#ede8e0", borderRadius: "2px", overflow: "hidden", position: "relative" }}>
         <div style={{
           width: `${pct}%`, height: "100%",
           background: `linear-gradient(90deg, ${C.progressStart}, ${C.accentAlt})`,
-          borderRadius: "2px",
-          transition: "width 0.6s cubic-bezier(0.4,0,0.2,1)",
-          position: "relative",
+          borderRadius: "2px", transition: "width 0.6s cubic-bezier(0.4,0,0.2,1)", position: "relative",
         }}>
           {pct > 2 && (
             <div style={{
-              position: "absolute", right: 0, top: 0, bottom: 0,
-              width: "20px",
+              position: "absolute", right: 0, top: 0, bottom: 0, width: "20px",
               background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35))",
               borderRadius: "0 2px 2px 0",
             }} />
@@ -491,24 +493,15 @@ function GlobalProgress({ visitedCount, total }) {
         </div>
       </div>
 
-      {/* Balisage dots */}
       <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "10px" }}>
         {Array.from({ length: segments }).map((_, i) => (
           <div key={i} style={{
-            width: i < filled ? "18px" : "8px",
-            height: "8px",
-            borderRadius: "2px",
-            background: i < filled
-              ? `linear-gradient(90deg, ${C.progressStart}, ${C.accentAlt})`
-              : "#ede8e0",
+            width: i < filled ? "18px" : "8px", height: "8px", borderRadius: "2px",
+            background: i < filled ? `linear-gradient(90deg, ${C.progressStart}, ${C.accentAlt})` : "#ede8e0",
             transition: "all 0.4s ease",
           }} />
         ))}
-        <span style={{
-          fontSize: "9px", color: C.textMuted,
-          fontFamily: "var(--font-mono, monospace)",
-          marginLeft: "5px", letterSpacing: "0.08em",
-        }}>
+        <span style={{ fontSize: "9px", color: C.textMuted, fontFamily: "var(--font-mono, monospace)", marginLeft: "5px", letterSpacing: "0.08em" }}>
           BALISAGE
         </span>
       </div>
@@ -517,10 +510,11 @@ function GlobalProgress({ visitedCount, total }) {
 }
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
-export default function RoadtripApp({ user, authLoading, isSupabaseConfigured }) {
-  const { visited, toggle, reset, syncStatus } = useVisited(user);
+export default function RoadtripApp({ user, isSupabaseConfigured, tour, catalogue }) {
+  const { books, activeBook, syncStatus } = tour;
   const [confirmReset, setConfirmReset] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [targetsOnly, setTargetsOnly] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showHeader, setShowHeader] = useState(false);
   useEffect(() => {
@@ -546,13 +540,19 @@ export default function RoadtripApp({ user, authLoading, isSupabaseConfigured })
     return [...seen];
   }, []);
 
-  const visitedCount = allVisitableIds.filter(id => visited[id]).length;
   const total = allVisitableIds.length;
+  const targetTotal = allVisitableIds.filter(id => locMap[id]?.fit === "oui").length;
+  const passedCount = activeBook ? allVisitableIds.filter(id => tour.latest(activeBook.id, id)).length : 0;
+  const depositedCount = activeBook ? allVisitableIds.filter(id => tour.latest(activeBook.id, id)?.status === "deposited").length : 0;
 
   const filteredItineraries = useMemo(() => {
-    if (!searchQuery.trim()) return RAW_ITINERARIES;
-    const q = searchQuery.toLowerCase();
-    return RAW_ITINERARIES.filter(t =>
+    let list = RAW_ITINERARIES;
+    if (targetsOnly) {
+      list = list.filter(t => t.stops.some(id => locMap[id]?.fit === "oui"));
+    }
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return list;
+    return list.filter(t =>
       t.stops.some(id => {
         const loc = locMap[id];
         return loc && (
@@ -561,122 +561,68 @@ export default function RoadtripApp({ user, authLoading, isSupabaseConfigured })
         );
       }) || t.name.toLowerCase().includes(q)
     );
-  }, [searchQuery, locMap]);
+  }, [searchQuery, targetsOnly, locMap]);
+
+  const syncLabel = isSupabaseConfigured
+    ? (user
+        ? `Compte connecté · ${syncStatus === "synced" ? "synchronisé" : syncStatus === "syncing" ? "synchronisation…" : syncStatus === "error" ? "erreur de synchronisation" : syncStatus}`
+        : "Mode local · connecte-toi pour retrouver tes passages partout")
+    : "Mode local · Supabase non configuré";
 
   return (
-    <div style={{
-      width: "100%",
-      height: "100%",
-      flex: 1,
-      overflow: "auto",
-      background: "#0a0812",
-      color: C.textPrimary,
-      fontFamily: "var(--font-main, sans-serif)",
-      position: "relative",
-    }}>
-      <div style={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        background: "#eef2f8",
-        minHeight: "100%",
-      }}>
-        <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: ${C.bg}; }
-        ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
-        button:focus-visible { outline: 2px solid ${C.accent}; outline-offset: 2px; }
-        a:hover > div { transform: translateY(-1px); }
-        @keyframes fadeSlide {
-          from { opacity: 0; transform: translateY(8px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+    <div className="roadtrip-root" style={{ color: C.textPrimary }}>
+      <div className="roadtrip-column">
 
-        {/* ── Toggle mobile ── */}
         {isMobile && (
-          <button
-            onClick={() => setShowHeader(h => !h)}
-            style={{
-              width: "100%",
-              padding: "10px 16px",
-              background: "#111",
-              border: "1px solid #333",
-              color: "#ccc",
-              fontFamily: "var(--font-mono)",
-              fontSize: "11px",
-              letterSpacing: "0.1em",
-              cursor: "pointer",
-              textAlign: "center",
-            }}
-          >
-            {showHeader ? "▲ RÉDUIRE" : "▼ DÉPLIER LES CONTRÔLES"}
+          <button className="mobile-toggle" onClick={() => setShowHeader(h => !h)}>
+            {showHeader ? "▲ RÉDUIRE" : `▼ ${passedCount}/${total} · CONTRÔLES`}
           </button>
         )}
 
-        {/* ── Sticky header ── */}
         {(!isMobile || showHeader) && (
-          <div style={{
-            position: "sticky", top: 0, zIndex: 100,
-            background: "#e8eef8",
-            backdropFilter: "blur(16px)",
-            borderBottom: `1px solid ${C.cardBorder}`,
-          }}>
-            <GlobalProgress visitedCount={visitedCount} total={total} />
-            <div className="sync-strip">
-              {isSupabaseConfigured
-                ? (user ? `Compte connecté · progression ${syncStatus === "synced" ? "synchronisée" : syncStatus}` : "Mode local · connecte-toi pour synchroniser")
-                : "Mode local · Supabase non configuré"}
-            </div>
+          <div className="sticky-header">
+            <GlobalProgress
+              passedCount={passedCount}
+              depositedCount={depositedCount}
+              total={total}
+              bookTitle={books.length > 1 ? activeBook?.title : null}
+            />
+            <BookBar
+              books={books}
+              activeBook={activeBook}
+              onSelect={tour.setActiveBookId}
+              onCreate={tour.createBook}
+            />
+            <div className="sync-strip">{syncLabel}</div>
 
-            {/* Search */}
             <div style={{ padding: "0 16px 14px" }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: "10px",
-                background: "#e0eaf5",
-                border: "1px solid #333",
-                borderRadius: "2px",
-                padding: "9px 14px",
-                boxShadow: "none",
-              }}>
+              <div className="search-box">
                 <span style={{ fontSize: "14px", color: C.textMuted }}>🔍</span>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   placeholder="Rechercher un lieu, une ville..."
-                  style={{
-                    flex: 1, border: "none", outline: "none",
-                    fontFamily: "var(--font-main, sans-serif)",
-                    fontSize: "13.5px", color: C.textPrimary,
-                    background: "transparent",
-                  }}
                 />
                 {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      color: C.textMuted, fontSize: "16px", padding: "0", lineHeight: "1",
-                    }}
-                  >×</button>
+                  <button className="search-clear" onClick={() => setSearchQuery("")}>×</button>
                 )}
               </div>
+              <label className="targets-filter">
+                <input
+                  type="checkbox"
+                  checked={targetsOnly}
+                  onChange={(e) => setTargetsOnly(e.target.checked)}
+                />
+                Cibles seulement ({targetTotal} lieux qui diffusent de la micro-édition)
+              </label>
             </div>
           </div>
         )}
 
-        {/* ── Troncon list ── */}
         <div style={{ padding: "12px 12px 100px" }}>
           {filteredItineraries.length === 0 && (
-            <div style={{
-              textAlign: "center", padding: "50px 20px",
-              color: C.textMuted, fontFamily: "var(--font-mono, monospace)",
-              fontSize: "13px",
-            }}>
-              Aucun tronçon trouvé pour "{searchQuery}"
-            </div>
+            <div className="empty-state">Aucun tronçon trouvé pour "{searchQuery}"</div>
           )}
           {filteredItineraries.map((troncon, idx) => {
             const realIdx = RAW_ITINERARIES.indexOf(troncon);
@@ -685,71 +631,34 @@ export default function RoadtripApp({ user, authLoading, isSupabaseConfigured })
                 <TronconCard
                   troncon={troncon}
                   locMap={locMap}
-                  visited={visited}
-                  onToggle={toggle}
+                  books={books}
+                  activeBook={activeBook}
+                  tour={tour}
                   tronconIndex={realIdx}
                   user={user}
+                  targetsOnly={targetsOnly}
+                  byPlace={catalogue?.byPlace}
                 />
               </div>
             );
           })}
         </div>
 
-        {/* ── Footer ── */}
-        <div style={{
-          position: "sticky", bottom: 0,
-          width: "100%",
-          padding: "12px 16px",
-          background: "#e8eef8",
-          backdropFilter: "blur(16px)",
-          borderTop: `1px solid ${C.cardBorder}`,
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          zIndex: 50,
-        }}>
-          <div style={{
-            fontFamily: "var(--font-mono, monospace)",
-            fontSize: "10px", color: C.textMuted, letterSpacing: "0.05em",
-          }}>
-            {visitedCount === total && total > 0 ? "🎉 Tour complété !" : `${total - visitedCount} lieux restants`}
+        <div className="roadtrip-footer">
+          <div className="footer-count">
+            {passedCount === total && total > 0 ? "🎉 Tour complété !" : `${total - passedCount} lieux restants`}
           </div>
 
           {!confirmReset ? (
-            <button
-              onClick={() => setConfirmReset(true)}
-              style={{
-                padding: "7px 14px", borderRadius: "2px",
-                background: "transparent",
-                border: "1px solid #333",
-                color: C.textMuted, cursor: "pointer",
-                fontFamily: "var(--font-main, sans-serif)",
-                fontSize: "12px", fontWeight: "500",
-                transition: "all 0.2s",
-              }}
-            >
-              Réinitialiser
+            <button className="footer-button" onClick={() => setConfirmReset(true)} disabled={!activeBook}>
+              Réinitialiser{books.length > 1 && activeBook ? ` « ${activeBook.title} »` : ""}
             </button>
           ) : (
             <div style={{ display: "flex", gap: "8px" }}>
-              <button
-                onClick={() => { reset(); setConfirmReset(false); }}
-                style={{
-                  padding: "7px 14px", borderRadius: "2px",
-                  background: "#fee2e2", border: "none",
-                  color: "#dc2626", cursor: "pointer",
-                  fontFamily: "var(--font-main, sans-serif)",
-                  fontSize: "12px", fontWeight: "700",
-                }}
-              >Confirmer</button>
-              <button
-                onClick={() => setConfirmReset(false)}
-                style={{
-                  padding: "7px 14px", borderRadius: "2px",
-                  background: "#e0eaf5", border: "1px solid #333",
-                  color: C.textSecondary, cursor: "pointer",
-                  fontFamily: "var(--font-main, sans-serif)",
-                  fontSize: "12px",
-                }}
-              >Annuler</button>
+              <button className="footer-button danger" onClick={async () => { await tour.resetBook(activeBook?.id); setConfirmReset(false); }}>
+                Confirmer
+              </button>
+              <button className="footer-button" onClick={() => setConfirmReset(false)}>Annuler</button>
             </div>
           )}
         </div>

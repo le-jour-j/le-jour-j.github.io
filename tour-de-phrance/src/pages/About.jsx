@@ -11,7 +11,7 @@ export default function About() {
           Chaque point correspond à un lieu réel. Chaque tronçon propose une tournée possible. L’outil n’est pas un classement définitif, mais une base de terrain : à cocher, corriger, commenter, augmenter.
         </p>
         <p>
-          La version actuelle est gratuite et fonctionne sans compte. Les cases cochées restent enregistrées dans le navigateur. Les commentaires partagés et les comptes pourront venir ensuite, quand la carte aura été éprouvée par l’usage.
+          L’outil est gratuit et fonctionne sans compte. Chaque passage est noté par livre : un même lieu peut avoir pris l’un et refusé l’autre. Sans compte, tout reste dans le navigateur ; avec un compte, les passages sont retrouvés partout et les commentaires deviennent publics.
         </p>
       </section>
     </main>

@@ -20,9 +20,16 @@ npm run dev
 
 ## Notes
 
-- Les cases cochées sont stockées en local dans le navigateur avec `localStorage`.
-- Les anciennes coches `tourdePhrance_v2_visited` sont relues automatiquement si elles existent.
+- Depuis la v11, on note des **passages par livre** (résultat + note + date), voir `CHANGELOG_v11.txt`.
+- Sans compte, tout est stocké dans le navigateur (`localStorage`, clé `tourdePhrance_v11`) ; les anciennes coches v2/v6/v8 sont converties automatiquement.
+- À la première connexion, les passages locaux sont fusionnés dans le compte.
 - Les fonctions liées à Banque Fantôme ont été retirées : solde, transactions, packs, inventaire.
+
+## v11 — livres et passages
+
+Côté Supabase, exécuter une fois `supabase/migration_v11_livres_passages.sql` dans SQL Editor (après `schema.sql`). Il crée `books`, `checkins`, la colonne `profiles.is_admin`, le livre par défaut à l'inscription, et convertit les anciennes coches `visited_places`.
+
+Fichiers clés : `src/hooks/useTour.js` (livres, passages, mode local, fusion), `src/lib/statuses.js` (liste des résultats), `src/components/StatusPicker.jsx` (pastille + sélecteur), `src/components/BooksPanel.jsx` (gestion des livres).
 
 
 ## Comptes et commentaires

@@ -1,5 +1,7 @@
-cat > tour-de-phrance/.gitignore <<'EOF'
 node_modules/
 dist/
 .env.local
-EOF
+dist-fake/
+
+# notes de terrain : ne jamais publier
+contenu/prive/

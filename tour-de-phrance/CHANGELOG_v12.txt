@@ -1,0 +1,30 @@
+v12 — refonte du contenu (12/09/2026)
+
+Base des lieux : 313 → 467 lieux (154 ajouts), tous recherchés sur le web,
+avec source. Nouveaux champs dans src/data/locations.js :
+  website, type, status, fit, verified_address, sources, region, origine,
+  field_note (note de terrain de Jeanson), verification_note, retired.
+Les descriptions génériques sont remplacées par des résumés factuels sourcés.
+
+Classement : 56 lieux « cible » (diffusent fanzines / micro-édition / livres
+d'artiste), 352 « à tenter », 59 marqués retired (musées sans boutique,
+médiathèques, chaînes, lieux sans point de vente) — sortis des tronçons mais
+conservés en base, ids intacts.
+
+Notes de terrain : les 52 commentaires de la tournée n°1 de Jeanson ont été
+relus ; 34 lieux portent désormais sa note, qui prime sur le web. Ses demandes
+d'ajout sont traitées (Terra Nova, L'Archa des Carmes, Cérès Franco Montolieu,
+Le Réservoir).
+
+Tronçons : 39 → 57, reconstruits sur des ordres de tournée régionaux vérifiés,
+sans les aller-retours de la v1, détour corse entre Marseille et Toulon.
+36 des 39 ids d'origine réutilisés pour préserver les commentaires ; les 3
+abandonnés (troncon-8, -9, -35) n'en portaient aucun.
+
+Interface : type, adresse vérifiée, site du lieu, badges « cible » / « à
+confirmer » / « non vérifié », note de terrain encadrée, compteur de cibles par
+tronçon, case « Cibles seulement ».
+
+Reste à vérifier : 124 lieux (Bourgogne-Franche-Comté 36, Centre-Val de Loire
+20, Hauts-de-France 18, Corse 12, Nouvelle-Aquitaine 12) — quota de recherche
+web épuisé. Voir contenu/RAPPORT-CONTENU.md.

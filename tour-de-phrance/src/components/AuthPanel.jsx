@@ -8,6 +8,9 @@ export default function AuthPanel({ user }) {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [monPseudo, setMonPseudo] = useState("");
+  const [pseudoCharge, setPseudoCharge] = useState(false);
+  const [pseudoMsg, setPseudoMsg] = useState("");
 
   useEffect(() => {
     if (!supabase) return;
@@ -24,6 +27,50 @@ export default function AuthPanel({ user }) {
       setMessage("Choisis un nouveau mot de passe.");
     }
   }, []);
+
+  useEffect(() => {
+    let annule = false;
+    async function charger() {
+      if (!supabase || !user) {
+        setPseudoCharge(false);
+        return;
+      }
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("pseudo")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (annule) return;
+      if (error) {
+        console.warn("Impossible de lire le profil", error);
+        return;
+      }
+      setMonPseudo(data?.pseudo || "");
+      setPseudoCharge(true);
+    }
+    charger();
+    return () => { annule = true; };
+  }, [user?.id]);
+
+  // Le pseudo paraît au catalogue à côté des livres : il doit pouvoir changer.
+  async function enregistrerPseudo(event) {
+    event.preventDefault();
+    setPseudoMsg("");
+    const propre = monPseudo.trim();
+    if (!propre) {
+      setPseudoMsg("Le pseudo ne peut pas être vide.");
+      return;
+    }
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id: user.id, pseudo: propre }, { onConflict: "id" });
+    if (error) {
+      console.warn("Impossible d'enregistrer le pseudo", error);
+      setPseudoMsg("Le pseudo n'a pas pu être enregistré.");
+      return;
+    }
+    setPseudoMsg("Pseudo enregistré.");
+  }
 
   async function ensureProfile(nextUser, nextPseudo) {
     if (!supabase || !nextUser) return;
@@ -161,6 +208,30 @@ export default function AuthPanel({ user }) {
           <div className="account-card">
             <p>Connecté avec :</p>
             <strong>{user.email}</strong>
+
+            {pseudoCharge && (
+              <form onSubmit={enregistrerPseudo} className="pseudo-form">
+                <label htmlFor="pseudo-public">
+                  Pseudo public
+                  <small>
+                    Il paraît au catalogue à côté de tes livres, sauf si tu renseignes un nom
+                    d'auteur·ice sur la fiche du livre.
+                  </small>
+                </label>
+                <div className="pseudo-row">
+                  <input
+                    id="pseudo-public"
+                    value={monPseudo}
+                    onChange={(event) => setMonPseudo(event.target.value)}
+                    maxLength={60}
+                    placeholder="ton nom public"
+                  />
+                  <button type="submit" className="primary-button">Enregistrer</button>
+                </div>
+                {pseudoMsg && <p className="form-message">{pseudoMsg}</p>}
+              </form>
+            )}
+
             <button type="button" className="plain-button" onClick={signOut}>
               Se déconnecter
             </button>

@@ -1,0 +1,47 @@
+v13 — le catalogue public des livres (12/09/2026)
+
+Nouvel onglet « Livres » : tous les livres déposés, avec les lieux qui les
+vendent aujourd'hui. Consultable sans compte.
+
+Ce qui est public : titre, auteur, année, prix, description, lien, pseudo du
+déposant, et les lieux où le livre est EN DÉPÔT, avec la date.
+
+Ce qui reste privé : les refus, les « ne prend pas », les « fermé ce jour-là »,
+les « à relancer », et toutes les notes de passage (elles contiennent des
+contacts et des appréciations). Le filtrage est fait par la vue SQL, pas par
+l'application : impossible de fuiter un refus depuis le front.
+
+Un livre entre au catalogue dès qu'un passage vaut « Déposé », et en sort tout
+seul si le dépôt est repris — c'est toujours le DERNIER passage du couple
+livre × lieu qui décide, sans rien supprimer de l'historique.
+
+Confidentialité : bouton « Passer en discret » par livre (colonne books.visible).
+Un livre discret disparaît du catalogue, son suivi reste pour son auteur.
+
+Fiche livre enrichie dans l'onglet Compte : auteur, année, prix public,
+description, lien.
+
+Sur la carte, chaque lieu indique les livres qu'on y trouve (« En vente ici »).
+
+Sans compte, les dépôts notés dans le navigateur apparaissent au catalogue avec
+la mention « pas encore publié » : ils rejoignent le catalogue public à la
+première connexion.
+
+Supabase : exécuter supabase/migration_v13_catalogue.sql après la v11.
+
+PSEUDO PUBLIC MODIFIABLE (même jour)
+L'appli ne permettait pas de changer son pseudo après l'inscription, alors
+qu'il paraît au catalogue à côté des livres. Onglet Compte → « Pseudo public »,
+champ modifiable pour le compte connecté (upsert sur profiles, RLS inchangée :
+chacun ne change que le sien).
+Un nom d'auteur·ice renseigné sur la fiche d'un livre prend le pas sur le pseudo.
+Pour renommer les comptes déjà créés : supabase/renommer-pseudos.sql
+
+CORRECTIONS trouvées par les tests en mode connecté
+- Le catalogue comptait chaque dépôt deux fois une fois connecté : les données
+  du compte étaient ajoutées aux données de la vue, qui les contenait déjà.
+  Les dépôts du navigateur ne s'ajoutent plus que hors connexion.
+- Le catalogue ne se rafraîchissait pas : il est relu à chaque ouverture de
+  l'onglet, pour voir les dépôts des autres.
+- Faux client de test enrichi (maybeSingle, upsert, simulation de la vue
+  catalogue) : tests/e2e-pseudo.mjs et tests/e2e-catalogue-compte.mjs
