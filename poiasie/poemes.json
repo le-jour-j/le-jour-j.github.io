@@ -28,5 +28,35 @@
         "texte": "Montagne murmurante, murmure mortelle,\nChants des nuages, cris effrayants.\nRochers reposant dans la danse silencieuse du temps."
       }
     ]
+  },
+  {
+    "id": "20260918-225532",
+    "date": "2026-09-18 22:55",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:55:44",
+        "texte": "Flots de chiffres dans la mer des rêves,\nPIB qui bat comme coeur en sommeil,\nTaux d'intérêt, un filet autour du monde.\n\nCrispes tensions économiques, oiseaux sans n"
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:56:02",
+        "texte": "Filets enroulés.\nDoutes dans le vent.\nOiseaux sur des ponts effrayés.\n\nJardins oubliés,\nLarmes tombent sur de vieilles égratignures.\nLe soleil s'efface discrètement."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:56:21",
+        "texte": "Marelle rouge dans un verre d'ambre. Souris noire dans les tulipes blanches. Nuage en forme de coeur dans le ciel bleu."
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:56:37",
+        "texte": "Nuages murmureurs dans un ballet d'azur,\nBlanche danse sur la rivière des cieux.\nCœur s'accroche, souffle du vent se déploie."
+      }
+    ]
   }
 ]
