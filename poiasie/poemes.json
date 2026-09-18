@@ -105,5 +105,35 @@
         "texte": "Flou chant des ombres, murmures du vent. Échos enlacés dans le silence noir.\n\nSoleil couchant, éclats dorés sur la pierre sombre. Danse délicate de la lumière naissante."
       }
     ]
+  },
+  {
+    "id": "20260918-223358",
+    "date": "2026-09-18 22:33",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:34:16",
+        "texte": "Soleil se lévant au-dessus des mers,\nChants d'oiseaux dans les arbres sifflant,\nPromesse d'espérance au cœur brisé."
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:34:42",
+        "texte": "Neuf plumes volent,\nFeuilles soupirantes s'évanouissent—\nCœur en fuite, vague.\n\nLune murmure des promesses,\nBranches se penchent sous le poids.\nOcéan appelle sans fin—valse silencieuse."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:35:10",
+        "texte": "Les nuages pleurent des étoiles, dans la lumière du sourire nocturne.\nEt les fleurs murmurent aux ombres des sons oubliés.\nLe sable danse au rythme de l'horloge qui n"
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:35:37",
+        "texte": "Le sable s'endort en murmure,\nDouce rime des flots endormis.\nHeures murmurées sous le ciel doré,\n\nLes ombres dansent, silence assourdissant,\nRires oubliés résonnent,\nEchos éphémères se fanent."
+      }
+    ]
   }
 ]
