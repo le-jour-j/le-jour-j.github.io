@@ -120,11 +120,17 @@
 <footer>chaque poème est écrit à l'aveugle : chaque voix ne voit que les derniers mots de la précédente</footer>
 
 <script>
+let dernierNombreDePoemes = -1;
+
 async function charger() {
   const conteneur = document.getElementById('poemes');
   try {
-    const reponse = await fetch('poemes.json');
+    const reponse = await fetch('poemes.json?t=' + Date.now());
     const poemes = await reponse.json();
+    if (poemes.length === dernierNombreDePoemes) {
+      return;
+    }
+    dernierNombreDePoemes = poemes.length;
     if (!poemes.length) {
       conteneur.innerHTML = '<div class="vide">aucun poème pour le moment</div>';
       return;
@@ -141,10 +147,13 @@ async function charger() {
       </div>
     `).join('');
   } catch (e) {
-    conteneur.innerHTML = '<div class="vide">poèmes indisponibles pour le moment</div>';
+    if (dernierNombreDePoemes === -1) {
+      conteneur.innerHTML = '<div class="vide">poèmes indisponibles pour le moment</div>';
+    }
   }
 }
 charger();
+setInterval(charger, 60000);
 </script>
 </body>
 </html>
