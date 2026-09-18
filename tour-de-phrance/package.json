@@ -1,7 +1,7 @@
 {
   "name": "tour-de-phrance",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
-    "react": "latest",
-    "react-dom": "latest",
-    "vite": "latest"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1"
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^5.4.21"
   }
 }
