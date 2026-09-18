@@ -1,12 +1,16 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
+import { useJournal, phrase } from './Journal'
 
 export default function Navbar() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate  = useNavigate()
+  const location  = useLocation()
   const [unread, setUnread] = useState(0)
+  const [open, setOpen]     = useState(false) // menu mobile
+  const journal = useJournal(8)             // ticker vivant : les dernières opérations de la banque
 
   useEffect(() => {
     if (!user) { setUnread(0); return }
@@ -19,6 +23,15 @@ export default function Navbar() {
       .subscribe()
     return () => supabase.removeChannel(channel)
   }, [user])
+
+  // Ferme le menu mobile à chaque navigation, et sur Échap
+  useEffect(() => { setOpen(false) }, [location.pathname])
+  useEffect(() => {
+    if (!open) return
+    const onKey = e => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
 
   async function logout() {
     await supabase.auth.signOut()
@@ -33,29 +46,40 @@ export default function Navbar() {
             <span className="logo-badge">BF</span>
             BANQUE FANTÔME
           </NavLink>
-          <ul className="nav-links">
+          <button
+            type="button"
+            className="nav-burger"
+            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={open}
+            aria-controls="nav-menu"
+            onClick={() => setOpen(v => !v)}
+          ><span /></button>
+          <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
             <li><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             <li><NavLink to="/deposer">Déposer</NavLink></li>
             {user ? <>
               <li>
-                <NavLink to="/messages" style={{ position: 'relative' }}>
+                <NavLink to="/messages">
                   Messages
-                  {unread > 0 && <span style={{ position: 'absolute', top: -6, right: -10, background: '#FFD600', color: '#111', borderRadius: '50%', width: 16, height: 16, fontSize: '.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>{unread}</span>}
+                  {unread > 0 && <span className="nav-badge" aria-label={`${unread} non lu`}>{unread}</span>}
                 </NavLink>
               </li>
-              <li><NavLink to="/compte">Mon compte</NavLink></li>
-              <li><button className="btn btn-jaune" style={{ fontSize: '.72rem', padding: '.35rem .9rem' }} onClick={logout}>Quitter</button></li>
+              <li><NavLink to="/compte">Mon compte{profile && <span className="nav-solde" title="Votre solde de billets">◈ {profile.solde}</span>}</NavLink></li>
+              <li><button className="btn btn-jaune btn-sm" onClick={logout}>Quitter</button></li>
             </> : (
-              <li><NavLink to="/connexion"><button className="btn btn-jaune" style={{ fontSize: '.72rem', padding: '.35rem .9rem' }}>Connexion</button></NavLink></li>
+              <li><NavLink to="/connexion" className="btn btn-jaune btn-sm">Connexion</NavLink></li>
             )}
           </ul>
         </div>
       </nav>
-      <div className="ticker-wrap">
-        <span className="ticker">
-          ◈ BANQUE FANTÔME — INSTITUTION DE CIRCULATION ◈ OUVREZ UN COMPTE ◈ FABRIQUEZ VOTRE FAUX ARGENT ◈ TÉLÉCHARGEZ DES BILLETS À COLORIER ◈ DÉPOSEZ · ÉCHANGEZ · FAITES CIRCULER ◈ CHAQUE OBJET PEUT DEVENIR UN ACTIF NARRATIF ◈ &nbsp;
+      <div className="ticker-wrap" aria-hidden="true">
+        <span className="ticker" key={journal.length}>
+          ◈ BANQUE FANTÔME — INSTITUTION DE CIRCULATION ◈ {journal.length
+            ? journal.map((e, i) => <span key={i} className={`ticker-item ${e.type}`}>{phrase(e)} ◈ </span>)
+            : 'OUVREZ UN COMPTE ◈ FABRIQUEZ VOTRE FAUX ARGENT ◈ DÉPOSEZ · ENCHÉRISSEZ · FAITES CIRCULER ◈ '}
+          CHAQUE OBJET PEUT DEVENIR UN ACTIF NARRATIF ◈ &nbsp;
         </span>
       </div>
     </>

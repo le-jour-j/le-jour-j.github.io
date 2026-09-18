@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Portal from './Portal'
 
 export default function RecoveryCodeReveal({ code, onConfirm }) {
   const [copied, setCopied]   = useState(false)
@@ -9,30 +10,28 @@ export default function RecoveryCodeReveal({ code, onConfirm }) {
   }
 
   return (
+    <Portal>
     <div className="modal-bg">
-      <div className="modal" onClick={e => e.stopPropagation()}>
-        <h3 style={{ fontFamily: 'var(--sans)', marginBottom: '.4rem' }}>Votre code de récupération</h3>
-        <p style={{ fontFamily: 'var(--sans)', fontSize: '.85rem', color: 'var(--gris-fonce)', marginBottom: '1.2rem', lineHeight: 1.6 }}>
+      <div className="modal" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+        <h3 style={{ marginBottom: '.4rem' }}>Votre code de récupération</h3>
+        <p className="texte-aide" style={{ marginBottom: '1.2rem' }}>
           Notez-le précieusement : c'est le seul moyen de récupérer votre compte si vous oubliez votre mot de passe. Il ne sera plus jamais affiché.
         </p>
-        <div style={{
-          fontFamily: 'var(--mono)', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '.08em',
-          background: 'var(--gris-clair)', border: '2px solid var(--noir)', padding: '1rem',
-          textAlign: 'center', marginBottom: '1rem', userSelect: 'all',
-        }}>
+        <div className="code-recup">
           {code}
         </div>
-        <button className="btn btn-outline" onClick={copy} style={{ width: '100%', justifyContent: 'center', marginBottom: '1.2rem' }}>
-          {copied ? 'Copié !' : 'Copier le code'}
+        <button className="btn btn-outline btn-bloc" onClick={copy} style={{ marginBottom: '1.2rem' }}>
+          {copied ? '✓ Copié !' : 'Copier le code'}
         </button>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontFamily: 'var(--sans)', fontSize: '.82rem', color: 'var(--gris-fonce)', marginBottom: '1.2rem', cursor: 'pointer' }}>
+        <label className="check-line">
           <input type="checkbox" checked={checked} onChange={e => setChecked(e.target.checked)} />
           J'ai noté mon code de récupération
         </label>
-        <button className="btn btn-noir" disabled={!checked} onClick={onConfirm} style={{ width: '100%', justifyContent: 'center' }}>
+        <button className="btn btn-noir btn-bloc" disabled={!checked} onClick={onConfirm}>
           → Continuer
         </button>
       </div>
     </div>
+    </Portal>
   )
 }

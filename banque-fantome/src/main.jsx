@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
+import { registerSW } from 'virtual:pwa-register'
+
+// Service worker (PWA) : mise en cache de l'appli, mise à jour automatique au prochain chargement.
+registerSW({ immediate: true })
 
 // GitHub Pages n'a pas de rewrite serveur : le 404.html racine redirige
 // /banque-fantome/<route> vers /banque-fantome/ en gardant la route

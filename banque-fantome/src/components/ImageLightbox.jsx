@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
+import Portal from './Portal'
 
 export default function ImageLightbox({ images = [], initialIndex = 0, onClose, onPrev, onNext }) {
+  useEffect(() => {
+    document.body.classList.add('no-scroll')
+    return () => { if (!document.querySelector('.modal-bg')) document.body.classList.remove('no-scroll') }
+  }, [])
+
   useEffect(() => {
     function onKeyDown(e) {
       if (e.key === 'Escape') onClose?.()
@@ -16,9 +22,10 @@ export default function ImageLightbox({ images = [], initialIndex = 0, onClose, 
   const current = images[safeIndex]
 
   return (
+    <Portal>
     <div className="lightbox-bg" onClick={onClose}>
       <div className="lightbox-shell" onClick={e => e.stopPropagation()}>
-        <button className="lightbox-close" onClick={onClose}>✕</button>
+        <button className="lightbox-close" onClick={onClose} aria-label="Fermer">✕</button>
         {images.length > 1 && (
           <>
             <button className="lightbox-nav lightbox-prev" onClick={onPrev} aria-label="Image précédente">‹</button>
@@ -31,5 +38,6 @@ export default function ImageLightbox({ images = [], initialIndex = 0, onClose, 
         )}
       </div>
     </div>
+    </Portal>
   )
 }

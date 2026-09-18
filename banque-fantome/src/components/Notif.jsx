@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import Portal from './Portal'
 
 export default function Notif({ msg, type = 'ok', onClose }) {
   useEffect(() => {
@@ -7,9 +8,11 @@ export default function Notif({ msg, type = 'ok', onClose }) {
   }, [onClose])
 
   return (
-    <div className={`notif ${type}`}>
+    <Portal>
+    <div className={`notif ${type}`} role="status" onClick={onClose} title="Cliquer pour fermer">
       {type === 'ok' ? '✓ ' : type === 'err' ? '✗ ' : ''}
       {msg}
     </div>
+    </Portal>
   )
 }

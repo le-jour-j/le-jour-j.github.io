@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
@@ -23,7 +23,9 @@ export default function Connexion() {
   const [errors, setErrors]     = useState({})
   const [revealCode, setRevealCode] = useState(null)
 
-  if (user) { navigate('/compte'); return null }
+  // Déjà connecté → mon compte (dans un effet, pas pendant le rendu)
+  useEffect(() => { if (user) navigate('/compte') }, [user])
+  if (user) return null
 
   function validate() {
     const e = {}
@@ -84,19 +86,21 @@ export default function Connexion() {
   const titres = { login: 'Connexion', register: 'Nouveau compte', reset: 'Changer de mot de passe' }
 
   return (
-    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3rem 1rem', background: 'var(--gris-clair)' }}>
-      <div style={{ width: '100%', maxWidth: 420 }}>
+    <div className="connexion-wrap">
+      <div className="connexion-box">
         {/* Header jaune */}
-        <div style={{ background: 'var(--jaune)', padding: '2rem 2rem 1.5rem' }}>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', fontWeight: 700, letterSpacing: '.18em', marginBottom: '.5rem' }}>
-            BANQUE FANTÔME
-          </div>
+        <div className="connexion-head">
+          <div className="eyebrow">BANQUE FANTÔME</div>
           <h2 style={{ color: 'var(--noir)' }}>{titres[mode]}</h2>
         </div>
 
         {/* Formulaire */}
-        <div style={{ background: 'var(--blanc)', padding: '2rem', border: '2px solid var(--noir)', borderTop: 'none' }}>
-          <p className="texte-aide" style={{ marginBottom: '1.8rem' }}>
+        <div className="connexion-form">
+          <div className="mode-switch" role="tablist" aria-label="Mode">
+            <button type="button" role="tab" aria-selected={mode === 'login'} className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>Connexion</button>
+            <button type="button" role="tab" aria-selected={mode === 'register'} className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>Nouveau compte</button>
+          </div>
+          <p className="texte-aide" style={{ marginBottom: '1.6rem' }}>
             {mode === 'login' && 'Identifiez-vous pour déposer des objets et gérer vos échanges.'}
             {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo — vous devenez opérateur de la Banque.'}
             {mode === 'reset' && 'Entrez votre pseudo, votre code de récupération, puis votre nouveau mot de passe.'}
@@ -129,20 +133,16 @@ export default function Connexion() {
             </div>
           )}
 
-          <button className="btn btn-noir" onClick={handleSubmit} disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: '.5rem' }}>
+          <button className="btn btn-noir btn-bloc" onClick={handleSubmit} disabled={loading} style={{ marginTop: '.5rem' }}>
             {loading ? 'Traitement…'
               : mode === 'login' ? '→ Se connecter'
               : mode === 'register' ? '→ Créer mon compte'
               : '→ Changer le mot de passe'}
           </button>
 
-          <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '.82rem', color: 'var(--gris)', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-            {mode === 'login' && <>
-              <span>Pas de compte ? <button className="lien-texte" onClick={() => setMode('register')}>En créer un</button></span>
+          <div className="connexion-liens">
+            {mode === 'login' && (
               <span>Mot de passe oublié ? <button className="lien-texte" onClick={() => setMode('reset')}>Le changer</button></span>
-            </>}
-            {mode === 'register' && (
-              <span>Déjà un compte ? <button className="lien-texte" onClick={() => setMode('login')}>Se connecter</button></span>
             )}
             {mode === 'reset' && (
               <span><button className="lien-texte" onClick={() => setMode('login')}>← Retour à la connexion</button></span>
