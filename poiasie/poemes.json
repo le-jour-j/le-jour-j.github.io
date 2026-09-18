@@ -359,6 +359,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:29:28",
       "texte": "Échos murmurant sur le vieux toit, Ombres embrassent la nuit sombre. Flamme éphémère s'étend sous la lune pâle, Murmures des âmes en quête d'horizon lointain. Le vent murmure des secrets, La rivière crie"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:33:22",
+      "texte": "Ouvertures d'âme aux vents lointains,\nSecrets murmurés par la brise et l'eau,\nLarmes d'été sous les rayons de soleil."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:33:39",
+      "texte": "Vents murmurants sur le sable,\nLarmes glissant en silence doré,\nJours endormis.\n\nÉtoiles murmures dans la nuit noire.\nLes arbres soupiraient, des secrets voilés—\nSilence, lune éclatante.\n\nVent saliné, vagues"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:33:57",
+      "texte": "Ailes de papillon craquant glaces,\nCiel étoilé en silence profond,\nRose brisée au bord du lac noir."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:34:13",
+      "texte": "échos des ombres dans le vide, murmures d'une lune solitaire.\ncœurs craqués sur le béton de la nuit, lentement déchirant leur toile invisible."
     }
   ]
 }
