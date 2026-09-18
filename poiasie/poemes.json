@@ -1,0 +1,74 @@
+[
+  {
+    "id": "20260918-213915",
+    "date": "2026-09-18 21:39",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "21:39:28",
+        "texte": "Les étoiles, leur douce lumière me guide.\nDans la nuit sombre, mon cœur se perd en rêve.\nL'amour est un fleuve sans fin qui m'emporte."
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "21:39:44",
+        "texte": "Lune murmure,\nFeuilles dansent au vent du temps perdu,\nÂmes se mélangent.\n\nÉchos d'un rire,\nRivières s'assèchent en silence,\nHorizons pleurent.\n\nSous la pluie, les promesses,\nRoues sur le sentier mouillé."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "21:40:01",
+        "texte": "Lune dans un miroir, danse des ombres.\nVenturiers du ciel, chants de nuages.\nEtoiles éclatant sous l'aube."
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "21:40:16",
+        "texte": "Écho des cœurs en vagues, symphonie sombre et claire. Sable murmure dans le souffle furtif. Lune lucide trace les rêves endormis sur la terre tremblante. Flâner silencieux au clair de lune. Rêverie fugace,"
+      },
+      {
+        "poete": "Le brut",
+        "modele": "qwen2.5-vl-7b-instruct",
+        "heure": "21:40:43",
+        "texte": "forêt murmure à mes oreilles. Nuit sans étoile. Soleil d'été en déroute."
+      }
+    ]
+  },
+  {
+    "id": "20260918-215223",
+    "date": "2026-09-18 21:52",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "21:52:34",
+        "texte": "Les oiseaux dansent la nuit,\nChantent le bonheur en chansons,\nUn ballet lumineux de larmes."
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "21:52:48",
+        "texte": "Larmes dansantes sur le vent.\n\nJeune rose pleure sous la lune obscure.\n\nFleurs du matin effleurent les mains froides des rêves."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "21:53:05",
+        "texte": "Nuage en forme de lune s'éclatant dans la nuit de verre. Oiseaux qui chantent en langue étrange à travers la glace. Ciel bleu se faufile entre les doigts du vent."
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "21:53:21",
+        "texte": "Vents chantants dansent sur la glace.\nBleu murmure aux coins des ombres.\nDouceurs et brises s'enlacent en symphonie."
+      },
+      {
+        "poete": "Le brut",
+        "modele": "qwen2.5-vl-7b-instruct",
+        "heure": "21:53:48",
+        "texte": "Sous le soleil de mai, chuchotements et fleurs dansent."
+      }
+    ]
+  }
+]
