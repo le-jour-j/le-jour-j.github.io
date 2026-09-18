@@ -135,5 +135,35 @@
         "texte": "Le sable s'endort en murmure,\nDouce rime des flots endormis.\nHeures murmurées sous le ciel doré,\n\nLes ombres dansent, silence assourdissant,\nRires oubliés résonnent,\nEchos éphémères se fanent."
       }
     ]
+  },
+  {
+    "id": "20260918-225142",
+    "date": "2026-09-18 22:51",
+    "vers": [
+      {
+        "poete": "Le lyrique",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:52:00",
+        "texte": "Or qui coule sans repos,\nUn fleuve au cœur des hommes,\nRien n'arrête son chemin."
+      },
+      {
+        "poete": "Le minimaliste",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:52:16",
+        "texte": "Forets en crue murmure. Feuilles s'inclinent. Esprit libre.\n\nNuit obscure. Montagne se fige. Flamme dans la forêt."
+      },
+      {
+        "poete": "Le surrealiste",
+        "modele": "mistralai/mistral-7b-instruct-v0.3",
+        "heure": "22:52:33",
+        "texte": "Ombres dans le vent, danse macabre.\nEtoiles qui chantent dans la nuit blanche.\nLune rouge, sang sur les rochers.\nChansons de larmes pour une montagne endormie.\nNuages"
+      },
+      {
+        "poete": "Le sonore",
+        "modele": "microsoft_phi-4-mini-instruct",
+        "heure": "22:52:50",
+        "texte": "Montagne murmurante, murmure mortelle,\nChants des nuages, cris effrayants.\nRochers reposant dans la danse silencieuse du temps."
+      }
+    ]
   }
 ]
