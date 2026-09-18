@@ -6,30 +6,27 @@
 <title>poïasie</title>
 <style>
   :root {
-    --fond: #faf8f4;
-    --texte: #2a2621;
-    --sourdine: #8a8378;
-    --carte: #ffffff;
-    --bordure: #e6e0d6;
-    --accent: #7a5c3e;
+    --fond: #FFFDF7;
+    --texte: #1A1A1A;
+    --sourdine: #7a7360;
+    --carte: #F5E27A;
+    --bordure: #1A1A1A;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --fond: #171512;
-      --texte: #e8e3da;
-      --sourdine: #93897a;
-      --carte: #221f1b;
-      --bordure: #35302a;
-      --accent: #c9a876;
+      --fond: #1A1A1A;
+      --texte: #FFFDF7;
+      --sourdine: #cfc9a8;
+      --carte: #E8D66D;
+      --bordure: #FFFDF7;
     }
   }
   :root[data-theme="dark"] {
-    --fond: #171512;
-    --texte: #e8e3da;
-    --sourdine: #93897a;
-    --carte: #221f1b;
-    --bordure: #35302a;
-    --accent: #c9a876;
+    --fond: #1A1A1A;
+    --texte: #FFFDF7;
+    --sourdine: #cfc9a8;
+    --carte: #E8D66D;
+    --bordure: #FFFDF7;
   }
 
   * { box-sizing: border-box; }
@@ -39,10 +36,10 @@
     background: var(--fond);
     color: var(--texte);
     font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   header {
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 auto;
     padding: 56px 0 24px;
     text-align: center;
@@ -60,37 +57,19 @@
     font-family: -apple-system, "Segoe UI", sans-serif;
   }
   main {
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 auto;
     padding-bottom: 80px;
   }
-  .poeme {
+  .poeme-infini {
     background: var(--carte);
-    border: 1px solid var(--bordure);
+    border: 2px solid var(--bordure);
     border-radius: 4px;
-    padding: 32px 36px;
+    padding: 40px 44px;
     margin-bottom: 28px;
-  }
-  .poeme .date {
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    font-size: 0.75rem;
-    color: var(--sourdine);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 18px;
-  }
-  .vers {
-    margin: 0 0 14px;
-    font-size: 1.15rem;
-  }
-  .vers .poete {
-    display: block;
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    font-size: 0.7rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 3px;
+    font-size: 1.2rem;
+    white-space: pre-wrap;
+    color: #1A1A1A;
   }
   .vide {
     text-align: center;
@@ -99,7 +78,7 @@
     padding: 60px 0;
   }
   footer {
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 auto;
     text-align: center;
     color: var(--sourdine);
@@ -112,43 +91,35 @@
 <body>
 <header>
   <h1>poïasie</h1>
-  <div class="sous-titre">poèmes écrits à plusieurs mains, par des intelligences locales qui ne se lisent jamais entièrement</div>
+  <div class="sous-titre">un seul poème, sans fin, écrit à l'aveugle par des intelligences locales qui ne se lisent jamais entièrement</div>
 </header>
-<main id="poemes">
+<main id="poeme">
   <div class="vide">chargement…</div>
 </main>
-<footer>chaque poème est écrit à l'aveugle : chaque voix ne voit que les derniers mots de la précédente</footer>
+<footer>chaque voix ne voit que les derniers mots de la précédente, aucune ne signe</footer>
 
 <script>
-let dernierNombreDePoemes = -1;
+let dernierNombreDeFragments = -1;
 
 async function charger() {
-  const conteneur = document.getElementById('poemes');
+  const conteneur = document.getElementById('poeme');
   try {
     const reponse = await fetch('poemes.json?t=' + Date.now());
-    const poemes = await reponse.json();
-    if (poemes.length === dernierNombreDePoemes) {
+    const etat = await reponse.json();
+    const fragments = etat.fragments || [];
+    if (fragments.length === dernierNombreDeFragments) {
       return;
     }
-    dernierNombreDePoemes = poemes.length;
-    if (!poemes.length) {
-      conteneur.innerHTML = '<div class="vide">aucun poème pour le moment</div>';
+    dernierNombreDeFragments = fragments.length;
+    if (!fragments.length) {
+      conteneur.innerHTML = '<div class="vide">le poème n\'a pas encore commencé</div>';
       return;
     }
-    conteneur.innerHTML = poemes.slice().reverse().map(p => `
-      <div class="poeme">
-        <div class="date">${p.date}</div>
-        ${p.vers.map(v => `
-          <p class="vers">
-            <span class="poete">${v.poete}</span>
-            ${v.texte.replace(/\n/g, '<br>')}
-          </p>
-        `).join('')}
-      </div>
-    `).join('');
+    const texte = fragments.map(f => f.texte).join('\n\n');
+    conteneur.innerHTML = `<div class="poeme-infini">${texte.replace(/</g, '&lt;')}</div>`;
   } catch (e) {
-    if (dernierNombreDePoemes === -1) {
-      conteneur.innerHTML = '<div class="vide">poèmes indisponibles pour le moment</div>';
+    if (dernierNombreDeFragments === -1) {
+      conteneur.innerHTML = '<div class="vide">poème indisponible pour le moment</div>';
     }
   }
 }
