@@ -335,6 +335,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:24:50",
       "texte": "Silence des flacons se brisant en une mélodie effrayante.\nDes ombres murmurantes tissent un conte fantôme."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:28:39",
+      "texte": "Étoiles brûlantes dans la nuit sombre,\nUn chant de mort s'échoit dans le silence,\nEsprits errants dans les rêves désolés."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:28:55",
+      "texte": "L'aube s'embrase, flamme danse. \nSous la lune, pas de trace. \nForêt murmure secrètes."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:29:12",
+      "texte": "Étoiles enflammées au ciel échancré,\nUn soleil fantôme derrière les arbres,\nLarves danseuses dans un ballet silencieux."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:29:28",
+      "texte": "Échos murmurant sur le vieux toit, Ombres embrassent la nuit sombre. Flamme éphémère s'étend sous la lune pâle, Murmures des âmes en quête d'horizon lointain. Le vent murmure des secrets, La rivière crie"
     }
   ]
 }
