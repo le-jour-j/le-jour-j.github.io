@@ -7,18 +7,61 @@ commande SQL n'a été exécutée sur la base.
 
 ## **http://localhost:8905/banque-fantome/**
 
-Depuis le téléphone, sur le même wifi : **http://192.168.247.81:8905/banque-fantome/**
+Depuis le téléphone, sur le même wifi : **http://10.155.241.220:8905/banque-fantome/**
 
-**Correction du 2026-09-18 à 20h05 : le serveur est arrêté.** Il tournait bien quand
-j'ai écrit ce document, Claude Code l'a coupé tout seul un quart d'heure après parce
-que la machine manquait de mémoire vive. Ce n'est pas une panne du site, le site n'y
-est pour rien.
+---
 
-**Pour le rallumer**, ouvre une fenêtre de commande dans
-`C:\Users\Pole-Fromage\Documents\GitHub\le-jour-j.github.io\banque-fantome` et tape :
-`npm run preview -- --port 8905 --host 0.0.0.0`
-Laisse cette fenêtre ouverte tant que tu veux voir le site. Si ça recoupe tout seul,
-ferme quelques onglets Claude avant de relancer : c'est la mémoire qui manque.
+## Correction du 2026-09-18 à 20h45 : la base est à jour, les enchères sont allumées
+
+Tout ce qui est écrit plus bas date d'avant ta migration SQL. **Lis ce bloc-ci en
+premier, il est plus récent et c'est lui qui fait foi.**
+
+### Ce qui a changé depuis
+
+1. **Tu as passé le SQL, et je l'ai vérifié moi-même** plutôt que de te croire sur
+   parole. Les colonnes `objets.mise_depart`, `prix_achat`, `duree_jours`,
+   `expire_at`, `enchere_courante` et `profiles.solde`, `profiles.role` répondent
+   toutes. Les quatre tables neuves (`banque`, `billets_emis`, `encheres`,
+   `transactions`) répondent. Les trois fonctions (`stats_banque`, `journal_banque`,
+   `resoudre_ventes_expirees`) répondent.
+2. **J'ai remis le nouveau formulaire de dépôt**, celui avec mise de départ, durée
+   et achat immédiat. Le point 1.b plus bas, qui disait que je gardais l'ancien,
+   n'est plus vrai.
+3. **Le site a été reconstruit** et le serveur sert bien la version neuve (vérifié :
+   le nom du fichier de code servi a changé, et il contient le nouveau formulaire).
+
+### Ce qui s'allume maintenant
+
+4. **Déposer avec mise de départ, durée et achat immédiat.**
+5. **Le bandeau de chiffres de l'accueil** ne montre plus des tirets : il montre de
+   vrais nombres. Ils valent zéro pour l'instant (trésor, ventes en cours), tout
+   simplement parce que personne n'a encore émis de billet ni lancé de vente. C'est
+   juste, pas cassé.
+6. **Fabriquer un billet** au guichet : la fonction existe désormais côté base.
+7. **Les blocs d'enchères** sur les objets mis en vente, et le solde à côté de
+   "Mon compte".
+
+### Ce qui reste éteint, et c'est normal
+
+8. **Le bandeau défilant en haut** affiche encore son texte de secours. La fonction
+   répond, mais elle renvoie une liste vide : il n'y a pas encore d'évènement à
+   raconter. Il se remplira tout seul dès le premier billet ou la première enchère.
+9. **Les 4 objets déjà dans le market n'ont pas de mise de départ** et n'en auront
+   jamais : ils ont été déposés avant. Ils restent en troc par message. Seuls les
+   nouveaux dépôts seront des ventes aux enchères. Si tu veux des enchères visibles
+   demain, **dépose un ou deux objets neufs ce soir.**
+
+### Ce que je n'ai pas pu vérifier cette fois
+
+10. **Rien n'a été vu à l'écran pour cette seconde passe.** L'extension navigateur
+    ne répondait plus, j'ai essayé deux fois et je me suis arrêté là. La première
+    passe, elle, avait bien été vue de mes yeux.
+11. **Personne n'a encore jamais déposé avec le nouveau formulaire.** Ce que j'ai
+    vérifié, c'est que les 15 colonnes qu'il écrit existent toutes dans la base, et
+    que les durées qu'il propose (1, 3, 7 jours) sont exactement celles que la base
+    accepte. Ça ne remplace pas un vrai dépôt. **C'est le premier geste à faire :
+    connecte-toi et dépose un objet.**
+12. **Émettre un billet, enchérir, conclure une vente** : jamais essayés.
 
 ---
 
