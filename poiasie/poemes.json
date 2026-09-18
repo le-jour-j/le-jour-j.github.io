@@ -71,6 +71,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:22:45",
       "texte": "Etoiles murmures dans la nuit, secrets voilés en mousse,\nNuances murmurantes sous un voile nocturne.\nSecrets se mêlant aux étoiles, écho silencieux de lune."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:25:18",
+      "texte": "Souffle dans l'ombre de ton sourire,\nRythme des ombres et des sons nocturnes,\nLune, étoiles, tous t'entendent, t'écoutent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:25:35",
+      "texte": "Ombres dans le calme,\nSons murmurants, lune veille.\nÉtoiles témoignent.\n\nPetite rivière coule silently, les feuilles chuchotent secrets anciens, l'horizon s'étend sans fin."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:25:53",
+      "texte": "nuages en robe de soie, dansant avec les ombres des arbres,\nsouris blanches qui dansent sur la glace nocturne, rient au silence,\nlune au cœur de cristal, contemplant sa propre éclipse"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:26:10",
+      "texte": "Silencieux murmur des ombres,\nLune murmure un souffle muet.\nÉclipses, éternelle danse silencieuse."
     }
   ]
 }
