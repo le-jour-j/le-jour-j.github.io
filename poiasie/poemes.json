@@ -311,6 +311,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:20:08",
       "texte": "échos des nuits vagabondes. Écho du vent, silence sacré.\nVents susurrant, tourments vibrants, rêves en vrac."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:24:01",
+      "texte": "Nuage aux yeux d'argent,\nSouris sous la lune paille,\nPluie d'étoiles dans l'obscur."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:24:17",
+      "texte": "Argent danse au vent,\n\nSourit lunaire s'écarte.\n\nPluies étoilées pleurent sur les ombres."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:24:34",
+      "texte": "Nuages de rose éclatent dans le ciel d'acier.\nNuit qui chante des mélodies de glace.\nLunes noires dansant autour du soleil somnolent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:24:50",
+      "texte": "Silence des flacons se brisant en une mélodie effrayante.\nDes ombres murmurantes tissent un conte fantôme."
     }
   ]
 }
