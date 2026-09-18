@@ -215,6 +215,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:01:17",
       "texte": "Doré, cris gelés sous le voile mystique,\nMystères chantent au cœur frêle.\nNoir froid, rime dorée, lamentations hallucinées."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:05:10",
+      "texte": "Plumes de nuage dans l'obscurité,\nUn chant des oiseaux perdus,\nSoleil chaud qui se meurt à peine."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:05:25",
+      "texte": "Paradis assombri, Oiseaux errants.\n\nLes feuilles dorées s'écoulent en silence.\n\nCiel pleure des reflets d'or morts."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:05:42",
+      "texte": "Ombre aux yeux ouverts vers le vide,\nNuit qui dort dans un soleil brûlant,\nCœur de glace dans la bouche du sang."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:05:57",
+      "texte": "Bruits des chemins brisés, cris des âmes perdues,\nCendres se faufilent, ombres confondus, murmure d'air pur.\nRêves s'enlacent en danseurs vaporeux, silence mordant."
     }
   ]
 }
