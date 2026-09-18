@@ -95,6 +95,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:26:10",
       "texte": "Silencieux murmur des ombres,\nLune murmure un souffle muet.\nÉclipses, éternelle danse silencieuse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:41:36",
+      "texte": "Ombres dansant sur la nuit tranquille,\nLune qui sourit dans sa silence,\nDans le ballet des étoiles, une chanson secrète."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:41:52",
+      "texte": "Lune éclaire la nuit noire,\nDouceur dansant sur les vagues brumeuses,\nSilence tisse des rêves.\n\nÉchos d'un regard égaré,\nCascade de feuilles en automne.\nViolette embrasse l'invisible.\n\nBateau au loin, horizon,"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:42:11",
+      "texte": "Nuage de fleurs dans la nuit.\nOiseau qui chante son sommeil.\nCimetière où danse le soleil."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:42:26",
+      "texte": "Rêves murmurent sous la plume d'oiseau.\nLe soleil, dansant au cimetière,\nLes murmures chantent des rêves endormis."
     }
   ]
 }
