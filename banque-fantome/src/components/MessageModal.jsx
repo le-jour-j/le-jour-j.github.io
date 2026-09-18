@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import Portal from './Portal'
 import { useAuth } from './AuthContext'
+import { useModal } from '../utils/useModal'
 
-export default function MessageModal({ objet, onClose }) {
+export default function MessageModal({ objet, onClose, destinataire }) {
+  // destinataire facultatif { id, pseudo } — par défaut le déposant de l'objet
+  const dest = destinataire || { id: objet.user_id, pseudo: objet.pseudo }
   const { user } = useAuth()
   const navigate  = useNavigate()
   const [contenu, setContenu] = useState('')
   const [sending, setSending] = useState(false)
   const [done, setDone]       = useState(false)
+  useModal(onClose)
 
   async function send() {
     if (!contenu.trim()) return
@@ -22,9 +27,9 @@ export default function MessageModal({ objet, onClose }) {
       objet_id:            objet.id,
       objet_titre:         objet.titre,
       expediteur_id:       user.id,
-      destinataire_id:     objet.user_id,
+      destinataire_id:     dest.id,
       expediteur_pseudo:   myProfile?.pseudo || 'Anonyme',
-      destinataire_pseudo: objet.pseudo || 'Anonyme',
+      destinataire_pseudo: dest.pseudo || 'Anonyme',
       contenu:             contenu.trim(),
     })
 
@@ -33,15 +38,16 @@ export default function MessageModal({ objet, onClose }) {
   }
 
   return (
+    <Portal>
     <div className="modal-bg" onClick={onClose}>
-      <div className="modal" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>✕</button>
+      <div className="modal" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label="Fermer">✕</button>
 
         {done
           ? <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-              <div className="stamp ok" style={{ fontSize: '1.4rem', marginBottom: '1rem' }}>Message envoyé</div>
+              <div className="stamp stamp-vert stamp-anim" style={{ fontSize: '1.3rem', marginBottom: '1.2rem' }}>Message envoyé</div>
               <p style={{ fontFamily: 'var(--sans)', color: 'var(--gris-fonce)', lineHeight: 1.7 }}>
-                {objet.pseudo} recevra votre proposition.<br />
+                {dest.pseudo} recevra votre message.<br />
                 Suivez la réponse dans <strong>Mes messages</strong>.
               </p>
               <button className="btn btn-noir" style={{ marginTop: '1.5rem' }} onClick={() => { onClose(); navigate('/messages') }}>
@@ -49,12 +55,12 @@ export default function MessageModal({ objet, onClose }) {
               </button>
             </div>
           : <>
-              <h3 style={{ fontFamily: 'var(--sans)', marginBottom: '.4rem' }}>Proposer un échange</h3>
-              <div style={{ fontSize: '.75rem', color: 'var(--gris)', marginBottom: '1.2rem', textTransform: 'uppercase', letterSpacing: '.1em' }}>
-                à {objet.pseudo} · re: {objet.titre}
+              <h3 style={{ marginBottom: '.4rem' }}>{destinataire ? 'Écrire' : objet.mise_depart != null ? 'Question au vendeur' : 'Proposer un échange'}</h3>
+              <div className="meta-label" style={{ marginBottom: '1.2rem' }}>
+                à {dest.pseudo} · re: {objet.titre}
               </div>
               {!user &&
-                <p style={{ fontFamily: 'var(--sans)', color: 'var(--rouge)', marginBottom: '1rem', fontSize: '.9rem' }}>
+                <p className="msg-err">
                   Vous devez être connecté pour envoyer un message.
                 </p>
               }
@@ -69,16 +75,16 @@ export default function MessageModal({ objet, onClose }) {
                 />
               </div>
               <button
-                className="btn btn-noir"
+                className="btn btn-noir btn-bloc"
                 onClick={user ? send : () => navigate('/connexion')}
-                disabled={sending}
-                style={{ width: '100%' }}
+                disabled={sending || (user && !contenu.trim())}
               >
-                {sending ? 'Envoi…' : !user ? '→ Se connecter pour écrire' : '→ Envoyer la proposition'}
+                {sending ? 'Envoi…' : !user ? '→ Se connecter pour écrire' : '→ Envoyer'}
               </button>
             </>
         }
       </div>
     </div>
+    </Portal>
   )
 }

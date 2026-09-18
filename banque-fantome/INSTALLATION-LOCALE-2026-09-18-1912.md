@@ -1,0 +1,199 @@
+# Banque Fantôme, version hôtel des ventes, installée en local
+
+Écrit le 2026-09-18 à 19h55. Rien n'a été poussé, rien n'a été déployé, aucune
+commande SQL n'a été exécutée sur la base.
+
+---
+
+## **http://localhost:8905/banque-fantome/**
+
+Depuis le téléphone, sur le même wifi : **http://10.155.241.220:8905/banque-fantome/**
+
+---
+
+## Correction du 2026-09-18 à 20h45 : la base est à jour, les enchères sont allumées
+
+Tout ce qui est écrit plus bas date d'avant ta migration SQL. **Lis ce bloc-ci en
+premier, il est plus récent et c'est lui qui fait foi.**
+
+### Ce qui a changé depuis
+
+1. **Tu as passé le SQL, et je l'ai vérifié moi-même** plutôt que de te croire sur
+   parole. Les colonnes `objets.mise_depart`, `prix_achat`, `duree_jours`,
+   `expire_at`, `enchere_courante` et `profiles.solde`, `profiles.role` répondent
+   toutes. Les quatre tables neuves (`banque`, `billets_emis`, `encheres`,
+   `transactions`) répondent. Les trois fonctions (`stats_banque`, `journal_banque`,
+   `resoudre_ventes_expirees`) répondent.
+2. **J'ai remis le nouveau formulaire de dépôt**, celui avec mise de départ, durée
+   et achat immédiat. Le point 1.b plus bas, qui disait que je gardais l'ancien,
+   n'est plus vrai.
+3. **Le site a été reconstruit** et le serveur sert bien la version neuve (vérifié :
+   le nom du fichier de code servi a changé, et il contient le nouveau formulaire).
+
+### Ce qui s'allume maintenant
+
+4. **Déposer avec mise de départ, durée et achat immédiat.**
+5. **Le bandeau de chiffres de l'accueil** ne montre plus des tirets : il montre de
+   vrais nombres. Ils valent zéro pour l'instant (trésor, ventes en cours), tout
+   simplement parce que personne n'a encore émis de billet ni lancé de vente. C'est
+   juste, pas cassé.
+6. **Fabriquer un billet** au guichet : la fonction existe désormais côté base.
+7. **Les blocs d'enchères** sur les objets mis en vente, et le solde à côté de
+   "Mon compte".
+
+### Ce qui reste éteint, et c'est normal
+
+8. **Le bandeau défilant en haut** affiche encore son texte de secours. La fonction
+   répond, mais elle renvoie une liste vide : il n'y a pas encore d'évènement à
+   raconter. Il se remplira tout seul dès le premier billet ou la première enchère.
+9. **Les 4 objets déjà dans le market n'ont pas de mise de départ** et n'en auront
+   jamais : ils ont été déposés avant. Ils restent en troc par message. Seuls les
+   nouveaux dépôts seront des ventes aux enchères. Si tu veux des enchères visibles
+   demain, **dépose un ou deux objets neufs ce soir.**
+
+### Ce que je n'ai pas pu vérifier cette fois
+
+10. **Rien n'a été vu à l'écran pour cette seconde passe.** L'extension navigateur
+    ne répondait plus, j'ai essayé deux fois et je me suis arrêté là. La première
+    passe, elle, avait bien été vue de mes yeux.
+11. **Personne n'a encore jamais déposé avec le nouveau formulaire.** Ce que j'ai
+    vérifié, c'est que les 15 colonnes qu'il écrit existent toutes dans la base, et
+    que les durées qu'il propose (1, 3, 7 jours) sont exactement celles que la base
+    accepte. Ça ne remplace pas un vrai dépôt. **C'est le premier geste à faire :
+    connecte-toi et dépose un objet.**
+12. **Émettre un billet, enchérir, conclure une vente** : jamais essayés.
+
+---
+
+## 1. Ce que tu as à décider ou à faire
+
+### a. Rien d'obligatoire pour demain
+
+Le site tourne, tu peux le montrer tel quel. Les trois points ci-dessous sont des
+choix, pas des réparations à faire en urgence.
+
+### b. Le choix que j'ai fait à ta place, et que tu peux défaire
+
+J'ai installé toute la mise à jour **sauf le nouveau formulaire de dépôt**, en
+gardant l'ancien. C'est l'option (a) qu'avait envisagée le dev web ce matin.
+
+Pourquoi : j'ai vérifié ce soir, en lecture seule sur ta base, que les colonnes
+`objets.mise_depart` et `profiles.solde` **n'existent pas**. La base n'a pas reçu la
+migration. Le nouveau formulaire de dépôt les écrit obligatoirement à chaque dépôt :
+installé tel quel, **déposer un objet ne marchait plus du tout**. Or c'est exactement
+ce que tu veux tester avec ton téléphone.
+
+Conséquence : tu déposes et tu retires des objets comme aujourd'hui. Tu n'as pas la
+mise de départ, ni la durée, ni l'achat immédiat sur le formulaire de dépôt.
+
+### c. Si tu veux les enchères pour de vrai : une seule chose à faire, par toi
+
+1. Ouvre ton tableau de bord Supabase, projet Banque Fantôme, rubrique **SQL Editor**.
+2. Ouvre le fichier
+   `C:\Users\Pole-Fromage\Documents\GitHub\le-jour-j.github.io\banque-fantome\supabase_hotel_des_ventes.sql`
+   colle tout son contenu dans l'éditeur, et lance.
+3. Dis-le moi : je remets le nouveau formulaire de dépôt, je rebuilde, et tout le
+   système d'enchères s'allume.
+
+Le dev web a lu ce fichier en entier ce matin : aucune instruction destructrice
+dedans, rien qui efface une table ou une colonne. Je ne l'ai pas exécuté, ce n'est
+pas mon rôle de toucher à ta base.
+
+Une ligne en fin de fichier (section 7) est en commentaire volontaire : elle te
+désigne comme banquier. À lancer séparément, consciemment, si tu la veux.
+
+### d. Ce qui n'est pas en ligne
+
+Tout ça vit sur ta machine, sur une branche git à part
+(`hotel-des-ventes-local-2026-09-18`). **Le site public n'a pas bougé.** J'ai mis ça
+sur une branche exprès : tant que personne ne fusionne dans `main`, aucun `git push`
+ne peut envoyer cette version en production par accident.
+
+---
+
+## 2. Ce qui marche, et comment je l'ai vérifié
+
+**Vérifié à l'écran, dans un vrai navigateur, sur le site local :**
+
+1. **Page d'accueil** : s'affiche entièrement. Nouveau design, gros titre, bandeau de
+   chiffres, bandeau défilant en haut, pied de page, bandeau "installer l'appli".
+2. **Market** : s'affiche avec **les 4 vraies entrées de ta base**, filtres par
+   catégorie, statut et rareté, tri, recherche. Les cartes sortent bien les données
+   réelles (numéro, valeur en billets, rareté).
+3. **S'enrichir** : mode d'emploi, guichet d'émission, cours des devises, billets à
+   imprimer. Tout s'affiche.
+4. **Connexion** : le formulaire s'affiche, les deux onglets (connexion / nouveau
+   compte) sont là.
+5. **Déposer, hors connexion** : affiche proprement "Accès refusé, vous devez être
+   connecté". Pas de page blanche.
+6. **Aucune erreur JavaScript** dans la console du navigateur sur les pages visitées.
+7. **La PWA est bien générée** : `manifest.webmanifest`, `sw.js` et les 6 icônes
+   répondent tous. Le bandeau "installer l'appli" apparaît en bas de page.
+
+**Vérifié par la commande, pas à l'écran :**
+
+8. `npm install` passe (284 paquets ajoutés, dont `vite-plugin-pwa` qui est neuf).
+9. `npm run build` passe sans erreur, 109 modules, PWA générée avec 49 fichiers mis
+   en cache.
+10. Les 10 adresses du site (accueil, market, déposer, compte, connexion, s'enrichir,
+    manifeste, service worker, icônes) répondent toutes 200.
+11. L'ancien formulaire de dépôt utilise 10 classes de style : **les 10 existent
+    toujours** dans le nouveau fichier de style. Il ne sera donc pas dénudé.
+
+---
+
+## 3. Ce qui ne marche pas, et pourquoi
+
+Tout ce qui suit a la même cause unique : **la migration SQL n'est pas passée.**
+Rien de tout ça ne casse une page, tout dégrade proprement.
+
+1. **Le bandeau de chiffres de l'accueil** affiche un tiret vide pour billets en circulation,
+   trésor de la banque et ventes en cours. La fonction `stats_banque` n'existe pas
+   encore côté base. Seul "objets en circulation" est vrai.
+2. **Fabriquer un billet** (guichet d'émission, page S'enrichir) : le formulaire
+   s'affiche mais l'envoi échouera, la fonction `emettre_billet` n'existe pas. Échec
+   propre, message d'erreur, pas de page cassée.
+3. **Le solde à côté de "Mon compte"** ne s'affiche jamais, et **les blocs d'enchères
+   ne s'affichent sur aucun objet**. Normal, ces notions n'existent pas dans la base.
+4. **Le formulaire de dépôt est l'ancien** : pas de mise de départ, pas de durée, pas
+   d'achat immédiat. C'est le choix du point 1.b.
+5. **Le bandeau défilant en haut** affiche son texte de secours
+   ("OUVREZ UN COMPTE...") au lieu du vrai journal de la banque. Prévu par Gaétan,
+   c'est fait exprès.
+
+Aucun de ces cinq points n'est un bug. Ce sont les cinq endroits où la nouvelle
+version attend une base qu'elle n'a pas encore.
+
+---
+
+## 4. Ce que je n'ai pas pu vérifier
+
+Je le dis franchement plutôt que de laisser croire que tout est testé.
+
+1. **Tout ce qui demande d'être connecté n'a pas été testé à l'écran.** Je n'ai pas
+   tes identifiants, et je ne voulais pas créer un compte de test qui resterait pour
+   toujours dans ta vraie base. Donc : **déposer un objet, le retirer, la page Mon
+   compte, les messages, les échanges** sont vérifiés par lecture du code, pas à
+   l'écran. **C'est la première chose à faire toi-même** : connecte-toi sur
+   l'adresse locale et dépose un objet. Si ça marche, le reste suit.
+2. **L'affichage sur un vrai téléphone.** J'ai tenté de rétrécir la fenêtre, le
+   navigateur n'a pas suivi. Le menu en tiroir et les colonnes en mode téléphone sont
+   du travail de Gaétan que je n'ai pas vu de mes yeux.
+3. **L'accès depuis ton téléphone.** L'adresse réseau est donnée en haut, mais le
+   pare-feu Windows peut bloquer le port 8905 en arrivée. Si ton téléphone n'arrive
+   pas à ouvrir la page, c'est ça, et je ne touche pas aux réglages de ta machine.
+4. **L'installation de l'appli sur l'écran d'accueil du téléphone.** Les navigateurs
+   exigent en général du HTTPS pour ça : en local, en `http://`, l'installation
+   risque d'être refusée par le téléphone même si le bandeau s'affiche. Non testé.
+5. **Le service worker en conditions réelles** (usage hors ligne, mise à jour
+   automatique). Généré, servi, jamais éprouvé.
+6. **Le contenu réel du fichier SQL en exécution.** Lu par le dev web ce matin, jugé
+   non destructeur. Jamais lancé, donc jamais prouvé.
+7. **Je n'ai pas relu ligne à ligne les 20 fichiers modifiés.** Je me suis appuyé sur
+   l'analyse de ce matin (`CE-QUI-CHANGE-HOTEL-DES-VENTES.md`) et j'ai vérifié
+   moi-même les points qui décidaient de l'installation.
+
+---
+
+*Écrit le 2026-09-18 à 19h55 par le développeur web, mandaté par MORTIS sur demande
+de Jiiji. Aucune sortie vers l'extérieur, aucun déploiement, aucune écriture en base.*

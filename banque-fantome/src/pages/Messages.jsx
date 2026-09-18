@@ -5,7 +5,7 @@ import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
 
 export default function Messages() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const navigate  = useNavigate()
 
   const [conversations, setConversations] = useState([]) // liste des interlocuteurs
@@ -18,9 +18,10 @@ export default function Messages() {
   const [unread, setUnread]               = useState(0)
 
   useEffect(() => {
+    if (authLoading) return // on attend de savoir si une session existe (évite une redirection à tort au rechargement)
     if (!user) { navigate('/connexion'); return }
     loadConversations()
-  }, [user])
+  }, [user, authLoading])
 
   useEffect(() => {
     if (!selected) return
@@ -110,47 +111,39 @@ export default function Messages() {
   if (!user) return null
 
   return (
-    <div style={{ padding: '2.5rem 0 4rem' }}>
+    <div className="page-pad">
       <div className="container">
         <div className="section-head">
           <h2>Messages</h2>
-          {unread > 0 && <span className="stamp warn" style={{ fontSize: '.8rem' }}>{unread} non lu{unread > 1 ? 's' : ''}</span>}
+          {unread > 0 && <span className="stamp stamp-rouge">{unread} non lu{unread > 1 ? 's' : ''}</span>}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: selected ? '300px 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
+        <div className={`messages-grid ${selected ? 'has-thread' : 'solo'}`}>
 
           {/* ── LISTE CONVERSATIONS ── */}
-          <div>
+          <div className="conv-list">
             {loading
               ? <div className="loader">chargement<span className="blink">_</span></div>
               : conversations.length === 0
-                ? <div style={{ color: 'var(--gris)', fontFamily: 'var(--bebas)', fontSize: '1.3rem', padding: '2rem 0' }}>
-                    AUCUN MESSAGE
-                  </div>
+                ? <div className="vide"><div className="titre">Aucun message</div><p style={{ margin: '0 auto' }}>Proposez un échange depuis une fiche du market pour démarrer une conversation.</p></div>
                 : conversations.map(c => {
                     const key = `${c.userId}_${c.objetId}`
                     const isActive = selected?.userId === c.userId && selected?.objetId === c.objetId
                     return (
                       <div
                         key={key}
+                        role="button"
+                        tabIndex={0}
                         onClick={() => setSelected(c)}
-                        style={{
-                          padding: '1rem',
-                          borderBottom: '1px solid var(--gris-bord)',
-                          cursor: 'pointer',
-                          background: isActive ? 'var(--noir)' : c.unread > 0 ? 'rgba(255, 230, 109, 0.28)' : 'var(--blanc)',
-                          color: isActive ? 'var(--blanc)' : 'var(--noir)',
-                          transition: 'background .1s',
-                        }}
+                        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(c) } }}
+                        className={`conv ${isActive ? 'active' : ''} ${c.unread > 0 ? 'unread' : ''}`}
                       >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.3rem' }}>
-                          <strong style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{c.pseudo}</strong>
-                          {c.unread > 0 && <span style={{ background: 'var(--rouge)', color: '#fff', borderRadius: '50%', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem' }}>{c.unread}</span>}
+                        <div className="conv-head">
+                          <strong>{c.pseudo}</strong>
+                          {c.unread > 0 && <span className="conv-count">{c.unread}</span>}
                         </div>
-                        {c.objetTitre && <div className="caption-gris" style={{ color: isActive ? '#ccc' : 'var(--gris)', marginBottom: '.2rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>re: {c.objetTitre}</div>}
-                        <div style={{ fontSize: '.8rem', color: isActive ? '#ccc' : 'var(--gris)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {c.last}
-                        </div>
+                        {c.objetTitre && <div className="conv-objet">re: {c.objetTitre}</div>}
+                        <div className="conv-last">{c.last}</div>
                       </div>
                     )
                   })
@@ -159,33 +152,21 @@ export default function Messages() {
 
           {/* ── THREAD ── */}
           {selected && (
-            <div style={{ background: 'var(--blanc)', border: '1px solid var(--gris-bord)', display: 'flex', flexDirection: 'column', height: '60vh' }}>
-              {/* Header */}
-              <div style={{ padding: '.8rem 1rem', borderBottom: '1px solid var(--gris-bord)', background: 'var(--noir)', color: 'var(--blanc)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="thread">
+              <div className="thread-head">
                 <div>
-                  <div style={{ fontFamily: 'var(--sans)', fontSize: '1rem' }}>{selected.pseudo}</div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 700 }}>{selected.pseudo}</div>
                   {selected.objetTitre && <div className="caption-gris">re: {selected.objetTitre}</div>}
                 </div>
-                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--gris)', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
+                <button className="thread-close" onClick={() => setSelected(null)} aria-label="Fermer la conversation">✕</button>
               </div>
 
-              {/* Messages */}
-              <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '.8rem' }}>
+              <div className="thread-body">
                 {thread.map(m => {
                   const isMine = m.expediteur_id === user.id
                   return (
-                    <div key={m.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMine ? 'flex-end' : 'flex-start' }}>
-                      <div style={{
-                        maxWidth: '75%',
-                        background: isMine ? 'var(--noir)' : 'var(--gris-clair)',
-                        color: isMine ? 'var(--blanc)' : 'var(--noir)',
-                        padding: '.6rem .9rem',
-                        border: '1px solid var(--gris-bord)',
-                        fontFamily: 'var(--sans)',
-                        lineHeight: 1.6,
-                      }}>
-                        {m.contenu}
-                      </div>
+                    <div key={m.id} className={`bulle-wrap ${isMine ? 'mine' : ''}`}>
+                      <div className="bulle">{m.contenu}</div>
                       <div className="caption-gris" style={{ marginTop: '.2rem' }}>
                         {new Date(m.created_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                       </div>
@@ -194,17 +175,16 @@ export default function Messages() {
                 })}
               </div>
 
-              {/* Répondre */}
-              <div style={{ padding: '.8rem', borderTop: '1px solid var(--gris-bord)', display: 'flex', gap: '.6rem' }}>
+              <div className="thread-reply">
                 <textarea
                   value={reply}
                   onChange={e => setReply(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply() } }}
-                  placeholder="Votre message… (Entrée pour envoyer)"
-                  style={{ flex: 1, resize: 'none', height: 60, background: 'var(--gris-clair)', border: '1px solid var(--gris-bord)', padding: '.5rem', fontFamily: 'var(--mono)', fontSize: '.85rem', color: 'var(--noir)', outline: 'none' }}
+                  placeholder="Votre message… (Entrée pour envoyer, Maj+Entrée pour un retour à la ligne)"
+                  aria-label="Votre message"
                 />
-                <button className="btn btn-noir" onClick={sendReply} disabled={sending} style={{ alignSelf: 'flex-end' }}>
-                  {sending ? '…' : '→'}
+                <button className="btn btn-noir" onClick={sendReply} disabled={sending || !reply.trim()} style={{ alignSelf: 'flex-end' }} aria-label="Envoyer">
+                  {sending ? '…' : 'Envoyer →'}
                 </button>
               </div>
             </div>

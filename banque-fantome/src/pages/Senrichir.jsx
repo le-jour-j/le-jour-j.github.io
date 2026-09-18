@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import ImageLightbox from '../components/ImageLightbox'
+import GuichetEmission, { MurBillets } from '../components/GuichetEmission'
+import CoursDevises from '../components/CoursDevises'
+import Notif from '../components/Notif'
 
 const BASE = import.meta.env.BASE_URL
 const billets = [
@@ -52,15 +55,16 @@ const prompts = [
 export default function Senrichir() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
   const [copiedIndex, setCopiedIndex] = useState(null)
+  const [notif, setNotif] = useState(null)
 
   function copyPrompt(text, index) {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard?.writeText(text).catch(() => {})
     setCopiedIndex(index)
-    window.setTimeout(() => setCopiedIndex(null), 1400)
+    window.setTimeout(() => setCopiedIndex(null), 1600)
   }
 
   return (
-    <div style={{ padding: '3rem 0 5rem' }}>
+    <div className="page-pad">
       <div className="container">
         <div className="section-head">
           <h2>S'enrichir</h2>
@@ -68,14 +72,24 @@ export default function Senrichir() {
         </div>
 
         <section style={{ marginBottom: '2.5rem' }}>
-          <div className="card" style={{ background: 'linear-gradient(135deg, rgba(245,226,122,.45), rgba(255,255,255,.95))' }}>
-            <div style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', fontWeight: 700, letterSpacing: '.18em', textTransform: 'uppercase', marginBottom: '.7rem', color: 'var(--gris-fonce)' }}>
-              Mode d'emploi
-            </div>
-            <p style={{ lineHeight: 1.8, color: 'var(--gris-fonce)', maxWidth: 900 }}>
-              Ici, vous fabriquez votre monnaie. Téléchargez un billet, imprimez-le, coloriez-le, complétez-le, puis utilisez-le pour entrer dans le jeu d'échanges de la Banque Fantôme. Plus vous produisez de faux argent, plus vous pouvez tenter d'obtenir un objet, une œuvre ou un service présent dans le market.
+          <div className="info-drawer" style={{ margin: 0 }}>
+            <div className="info-drawer-title">Mode d'emploi</div>
+            <p>
+              Ici, vous fabriquez votre monnaie. Téléchargez un billet, imprimez-le, coloriez-le, complétez-le — ou dessinez le vôtre — puis photographiez-le au guichet ci-dessous : la banque le crédite sur votre compte. Ce sont ces billets que vous misez dans le market. Plus vous produisez de faux argent, plus vous pouvez enchérir.
             </p>
           </div>
+        </section>
+
+        <GuichetEmission onNotif={setNotif} />
+
+        <MurBillets limit={12} onNotif={setNotif} />
+
+        <section style={{ marginBottom: '3rem' }}>
+          <div className="section-head">
+            <h2>Cours des devises</h2>
+            <span className="count">Les monnaies inventées par les joueurs</span>
+          </div>
+          <CoursDevises />
         </section>
 
         <section style={{ marginBottom: '4rem' }}>
@@ -85,17 +99,20 @@ export default function Senrichir() {
           </div>
           <div className="grid-3">
             {billets.map((src, index) => (
-              <article key={src} className="objet-card" style={{ cursor: 'default' }}>
-                <button className="img-wrap enrichir-billet-button" style={{ aspectRatio: '4 / 2.8' }} onClick={() => setLightboxIndex(index)} aria-label={`Agrandir le billet ${index + 1}`}>
-                  <img src={src} alt={`Billet à colorier ${index + 1}`} />
-                </button>
+              <article key={src} className="objet-card billet-card">
+                <span className="card-num">#{String(index + 1).padStart(2, '0')}</span>
+                <div className="img-wrap">
+                  <button className="enrichir-billet-button" onClick={() => setLightboxIndex(index)} aria-label={`Agrandir le billet ${index + 1}`}>
+                    <img src={src} alt={`Billet à colorier ${index + 1}`} loading="lazy" />
+                  </button>
+                </div>
                 <div className="card-body">
                   <div className="card-title">Billet {String(index + 1).padStart(2, '0')}</div>
                   <div className="card-desc">Support imprimable pour fabriquer votre monnaie et acheter dans le market.</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '.8rem', marginTop: 'auto', paddingTop: '.4rem', flexWrap: 'wrap' }}>
-                    <button type="button" className="tag enrichir-zoom-tag" onClick={() => setLightboxIndex(index)}>agrandir</button>
-                    <a className="btn btn-noir" href={src} download style={{ fontSize: '.68rem', padding: '.4rem .9rem' }}>
-                      Télécharger
+                  <div className="card-foot">
+                    <button type="button" className="tag enrichir-zoom-tag" onClick={() => setLightboxIndex(index)}>⤢ agrandir</button>
+                    <a className="btn btn-noir btn-sm" href={src} download>
+                      ↓ Télécharger
                     </a>
                   </div>
                 </div>
@@ -114,17 +131,19 @@ export default function Senrichir() {
               <article key={prompt.label} className="prompt-card">
                 <div className="prompt-card-head">
                   <h3>{prompt.label}</h3>
-                  <button className="btn btn-outline" onClick={() => copyPrompt(prompt.text, index)}>
-                    {copiedIndex === index ? 'Copié' : 'Copier'}
+                  <button className={`btn btn-sm ${copiedIndex === index ? 'btn-noir' : 'btn-outline'}`} onClick={() => copyPrompt(prompt.text, index)}>
+                    {copiedIndex === index ? '✓ Copié' : 'Copier le prompt'}
                   </button>
                 </div>
-                <textarea value={prompt.text} readOnly />
+                {copiedIndex === index && <span className="stamp-copie" aria-hidden="true">Copié</span>}
+                <textarea value={prompt.text} readOnly onFocus={e => e.target.select()} aria-label={`Prompt ${prompt.label}`} />
               </article>
             ))}
           </div>
         </section>
       </div>
 
+      {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
       {lightboxIndex !== null && (
         <ImageLightbox
           images={billets}
