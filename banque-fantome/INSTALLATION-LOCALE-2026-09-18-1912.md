@@ -9,9 +9,16 @@ commande SQL n'a été exécutée sur la base.
 
 Depuis le téléphone, sur le même wifi : **http://192.168.247.81:8905/banque-fantome/**
 
-Le serveur tourne en ce moment. Si tu fermes la fenêtre de commande, il s'arrête, et
-on le rallume avec (dans `banque-fantome\`) :
+**Correction du 2026-09-18 à 20h05 : le serveur est arrêté.** Il tournait bien quand
+j'ai écrit ce document, Claude Code l'a coupé tout seul un quart d'heure après parce
+que la machine manquait de mémoire vive. Ce n'est pas une panne du site, le site n'y
+est pour rien.
+
+**Pour le rallumer**, ouvre une fenêtre de commande dans
+`C:\Users\Pole-Fromage\Documents\GitHub\le-jour-j.github.io\banque-fantome` et tape :
 `npm run preview -- --port 8905 --host 0.0.0.0`
+Laisse cette fenêtre ouverte tant que tu veux voir le site. Si ça recoupe tout seul,
+ferme quelques onglets Claude avant de relancer : c'est la mémoire qui manque.
 
 ---
 
