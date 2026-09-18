@@ -68,8 +68,42 @@
     padding: 40px 44px;
     margin-bottom: 28px;
     font-size: 1.2rem;
-    white-space: pre-wrap;
     color: #1A1A1A;
+    overflow: hidden;
+  }
+  .poeme-infini .mot {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+  }
+  .poeme-infini .saut {
+    display: block;
+    height: 0.9em;
+  }
+  .poeme-infini.tremble .mot {
+    animation: tremble 0.7s ease-in-out;
+  }
+  .poeme-infini.disperse .mot {
+    animation: disperse 1.7s ease-in forwards;
+    animation-delay: var(--delai);
+  }
+  .poeme-infini.reforme .mot {
+    animation: reforme 1.9s cubic-bezier(.2,.8,.2,1) forwards;
+    animation-delay: var(--delai);
+  }
+  @keyframes tremble {
+    0%, 100% { transform: translate(0,0) rotate(0deg); }
+    20% { transform: translate(calc(var(--dx) * 0.06), calc(var(--dy) * 0.06)) rotate(calc(var(--rot) * 0.15)); }
+    40% { transform: translate(calc(var(--dx) * -0.05), calc(var(--dy) * -0.05)) rotate(calc(var(--rot) * -0.12)); }
+    60% { transform: translate(calc(var(--dx) * 0.04), calc(var(--dy) * -0.04)) rotate(calc(var(--rot) * 0.1)); }
+    80% { transform: translate(calc(var(--dx) * -0.03), calc(var(--dy) * 0.03)) rotate(calc(var(--rot) * -0.08)); }
+  }
+  @keyframes disperse {
+    0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; filter: blur(0px); }
+    100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.6); opacity: 0; filter: blur(5px); }
+  }
+  @keyframes reforme {
+    0%   { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.6); opacity: 0; filter: blur(5px); }
+    100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; filter: blur(0px); }
   }
   .vide {
     text-align: center;
@@ -99,32 +133,82 @@
 <footer>chaque voix ne voit que les derniers mots de la précédente, aucune ne signe</footer>
 
 <script>
-let dernierNombreDeFragments = -1;
+let texteActuel = null;
+let premierChargement = true;
 
-async function charger() {
+function attendre(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+function construireMots(texte) {
+  const paragraphes = texte.split('\n\n');
+  return paragraphes.map(p => {
+    const mots = p.split(/\s+/).filter(Boolean);
+    return mots.map(m => {
+      const dx = (Math.random() * 2 - 1) * 220;
+      const dy = (Math.random() * 2 - 1) * 220;
+      const rot = (Math.random() * 2 - 1) * 200;
+      const delai = (Math.random() * 0.5).toFixed(2);
+      const echappe = m.replace(/</g, '&lt;');
+      return `<span class="mot" style="--dx:${dx}px;--dy:${dy}px;--rot:${rot}deg;--delai:${delai}s">${echappe}</span>`;
+    }).join(' ');
+  }).join('<span class="saut"></span>');
+}
+
+async function recupererTexte() {
+  const reponse = await fetch('poemes.json?t=' + Date.now());
+  const etat = await reponse.json();
+  const fragments = etat.fragments || [];
+  if (!fragments.length) return null;
+  return fragments.map(f => f.texte).join('\n\n');
+}
+
+async function afficherInitial() {
   const conteneur = document.getElementById('poeme');
   try {
-    const reponse = await fetch('poemes.json?t=' + Date.now());
-    const etat = await reponse.json();
-    const fragments = etat.fragments || [];
-    if (fragments.length === dernierNombreDeFragments) {
-      return;
-    }
-    dernierNombreDeFragments = fragments.length;
-    if (!fragments.length) {
+    texteActuel = await recupererTexte();
+    if (!texteActuel) {
       conteneur.innerHTML = '<div class="vide">le poème n\'a pas encore commencé</div>';
       return;
     }
-    const texte = fragments.map(f => f.texte).join('\n\n');
-    conteneur.innerHTML = `<div class="poeme-infini">${texte.replace(/</g, '&lt;')}</div>`;
+    conteneur.innerHTML = `<div class="poeme-infini">${construireMots(texteActuel)}</div>`;
   } catch (e) {
-    if (dernierNombreDeFragments === -1) {
-      conteneur.innerHTML = '<div class="vide">poème indisponible pour le moment</div>';
-    }
+    conteneur.innerHTML = '<div class="vide">poème indisponible pour le moment</div>';
   }
 }
-charger();
-setInterval(charger, 60000);
+
+async function cycle() {
+  const bloc = document.querySelector('.poeme-infini');
+  if (!bloc) { return; }
+
+  bloc.classList.add('tremble');
+  await attendre(700);
+  bloc.classList.remove('tremble');
+
+  bloc.classList.add('disperse');
+  await attendre(1900);
+
+  try {
+    const nouveauTexte = await recupererTexte();
+    if (nouveauTexte) texteActuel = nouveauTexte;
+  } catch (e) {
+    // reseau indisponible ce tour : on redessine le meme texte
+  }
+  bloc.innerHTML = construireMots(texteActuel);
+  bloc.classList.remove('disperse');
+
+  bloc.classList.add('reforme');
+  await attendre(2000);
+  bloc.classList.remove('reforme');
+}
+
+(async function boucleAffichage() {
+  await afficherInitial();
+  while (true) {
+    await attendre(20000);
+    await cycle();
+  }
+})();
 </script>
 </body>
 </html>
