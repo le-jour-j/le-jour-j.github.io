@@ -11,13 +11,17 @@
 //          non (pas de point de vente de livres, hors sujet, chaîne)
 // origine: v1 (base d'origine) | ajout-2026 (ajouté lors de la refonte)
 //
-// Les notes de terrain de la tournée n°1 ne figurent PAS ici : elles nomment des
-// librairies et certaines sont peu flatteuses. Elles ont servi à classer les
-// lieux (fit, status) et sont conservées hors du site, dans contenu/prive/.
+// field_note : note de terrain prise pendant la tournée n°1, sur les 37 lieux qui
+// en ont une. Nomme parfois des librairies, et le ton n'est pas toujours flatteur.
+// Retirée du site le 12/09/2026 par précaution, remise le 18/09/2026 sur décision
+// explicite de Jeanson (« elles sont cruciales, elles doivent être visibles »),
+// après qu'on lui a montré les exemples les moins flatteurs. Elles ont aussi
+// servi à classer les lieux (fit, status). Copie source dans contenu/prive/.
 
 export const RAW_LOCATIONS = [
   {
     "id": "occitanie-1",
+    "field_note": "faut les relancer eux (2026-06-01)",
     "name": "Librairie du Carré d'Art",
     "city": "Nîmes",
     "address": "Place de la Maison Carrée, 30000 Nîmes",
@@ -37,6 +41,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-2",
+    "field_note": "Généraliste (2026-05-12)",
     "name": "Librairie Teissier",
     "city": "Nîmes",
     "address": "11 rue Régale, 30000 Nîmes",
@@ -55,6 +60,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-3",
+    "field_note": "Généraliste (2026-05-12)",
     "name": "Librairie L'Eau Vive",
     "city": "Nîmes",
     "address": "7 rue Régale, 30000 Nîmes",
@@ -73,6 +79,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-4",
+    "field_note": "Généraliste (2026-05-12)",
     "name": "La Librairie des Deux Places (ex-Aux Lettres de mon Moulin)",
     "city": "Nîmes",
     "address": "12 boulevard Alphonse Daudet, 30000 Nîmes",
@@ -111,6 +118,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-6",
+    "field_note": "Pas ouvert quand je suis passé j'ai envoyé un mail (2026-05-12)",
     "name": "MO.CO. Panacée – librairie-boutique",
     "city": "Montpellier",
     "address": "14 rue de l'École de Pharmacie, 34000 Montpellier",
@@ -149,6 +157,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-8",
+    "field_note": "Ne fait plus de vente (2026-05-12)",
     "name": "En Traits Libres (librairie fermée / collectif)",
     "city": "Montpellier",
     "address": "2 rue du Bayle, 34000 Montpellier",
@@ -188,6 +197,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-10",
+    "field_note": "Travaux (2026-05-12)",
     "name": "Sauramps au Musée (Musée Fabre)",
     "city": "Montpellier",
     "address": "39 boulevard Bonne Nouvelle, 34000 Montpellier",
@@ -208,6 +218,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-11",
+    "field_note": "Généraliste Maïa sympa (2026-05-12)",
     "name": "Le Grain des Mots",
     "city": "Montpellier",
     "address": "2 cours Gambetta, 34000 Montpellier",
@@ -226,6 +237,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-12",
+    "field_note": "Pas de point de vente (2026-05-12)",
     "name": "CRAC Occitanie",
     "city": "Sète",
     "address": "26 quai Aspirant Herber, 34200 Sète",
@@ -282,6 +294,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-15",
+    "field_note": "relancer nouvelle libraire, nouveau ? je sais plus. juin 26 relance (2026-06-01)",
     "name": "Mrac Occitanie – librairie-boutique",
     "city": "Sérignan",
     "address": "146 avenue de la Plage, 34410 Sérignan",
@@ -301,6 +314,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-16",
+    "field_note": "Envoyer dossier par mail (2026-05-12)",
     "name": "L.A.C. – Lieu d'Art Contemporain",
     "city": "Sigean",
     "address": "4 rue de la Cave Coopérative, 11130 Sigean",
@@ -319,6 +333,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-17",
+    "field_note": "« $pl » (2026-04-27) ; contacté (2026-05-12)",
     "name": "Musée des Arts et Métiers du Livre",
     "city": "Montolieu",
     "address": "39 rue de la Mairie, 11170 Montolieu",
@@ -356,6 +371,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-19",
+    "field_note": "livre ancien (2026-05-12)",
     "name": "Librairie L'Aubaine",
     "city": "Montolieu",
     "address": "22 rue Nationale, 11170 Montolieu",
@@ -376,6 +392,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-20",
+    "field_note": "Pas pu passer, contact pris par mail (2026-05-11)",
     "name": "Librairie Torcatis",
     "city": "Perpignan",
     "address": "10 rue Mailly, 66000 Perpignan",
@@ -394,6 +411,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-21",
+    "field_note": "Pas sûr qu'il y ait une librairie ici (2026-05-12)",
     "name": "À Cent Mètres du Centre du Monde",
     "city": "Perpignan",
     "address": "3 avenue de Grande-Bretagne, 66000 Perpignan",
@@ -528,6 +546,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-28",
+    "field_note": "ajouter Terra Nova à Toulouse !",
     "name": "Librairie Terra Nova",
     "city": "Toulouse",
     "address": "18 rue Léon Gambetta, 31000 Toulouse",
@@ -641,6 +660,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-34",
+    "field_note": "Ateliers du Réservoir, à ajouter",
     "name": "Le Réservoir (galerie / ateliers)",
     "city": "Sète",
     "address": "34200 Sète",
@@ -659,6 +679,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "occitanie-35",
+    "field_note": "boutique du musée d'art brut ouverture en juin 26",
     "name": "La Coopérative – Musée Cérès Franco",
     "city": "Montolieu",
     "address": "5 route d'Alzonne, 11170 Montolieu",
@@ -832,6 +853,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-8",
+    "field_note": "rdv demain (2026-05-12)",
     "name": "Librairie de la Friche (La Salle des machines)",
     "city": "Marseille",
     "address": "Friche la Belle de Mai, 41 rue Jobin, 13003 Marseille",
@@ -851,6 +873,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-9",
+    "field_note": "contacté (2026-05-12)",
     "name": "Studio Fotokino",
     "city": "Marseille",
     "address": "33 allée Léon Gambetta, 13001 Marseille",
@@ -870,6 +893,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-10",
+    "field_note": "j'ai un peu la flemme c'est loin (2026-05-12)",
     "name": "Librairie Pantagruel",
     "city": "Marseille",
     "address": "44 rue Paul Codaccioni, 13007 Marseille",
@@ -889,6 +913,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-12",
+    "field_note": "0 / j'ai pas assez regardé les livres pour donner un conseil, mais doit y avoir moyen (2026-06-01)",
     "name": "Librairie Offprint (LUMA Arles, Hôtel L'Arlatan)",
     "city": "Arles",
     "address": "14 rue du Docteur Fanton, 13200 Arles",
@@ -908,6 +933,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-13",
+    "field_note": "3 (2026-06-01)",
     "name": "Librairie du Palais",
     "city": "Arles",
     "address": "10 rue du Plan de la Cour, 13200 Arles",
@@ -927,6 +953,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-14",
+    "field_note": "Généraliste (2026-05-12)",
     "name": "Les Grandes Largeurs",
     "city": "Arles",
     "address": "11 rue Réattu, 13200 Arles",
@@ -1081,6 +1108,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-22",
+    "field_note": "Pas sympas (2026-05-12)",
     "name": "Collection Lambert – librairie",
     "city": "Avignon",
     "address": "5 rue Violette, 84000 Avignon",
@@ -1137,6 +1165,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "paca-25",
+    "field_note": "Pas trouvé (2026-05-12)",
     "name": "La Caravane des Créateurs",
     "city": "Saint-Rémy-de-Provence",
     "address": "4 rue Carnot, 13210 Saint-Rémy-de-Provence",
@@ -1340,6 +1369,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "corse-3",
+    "field_note": "2026-05-12 : « ça j'y vais pas, ce sera quand on me paiera pour finir le site web » / « ou au gré de mes trajets »",
     "name": "Palais Fesch – Musée des Beaux-Arts (boutique)",
     "city": "Ajaccio",
     "address": "50-52 rue Cardinal Fesch, 20000 Ajaccio",
@@ -2123,6 +2153,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "auvergne-rhone-alpes-19",
+    "field_note": "« on va te virer gibert, t'as rien à faire là » (2026-05-11)",
     "name": "Gibert Joseph Grenoble",
     "city": "Grenoble",
     "address": "4 rue Béranger, 38000 Grenoble",
@@ -2176,6 +2207,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "auvergne-rhone-alpes-22",
+    "field_note": "« Pas de boutique » (2026-05-19)",
     "name": "Frac Auvergne",
     "city": "Clermont-Ferrand",
     "address": "11 rue Ballainvilliers, 63000 Clermont-Ferrand",
@@ -2229,6 +2261,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "auvergne-rhone-alpes-25",
+    "field_note": "« Pas de micro édition » (2026-05-19)",
     "name": "Scop Librairie Les Volcans",
     "city": "Clermont-Ferrand",
     "address": "80 boulevard François Mitterrand, 63000 Clermont-Ferrand",
@@ -4311,6 +4344,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "ile-de-france-19",
+    "field_note": "3 déposés 1 vendu, retour état compliqué, le chéquier est fragile semble-t-il. (2026-06-01)",
     "name": "Folies d'encre Montreuil",
     "city": "Montreuil",
     "address": "9 avenue de la Résistance, 93100 Montreuil",
@@ -4562,6 +4596,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "ile-de-france-33",
+    "field_note": "Débordé (2026-05-12)",
     "name": "After 8 Books",
     "city": "Paris",
     "address": "7 rue Jarry, 75010 Paris",
@@ -4580,6 +4615,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "ile-de-france-34",
+    "field_note": "Débordé et pas sympas (2026-05-12)",
     "name": "Artazart",
     "city": "Paris",
     "address": "83 quai de Valmy, 75010 Paris",
@@ -4598,6 +4634,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "ile-de-france-35",
+    "field_note": "Pas de réponse, se prennent pour des oufs (2026-05-12)",
     "name": "Librairie sans titre",
     "city": "Paris",
     "address": "143 avenue Parmentier, 75010 Paris",
@@ -4616,6 +4653,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "ile-de-france-36",
+    "field_note": "Pas de retour (2026-05-12)",
     "name": "Librairie à la marge",
     "city": "Montreuil",
     "address": "7 rue Arsène Chéreau, 93100 Montreuil",
@@ -5507,6 +5545,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "normandie-11",
+    "field_note": "2026-05-22 : « territoire archi » (lieu d'architecture, pas de dépôt)",
     "name": "Le Pavillon",
     "city": "Caen",
     "address": "10 quai François Mitterrand, 14000 Caen",
@@ -7432,6 +7471,7 @@ export const RAW_LOCATIONS = [
   },
   {
     "id": "centre-val-de-loire-14",
+    "field_note": "2026-06-01 : « fauchée :'( mais super librairie enfin je crois. »",
     "name": "Librairie Jaune Citron",
     "city": "Orléans",
     "address": "9 rue des Carmes, 45000 Orléans",
