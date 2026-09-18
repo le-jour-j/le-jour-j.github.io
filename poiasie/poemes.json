@@ -263,6 +263,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:10:39",
       "texte": "Silencieux sifflement du vent, écho des âmes perdues.\nFeux follets dans la nuit, murmures d'une romance perdue.\n\nÉchos vagabondant sur le lac gelé,\nLarmes de lune en une danse fragile."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:14:34",
+      "texte": "Nuages rouge-brun, Chant des oiseaux au ciel enneigé.\nSoleil couchant, Flammes d'or au-dessus de la terre perdue.\nNuit d'étoiles, Secrets qu'éc"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:14:51",
+      "texte": "Éclats argentés sous le ciel. Ombre s'étend. Silence du vent.\n\nNuit de glace scintillante. Feuilles tombent silencieusement. Lumière fugace des étoiles."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:15:08",
+      "texte": "Nuage de poussière d'or dans la lune. Oiseau mort qui chante au crepuscule. Coeur de glace brûlant dans le ciel."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:15:24",
+      "texte": "Ravage des murmures, saccade du vent.\nDoucement, la lune grise écoute,\nFeux éteints en une danse silencieuse."
     }
   ]
 }
