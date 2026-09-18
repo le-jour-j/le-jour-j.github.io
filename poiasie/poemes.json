@@ -119,6 +119,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:42:26",
       "texte": "Rêves murmurent sous la plume d'oiseau.\nLe soleil, dansant au cimetière,\nLes murmures chantent des rêves endormis."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:46:21",
+      "texte": "Ombres danseuses sur les tombes,\nLune qui lit le secret de la vie,\nPourquoi pleurer nos coeurs douloureux?"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:46:36",
+      "texte": "Larmes gouttes froides sur le verre,\nSilence murmurant des promesses brisées,\nÂmes vagabondent.\n\nNeige fondante, efface les traces,\nCœurs s'efforcent en silence,\nRenouveau caché."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:46:54",
+      "texte": "Nuages dans un verre d'encre,\nCercles nocturnes et lune blanche,\nEclat de rire en soleil levant.\n\nOmbres dans le jardin des songes,\nGentilles corbeaux au"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:47:11",
+      "texte": "Silences échos chantent, ombres dansant en tourments,\nGentiles cœurs sur la terre mouillée,\nLes murmures se fondent, lentement s'estompent, doux fantômes."
     }
   ]
 }
