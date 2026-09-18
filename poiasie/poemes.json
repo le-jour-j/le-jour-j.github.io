@@ -1,62 +1,76 @@
-[
-  {
-    "id": "20260918-225142",
-    "date": "2026-09-18 22:51",
-    "vers": [
-      {
-        "poete": "Le lyrique",
-        "modele": "mistralai/mistral-7b-instruct-v0.3",
-        "heure": "22:52:00",
-        "texte": "Or qui coule sans repos,\nUn fleuve au cœur des hommes,\nRien n'arrête son chemin."
-      },
-      {
-        "poete": "Le minimaliste",
-        "modele": "microsoft_phi-4-mini-instruct",
-        "heure": "22:52:16",
-        "texte": "Forets en crue murmure. Feuilles s'inclinent. Esprit libre.\n\nNuit obscure. Montagne se fige. Flamme dans la forêt."
-      },
-      {
-        "poete": "Le surrealiste",
-        "modele": "mistralai/mistral-7b-instruct-v0.3",
-        "heure": "22:52:33",
-        "texte": "Ombres dans le vent, danse macabre.\nEtoiles qui chantent dans la nuit blanche.\nLune rouge, sang sur les rochers.\nChansons de larmes pour une montagne endormie.\nNuages"
-      },
-      {
-        "poete": "Le sonore",
-        "modele": "microsoft_phi-4-mini-instruct",
-        "heure": "22:52:50",
-        "texte": "Montagne murmurante, murmure mortelle,\nChants des nuages, cris effrayants.\nRochers reposant dans la danse silencieuse du temps."
-      }
-    ]
-  },
-  {
-    "id": "20260918-225532",
-    "date": "2026-09-18 22:55",
-    "vers": [
-      {
-        "poete": "Le lyrique",
-        "modele": "mistralai/mistral-7b-instruct-v0.3",
-        "heure": "22:55:44",
-        "texte": "Flots de chiffres dans la mer des rêves,\nPIB qui bat comme coeur en sommeil,\nTaux d'intérêt, un filet autour du monde.\n\nCrispes tensions économiques, oiseaux sans n"
-      },
-      {
-        "poete": "Le minimaliste",
-        "modele": "microsoft_phi-4-mini-instruct",
-        "heure": "22:56:02",
-        "texte": "Filets enroulés.\nDoutes dans le vent.\nOiseaux sur des ponts effrayés.\n\nJardins oubliés,\nLarmes tombent sur de vieilles égratignures.\nLe soleil s'efface discrètement."
-      },
-      {
-        "poete": "Le surrealiste",
-        "modele": "mistralai/mistral-7b-instruct-v0.3",
-        "heure": "22:56:21",
-        "texte": "Marelle rouge dans un verre d'ambre. Souris noire dans les tulipes blanches. Nuage en forme de coeur dans le ciel bleu."
-      },
-      {
-        "poete": "Le sonore",
-        "modele": "microsoft_phi-4-mini-instruct",
-        "heure": "22:56:37",
-        "texte": "Nuages murmureurs dans un ballet d'azur,\nBlanche danse sur la rivière des cieux.\nCœur s'accroche, souffle du vent se déploie."
-      }
-    ]
-  }
-]
+{
+  "fragments": [
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "22:52:00",
+      "texte": "Or qui coule sans repos,\nUn fleuve au cœur des hommes,\nRien n'arrête son chemin."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "22:52:16",
+      "texte": "Forets en crue murmure. Feuilles s'inclinent. Esprit libre.\n\nNuit obscure. Montagne se fige. Flamme dans la forêt."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "22:52:33",
+      "texte": "Ombres dans le vent, danse macabre.\nEtoiles qui chantent dans la nuit blanche.\nLune rouge, sang sur les rochers.\nChansons de larmes pour une montagne endormie.\nNuages"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "22:52:50",
+      "texte": "Montagne murmurante, murmure mortelle,\nChants des nuages, cris effrayants.\nRochers reposant dans la danse silencieuse du temps."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "22:55:44",
+      "texte": "Flots de chiffres dans la mer des rêves,\nPIB qui bat comme coeur en sommeil,\nTaux d'intérêt, un filet autour du monde.\n\nCrispes tensions économiques, oiseaux sans n"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "22:56:02",
+      "texte": "Filets enroulés.\nDoutes dans le vent.\nOiseaux sur des ponts effrayés.\n\nJardins oubliés,\nLarmes tombent sur de vieilles égratignures.\nLe soleil s'efface discrètement."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "22:56:21",
+      "texte": "Marelle rouge dans un verre d'ambre. Souris noire dans les tulipes blanches. Nuage en forme de coeur dans le ciel bleu."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "22:56:37",
+      "texte": "Nuages murmureurs dans un ballet d'azur,\nBlanche danse sur la rivière des cieux.\nCœur s'accroche, souffle du vent se déploie."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:21:55",
+      "texte": "Lune au-dessus des arbres, chansons de la nuit.\nOiseaux aux ailes sombres, danser autour du soleil.\nEtoiles qui guident, nous les suivrons toujours."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:22:11",
+      "texte": "Lune croque silence.\nVents murmurants des astres,\nTraçons sur la nuit éphémère.\n\nRoseau s'incline au vent.\nFeuillage frissonnant, secret révélé.\n\nNeige murmure le sol endormi.\nBlancheur enveloppe l"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:22:29",
+      "texte": "Ombres danseuses dans la nuit des songes,\nSouffles de gel se mêlent à mon secret,\nEtoiles qui chantent avec leurs nuances."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:22:45",
+      "texte": "Etoiles murmures dans la nuit, secrets voilés en mousse,\nNuances murmurantes sous un voile nocturne.\nSecrets se mêlant aux étoiles, écho silencieux de lune."
+    }
+  ]
+}
