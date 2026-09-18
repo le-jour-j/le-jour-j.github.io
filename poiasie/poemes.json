@@ -143,6 +143,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "23:47:11",
       "texte": "Silences échos chantent, ombres dansant en tourments,\nGentiles cœurs sur la terre mouillée,\nLes murmures se fondent, lentement s'estompent, doux fantômes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:51:07",
+      "texte": "Nuages pâles au crépuscule,\nUn souffle de vie dans la nuit,\nEtoiles qui guident le rêveur."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:51:22",
+      "texte": "Lune discerne le cœur des brumes.\nFlammes soupiraient sous une ombre sombre.\nPetites lucioles se réveillaient."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "23:51:39",
+      "texte": "Nuages en danse avec le soleil couchant, éclats de lune sur la mer. Ombres en conversation avec un arbre ensoleillé."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "23:51:54",
+      "texte": "Murmures sur le murmur marin,\nArbre écoutant, bras d'or.\nRêves de vent et rires de marins,\n\nPlongée des ombres dans la lumière du jour.\n\nSonneries sourdes des vagues qui grimpent,\nÂme azur"
     }
   ]
 }
