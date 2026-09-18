@@ -239,6 +239,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:05:57",
       "texte": "Bruits des chemins brisés, cris des âmes perdues,\nCendres se faufilent, ombres confondus, murmure d'air pur.\nRêves s'enlacent en danseurs vaporeux, silence mordant."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:09:47",
+      "texte": "Nuages de larmes dans le ciel,\nCorps tendus au-dessus de la terre,\nAu bord de la nuit, seuls espoirs."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:10:03",
+      "texte": "Soleils se lèvent sur des collines endormies,\nFeuilles dansent sous un ciel gris austère.\nEsprits vagabondent, ombres s'infiltrent.\n\nL'eau murmure secrets du fond,\nBranches chuchotant le vent léger.\nDouleur fleur"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "00:10:22",
+      "texte": "Ombres danseuses au cœur des nuages,\nLarmes de glace dans la nuit bleue,\nParfum d'azur sur les lèvres brûlées.\n\nEtoiles qui pleurent leur langage secret,"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "00:10:39",
+      "texte": "Silencieux sifflement du vent, écho des âmes perdues.\nFeux follets dans la nuit, murmures d'une romance perdue.\n\nÉchos vagabondant sur le lac gelé,\nLarmes de lune en une danse fragile."
     }
   ]
 }
