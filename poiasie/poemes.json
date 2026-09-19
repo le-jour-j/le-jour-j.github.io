@@ -923,6 +923,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:37:26",
       "texte": "Paillettes étoilées dans l'aube."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:57:58",
+      "texte": "Coeur qui bat à la lueur des larmes.\nNuages d'amour dans la nuit.\nLumières du souvenir perdu."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:58:16",
+      "texte": "Larmes tombent silencieusement,\nNuages murmurent des émois oubliés,\nLumière s'éteint, doux secret.\n\nLune veille sur le cœur brisé.\nBranches tremblantes dans le vent de l'anime.\nFeuilles chuchotant"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:58:35",
+      "texte": "Étoiles éclatées sur une mer d'ombre,\nOreilles enflammées dans l'or du crépuscule,\nCorps transparence au cœur des nuages."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:58:53",
+      "texte": "Frissons dans le vent murmuré des flots dorés,\nSilences enfouis sous les étoiles tissées.\nEchos d'une danse éphémère en ombre mordue."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:59:23",
+      "texte": "lumière filée. murmures dans l'obscurité, mystères sous un voile de sable."
     }
   ]
 }
