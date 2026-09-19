@@ -593,6 +593,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:36:06",
       "texte": "Écho des rêves. Mur de mémoire."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:56:37",
+      "texte": "Soleil du passé. Chansons des ombres.\nEau de souvenirs. Larmes de lumière.\nCœur de silence. Souffle des étoiles."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:56:55",
+      "texte": "Souvenirs se fanent,\nLarmes de lumière dans le vide,\nCœurs étoilés s'endorment.\n\nSilence du vent murmure.\nBranches chantantes sous la lune,\nFeuilles dansant, danseurs.\n\nOcéans embrassent l'horizon,\nCalme"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:57:14",
+      "texte": "Nuages dans les yeux, Silence enchanté, Étoiles qui pleurent.\nChansons des ombres, Larmes de soie, Voix du vent qui chante.\nFleur de glace, Cœur de feu, Miro"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:57:33",
+      "texte": "Vent qui chiante, fleur de glaise,\nFeu d'ardeur mordre la douce marine.\nCœur en muraille, maison des cœurs,\n\nMiro clair, voile brumeuse surriveur."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:58:03",
+      "texte": "vent qui murmure,\nsous la lune d'hiver,\nsecrets de nuit."
     }
   ]
 }
