@@ -863,6 +863,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:53:32",
       "texte": "lumières évanouies, murmure perdues"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:14:03",
+      "texte": "Ombres de souvenirs, dans le silence de la nuit.\nRive gauche sombre, odeur des fleurs en Automne.\nCiels pleins d'étoiles, lointaines, tristes et belles."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:14:23",
+      "texte": "Fleur automnale\nCiel étoilé, triste, belle.\nAutomnes isolés."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:14:41",
+      "texte": "Nuage de papier mâché, soleil en fleurs,\nRêve d'hiver sous le ciel d'automne,\nChansons des morts dans les arbres secs."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:14:58",
+      "texte": "Sifflement du vent, murmures en cris,\nFeuilles dansantes sous le voile gris.\nRacine au cœur de la terre bleue, secrets murmurés."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:15:27",
+      "texte": "Gris. Bleu. Secrets murmurent."
     }
   ]
 }
