@@ -533,6 +533,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:52:19",
       "texte": "Sons d'ombre murmurent dans le noir."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:12:51",
+      "texte": "Étoiles clament leur grandeur solitaire.\nNuage se dissipe au toucher de la lune.\nPoussière du vent, souffle ma vie triste."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:13:08",
+      "texte": "Lune argentée éclaire,\nPoussières s'enlacent en silence,\nVie murmure fort.\n\nFlocon solitaire danse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:13:25",
+      "texte": "Oiseau de nuit sourd son aile, Ciel plein d'etoiles s'effondre. Miroir noir se remplit de larmes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:13:42",
+      "texte": "Écho des pleurs dans la nuit noire, éclats d'étoiles en fuite.  \nMiroir baignant spheres de larme bleutée, murmures oubliés.\n\nDoucement le silence glisse sur les sentiers frénétiques,  \nLe vent chuchote secrets à"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:14:11",
+      "texte": "feuilles d'automne."
     }
   ]
 }
