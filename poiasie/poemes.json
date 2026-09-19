@@ -683,6 +683,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:41:43",
       "texte": "Larmes dans les miroirs,\nCiel noir rongé par les étoiles,\nFêtes mortes sous les éclairs."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:02:13",
+      "texte": "Cœur qui pleure l'automne, Dans le vent la larmes des arbres. Sanglot du temps qui passe."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:02:30",
+      "texte": "Vent murmure. Feuilles s'envolent. Temps glisse.\n\nNeiges fondent. Rivières chantent. Vagues murmurent. Chroniques changent. \n\nÉtoiles scintillent. Terre respire. Nuages se déplacent. Eternelle danse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:02:48",
+      "texte": "Lune craint l'horizon. Pluie s'évade de la nuit. Ciel plein d'ombres errantes. Reflets qui pleurent sur l'océan. Solitude éphémère du soleil.\n\nCimetières"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:03:07",
+      "texte": "Reflets en lamentation s'enlacent, murmures marins,\nCimetières des ombres dans le souffle marin se fondent.\nLumière solitaire danse, éclatée, effacée."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:03:36",
+      "texte": "Miroir de mer murmure, vague après vague. Rêve sous les ailes des nuages flotte, disparait."
     }
   ]
 }
