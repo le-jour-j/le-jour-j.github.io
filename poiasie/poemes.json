@@ -953,6 +953,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:59:23",
       "texte": "lumière filée. murmures dans l'obscurité, mystères sous un voile de sable."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "20:49:48",
+      "texte": "Ombres du soir, danseuse dans la lumière. Silence, écho de l'espoir. Ciel, miroir des rêves."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "20:50:18",
+      "texte": "Lumière tremble,\nSilence murmure espoir en bas,\nCiel rêve dans le clair.\n\nFoudre percutant la terre,\nUn instant de silence se tait,\nNuages murmurent les secrets.\n\nPluie caresse doucement,\nLe sol chante une nouvelle chanson,\nNature s"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "20:50:50",
+      "texte": "Oreilles de lune sur le rivage, Danse des ombres dans un miroir, Coquelicots qui chantent au vent"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "20:51:19",
+      "texte": "coeurs en écho, murmures secrets, vol lent des âmes errantes\n\nombres danse, éclats d'argent, martyres de la nuit s'effacent."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "20:52:01",
+      "texte": "luminosité furtive, tristes visages se perdent dans la brume."
     }
   ]
 }
