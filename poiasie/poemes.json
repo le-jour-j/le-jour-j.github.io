@@ -503,6 +503,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:30:34",
       "texte": "neiges lointaines. Écho solitaire. Histoires de glace."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:50:59",
+      "texte": "Océans gelés, silence profond.\nCœur suspendu dans les brumes.\nPromesse de soleil perdu."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:51:15",
+      "texte": "Soleil fuit au zénith, nuage tombé.\n\nPetits pois murmurent sous la neige froide. \n\nCœurs d'hiver s'endorment."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:51:34",
+      "texte": "Dormeurs d'argent dans le ciel de verre,\nMiroirs briseurs de soleil matiné,\nEffervescence des vents qui dansent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:51:52",
+      "texte": "Réfléchis sur la marée, silence ancien se moque.\nVents en désordre chantant un hymne à la nuit morse."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:52:19",
+      "texte": "Sons d'ombre murmurent dans le noir."
     }
   ]
 }
