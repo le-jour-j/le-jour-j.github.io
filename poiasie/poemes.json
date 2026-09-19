@@ -713,6 +713,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:03:36",
       "texte": "Miroir de mer murmure, vague après vague. Rêve sous les ailes des nuages flotte, disparait."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:24:09",
+      "texte": "Nuage bleu, sourire caché du ciel,\nDans ton sommeil éphémère je plane,\nJe disparaît dans ta douce volée."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:24:27",
+      "texte": "Lune pleure sur la mer.\nFumées se perdent au loin,\nVent murmure un secret ancien.\n\nOrage gronde en silence.\nPluie danse sur le blé doré.\nFeuillage s'effrite sous les ronces.\n\nCigales chant entremêlé"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:24:47",
+      "texte": "Orseaux de blé brillant. Brises feuilles sous les garrigues. Chansons des cigales enchevetreés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:25:03",
+      "texte": "Rains battent la fenêtre trempée. Les ombres dansent sur le sol couché.\nGourds chuchotent des secrets, murmures nocturnes. L'eau s'échappe doucement du sable mouillé."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:25:33",
+      "texte": "Sauvages murmurs de nuit,\nEaux chantent dans la sérénité,\nSable humide se taise."
     }
   ]
 }
