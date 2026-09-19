@@ -443,6 +443,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "11:46:46",
       "texte": "vent froid gronde,\nlumière bleue danse,\nsable doré murmure."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:07:19",
+      "texte": "Océan calme brille,\nÉtoiles se réveillent,\nPromesse du matin."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:07:35",
+      "texte": "Gravés par le vent sur la mer,\n\nÎlots argenté-luisant\n\nOmbres chatoyantes disparaissent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:07:52",
+      "texte": "Lune dans ma poésie, Nuages éclatants de stupeur\nDans la nuit, Je suis un écho de souvenirs oubliés\nOiseau des rêves, Mon cœur bat comme un rythme fantast"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:08:11",
+      "texte": "Coq chante-t-il sous le zéphyr léger,\nBattement secret, la symphonie de la nuit s'élève.\nPlumes dansant, écho du temps qui passe et se réincarne."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:08:40",
+      "texte": "Désirs chuchotent aux portes de nuit."
     }
   ]
 }
