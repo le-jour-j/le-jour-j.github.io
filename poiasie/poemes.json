@@ -833,6 +833,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:31:33",
       "texte": "étoiles dans les bras du vent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:52:05",
+      "texte": "Nuages de lumière aux mains.\nDans l'absence des mots, le silence parle.\nLe temps court sous la pluie froide."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:52:22",
+      "texte": "Douce brume enveloppe le jour mortel.  \nCiel assombri murmure des ombres se glissant.  \nÉchos s'évanouissent dans une danse silencieuse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:52:42",
+      "texte": "Lumières errantes, dans un ballet obscur.\nCoquilles vides, souvenirs en poussière.\nOiseaux nocturnes chantant de vie et de mort."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:53:00",
+      "texte": "Échos des sables, murmure du vent,\nsilence frôlant la lune obscure.\nRêves d'aérosols sur le fil fin,\n\nCœurs en désunion, sans fondement,\nflamme fumée, effrayante.\n\nDanse des ombres dans l'écho"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:53:32",
+      "texte": "lumières évanouies, murmure perdues"
     }
   ]
 }
