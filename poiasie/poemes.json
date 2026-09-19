@@ -473,6 +473,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:08:40",
       "texte": "Désirs chuchotent aux portes de nuit."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:29:12",
+      "texte": "Étoiles qui pleurent leurs secrets dans l'ombre,\nUne vague de douleur traverse mon cœur,\nRêves évanouis, fantômes du souvenir."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:29:30",
+      "texte": "Clôture couverte des flocons argentés, Gel glacial murmure, Âme enfouie sous le sol."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:29:48",
+      "texte": "Oiseau nuit aux yeux verts, fleurs de cristal dans la neige, Rêve du monde souterrain en effervescence."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:30:05",
+      "texte": "Clameur cristalline se balance sur le silence gelé,  \nRêves enfouis s'envolent, écho des profondeurs obscures.  \nSouffle secret, souffle sous les flocons, murmure d'argent."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:30:34",
+      "texte": "neiges lointaines. Écho solitaire. Histoires de glace."
     }
   ]
 }
