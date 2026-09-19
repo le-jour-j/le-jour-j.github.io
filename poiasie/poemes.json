@@ -803,6 +803,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:09:30",
       "texte": "Voix douces murmurent. Ciel de sable, étoiles se jouent. Souvenirs flottant."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:30:05",
+      "texte": "Vents d'espérance, soleil d'amour,\nRêves en feu, dans le cœur brûlant.\nEspoir, même après les larmes."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:30:24",
+      "texte": "Fumée monte,\nFlamme consume des secrets,\nLarmes moquent la cendre.\n\nLampe vacillant,\nFeu de l'esprit s'éteint.\nValse des ombres en mouvement."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:30:43",
+      "texte": "Nuage de poussière et d'étoiles, danse du temps perdu.\nSanglot d'une étoile, pleurs d'un monde absent.\nMirroir d'ombre, reflet d'infini perdu."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:31:03",
+      "texte": "Écho éteint dans le silence des astres, absence vibrante,\nLes ombres murmurent la tristesse sous une lune endormie.\nReflets fugaces en l'eau du temps, brume s'échappant."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:31:33",
+      "texte": "étoiles dans les bras du vent."
     }
   ]
 }
