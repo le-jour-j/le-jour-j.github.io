@@ -563,6 +563,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:14:11",
       "texte": "feuilles d'automne."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:34:41",
+      "texte": "Chutes d'eau en pleurs,\nSonge à la mort, oui, j'entends sa voix.\nLe vent sifflant, le ciel en deuil."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:34:59",
+      "texte": "Vent murmure au cœur des arbres,\nVoix se perd dans la tristesse du ciel,\nLarmes d'aubes.\n\nÉcume danse sur les vagues glacées,\n\nCiel pleure sans raison, horizon flou.\n\nLeur cri perdu, vague incessante.\nVie silencieuse sous"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:35:19",
+      "texte": "nuages couleurs du crépuscule.\nOiseaux fantômes dans la nuit lumineuse.\nPoussière d'étoiles qui tanguent le temps."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:35:37",
+      "texte": "Silence des ombres dans le murmure des nuits.\nÉcho des rêves sur le mur de mémoire."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:36:06",
+      "texte": "Écho des rêves. Mur de mémoire."
     }
   ]
 }
