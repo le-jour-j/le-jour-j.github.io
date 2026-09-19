@@ -983,6 +983,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "20:52:01",
       "texte": "luminosité furtive, tristes visages se perdent dans la brume."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "21:12:42",
+      "texte": "Étoiles qui s'éteignent au lever du jour,\nFleurs qui murmurent aux abords de l'ombre.\nCœur plein de nuages, âme en détresse."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "21:13:14",
+      "texte": "Lune pleure sur des herbes mortes. \nFeuillage frissonne d'écho silencieux.\nVent murmure secrets au creux du vent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "21:13:44",
+      "texte": "Lune blanche dans un jardin de roses brûlantes.\nOmbres qui chantent sous la pluie noire.\nCimetière éclairé par l'aurore fausse."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "21:14:18",
+      "texte": "Silences murmurants dans le vent du soir.\nLes ombres dansent sur les murs anciens.\n\nNeige embrasant des chuchotements secrets.\nPistes blanches, murmures s'entrelacent."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "21:15:00",
+      "texte": "Désert silencieux. Voix lointaines dans le désert. Sable ondulant sous les pas de la solitude."
     }
   ]
 }
