@@ -623,6 +623,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:58:03",
       "texte": "vent qui murmure,\nsous la lune d'hiver,\nsecrets de nuit."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:18:32",
+      "texte": "Ombre dans le verger,\nReflets des étoiles,\nRêves d'amour naissent.\n\nVagues sous le firmament,\nPleurs silencieux,\nEspérances perdues.\n\nCœur brisé par l'"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:18:51",
+      "texte": "Ciel maudit, Larmes tombent,\nEspoirs éteints sous la vaste voûte bleue.\nCoeur solitaire pleure."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:19:09",
+      "texte": "Larmes de sable dans un ciel étoilé.\nOiseau fantôme dans un jardin de roses glacées.\nRêve éternel d'une nuit sans fin."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:19:27",
+      "texte": "Échos dans le silence des feuilles frissonnantes,\nMurmures froids du vent sur une brise mortelle.\nRoses chuchotent sous un ciel endormi,\n\nSérénades sombres, danse macabre,\nReflets glacés de rêves décharnés."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:19:55",
+      "texte": "Soleil couchant, ombres longues,  \nforêt murmure, vents rauques,  \nlarme sur l'asphalte grise."
     }
   ]
 }
