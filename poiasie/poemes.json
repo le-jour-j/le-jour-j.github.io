@@ -743,6 +743,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:25:33",
       "texte": "Sauvages murmurs de nuit,\nEaux chantent dans la sérénité,\nSable humide se taise."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:46:06",
+      "texte": "Lune se reflète dans l'étang tranquille,\nOiseau chante au coucher du soleil,\nCœur en harmonie avec le vent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:46:24",
+      "texte": "Ciel embrasé s'estompe.\nFeuilles dansent au rythme des murmures.\nNuit enveloppe la terre."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:46:43",
+      "texte": "Oiseaux éternels dans les étoiles fuyant. Jardin où planent les ombres du passé. Ciel enflammé par le soleil de l'impossible."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:47:00",
+      "texte": "Ombres dansant, murmures d'un temps évanoui,\nCiel flamboyant, une flamme infinie.\nTemps entremêlées, rituels mystiques.\n\nDoucement murmurés des âmes isolées,\nSouffle du vent, rêve effleuré"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:47:30",
+      "texte": "Rien n'a de valeur que le présent.  \nOmbres dans la nuit, éclats sur l'eau.  \nPierres racontent les rires oubliés."
     }
   ]
 }
