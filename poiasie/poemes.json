@@ -773,6 +773,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:47:30",
       "texte": "Rien n'a de valeur que le présent.  \nOmbres dans la nuit, éclats sur l'eau.  \nPierres racontent les rires oubliés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:08:03",
+      "texte": "Lune dans mon cœur, reflet d'un sourire perdu.\nOmbres qui chantent l'amour des jours passés.\nEau de vie qui respire la douleur d'un adieu."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:08:23",
+      "texte": "Tapis fumant sous des cieux gris,\nOiseaux en migration soumissionnés—\nles rivières se sont asséchées.\n\nLes feuilles dorées tombent doucement,\nle souffle du vent murmure un bonjour.\nLes étoiles veillent sur l'absente silence.\n\nSable de"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:08:42",
+      "texte": "Bateau dans une mer d'étoiles, songe à la nuit endormie.\nOiseaux qui chantent les secrets des nuages.\nNuit bleue, où l'ombre danse avec la lumière."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:09:01",
+      "texte": "Guitares pleureuses chantent le vent,\nSaphirs chuchotant sur des dunes dorées.\nÉchos dansantes, rêves volants, cœur suspendu."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:09:30",
+      "texte": "Voix douces murmurent. Ciel de sable, étoiles se jouent. Souvenirs flottant."
     }
   ]
 }
