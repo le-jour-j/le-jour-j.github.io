@@ -893,6 +893,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:15:27",
       "texte": "Gris. Bleu. Secrets murmurent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:35:59",
+      "texte": "Ombres dans ma pensée,\nUne étoile fugitive,\nSouffle d'hiver qui passe."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:36:16",
+      "texte": "Lune veille sur les flots gelés.  \nNuit entremêlée de brume scintillante.  \nCoeurs enchaînés sous le ciel silencieux."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:36:35",
+      "texte": "Nuages de vapeur brillant mélangeant avec les cœurs captifs, suscitant une tristesse éternelle au-dessus du ciel taciturne et mystérieux.\n\nRésonance des ailes brisées dans"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:36:54",
+      "texte": "Résonances lunaires, échos marins.\nSilence des ombres embrassant la nuit, douce cadence de clochettes.\n\nClochetons tintillants sur les toits frostbitten,\nTimbres de rêves tissés d'ombres."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:37:26",
+      "texte": "Paillettes étoilées dans l'aube."
     }
   ]
 }
