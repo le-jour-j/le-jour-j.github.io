@@ -383,6 +383,36 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "00:34:13",
       "texte": "échos des ombres dans le vide, murmures d'une lune solitaire.\ncœurs craqués sur le béton de la nuit, lentement déchirant leur toile invisible."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "11:23:13",
+      "texte": "La Lune dans ses yeux, un sourire clair en son cœur sombre.\nLes nuages dans ses rêves, ils chantent sa chanson secrète.\nL'amour dans ses pas, une promesse inaccessible."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "11:23:33",
+      "texte": "Lune murmure\nFleurs s'effacent lentement,\nCoeurs enlacés en silence."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "11:23:52",
+      "texte": "Ombres danseraient dans la brume froide,\nPluie d'étoiles tombant sur le cœur,\nGorgées de sang et de pleurs mêlés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "11:24:10",
+      "texte": "Brumes chantent des frissons glacés, murmures en suspens, effroi dans les profondeurs sombres.\n\nLes ombres dansent sur la marée, battements rythmiques discordants, cœurs brisés sans voix ni rêves.\n\nLune sourde écoute le chagrin"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "11:24:45",
+      "texte": "Eaux grises murmurent secrets perdus. Vent fougeux souffle en rires tristes. Soleil sourit froidement aux ombres passantes."
     }
   ]
 }
