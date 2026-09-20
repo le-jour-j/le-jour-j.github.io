@@ -1427,6 +1427,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:46:57",
       "texte": "échelons d'or sombres. Ventes d'ombres, cendres brillantes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:48:22",
+      "texte": "Montants imprévus, flots infinis, trésors cachés.\nMiroirs de la puissance, fleurs du mal, or du souvenir.\nBillets fantômes dans une économie errante."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:48:42",
+      "texte": "Argent s'échappe froid. Or se flétrit. Valeur éphémère. Trésors volatils."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:49:01",
+      "texte": "Dessins d'ombre sur le sol,\nMiroirs de reflets disparus,\nEffervescence sans but.\n\nSoleil dans l'orchestre,\nDanseur de la bourse,\nGéométrie des rê"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:49:20",
+      "texte": "Réalité frôlant le sable, Argent murmure des désirs,\nSymphonie du marché, Échos en tourbillon.\nValeurs danser sur les vagues argentées."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:49:51",
+      "texte": "désirs, frénésie éclatante,\npoids et forces, se réchauffent,\nargent flotte, rêve s'envole, la lune accroche son blé."
     }
   ]
 }
