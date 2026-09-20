@@ -305,6 +305,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:23:59",
       "texte": "Sonneries de billets murmures dans le vent des économies futures.\nÉchos des dévaluations, valsant sur les plaines argentées."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:27:09",
+      "texte": "Argent fugace, dans tes mains tremblantes,\nValeur flottante sous la lune polaire,\nTu chantes le récit des échangements."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:27:27",
+      "texte": "Argent murmure, vide glace. Paires d'orbiques glissent en silence. Valeur éphémère de glace.\n\nLune éclatante, miroir argenté, transactions s'étendent silencieuses. Cœur glacé pulse au rythme du marché. Argent danse sur le gel"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:27:48",
+      "texte": "Étoiles chancelantes dans les tas de billets,\nCouleurs flottantes sur les graphs d'inflation,\nPoids lourds des débits de commerce."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:28:05",
+      "texte": "Coulées argentées volent,\nRires murmurant monnaie chuchotée.\nGains en silence - cachette du trésor.\n\nÀ chaque clocheton, le pacte se renforce,\nLes poids lourds de la dette s'élèvent sans repos.\nDépôts"
     }
   ]
 }
