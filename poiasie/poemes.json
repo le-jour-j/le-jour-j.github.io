@@ -2417,6 +2417,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:24:56",
       "texte": "lumière sur les miroirs s'évanouit dans le noir, prix des rêves chassés par la futilité."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:26:27",
+      "texte": "Argent doré sous les doigts, un spectre de pouvoir.\nLumières éteintes, le silence des billets.\nCruauté cachée derrière chaque zéro."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:26:45",
+      "texte": "Silence des portefeuilles vides.\nÉclats argentins en chute libre.\nValeurs déchues flottent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:27:04",
+      "texte": "Compteur sans fin de zéros brillants.\nAu fond du tiroir, pièce d'or dormante.\nMirages monétaires dans le miroir de la fortune."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:27:23",
+      "texte": "Montant murmure au mur, secret des sables argentés. Richesses résonnent en silence. Valeur valse sur les vagues du gain. Coin d'or chuchote un conte confus. Dolar danse discrète. Argent arcane à travers le fil du temps"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:27:59",
+      "texte": "Échos silencieux. Valeurs sombres dans l'écho des étoiles."
     }
   ]
 }
