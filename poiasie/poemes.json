@@ -977,6 +977,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:03:28",
       "texte": "argent murmure de nuit,\ncœur d'ébène dans la fosse,\nvaleur sous couvert d'ombre."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:04:55",
+      "texte": "Lumière de compte, danse des zéros et des uns, trésor sous le regard scrutant.\n\nHarmonie des montants et des paiements, rythme de vie et de dettes.\n\nTaureau en or du marché,"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:05:14",
+      "texte": "Trois jetons tombent.\nBulles éclatantes sur cuivre se refroidissent.\nÉchos des âges dorés."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:05:33",
+      "texte": "Pièce d'or au fond de la poche, somnambule au bord de la faillite.\nSouffleur de billets sous les voûtes de la bourse.\nArgent fuit comme un esprit dans le mur tari."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:05:52",
+      "texte": "Rentes murmurent des rêves dorés, chuchotements silencieux de richesse accumulée. Croissance invisible au sein du marché maudit, la danse impitoyable d'un vaudeville fiscal. Monnaie glisse sur le plateau éthéré, une symphonie des"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:06:22",
+      "texte": "lumières. Étincelle rapide dans la nuit, argent se disperse, rumeur envoûtante, valeurs vacillantes."
     }
   ]
 }
