@@ -1127,6 +1127,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:17:56",
       "texte": "baisse des prix, montée des richesses."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:19:21",
+      "texte": "Flots d'or se déversant dans les coffres vides,\nMarché en flambant d'éclats, danse des fortunes.\nCruauté cachée derrière chaque coup d'échange."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:19:39",
+      "texte": "Coin glissant sur le marché souriant. Échos de mains serrées.\n\nRichesses éphémères dans les poches du temps. Balancement silencieux de la monnaie mortelle.\n\nValeurs fluctuantes, spectres financiers flottent. Sommes vides à nouveau chantant."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:20:00",
+      "texte": "Papiers d'argent dans les mains de l'ombre,\nDanses économiques sous la Lune pleine,\nCapitaux invisibles se perdant en vapeur."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:20:19",
+      "texte": "Bruits des ronds, les chiffrés dansent silently. Valeurs volagees, fantômes d'échange.\n\nCoin de lumière, lentement s'estompe le fil argenté. Richesses murmures, secrets entremêlés sans fin."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:20:49",
+      "texte": "Cachées dans les ombres, les bijoux brillent. Vies tissées autour d'un trésor."
     }
   ]
 }
