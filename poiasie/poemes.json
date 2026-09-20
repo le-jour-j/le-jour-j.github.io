@@ -2027,6 +2027,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:46:15",
       "texte": "luminosité se cache."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:47:41",
+      "texte": "Fortunes sombres s'ébrouvent,\nChamps vides d'espérance,\nTout va vers une ruine."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:47:59",
+      "texte": "Bancasses décolorés murmurent,\nSilence des pièces se soustrait.\nRéduction éclaire la vérité."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:48:19",
+      "texte": "Métaux inertes dans des boîtes en verre,\nRichesse dorée sous les yeux, un secret caché.\nSous-sol de l'argent, terreur et rêve."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:48:39",
+      "texte": "Silence des sacs d'or, murmurations secrètes.\nClocheurs dans la danse du changement,\nEchange doré sous le voile sombre."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:49:10",
+      "texte": "Forte de sa valeur, la monnaie parle en silence."
     }
   ]
 }
