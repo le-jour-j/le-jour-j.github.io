@@ -1967,6 +1967,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:40:21",
       "texte": "échange. frappe les mains. vente d'espoirs."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:41:48",
+      "texte": "Aurore brille sur le marché,\nEspérance vendue au prix du plomb,\nMarchandise précieuse et fugace."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:42:06",
+      "texte": "Argent glissant sur le sable chaud.  \nTableau de marchandises changeant, illusion.  \nValeurs cachées sous la surface."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:42:26",
+      "texte": "Argent en flottaison, nuages d'or dans le ciel des finances,\nRien ne vaut plus que la promesse d'un aube lumineuse.\nMiroir du monde, où les valeurs sont mesurées par l'illusion."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:42:46",
+      "texte": "Cavaliers des roubles galopent, danseurs de la dette, dansant sur un tapis d'argent doré. Echoes des cris : crisser ! Criss-crossing l'âme économique.\n\nTes onces chantent au vent du marché, symphonie silencieuse du gain"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:43:18",
+      "texte": "éclats de métal dans le crépuscule, des étoiles brillant sur l'or noir"
     }
   ]
 }
