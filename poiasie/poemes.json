@@ -689,6 +689,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:30:38",
       "texte": "Dollars dansant sur des notes en trombe, Rythme frôlant les coffres-forts fantômes. Valeurs se faufilant, Dans un tango tumultueux du temps."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:33:52",
+      "texte": "Ondes de valeur dans les murs des bourses,\nGrenier d'or aux mains du marché flottant.\nFleuves d'argent coulent sans repos."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:34:12",
+      "texte": "Lune argentée, transactions murmurantes. Oiseaux des coffres en vol. Les échos de la richesse résonnent dans le vide."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:34:31",
+      "texte": "Dans la poche d'un millionnaire, un sou tombe et fume.\nLe coeur de l'argent, un labyrinthe sans issue.\nL'or, une larve qui rit du travail humain."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:34:49",
+      "texte": "argent murmure des fables effilochées. Richesse dans le vent, éphémère danse.\n\nTrois fois rassemblé, trois fois dispersé—un mantra de la vie en cage dorée. Valeur fugace, cachet sans égal, l'écho financier des"
     }
   ]
 }
