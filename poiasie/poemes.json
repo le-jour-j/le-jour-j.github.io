@@ -1037,6 +1037,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:09:16",
       "texte": "Valeurs flottantes dans le néant des marchés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:10:40",
+      "texte": "Dans l'ombre de la richesse, un souffle perdu,\nL'espoir du riche, une larme d'aujourd'hui.\nPoids lourds sur les épaules de l'homme pauvre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:10:59",
+      "texte": "Dollars murmures dans la rue vacillante. Vaches dorées s'abandonnent. Table tournante des mains.\n\nDevant, le mur du temps argenté pleure. Une monnaie muette se balance sans sonner."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:11:19",
+      "texte": "Fortunes volatiles dansant sous les lunettes de verre.\nUn fleuve d'or courant vers une économie sans cœur.\nBillets fantômes, échangés contre rêves perdus."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:11:37",
+      "texte": "Valeurs volées, murmures du marché brisé. Richesses éphémères en silence. Tocsin frappailleur, rythmique des mains impatientes. Argent qui chante dans le vide. Financiers aux ailes d'ombre, virevoltent au son de la dette"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:12:08",
+      "texte": "Économie dans les filets du temps, trahisons se croisent et s'imbriquent"
     }
   ]
 }
