@@ -1547,6 +1547,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:58:45",
       "texte": "Monnaie murmure, trépidante. Étincelles se cachent derrière les chiffres. Les étoiles dorées du commerce brillent. Le sang noir de l'économie s'écoule en ruisseaux. Vente est une danse mort"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:00:17",
+      "texte": "Echanges de vies en notes d'argent\nRichesses cachées dans les ténèbres\nÉconomie, danse des valeurs flottantes"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:00:35",
+      "texte": "Glaces frissonneuse\nSable précieux glissant à travers le temps\nCoincé en argent doré"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:00:54",
+      "texte": "Miroir de reflets, nuages de pièces flottantes,\nRichesse fantôme dans les pochettes vides,\nSouffle d'or s'enfuisant entre les doigts froids."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:01:14",
+      "texte": "cœur battant au rythme du fracas des chimes. Rêves déchiquetés par le silence doré.\n\nvaleur dans la main, murmure muet de l'émeraude. Détente fragile, souffle argenté se brise en fragments."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:01:45",
+      "texte": "Éclats de lumière, reflets vacillants,\nDans la pénombre, ils danse à la faveur d'un soir.\nGestes silencieux, échanges précipités."
     }
   ]
 }
