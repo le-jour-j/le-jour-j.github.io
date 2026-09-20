@@ -1367,6 +1367,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:41:10",
       "texte": "Soleil d'économie, monnaies chantent leurs notes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:42:35",
+      "texte": "Oreilles de marché qui écoutent le vent des changes,\nBourses qui dansent sous l'or du progrès,\nEsprits investis dans les ombres de la fortune."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:42:53",
+      "texte": "Richesses glissent silencieuses, froid des mains de la balance. Échange glacé, argent vertique s'étend. Richesse éphémère.\n\nValeur changeante, danse furtive des numéros. Paires se fendent sur l'échiquier financier. Croissance"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:43:14",
+      "texte": "Coins de métal lucent dans les ombres,\nRichesse somnambule dans la nuit des échanges,\nMontagnes de billets sous les nuages d'incertitude.\n\nCryptes de la pénombre, où"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:43:33",
+      "texte": "écorches le silence des deniers. Fragments dorés volent dans le vent du marché maudit. Argent fumant en échos fantomatiques, s'envole sans racine."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:44:03",
+      "texte": "Échanges vacillants, valeur déclinante, rumeurs d'inflation."
     }
   ]
 }
