@@ -641,6 +641,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:22:16",
       "texte": "Coin frappé sourdement dans le creux du silence.\nArgent murmurant à travers des fossés économiques,\nRires d'émeraude s'effacent sur les dunes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:25:30",
+      "texte": "Dans la vallée de l'or, Miroirs d'argent brissent sous le soleil.\n\nFleuves de dettes coulant vers l'infini, Lumière des richesses, teinture de l'étern"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:25:50",
+      "texte": "Silence des billets égarés, Argent-vapeur s'effiloche, Nuit bleutée éclate.\n\nValeurs glissantes dans le vent, Feuilles mortes d'or, Destinées volatiles."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:26:10",
+      "texte": "Cendres du trésor perdu, Tombales monnaies fantômes, Chansons des richesse perdue.\n\nBerceaux d'étoiles effilochées, Bouteilles de sable doré, Larmes d'"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:26:30",
+      "texte": "Coin brise des rêves égarés, Comptes chiffrés en murmures apaisent, Richesses s'envolent dans le vent du passé."
     }
   ]
 }
