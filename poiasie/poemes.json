@@ -2207,6 +2207,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:04:05",
       "texte": "argent danse au coin d'un marché."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:05:31",
+      "texte": "Or dans la brise d'un marché flottant,\nRichesse à la poussière des échanges,\nDans la brise de l'espoir et de la ferveur."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:05:50",
+      "texte": "Vaches marchent sur des billets verts.\n\nDiamants s'effacent au crépuscule.\n\nArgent liquide murmure secret."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:06:10",
+      "texte": "Nuages argentés dans la nuit,\nGéante main pleine de pièces d'or,\nRichesse fantôme se dissipant."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:06:28",
+      "texte": "Crois en le son du chagrin, L'argent murmure des regrets. Les échos de la quête perdus, Dans la nuit silencieuse et impitoyable. Valeurs volées par un vent cruel."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:07:01",
+      "texte": "argent dans les yeux, soleil à peine levé."
     }
   ]
 }
