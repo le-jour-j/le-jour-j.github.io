@@ -2057,6 +2057,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:49:10",
       "texte": "Forte de sa valeur, la monnaie parle en silence."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:50:37",
+      "texte": "Dans ses mains, un or poids lourd, une puissance latente.\nL'argent, le cœur du monde, rythme des échanges.\nCes billets d'échos, qui racontent des histoires invisibles."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:50:58",
+      "texte": "Des changeurs murmurants sous la surface.\n\nRichesses volantes dans le cyber-sable.\n\nValeur éphémère, numérique effervescence."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:51:17",
+      "texte": "Miroirs de lune dans la bourse flottante,\nCapitals fantômes sous les étoiles numériques,\nFortunes disparues au son des algorithmes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:51:37",
+      "texte": "Billets murmurants dans le vent économique, Échos argentés se fondant en silence. Valeurs volatiles danser sur une toile invisible de décrets fiscaux. Rythme financier, battement impassible du cœur de l'orbis."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:52:09",
+      "texte": "lumière argentée danse."
     }
   ]
 }
