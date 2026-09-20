@@ -1337,6 +1337,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:38:14",
       "texte": "bruits de marché, soleil couchant sur dollars. prix flottent, ancrés par les mains."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:39:40",
+      "texte": "Oreilles aux souffles de bourse,\nDans la nuit des billets d'or,\nEspérer sur les champs verts des gains."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:39:59",
+      "texte": "Marchandises se rarifient, effondrement monétaire. Murs dorés s'effritent sous la frénésie. Valeur volée en un souffle silencieux.\n\nDes euros, douce rosée, éclatant de l'aube aux étoiles froides. Graines d"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:40:19",
+      "texte": "Or du ciel tombant dans ma main,\nBillets de banque en fleurs s'épanouissent,\nValeur se métamorphose en miroirs lumineux."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:40:38",
+      "texte": "Chants des changeurs, cris argentés, rires de la balance. Trésors chuchotent dans le coffre silencieux. Symphonie du marché au clairon des comptes. Richesse danse sur l'ombre du temps."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:41:10",
+      "texte": "Soleil d'économie, monnaies chantent leurs notes."
     }
   ]
 }
