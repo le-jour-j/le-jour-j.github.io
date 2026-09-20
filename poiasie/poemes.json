@@ -1187,6 +1187,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:23:41",
       "texte": "Luminaires étincelants,\nValeurs dans la nuit,\nÉchanges muets."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:25:08",
+      "texte": "Coins cachés et ombres profondes,\nMarchés où les rêves se ventent,\nBateaux sombres sur la mer d'argent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:25:26",
+      "texte": "Silence des coffres vierges,\nVéhicules argentés s'éteignent,\nMondes de papier flétris."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:25:45",
+      "texte": "Lames d'or percé par les clous du destin,\nTailles de pièces comme ombres sur l'étain,\nLumière des étoiles dans le coffre-fort."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:26:04",
+      "texte": "Douces claires de la monnaie, Rires saccadés du coffre brisé. La danse silencieuse d'or en tourbillonnant. Les murmures argenté des mains échangeantes."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:26:36",
+      "texte": "Luminosité liquide danse sous le soleil. L'intrigue des prix, le mystère des transactions."
     }
   ]
 }
