@@ -1727,6 +1727,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:16:31",
       "texte": "marchandises volatiles, temps court."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:17:57",
+      "texte": "Valeur transitoire dans les mains errantes,\nFlottante comme le vent sur la mer froide,\nArgent, un spectre de richesse imprévisible."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:18:16",
+      "texte": "Coin chuchotant sous le ciel argenté. Marée déplace les fortunes. Vagues silencieuses échangent des secrets.\n\nMarée dorée en pause, La monnaie frôle la côte effilée. Les coquillages éclatent, précieux éphémère. Valeurs"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:18:37",
+      "texte": "Ralentit les vagues, orphelins des eaux profondes.\nÉtoiles tombées de la nuit, pièces d'or du ciel.\nLune secrète sous l'océan, trésor maudit en"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:18:58",
+      "texte": "Clokz des billets volent dans le vent. Coin d'échange murmure, danse de la valeur. Argent s'évade, fugue silencieux."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:19:28",
+      "texte": "Cristal de marché, sonne fort. Billets volés, espoir en fuite."
     }
   ]
 }
