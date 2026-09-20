@@ -2627,6 +2627,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:46:15",
       "texte": "argent court, vif."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:47:43",
+      "texte": "Étoiles chères dans la nuit banquées en or,\nLe monde tourne sur un fil d'argent fin,\nRêves éparpillés et souhaits incarnés."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:48:02",
+      "texte": "Cœur glacé au marché. Vaches marchands renoncent. Silencieuses transactions.\n\nSoleil argent pur se refroidit sur des notes non payées. Le mur des espoirs s'effondre silencieusement."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:48:23",
+      "texte": "Valesse d'ombre sur les comptoirs vides,\nRichesse fantôme dans la banque vide,\nDéchet d'argent dans le ciel désolé."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:48:42",
+      "texte": "Roulé des billets murmurant sous les doigts du temps, murmure muet de la monnaie fumée. Richesses chuchotées, effondrations silencieuses, écho frôlant l'éphémère.\n\nRequins déchiffres mordant dans le"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:49:15",
+      "texte": "café noir froid."
     }
   ]
 }
