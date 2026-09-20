@@ -593,6 +593,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:13:54",
       "texte": "Bons pour cent, La danse des billets murmure un secret. Argent volé dans le souffle du vent, Trompe-l'œil des coffres bruyants. Valeur éphémère sous le regard impitoyable du temps."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:17:05",
+      "texte": "Richesse en fuite, se perdant dans les sables du temps.\nRuées vers l'or, chasse à l'écho de la fortune.\nFlottant dans les courants de la vie, pièces d'or et abstraits z"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:17:26",
+      "texte": "pouls frénétiques des marchés,\nsilence du papier-monnaie tombant,\ngriffeurs se disputent.\n\nvaleurs éphémères,\nmarée argenté,\n\nbillets, éclats silencieux."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:17:45",
+      "texte": "Pièces de monnaie enlacées, cimetière des banques, débris d'espoir.\nTrafic d'ombre, lune de bourse, numéros mystérieux, danse macabre des finances.\nO"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:18:05",
+      "texte": "billets chuchotent secrets d'or, murmures du marché en fréquence. Valeurs oscillantes dans une sinfonie économique, notes discordantes s'entremêlent. Argent, vie éternelle, écho financier sans refrain."
     }
   ]
 }
