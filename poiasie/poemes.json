@@ -2387,6 +2387,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:21:57",
       "texte": "Paroles vacantes,\nluminosité fuyante,\nl'échange en écho."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:23:27",
+      "texte": "Esprit errant dans la nuit financière,\nRichesses cachées sous la surface,\nMétal précieux qui se perd dans l'air."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:23:45",
+      "texte": "Chasseurs des trésors en silence,\nPapier-valeur, murmure secret.\nÉchos d'or s'estompent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:24:05",
+      "texte": "Dormant argent dans les rêves, Lumières de change au cœur des ténèbres. Flots d'étoiles dans nos portefeuilles."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:24:24",
+      "texte": "sous la lune argentée, on fripote les rêves dorés.\nrassolant chuchotements, le marché murmure.\ncœurs en cuivre battent, à la quête du secret précieux."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:24:56",
+      "texte": "lumière sur les miroirs s'évanouit dans le noir, prix des rêves chassés par la futilité."
     }
   ]
 }
