@@ -1397,6 +1397,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:44:03",
       "texte": "Échanges vacillants, valeur déclinante, rumeurs d'inflation."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:45:29",
+      "texte": "Argent fantôme dans les pochettes vides,\nEconomie tremblante au cœur des finances,\nFlottant dans les courants du capitalisme."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:45:46",
+      "texte": "Argent murmure, voile s'entrechoque, valeur éphémère.\n\nGros jetons tombant, silence de la balance.\nValeurs alterner à travers le tissu du temps.\n\nPapillon d'argent, danse furtive sous l'éclat des chandelles."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:46:06",
+      "texte": "Or etombe des nuages, dans les mains de spectres invisibles.\nFleurs de cuivre poussent dans le désert des portefeuilles vides.\nVautour d'or perché sur les montagnes d'endett"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:46:26",
+      "texte": "Des sacs s'évanouissent, des murmures dans le vent.\nOranges se transforment en roubles, silence glissant.\nMontagnes de dette murmurent, volatiles et froides."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:46:57",
+      "texte": "échelons d'or sombres. Ventes d'ombres, cendres brillantes."
     }
   ]
 }
