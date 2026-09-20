@@ -665,6 +665,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:26:30",
       "texte": "Coin brise des rêves égarés, Comptes chiffrés en murmures apaisent, Richesses s'envolent dans le vent du passé."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:29:41",
+      "texte": "Ombres de lucre, dans le crepuscule des jours perdu,\nMontent les tensions, tendues comme un arc sur la nuit.\nLumière effrontée d'une économie brute."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:30:00",
+      "texte": "Faucilles éthérées glissent sur des plaques dorées. Richesse se diffuse subtilement, invisible au regard aveugle.\n\nArgent murmure à travers le temps silencieux. La main froide du changeur enveloppe chaque transaction sans sentiment ou émotion. \n\nSilhouettes s"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:30:20",
+      "texte": "Argent fugace dans les mains vides,\nBillets et pièces dans un ballet d'ombres,\nFortunes flottantes dans le vent de la folie."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:30:38",
+      "texte": "Dollars dansant sur des notes en trombe, Rythme frôlant les coffres-forts fantômes. Valeurs se faufilant, Dans un tango tumultueux du temps."
     }
   ]
 }
