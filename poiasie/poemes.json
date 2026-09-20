@@ -2117,6 +2117,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:55:07",
       "texte": "Étincelles. Échos perdus dans le vent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:56:34",
+      "texte": "Traces d'or dans les vaisseaux.\nMarchandises flottant sur les océans.\nRichesse fantôme dans les mains vides."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:56:53",
+      "texte": "Montant des bulles. Vide se noie sous la mer glacée.\n\nOrbes de négoce brillent, éphémères. Éclipsé par le temps.\n\nValeur fugace en main morte. Les pièces s'effacent lentement."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:57:14",
+      "texte": "Étoiles de papier, brillant dans la ténèbre,\nRichesse d'ombre, inaccessible au toucher.\nDans les vaisseaux de glaces flotte le désir."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:57:33",
+      "texte": "Clignotements des caisses, murmures des économies se fanent en frissons. Échanges éphémères, éclats d'argent volés.\n\nCœurs battent pour la fortune, au rythme du changement inégal. Richesses chuchotées dans les ombres, valeur"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:58:05",
+      "texte": "argent liquide en vitesse."
     }
   ]
 }
