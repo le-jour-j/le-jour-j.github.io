@@ -161,6 +161,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "12:59:02",
       "texte": "Échange murmurant sous la surface, Intrication argentée de rêveurs.\n\nMurmures d'or, murmure fatal. Échos frêle de monnaie glaciale.\nChanteurs silencieux en chiffré, Rime du destin en balance sans voix."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:02:11",
+      "texte": "Ailes d'or de l'espérance battent dans le ciel des rêves perdu,\nChiffres cachés dans la nuit qui mordent la peau des vrais richesse,\nOuverture du voyage vers les tén"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:02:30",
+      "texte": "Peau en cuir s'éclate,\nMarchands murmurent sur la route de soie,\nSable-value change.\n\nPapier-monnaies flottants,\n\nÉchos d'or dans le marché silencieux.\n\nMondes virtuels florissent,\nCryptes obscures, trésors inexpl"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:02:51",
+      "texte": "Marche nocturne de la Lune argentée,\nOmbres numériques dans l'obscurité,\nRichesse éphémère dans la lumière bleue.\n\nEchanges furtifs comme des oiseaux au crépusc"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:03:10",
+      "texte": "écumes murmurent sur le fil du temps, argent volant dans les airs. Vents économiques soufflent, chassant les coquillages d'espoir. Les serrures tournoyantes dans la danse de l'échange éternelle."
     }
   ]
 }
