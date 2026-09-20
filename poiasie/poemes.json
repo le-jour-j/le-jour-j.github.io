@@ -377,6 +377,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:36:20",
       "texte": "Piles argentées murmurent des secrets financiers sous une lune froide. Comptes tissés dans le vent, la monnaie murmure des vies achetées. Richesses volatiles dans les mains vides de ceux qui rêvent encore."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:39:35",
+      "texte": "Ailes d'or s'effondrent sur la terre brûlée,\nRichesse cachée sous les épaules des pauvres,\nValise pleine de promesses sans fondement."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:39:54",
+      "texte": "Noyaux volatils flottent sur la mer argentée, L'écume d'espoirs éphémères s'échappe silencieusement."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:40:13",
+      "texte": "Dans les coffres souterrains, l'or somnolente résonne avec des paroles promesse.\nSous les paies de verre, la richesse glisse dans les mains inquiétées.\nLes nombres noirs dansent"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:40:32",
+      "texte": "bancs murmurent des promesses chères. Argent s'effleure silently. Riches rires se perdent. Valeur volée par le vent de la folie. Charmes d'union, échos dorés. Mains du marché, danse des silences argenté"
     }
   ]
 }
