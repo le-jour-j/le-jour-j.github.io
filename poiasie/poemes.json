@@ -1817,6 +1817,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:25:24",
       "texte": "valeur de la frénésie."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:26:51",
+      "texte": "Orpheé dans le labyrinthe des zéro et un, chasseur de la face cachée du numérique.\n\nLumière d'or éblouissant, trompe-l'œil de l'éternel retour, bal"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:27:11",
+      "texte": "Coin sec dans la nuit. Vents cryptés murmurent.\n\nTerre or et argent, danse silencieuse des mains invisibles. Valeur effleurant le bout du doigt. Cryptes s'effaçant au lever du jour."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:27:31",
+      "texte": "Lune d'argent en chute libre,\nMarché fantomatique sous les voiles noirs,\nCaisse-fort inaccessible dans un réveil sonore."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:27:49",
+      "texte": "écusons des chrypiés, symphonies silencieuses du marché. \ndollar danse, tango de la dépréciation."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:28:21",
+      "texte": "argent murmure, échos d'échecs financiers. euros roulent, rires d'une économie en fête. prix montent comme des volcans sous-marin, bulles s'élancent dans les cimes invisibles."
     }
   ]
 }
