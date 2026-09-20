@@ -2147,6 +2147,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:58:05",
       "texte": "argent liquide en vitesse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:59:34",
+      "texte": "Or fluyant dans le rapide courant.\nEchanges effervescents au cœur de la nuit.\nRichesse fantôme sous la lueur des projecteurs."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:59:52",
+      "texte": "Croisques oblitérés glissent sur le marché glacé. Valeurs éphémères volent à travers les mains froides. Monnaie de rêve, disparaît dans un souffle sans trace."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:00:13",
+      "texte": "Miroirs d'or se dissolent dans les flots d'encre noire.\nCoins creux d'argent éclatant sous le regard inquiet du soleil.\nBanque des abysses, où s'effondrent les"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:00:33",
+      "texte": "billets dorés dans un murmure frôlant la folie,\nsoupirs argenté tombent sur le sable de la désolation.\ndouceur déclinant à chaque cliquetie, l'écho des économies."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:01:05",
+      "texte": "Éclat d'or noir, la nuit s'agrandit."
     }
   ]
 }
