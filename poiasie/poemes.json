@@ -1607,6 +1607,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:04:43",
       "texte": "souffles d'air froids."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:06:10",
+      "texte": "Éclats de métal dans le silence,\nCoursives de feuillage dans le vent,\nRichesses enterrées sous terre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:06:28",
+      "texte": "Dépôts glacés se fondent, L'or brisé par la foudre éclate."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:06:48",
+      "texte": "Ombres de billets en marche vers l'horizon,\nUn fleuve d'argent s'écoulant dans le temps,\nMétaux nobles sous l'influence lunaire."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:07:07",
+      "texte": "Crises économiques, effusion des roubles, silence des saveurs. Valeur vacillant sur la vague financière. Richesses se glissent à travers les mains fugaces de l'échange. Argent, écho du temps envoûtant."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:07:38",
+      "texte": "Béats lourds du commerce, échos d'or."
     }
   ]
 }
