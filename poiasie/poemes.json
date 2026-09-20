@@ -209,6 +209,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:07:18",
       "texte": "Cartes chantantes, écho argenté. Les mains dans la pioche des chimeras. L'or murmure aux paupes impuissantes. La danse du dupatement discutable. Valeurs volées sur les vagues du gain. Richesse résonante, sour"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:10:29",
+      "texte": "Orbe de croissance, chanteur des taux,\nMouvement sans fin, dans le ballet des changes,\nTensions dans l'air, vibrations des stocks."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:10:47",
+      "texte": "Argent murmure sous le gel, effigie du temps.  \nBoules de coton s'inclinent, marchant sur le marché sombre.  \nSilencieuses transactions, âmes échangées en ombre."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:11:07",
+      "texte": "Monnaies d'ombre flottant dans les vents des secrets,\nBillets de banque murmurant les chants de la nuit,\nCaisse pleine de rêves qui ne peuvent être touchés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:11:26",
+      "texte": "décroissance des sons, cris vides se moquent du gain.\néchanges silencieux, argent volé en éclats d'argent.\n\nvoitures bruyantes murmurent des dettes non payées, des chuchotements endormis,\nvaleur éphémère"
     }
   ]
 }
