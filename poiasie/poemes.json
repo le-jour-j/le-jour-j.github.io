@@ -2087,6 +2087,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:52:09",
       "texte": "lumière argentée danse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:53:35",
+      "texte": "Fortunes flottantes dans le vent,\nDanses d'ombres et de souffles,\nRêves d'or perchés sur la nuit."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:53:53",
+      "texte": "Monnaie flétrit sous le voile des étoiles. Larmes d'argent, silence assourdissant.\n\nVéritable or dévalant, lentement s'effiloche. Coincé dans les mains vides du temps."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:54:14",
+      "texte": "Bouteilles de verre brillent dans les tas sombres des égouts,\nMarchandises fantômes dans les rues nocturnes,\nMonnaie morte sous les pas des ombres errantes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:54:35",
+      "texte": "Courants cachés, Échos argentins dans le vent murmurant. Chuchotements frôlant la chaîne de fortunes effritées.\n\nTremblement du dollar, Balise d'un rêve éthéré. Les rives s'effaissent sous l'éclat des"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:55:07",
+      "texte": "Étincelles. Échos perdus dans le vent."
     }
   ]
 }
