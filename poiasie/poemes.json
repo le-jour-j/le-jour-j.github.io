@@ -1847,6 +1847,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:28:21",
       "texte": "argent murmure, échos d'échecs financiers. euros roulent, rires d'une économie en fête. prix montent comme des volcans sous-marin, bulles s'élancent dans les cimes invisibles."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:29:53",
+      "texte": "Trésors enfouis dans des vagues de miroir,\nLe temps les transfigure en rêves lucides.\nOreilles aux murmures secrets du marché."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:30:12",
+      "texte": "Richesses s'élèvent, tombent silencieusement.\nCoin de rêve, argent fluide.\nÉchos financiers se moquent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:30:32",
+      "texte": "Dans un espace secret, monnaie d'étoiles s'écoule.\nChamp-clés étranges dans l'obscurité des transactions.\nValorisant les fantômes de la richesse perdues."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:30:52",
+      "texte": "sons cliquetants sous le sol des caisses volées. échos argentés dans un vide froid. valeurs murmurantes, silence assiégeant."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:31:24",
+      "texte": "cadenas brisés en promesses vides. éclats métalliques fusent."
     }
   ]
 }
