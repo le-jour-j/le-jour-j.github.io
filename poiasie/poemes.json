@@ -2357,6 +2357,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:19:00",
       "texte": "argent liquide, souffle des affaires."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:20:28",
+      "texte": "Flux financier, rythme des échanges,\nOr pur, vibrant au battement de la vie,\nCapital flottant sur les courants de la fortune."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:20:47",
+      "texte": "Riqueaux plongent, pauvres émergent, balance silencieuse murmure.\n\nL'or changeant des mains, temps s'égrène en marbre.\n\nValeurs échangées sous le voile du jour."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:21:08",
+      "texte": "Pluie d'or dans la poche vide,\nCroissance fantôme des épargnes,\nFlammes de billets dans les ténèbres."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:21:26",
+      "texte": "Billets s'évanouissent sur la vague du temps, Silencieuses sirènes des chèques d'or. Échange silencieux à travers le froid du marché. Argent qui murmure une promesse enfumée par l'argent."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:21:57",
+      "texte": "Paroles vacantes,\nluminosité fuyante,\nl'échange en écho."
     }
   ]
 }
