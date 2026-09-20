@@ -2297,6 +2297,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:13:00",
       "texte": "argent liquide bat, murmures de monnaie, éclats d'or."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:14:29",
+      "texte": "Patrimoine en feu, richesse fantôme, ailettes de pauvreté.\nGants d'ambition tordus par le fer de la volupté.\nEtoiles chutes dans les bourses, rêves qui s'"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:14:49",
+      "texte": "Silence des pièces,\nPavés argent clairs rassemblent.\nVérités volatiles."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:15:09",
+      "texte": "Bijoux d'ombres,\nDans la danse des ténèbres,\nRichesse invisible.\n\nFleurs de papier-monnaie,\nChant d'aurore dans l'ombre,\nRichesse fantô"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:15:30",
+      "texte": "Échos des pièces en volée, Murmures du marché au crépuscule,\nSilencieux trésor sous la peau verte.\nCrores et crocs, Danse numérique, Vaste vacarme."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:16:02",
+      "texte": "Échange de couleurs,\nvaleur dans le silence,\npièges sous la surface."
     }
   ]
 }
