@@ -917,6 +917,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:57:45",
       "texte": "Marché frénétique, prière silencieuse. Valeurs évanouies dans le brouillard des affaires."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:59:11",
+      "texte": "Trésors perdus sous les montants imposants,\nRichesses fuyant le grattement de la main,\nÉchange infini de rêves et d'illusions."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:59:30",
+      "texte": "Papierluvre des coffres vides, Rivières murmurant argent. \nMontagnes cachent des trésors, Sombres forêts du passé. \nSymphonie cryptée des dépréciations silencieuses."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:59:49",
+      "texte": "Bric-à-brac de richesses fantômes,\nFleurs d'or de la faim somnambule,\nBanque de rêves en poussière d'étoiles."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:00:07",
+      "texte": "Douceur du mètretonneau des caisses, rime dorée effleure les mains mortes. Les murmures frémissants du filant s'envolent sans valeur ni son.\n\nLes cœurs battants résonnent sur le rythme de la balance inerte, é"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:00:38",
+      "texte": "mains gantoises s'accrochent à des rêves vacillants."
     }
   ]
 }
