@@ -89,6 +89,54 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "12:11:56",
       "texte": "Sifflements à travers les forêts brumeuses, murmure du vent, secret d'un cœur désertré.\nRacines profondes dans le sol sombre, échos perdus dans une éternelle solitude."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:14:21",
+      "texte": "Sous la lumière des étoiles, un souffle de vie se réveille.\nUn coeur enflammé s'éloigne, comme les ombres dans la nuit profonde.\nL'espoir flotte au-dessus,"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:14:41",
+      "texte": "Nuit étoilée. Feuilles murmurent.\nEspoir s'envole vers le haut.\n\nLune éclaire des rêves flottants,\nSilence profond murmure."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:14:59",
+      "texte": "Plumes d'oiseaux nocturnes dans la nuit, Danse macabre de l'ombre lunaire, Coeur perdu dans les constellations."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:15:17",
+      "texte": "Douce sinfonie des étoiles muettes, Sable du silence murmure.\nÉchos d'éternité échoent, Dans le sable scintillant s'écoule."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:53:56",
+      "texte": "Aube d'or, marque de commerce,\nLuxe et pauvreté s'étirent,\nOmbres d'avenir dans l'ombre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:54:15",
+      "texte": "Monnaie pleure sous le pont, silence des banques, éclats argentés se dispersant."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:54:34",
+      "texte": "Dans les veines du commerce, saphir bleu de la dette,\nMarchandises fantômes dans la lune du capital,\nOr dans un labyrinthe, poids lourd de l'argent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:54:53",
+      "texte": "bulles écho des comptes murmurants, monnaie sifflante se heurte aux mains avares. Le vertige du dollar danse avec le frisson du euro sur une scène silencieuse. Parfum d'espoir effiloché par la rancune de la dépréciation."
     }
   ]
 }
