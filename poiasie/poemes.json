@@ -1997,6 +1997,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:43:18",
       "texte": "éclats de métal dans le crépuscule, des étoiles brillant sur l'or noir"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:44:46",
+      "texte": "Éclats de lumière, dans la nuit des portefeuilles vides,\nMarchandises d'ombre dans les rues de la ville,\nFleur d'argent au cœur des échanges secrets."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:45:04",
+      "texte": "Marché bruyant,\nÉchangeurs chuchotent des pièces dorées.\nCœur se balance en argent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:45:23",
+      "texte": "Coins lumineux dans l'ombre de la bourse,\nLuxure somnambulique des portefeuilles.\nSilhouette d'une économie en danse macabre."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:45:43",
+      "texte": "Papillon volant sur la monnaie de cuivre, écho funèbre. Barde du bourdonnement fiscal. Cœur battant au rythme des gains et des pertes, murmures dans l'ombre des comptes. Argent fantomatique tissant une toile invisible. Echoes dorés s"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:46:15",
+      "texte": "luminosité se cache."
     }
   ]
 }
