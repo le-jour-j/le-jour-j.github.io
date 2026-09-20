@@ -1637,6 +1637,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:07:38",
       "texte": "Béats lourds du commerce, échos d'or."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:09:06",
+      "texte": "Dans tes veines, courbe la richesse,\nValse des sommes et du pouvoir,\nEsprits maudits par leur volupté."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:09:24",
+      "texte": "Miroirs des transactions glissent.  \nCoin d'or murmure, argent volubile.  \nSilence fiscal embaume."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:09:43",
+      "texte": "Ombres numériques dansant sur une échelle infinie.\nFlux monétaires, comme un océan secret sous la Lune.\nPapiers à bord de bateau solide, nageant vers les abysses de la ric"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:10:03",
+      "texte": "bande argentée, rives s'ébranlent,\ngrins d'audaces, promesses frôlantes, écho des aspirations.\npierre et fil se déchirent, rêve du coquin audacieux."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:10:34",
+      "texte": "orages grondeurs, soleil de plomb."
     }
   ]
 }
