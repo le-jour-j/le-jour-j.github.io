@@ -545,6 +545,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:05:31",
       "texte": "Douceur du billet sous la main tremblante, échos murmurent des gains. La danse du déchiffrement en cadence de marquis murmure une dette volee par les vents. Envoûts par le frisson fiscal, l'esprit affluent d'unité argentée"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:08:45",
+      "texte": "Nuages d'or s'épanouissent dans les ciels de la richesse,\nCœur battant sous le charme des marchés flottants,\nSouffle économique soufflant vers un rêve d'abondance."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:09:06",
+      "texte": "Coin flétri s'effrite sous le soleil impitoyable du marché. La balance se plie silencieusement, effrayée par la cupidité cruelle de la main invisible. Argent murmure des promesses voilées dans une danse macabre d'éphémère richesse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:09:26",
+      "texte": "Dans la cage de glace des sommes échangées, un visage déchiré par le désir.\n\nL'or se transforme en oiseaux migrateurs, poussant vers les horizons inconnus.\n\nDans l'"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:09:46",
+      "texte": "valeur des pièces, murmures financiers se murmurent.\nsilencieuse danse du change, échos d'argent.\ndraps des temps, drapeaux économiques flottants."
     }
   ]
 }
