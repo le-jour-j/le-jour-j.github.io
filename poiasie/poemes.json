@@ -2237,6 +2237,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:07:01",
       "texte": "argent dans les yeux, soleil à peine levé."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:08:30",
+      "texte": "Fortune flottant sur la mer calme,\nLumières des échanges de jour,\nAurore du travail fécond."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:08:48",
+      "texte": "Coin se balance au marché bruyant, Teneur d'or murmure.  \nTapis noir, la nuit finance, Etoiles marchent silencieuses.  \nNégociants voilent le rêve argenté."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:09:08",
+      "texte": "Éclats d'or s'évaporent dans les ténèbres,\nRuisseaux de pièce d'or qui fuient la main,\nProfondeur infinie où plongent les abstraits."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:09:29",
+      "texte": "Cliquetis des pièces sous le silence absolu, Rythme économique du cœur battant. Valse de la valeur, Onde argentée s'évanouit.\n\nGémissements des décrets d'or, Murmure métallique en effervescence. Trésor caché dans"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:10:00",
+      "texte": "candide abîme, trésor inaudible en frémissement."
     }
   ]
 }
