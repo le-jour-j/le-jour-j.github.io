@@ -137,6 +137,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "12:54:53",
       "texte": "bulles écho des comptes murmurants, monnaie sifflante se heurte aux mains avares. Le vertige du dollar danse avec le frisson du euro sur une scène silencieuse. Parfum d'espoir effiloché par la rancune de la dépréciation."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:58:05",
+      "texte": "Oreilles attentives au battement des tas d'or,\nDans le bruit de la spéculation flotant dans l'air,\nUn souffle de promesse se perd en écho."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:58:23",
+      "texte": "Billets s'envolent, effaçants des mains. Valeur vacillante. Or purment volé.\n\nSilence des coffres fermés sur les secrets dorés cachés. Prévoyance murmurée. Argent d'ombre."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:58:43",
+      "texte": "Portes aux yeux verrous,\nDans le labyrinthe du temps perdu,\nValeurs fantômes dans l'obscurité des pochettes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:59:02",
+      "texte": "Échange murmurant sous la surface, Intrication argentée de rêveurs.\n\nMurmures d'or, murmure fatal. Échos frêle de monnaie glaciale.\nChanteurs silencieux en chiffré, Rime du destin en balance sans voix."
     }
   ]
 }
