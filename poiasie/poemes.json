@@ -737,6 +737,36 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:39:01",
       "texte": "Coincisions silencieuses des billets dans les mains obscures.\n\nVibrations du marché, frisson secret des transactions impitoyables.\n\nPiles d'or, tangage de la monnaie à travers le temps."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:42:09",
+      "texte": "Ailes d'argent, vol plane et fragile sur les échanges.\nSous solides montantes, la valeur flotte et se perd.\nRêves en or, sommeil éveillé par des financements."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:42:27",
+      "texte": "Billets volent vers le vide.\nRentes glissent sur une surface froide.\nValeur éthérée se dérobe."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:42:46",
+      "texte": "Rêves d'or s'évaporent dans les airs froids.\nCoins secrets où la valeur somnambule.\nÉchanges illusoirement éternels."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:43:04",
+      "texte": "Douceur du frillon - un faux murmure d'or. Argent scintillant, spectre saccadé. Richesses murmurées dans les coins froids de la nuit. La symphonie des pièces se danse en silence. Envoûtés par l'écho silencieux"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:43:36",
+      "texte": "Lumière dans la nuit, brillent les billets."
     }
   ]
 }
