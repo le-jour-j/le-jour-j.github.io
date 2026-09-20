@@ -1217,6 +1217,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:26:36",
       "texte": "Luminosité liquide danse sous le soleil. L'intrigue des prix, le mystère des transactions."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:28:02",
+      "texte": "Dans la sombre arche d'un coffre-fort,\nUne richesse cachée, infinie et brille,\nAu rythme de l'espoir déchiré."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:28:21",
+      "texte": "Boîte vide à la lumière argentée,\n\nDouceur des économies s'envole vers le néant.\n\nValeurs dans un tourbillon d'argent se perdent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:28:40",
+      "texte": "Nuages d'or flottant dans les bourses,\nVies humaines réduites à des chiffres,\nÉconomie, un miroir au-dessus du gouffre."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:28:59",
+      "texte": "crèdes par les cliquetements, Coin murmure sous la nuit. Valeur vacillante dans le souffle d'air froid.\n\nChiffres chauds surfaces, Paroles frêles, Argent s'étire vers l'infini. La danse des balances se déploie"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:29:31",
+      "texte": "Éclats brillants dans le crépuscule, échange d'énergie."
     }
   ]
 }
