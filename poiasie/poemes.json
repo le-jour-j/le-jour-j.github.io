@@ -1157,6 +1157,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:20:49",
       "texte": "Cachées dans les ombres, les bijoux brillent. Vies tissées autour d'un trésor."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:22:15",
+      "texte": "Lumière de pouvoir, flammes des échanges,\nNuit où rêve le matériel des rêves,\nValeur cachée sous chaque chaîne."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:22:33",
+      "texte": "Coin argenté scintillant,\nSilencieux sillon du marché en mouvement,\nPuissance enfouie dans la dentelle.\n\nValeurs échangeant leurs étreintes,\nNumismatique danse silencieuse.\nLumière de l'or se reflète,\nLe temps, le tissu des transactions."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:22:53",
+      "texte": "L'argent coule comme un fleuve de songe,\nDans les veines du marché, il éclate d'étincelles,\nLe métal des illusions, la peau de l'abstraction."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:23:12",
+      "texte": "Échangeur en sommeil, murmure argenté, Reposant sur le flamme dorée."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:23:41",
+      "texte": "Luminaires étincelants,\nValeurs dans la nuit,\nÉchanges muets."
     }
   ]
 }
