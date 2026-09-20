@@ -2657,6 +2657,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:49:15",
       "texte": "café noir froid."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:50:43",
+      "texte": "Argent brûlant les mains,\nDouleur de la monnaie morte,\nRêve d'or au cœur inquiet."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:51:01",
+      "texte": "Piles dorées des chartes s'effondrent.\nBancs murmurent en échos argentés.\nValeur danse sur les feux vacillants."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:51:22",
+      "texte": "Ombres d'or flottant dans la nuit sombre,\nDécoration des fantômes de la pauvreté,\nGris des billets entre les mains tremblantes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:51:42",
+      "texte": "silence des coffres en reposé sur le silence du mur. \ncœur battant avec la promesse des pièces chassées par une main pressée.\nargent murmure dans le creux de paresse et de labeur."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:52:15",
+      "texte": "valeur danse entre sourire et ombre."
     }
   ]
 }
