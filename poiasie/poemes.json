@@ -1067,6 +1067,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:12:08",
       "texte": "Économie dans les filets du temps, trahisons se croisent et s'imbriquent"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:13:34",
+      "texte": "Dans les tissus des rêves, or sommeille en secret.\nTournoie la roue du destin, brouille la frontière du bonheur.\nArgent d'ombre, qui nous aveugle, cesse ton spectre infernal"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:13:53",
+      "texte": "Sourires des marchés vacillants,\nMiroirs reflètent la richesse éphémère,\nTimbre de cœur silencieux.\n\nDoux murmures du marché.\nLes billets s'effilochent lentement,\nLa danse fragile du gain."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:14:13",
+      "texte": "Effet miroir des comptes vides,\nUn soleil éteint dans les portefeuilles,\nÉchos des cris de papier-monnaie."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:14:31",
+      "texte": "cliquets d'or, rires en vacance, effrités du temps.\n\nvaleur murmure à la marée argentine, flux incessant."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:15:00",
+      "texte": "argent dans la main, \ntous échangent,\nvaleur défile, rapide."
     }
   ]
 }
