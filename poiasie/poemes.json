@@ -17,6 +17,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "11:57:25",
       "texte": "Pluie sur le sable, murmure du vent,\nCacti gardent des secrets, silence sème.\nLarmes se glissent, ruisseau silencieux résonne,\nMiroir et pluie dans un balancement incessant."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:01:38",
+      "texte": "Nuage flottant dans la tristesse,\nLune pleure au-dessus des nuages,\nÉtoiles qui chantent leur chanson."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:01:55",
+      "texte": "Lune pleure,\nNuages tissent du désespoir,\nÉtoiles murmurent.\n\nBouteilles se déchirant sous la lune,\nRuisseaux racontent des légendes perdues.\nVents dans le désert,\n\nSable doré danse,\nMurmures d'un"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:02:15",
+      "texte": "Ombres des arbres perdus,\nRêves dans un monde mort,\nCoeur de glace sous la lumière."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:02:33",
+      "texte": "Bruits silencieux des ombres danse, échos vagues se confondent.\n\nFluentes rires s'évaporent dans le vent, souvenirs perdus lamentent silently."
     }
   ]
 }
