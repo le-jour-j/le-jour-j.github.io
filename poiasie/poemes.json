@@ -2447,6 +2447,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:27:59",
       "texte": "Échos silencieux. Valeurs sombres dans l'écho des étoiles."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:29:29",
+      "texte": "Ombres flottantes sur les montants,\nMiroirs aux reflets de rêve,\nVagues promesses de richesse."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:29:48",
+      "texte": "Papier déchiré, Transactions du soir, Échos des économies perdues.\n\nCoin d'or flétrissant, Coin vide, Richesse qui s'efface.\n\nVaisseaux emportés, Détresse silencieuse, Valeurs volées au vent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:30:08",
+      "texte": "Géants en or se détachant,\nRuisseau d'argent noirci par la peur,\nTonnerre des échanges incessants."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:30:27",
+      "texte": "Silence du chèque muet sous le tapis, Sifflements des bons perdus en poussière. Fluctuation des fortunes, échos vides de paquets pleureurs. La balance vacillante dans l'air sombre et sec. Les serrures grinçantes ouvrant sur"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:30:59",
+      "texte": "lumières blafardes. Des monnaies tombent."
     }
   ]
 }
