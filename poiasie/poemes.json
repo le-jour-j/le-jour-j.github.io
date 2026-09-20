@@ -1757,6 +1757,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:19:28",
       "texte": "Cristal de marché, sonne fort. Billets volés, espoir en fuite."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:20:55",
+      "texte": "Ailes d'argent, chasseurs de rêves perdues.\nLignes de temps tissées par la poussière des pièces.\nLumière des échanges, spectre des richesse."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:21:15",
+      "texte": "Silence du portefeuille. Coin secret des transactions. Argent-vie, éphémères."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:21:33",
+      "texte": "Danseur aux pieds d'or, dans la nuit de l'échange.\nPoids lourd du rêve déchiré par les fils du commerce.\nMonnaie fantôme sous les yeux fermés du sommeil."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:21:54",
+      "texte": "Baisse silencieuse, échos financiers des débris se mêlent. Richesse dans le murmure, frissons argentins s'échappent de la trappe. Valeurs volées en chuchotements d'argent, rumeurs inavouables murmurent au vent."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:22:26",
+      "texte": "Coffres vides de promesses, fuyant les échos d'or."
     }
   ]
 }
