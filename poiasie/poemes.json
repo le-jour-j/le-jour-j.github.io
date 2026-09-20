@@ -1307,6 +1307,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:35:20",
       "texte": "Pluie d'électrons, écho du marché. Pièces dans la machine, rythme monétaire."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:36:47",
+      "texte": "Chant d'or du temps, flux de valeur cachée,\nMétal pur et lumières de transactions,\nFragiles chaînes des richesses nouées."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:37:06",
+      "texte": "Monnaie scintille en secret, éclat sombre du temps. Valeur éthérée se meut silently dans la nuit. Richesse respirant le froid indifférent.\n\nL'or glisse sur le tissu du destin, tracé invisible d'une main impassible. La balance bat"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:37:26",
+      "texte": "Argent, une danse invisible,\nGuide par des mains inconnues et impassibles.\nUne fleur de fer qui s'ouvre vers les ténèbres."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:37:44",
+      "texte": "Douceur du silence dans le vault des rimes,\nÉchos frémissants d'or, danseurs silencieux.\nValeurs murmures entrelacées avec le temps."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:38:14",
+      "texte": "bruits de marché, soleil couchant sur dollars. prix flottent, ancrés par les mains."
     }
   ]
 }
