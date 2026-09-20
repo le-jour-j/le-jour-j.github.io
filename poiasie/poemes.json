@@ -1007,6 +1007,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:06:22",
       "texte": "lumières. Étincelle rapide dans la nuit, argent se disperse, rumeur envoûtante, valeurs vacillantes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:07:48",
+      "texte": "Lueur d'or sous les étoiles fuyante,\nEconomie de rêve aux contours flous,\nFinances fantômes dans le vide bougeant."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:08:06",
+      "texte": "Monnaie éphémère murmure. Échos des marchés s'évanouissent au crépuscule. Richesse dévorée par les marées impitoyables."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:08:25",
+      "texte": "Coins d'ombre éclaboussés de lumière fuyante,\nBillets de banque se transfigurent en larves nocturnes,\nDévaluation inquiète les dormants rêveurs du capitalisme."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:08:44",
+      "texte": "Silencieuses symphonies des sous-émouvantes notes des euros dévalent dans le désarroi. Valeurs vagabondes volent, la richesse s'évanouit lentement. Échos financiers fantômes se mêlent aux murmures de l'économie effrayée."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:09:16",
+      "texte": "Valeurs flottantes dans le néant des marchés."
     }
   ]
 }
