@@ -329,6 +329,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:28:05",
       "texte": "Coulées argentées volent,\nRires murmurant monnaie chuchotée.\nGains en silence - cachette du trésor.\n\nÀ chaque clocheton, le pacte se renforce,\nLes poids lourds de la dette s'élèvent sans repos.\nDépôts"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:31:13",
+      "texte": "Nuages d'argent dans le ciel des marchés,\nDanses des valeurs en ébullition furieuse,\nCapitaux flottants dans les océans mondiaux."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:31:33",
+      "texte": "Objets dorés glissent sur des mains froides. Richesses volent au vent. Argent murmure."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:31:51",
+      "texte": "Étoiles en poche, or dans le sable,\nDanses économiques en folie,\nRichesse fantôme, dans les rêves brisés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:32:09",
+      "texte": "Crises, cris argentins, notes déchirées. Valeurs s'effondrant sur la symphonie des défaillances. Repos financiers, illusion de sommeil doré."
     }
   ]
 }
