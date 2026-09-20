@@ -2597,6 +2597,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:43:09",
       "texte": "Éclat de métal brise le silence. L'argent danse, invisible mais omniprésent, Un spectre financier, son rire gronde."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:44:42",
+      "texte": "Argent doré, dans tes mains brûlantes,\nEconomie secrete, flottante et changeante,\nFinances sombres, tant vagues, tant mystérieuses."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:45:01",
+      "texte": "Papierluire murmure, déchirer les mains.\nArgent glissant dans le vent inattentieux,\nÉcho vide de coffres lourds.\n\nBourreliers blafards sur des mers frôlantes,\nValeurs se fanant comme flocons d'hiver"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:45:22",
+      "texte": "Nuages argentés dans la poche, Économies en déshabillage discret, Le temps s'écoulant sur une balance."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:45:41",
+      "texte": "Cassettes silencieuses des frissons de la banque, Les rimes des pièces se font écho. Rythme du dépôt, La danse délicate de la confiance. Valeur volatile, Sous le poids du silence."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:46:15",
+      "texte": "argent court, vif."
     }
   ]
 }
