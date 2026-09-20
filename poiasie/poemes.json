@@ -41,6 +41,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "12:02:33",
       "texte": "Bruits silencieux des ombres danse, échos vagues se confondent.\n\nFluentes rires s'évaporent dans le vent, souvenirs perdus lamentent silently."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:06:57",
+      "texte": "Nuages de mémoires flottants, dans les yeux doux du temps passé. Lente danse des cœurs épars, entraînés par l’oubli."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:07:16",
+      "texte": "Temps murmure,\nCœurs s’envolent dans le vent,\nDanse oubliée."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:07:34",
+      "texte": "Nuage de pierres tombale,\nLumière des yeux en pleurs,\nVieillesse et beauté renaissent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:07:51",
+      "texte": "Rythmes mortels, battements apaisants, Murmures éternels s'entrelacent.\nVents vagabondent, échos du passé murmurés à nouveau,\nVie sans fin dans le cœur de la danse des ombres."
     }
   ]
 }
