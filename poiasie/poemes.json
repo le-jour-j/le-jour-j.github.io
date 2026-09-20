@@ -617,6 +617,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:18:05",
       "texte": "billets chuchotent secrets d'or, murmures du marché en fréquence. Valeurs oscillantes dans une sinfonie économique, notes discordantes s'entremêlent. Argent, vie éternelle, écho financier sans refrain."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:21:17",
+      "texte": "Étoiles d'or qui glissent dans les mains,\nDouleur de la monnaie et des changeurs,\nRichesse sombre qui nous hante toujours."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:21:36",
+      "texte": "Papier flétrissant,\nMontagnes d'or s'effaçant sous nos mains.\nVérités éphémères.\n\nRessources glissent silencieuses,\nLeur valeur se dilue dans le temps.\nÉcho de transactions oubliées.\n\nCoin du marché, murmure\nDollars"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:21:56",
+      "texte": "Argent au fond de l'abîme, songe d'une richesse fantôme.\nLignes de temps brouillées par les échanges, traces de valeurs perdues.\nÉconomie comme un fleuve souterrain, flux in"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:22:16",
+      "texte": "Coin frappé sourdement dans le creux du silence.\nArgent murmurant à travers des fossés économiques,\nRires d'émeraude s'effacent sur les dunes."
     }
   ]
 }
