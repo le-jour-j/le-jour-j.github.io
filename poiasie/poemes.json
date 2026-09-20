@@ -2507,6 +2507,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:33:58",
       "texte": "Échange danseur. Monnaie chante. Valeur danseuse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:35:26",
+      "texte": "Richesse en fuite, pauvreté dans les yeux,\nDans la danse des valeurs, nous perdons le temps,\nMonnaie et richesse, deux visages d'un même masque."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:35:46",
+      "texte": "L'or scintille sous le soleil. Vaches se frottent aux sacs lourds de cuivre. Les mains s'entremêlent en un marché. Argent murmure, la nuit est silencieuse. Valeur fléchit avec le vent du temps. Lances jetant des perles"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:36:07",
+      "texte": "Dans les épaules de la Banque, poussent des jonques en herbe.\nLes billets sifflent dans les arbres, comme des oiseaux migrateurs.\nL'or, une rivière perdue dans le sable de l'ab"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:36:28",
+      "texte": "dollar murmure la vérité muette.\nPièces d'écho, silence des coffres pleins,\nargent fantôme sur les traces du temps."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:37:00",
+      "texte": "sous la poussière, des secrets se murmurent."
     }
   ]
 }
