@@ -1577,6 +1577,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:01:45",
       "texte": "Éclats de lumière, reflets vacillants,\nDans la pénombre, ils danse à la faveur d'un soir.\nGestes silencieux, échanges précipités."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:03:14",
+      "texte": "Lumière blanche des billets, rythme pulsant des chaînes.\nPoids lourd de l'or dans la poche, balances de l'espoir.\nDans le vent la musique d'une valeur fugace."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:03:35",
+      "texte": "Montant des bulles dégonflées.\n\nLettres argent dans les eaux changeantes.\n\nCoin de temps - jet d'or éphémère."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:03:54",
+      "texte": "Argent au cœur du labyrinthe,\nRichesse en fleurs sauvages,\nGénie des tas infinis."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:04:12",
+      "texte": "Chiffres s'entremêlent, argent murmure, échos d'échanges. Taiseurs de trésors, tisseurs du cocon. Rires résonnent dans la balance silencieuse, volatiles comme les ronds des pièces. Valeurs se transforment en"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:04:43",
+      "texte": "souffles d'air froids."
     }
   ]
 }
