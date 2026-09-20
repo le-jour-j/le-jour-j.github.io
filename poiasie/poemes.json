@@ -1277,6 +1277,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:32:24",
       "texte": "Soleil d'argent brillait, puis cendres.\nMonnaie flottant sur eaux grises,\npaillettes qui s'évanouissent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:33:51",
+      "texte": "Étoiles effacées par la lueur du métal, richesse fantôme dans les mains vides.\nRêves en or brûlant aujourd'hui, espoirs en argent dorés perdus.\nPoids de"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:34:11",
+      "texte": "Poudrer des flocons d'hiver, jetant des pièces usées sur le vieux marché. Valeur éphémère.\n\nPapillons volent aux fleurs chères pour une gouttelette d'ambre liquide. L'équilibre vacille sous la lune argentée.\n\nLes portefe"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:34:31",
+      "texte": "Argent nuageux dans une vase de verre.\nBillets fantômes flottant autour du sol.\nMiroir des rêves éclaté en pièces d'or."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:34:50",
+      "texte": "cœur battant, rumeurs chiffrées murmurent. Affaires frôlent la vague dorée.\nPavé de cuivre, chant secret des décrets financiers."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:35:20",
+      "texte": "Pluie d'électrons, écho du marché. Pièces dans la machine, rythme monétaire."
     }
   ]
 }
