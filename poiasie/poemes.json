@@ -857,6 +857,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:52:06",
       "texte": "Paysages brumeux. Argent court, chaleur étranglée, silence dans les rues."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:53:30",
+      "texte": "Ombres flottantes du commerce,\nFlot de billets s'échappant,\nVilles de lumière éteintes."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:53:48",
+      "texte": "Miroir d'or se fond, silence oppressant. Austerité des portefeuilles vides. Pertes inévitables du temps."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:54:07",
+      "texte": "Coins d'or dormants sous les yeux sourds.\nEtoiles en bourse, chutant vers la faillite.\nComptoirs de sable, mesure de richesses transitoires."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:54:26",
+      "texte": "écorchements d'or, silence des coffres vides. échangeurs murmures, le temps se glisse. argent fugitif, dans les mains tourmentées. échos déchirants, fractures financières."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:54:57",
+      "texte": "monnaie liquide, sentiments brisés."
     }
   ]
 }
