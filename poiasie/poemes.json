@@ -233,6 +233,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:11:26",
       "texte": "décroissance des sons, cris vides se moquent du gain.\néchanges silencieux, argent volé en éclats d'argent.\n\nvoitures bruyantes murmurent des dettes non payées, des chuchotements endormis,\nvaleur éphémère"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:14:42",
+      "texte": "Dans l'ombre du commerce, songeau à l'or perdu,\nUne aube de dettes s'éclaircit la nuit.\nLa monnaie change, mais les rêves restent immobiles."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:15:01",
+      "texte": "Silence argenté. Piles dorées tombent.\n\nÉchos des mains. Pas de cloche pour le temps perdu.\n\nDollars s'écrasent sur la lentille du passé."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:15:21",
+      "texte": "Argent solitaire dans un cimetière de mots.\nValeur fantôme, dans le ventre d'une nuit avarieuse.\nBourse enchantée, se perdant dans les labyrinthes des rêves."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:15:40",
+      "texte": "Dollars murmurants sous le silence, secrets de la nuit.\nÉchangeurs d'échos, en frénésie, affluent incessante.\nValeur vacillante, danse sur une fine ligne."
     }
   ]
 }
