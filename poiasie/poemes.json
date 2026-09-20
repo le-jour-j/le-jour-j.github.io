@@ -1697,6 +1697,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:13:31",
       "texte": "Échos d'or et d'argent,\nLa lune réfléchit sur les rêves oubliés.\n\nMonnaie dans le sang,\nLa voix du destin murmure ses secrets, esprits qui évoquent l'éternité.\n\nDents de la"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:15:02",
+      "texte": "fortune meurtrie dans le creux des mains.\nOr se dissipe comme sable sous les doigts.\nSous les yeux de ceux qui n'en ont jamais eu."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:15:22",
+      "texte": "Ventes en chute.\nCouronnes murmurent au vide.\nValeurs volatiles."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:15:41",
+      "texte": "Orfèvres du néant,\nDans les miroirs de la solitude,\nFusillés par leur propre reflet."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:15:59",
+      "texte": "écoutes des chuchotements du marché, murmures sinistres sous le charme d'une danse dorée.\n\ncoins cliquetant dans un ballet silencieux, les ombres dansent en argenté.\n\nvaleur vacillante sur l'océan numérique, flottant et se perdant"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:16:31",
+      "texte": "marchandises volatiles, temps court."
     }
   ]
 }
