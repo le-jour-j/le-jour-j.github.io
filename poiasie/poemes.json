@@ -2567,6 +2567,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:40:02",
       "texte": "Diamants, aciers, éclatent aux aurores. Trésors secrètes des rues, murmures des mouches, chuchotements des étoiles en or."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:41:38",
+      "texte": "Argent doré, nuages d'aspirations,\nFlottant dans les courants de la vie,\nValeur infinie, invisible et présente."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:41:56",
+      "texte": "Dollars dans le vent murmure. Silences des rentes. Richesse éphémère.\n\nLes feuilles du marché se renouvellent silencieux. La monnaie s'effleure délicatement. Les âmes marchent sur des symboles froids. Le temps déforme les monnaies"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:42:18",
+      "texte": "Marcheurs dans un labyrinthe d'or,\nDans une nuit de billets électriques,\nArgent flottant dans le vide froid."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:42:37",
+      "texte": "Doucement, pièces cliquetent en secret, Rumeur du frisson argenté. Fées des fondus, danseurs volatils d'échange silencieux. Les ombres murmurent la valeur inerte, Spectre monétaire fantôme."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:43:09",
+      "texte": "Éclat de métal brise le silence. L'argent danse, invisible mais omniprésent, Un spectre financier, son rire gronde."
     }
   ]
 }
