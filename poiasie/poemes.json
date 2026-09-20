@@ -767,6 +767,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:43:36",
       "texte": "Lumière dans la nuit, brillent les billets."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:45:01",
+      "texte": "Dans le ciel des transactions, chaque pièce d'or brille.\nRichesse enflammée du commerce mondial,\nFlots de numéros qui nous rassemblent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:45:18",
+      "texte": "Silence des pièces\nGironées en argent,\nRepos d'antan s'effrite."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:45:36",
+      "texte": "Orages monétaires,\nNuits de commerce brouillées,\nRichesse fantomatique."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:45:52",
+      "texte": "Croisures financières sous un ciel sombre,\nLeurs échos murmurent des gains et des pertes.\nCouronnes volatiles dans le vent, vagabondes."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:46:22",
+      "texte": "argent court, flâneur du temps, chasseur de rêves."
     }
   ]
 }
