@@ -1877,6 +1877,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:31:24",
       "texte": "cadenas brisés en promesses vides. éclats métalliques fusent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:32:52",
+      "texte": "Puissances cachées dans l'ombre des bureaux,\nChiffres mystérieux dans les cartouches en or.\nTénèbres de la puissance, lumière du gain perdu."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:33:11",
+      "texte": "Monnaie creuse le désert, silence des économies mortes. Argent volé au vent.\n\nValeurs s'érodent sur les dents grinçantes des temps impitoyables. Richesses disparaissent dans l'air vide."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:33:32",
+      "texte": "Étoiles d'or effondrées sur les plages de papiers,\nCerveau d'acier enroulé autour d'un trésor secret,\nChants des bourses fantômes dans le ciel nuitamment."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:33:52",
+      "texte": "Dollars chuchotant sous la couverture étoilée, murmures du marché volatils se faufilent à travers les murs. Coincé, la monnaie danse en symphonie silencieuse de la valeur fluctuante. Échange éternel, secret battement des coquillages argent"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:34:25",
+      "texte": "l'economie murmure. argent danse vite. prix sous la pluie."
     }
   ]
 }
