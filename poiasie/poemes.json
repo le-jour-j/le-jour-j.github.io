@@ -521,6 +521,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:01:21",
       "texte": "billets bleutés murmurant des secrets sous le vent. Valeurs volantes dans un ballet de chocs. Richesses s'envolent, spectres d'argent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:04:34",
+      "texte": "Dans le vent, bilans perdu : espérances volées.\nMiroir effacé par la poussière des transactions.\nSeuls les zeros restent dans le silence, danseurs inquiets."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:04:54",
+      "texte": "Douleurs des dettes vacillantes,\nPapier-monnaie murmure faiblement,\nGloires se transforment en poussière."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:05:12",
+      "texte": "Coins d'or dans un ciel de plomb,\nRichesses éclipsées par la lumière,\nSable qui raffine l'or au coeur des mains."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:05:31",
+      "texte": "Douceur du billet sous la main tremblante, échos murmurent des gains. La danse du déchiffrement en cadence de marquis murmure une dette volee par les vents. Envoûts par le frisson fiscal, l'esprit affluent d'unité argentée"
     }
   ]
 }
