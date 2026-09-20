@@ -65,6 +65,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "12:07:51",
       "texte": "Rythmes mortels, battements apaisants, Murmures éternels s'entrelacent.\nVents vagabondent, échos du passé murmurés à nouveau,\nVie sans fin dans le cœur de la danse des ombres."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:11:01",
+      "texte": "Nuages de soie dans un jardin d'ombre,\nChanson des oiseaux au-delà du temps.\nDoux souffle de vie émanant de la terre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:11:19",
+      "texte": "Douceur des feuilles tombantes.\nSoleil caressant le roc sombre.\nVent murmurant au cœur de pierre."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:11:38",
+      "texte": "Nuages bleus dans l'oeil d'une femme morte.\nOiseaux noirs chantant sur les ossements d'un soleil couchant.\nVagues de sang sur la plage blanche des reves interdits."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:11:56",
+      "texte": "Sifflements à travers les forêts brumeuses, murmure du vent, secret d'un cœur désertré.\nRacines profondes dans le sol sombre, échos perdus dans une éternelle solitude."
     }
   ]
 }
