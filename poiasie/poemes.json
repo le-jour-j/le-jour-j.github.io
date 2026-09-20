@@ -2327,6 +2327,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:16:02",
       "texte": "Échange de couleurs,\nvaleur dans le silence,\npièges sous la surface."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:17:32",
+      "texte": "Dans les coins ombragés de la richesse,\nLe silence accueille ses trésors cachés,\nPièges transparents d'une valeur inespérée.\n\nOr reflets d'un monde en ébullition,\nL"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:17:51",
+      "texte": "Argent dans le vent murmure,\nÉchos des marchés chuchotants.\nSilence sous la vente.\n\nCoins flottant sur le vide,\nGratitude muette pour le temps.\nTapis de la perte."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:18:12",
+      "texte": "Étoiles tombées du ciel des riches,\nDévalisant les chemins poussièreux.\nSonge à la fortune endormie."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:18:30",
+      "texte": "cavaleries d'or. Douce symphonie des échanges silencieux. Rituels anciens de paumes serrées. Valeur qui danse, écho du temps."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:19:00",
+      "texte": "argent liquide, souffle des affaires."
     }
   ]
 }
