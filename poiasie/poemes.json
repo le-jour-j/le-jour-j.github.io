@@ -473,6 +473,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:53:08",
       "texte": "Silences frêles, rumeurs dorées se murmurent. Échos argentés dans le vide. Vents vides du futur. Flots fidèles à la fortune. Le poème est une danse de notes sans valeur ni sens, un hymne aux échos inertes des"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:56:20",
+      "texte": "Coins sombres où gisent les espérances,\nRêves éteints sous la pression des deniers,\nL'or se tord de douleur dans son sommeil."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:56:38",
+      "texte": "Silence des coffres fermés\nPapier glisse sur le froid sol\nValeurs s'estompent au jour-light"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:56:58",
+      "texte": "Monnaie enneigée dans la poche du vent\nCapitaux gelés sous une neige de chiffres\nArgent fantôme dans l'obscurité des échanges"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:57:17",
+      "texte": "Frissons fiscaux et murmures du marché Secrètent la danse argentée du temps L'échange envoûtant sur le fil glissant"
     }
   ]
 }
