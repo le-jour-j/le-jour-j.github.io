@@ -1787,6 +1787,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:22:26",
       "texte": "Coffres vides de promesses, fuyant les échos d'or."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:23:54",
+      "texte": "Argent flottant dans le vide, lueurs du pouvoir perdu. Économies croulant sous la pression des temps modernes."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:24:12",
+      "texte": "Argent glissant dans le vide.\nBourses vacillantes sur la toile.\nValeur éphémère flottant en paix.\n\nCoin d'écho crypté, dévalué silence."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:24:32",
+      "texte": "Orbe de luxe aux doigts désordonnés, brille dans l'ombre.\nCrises de richesse comme une ombre qui danse.\nCe qu'on cache sous la table n'est pas toujours d'argent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:24:52",
+      "texte": "Rumeurs murmurent sur le fond du commerce,\nSilences riches de pièces silencieuses.\nValeur se glisse dans des poches de mensonges.\n\n==\n\nSonnets secrets, danseurs en argent,\nEchos d'économies étincelant.\nChasse cachée derrière l"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:25:24",
+      "texte": "valeur de la frénésie."
     }
   ]
 }
