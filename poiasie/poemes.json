@@ -281,6 +281,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:19:47",
       "texte": "Coin-fin d'or, éclats ronds en danse. Écho monétaire, murmurant. Valeurs voilées s'entrelacent dans le temps.\n\nDons argentés se glissent sur les mains du destinataire. Le son des pièces, un écho secret de la richesse"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:23:03",
+      "texte": "Éclats d'or dans les mains vides,\nRuissellement de bourse pleine et vide,\nTemps de changement où flottent les billets."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:23:21",
+      "texte": "Montre la banque déserte.\nPapier-monnaie se courbe sous le poids.\nValeurs glissent silencieuses."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:23:40",
+      "texte": "Miroir de rêve, pièce d'or s'enfuit,\nDans la nuit des taux d'intérêt,\nChaîne invisible du pouvoir."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:23:59",
+      "texte": "Sonneries de billets murmures dans le vent des économies futures.\nÉchos des dévaluations, valsant sur les plaines argentées."
     }
   ]
 }
