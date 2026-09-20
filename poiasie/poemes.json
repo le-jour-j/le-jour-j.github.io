@@ -1097,6 +1097,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:15:00",
       "texte": "argent dans la main, \ntous échangent,\nvaleur défile, rapide."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:16:25",
+      "texte": "Papiers enflammés,\nRuptures soudaines,\nTénèbres d’ombre et de lucre.\n\nLignes invisibles,\nCeux qui creusent les tensions,\nEt la volonté de l"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:16:45",
+      "texte": "Silence des pièces, vieilles,\nCoincurs à la marée argentueuse.\nValeur volée par le vent.\n\nTremblements d'audacieux espoirs,\nMarches fidèles sous des masques impassibles.\nÉchos financiers s'effacent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:17:05",
+      "texte": "D'argent bleu dans les mains vides, danse de spectres en chute libre.\nEtoiles d'or qui fuient le soleil effondré, balances brisées par les courants du marché.\nCouleurs tern"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:17:25",
+      "texte": "Coincis argenté murmure des secrets, faux trésors. Grimaudage de la guigne, un balisage d'oubli.\n\nDétaillements des deniers se dissolvent dans le vent sans fin. Valeurs volatiles en quête de silence, voleur"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:17:56",
+      "texte": "baisse des prix, montée des richesses."
     }
   ]
 }
