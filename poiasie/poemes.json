@@ -1667,6 +1667,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:10:34",
       "texte": "orages grondeurs, soleil de plomb."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:12:00",
+      "texte": "Argents flottants dans le vent,\nMarchands au front, tentez la chance,\nNuits d'argent brûlant le ciel."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:12:19",
+      "texte": "Richesses volatiles, murmures glacials. Paires échangées sous les étoiles pâles. Valeurs inébranlables dans le flux incessant des marées argentées."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:12:39",
+      "texte": "Bateaux fantômes naviguent sur les rivières de pièces d'or,\nVents d'argent soufflant sans relâche sur nos cœurs suspendus aux chaînes du commerce,\nMétamorphoses économiques dans"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:12:59",
+      "texte": "écorces dorées des rires échangés, Paroles pleines d'espoir pour les âmes asservies par le cache-cul.\n\nDes murmures doux au fond des coffres verrouillés, Le vent de la fortune effleurant l'âme insoupçonnée."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:13:31",
+      "texte": "Échos d'or et d'argent,\nLa lune réfléchit sur les rêves oubliés.\n\nMonnaie dans le sang,\nLa voix du destin murmure ses secrets, esprits qui évoquent l'éternité.\n\nDents de la"
     }
   ]
 }
