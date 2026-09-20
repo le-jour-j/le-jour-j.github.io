@@ -1517,6 +1517,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:55:46",
       "texte": "Marcher en silence."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:57:13",
+      "texte": "Dans un monde de numéraires, je cherche mon verseau perdu,\nUn songe d'or pur, qui brille dans le ciel nocturne.\nEt les étoiles s'éteignent pour l'attendre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:57:33",
+      "texte": "Papier monnaie murmure. \nMarché sombre, silence des transactions.\nValeurs volatiles au vent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:57:53",
+      "texte": "Ailes d'argent battant le ciel de bourse,\nRuée vers les trésors cachetés dans les ténèbres,\nFortune flottante sur un océan de spéculation."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:58:13",
+      "texte": "Symétrie des pièces, sifflement du silence argenté. Les murmures des chiffrés, danse numérique.\n\nÉchos d'échanges, cris de la valeur, symphonie silencieuse. Encreur des destinées dans le grand tableau financier."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:58:45",
+      "texte": "Monnaie murmure, trépidante. Étincelles se cachent derrière les chiffres. Les étoiles dorées du commerce brillent. Le sang noir de l'économie s'écoule en ruisseaux. Vente est une danse mort"
     }
   ]
 }
