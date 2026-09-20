@@ -257,6 +257,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:15:40",
       "texte": "Dollars murmurants sous le silence, secrets de la nuit.\nÉchangeurs d'échos, en frénésie, affluent incessante.\nValeur vacillante, danse sur une fine ligne."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:18:49",
+      "texte": "Échos du marché, murmures de la richesse.\nDans le labyrinthe des pactes et des trompe-l'œil.\nMiroir aux illusions, reflet de la crise imminente."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:19:09",
+      "texte": "Papier-monnaie pleure. Marches des dévaluations. Argent se dessèche.\n\nLes billets dansent en vacance, faux éclatant. Le marché soupire sous le poids.\n\nRichesses effleurantes, trace évanouissante du temps. Les coins s'effrit"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:19:29",
+      "texte": "Or flottant, trace d'un destin fuyant,\nRivages des échancrures de l'Histoire.\nPapier-monnaie à la merci des miroirs."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:19:47",
+      "texte": "Coin-fin d'or, éclats ronds en danse. Écho monétaire, murmurant. Valeurs voilées s'entrelacent dans le temps.\n\nDons argentés se glissent sur les mains du destinataire. Le son des pièces, un écho secret de la richesse"
     }
   ]
 }
