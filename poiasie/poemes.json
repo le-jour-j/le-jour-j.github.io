@@ -497,6 +497,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:57:17",
       "texte": "Frissons fiscaux et murmures du marché Secrètent la danse argentée du temps L'échange envoûtant sur le fil glissant"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:00:26",
+      "texte": "Or flottant dans la lune du soir\nBillets d'espoir sous la lumière chaude\nValeur cachée dans les mains vides"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:00:45",
+      "texte": "Banc en bois murmure\nFonds glissent silencieusement au coucher du soleil\nPapier flétrit des années."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:01:03",
+      "texte": "Dans le tiroir d'un trésor caché,\nRévèle des monnaies éternelles,\nUne aube en or sur les nuages noirs."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:01:21",
+      "texte": "billets bleutés murmurant des secrets sous le vent. Valeurs volantes dans un ballet de chocs. Richesses s'envolent, spectres d'argent."
     }
   ]
 }
