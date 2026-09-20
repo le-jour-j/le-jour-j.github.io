@@ -449,6 +449,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:48:56",
       "texte": "Valeurs volées dans la nuit noire, Silencie de billets effrayants, Richesses s'envolent, Dans le vide des coffres vides, L'argent murmure au fond du cœur."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:52:11",
+      "texte": "Lumière de PIB qui brille dans la nuit,\nInterêt se creusant comme une fuite soudaine,\nÉconomie tremblante sur le fil des tensions."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:52:30",
+      "texte": "Richesses s'envolent, Vent glacial. Or blanc vacille. Argent murmure loin.\n\nÉchange oublié, Paillettes du temps dorment. Valeur se dérobe silencieusement. Ciel de transactions sombre."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:52:50",
+      "texte": "Montantes fantômes dans le vent.\nOrphelins des comptoirs nocturnes.\nMiroir des trompettes monétaires."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:53:08",
+      "texte": "Silences frêles, rumeurs dorées se murmurent. Échos argentés dans le vide. Vents vides du futur. Flots fidèles à la fortune. Le poème est une danse de notes sans valeur ni sens, un hymne aux échos inertes des"
     }
   ]
 }
