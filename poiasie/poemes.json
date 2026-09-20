@@ -947,6 +947,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:00:38",
       "texte": "mains gantoises s'accrochent à des rêves vacillants."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:02:02",
+      "texte": "Monnaie d'or, poids lourd dans la poche vide,\nFleurs de papier dans un vent froid et fausse,\nValeur cachée derrière le verre rouge."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:02:20",
+      "texte": "L'argent coule silencieux, glacé des mains du temps.  \nMarchandises dorment sous des rideaux feutres, éclipsant la lumière de Mars.  \nÉchange d'éternité, papier en chute constant."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:02:40",
+      "texte": "Nuages d'or dans un océan de verre,\nCroissance et désintégration simultane,\nBillets fantômes dans l'ombre du temps."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:02:58",
+      "texte": "Dollars murmurant des secrets anciens, Argent flottant à travers les âmes. Frères de la chimère, échange silencieux.\n\nValeurs glissant sur le marché, Nouvelles échos aux abords d'un sommeil mortel. Richesses en quête du cœur endurci"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:03:28",
+      "texte": "argent murmure de nuit,\ncœur d'ébène dans la fosse,\nvaleur sous couvert d'ombre."
     }
   ]
 }
