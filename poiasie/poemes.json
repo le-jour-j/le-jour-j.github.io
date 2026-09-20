@@ -713,6 +713,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:34:49",
       "texte": "argent murmure des fables effilochées. Richesse dans le vent, éphémère danse.\n\nTrois fois rassemblé, trois fois dispersé—un mantra de la vie en cage dorée. Valeur fugace, cachet sans égal, l'écho financier des"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:38:04",
+      "texte": "Rêves d'or brillant,\nDans le sillage de la fortune,\nLumière du pouvoir et de la peur."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:38:23",
+      "texte": "Marchandises glissent sur le marché.\nBancs tombent, silence se dessèche.\nValeurs volées par le vent."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:38:42",
+      "texte": "Or se dissipe au loin, spectres dans la lune.\nCommerce flottant sur les ondes de la nuit.\nRichesses enterrées sous des arbres vides."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:39:01",
+      "texte": "Coincisions silencieuses des billets dans les mains obscures.\n\nVibrations du marché, frisson secret des transactions impitoyables.\n\nPiles d'or, tangage de la monnaie à travers le temps."
     }
   ]
 }
