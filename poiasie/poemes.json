@@ -2537,6 +2537,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:37:00",
       "texte": "sous la poussière, des secrets se murmurent."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:38:30",
+      "texte": "D'or caché dans les ténèbres, un souffle d'espoir susurre le jour.\nNuits de rêves ébullientes, chants de fortune en songe douloureux.\nTrésors perdus entre"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:38:51",
+      "texte": "Silber murmure.\nPapier argent brûlant.\nRuptures des faux dollars."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:39:10",
+      "texte": "Or parle en souffles.\nCendres d'argent dans les mains.\nLignes de transaction cassées."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:39:29",
+      "texte": "Rires monétaires murmurés. Dîners découverts à la hausse des ruisseaux argentins. Mains enlacées, sœurs en frondes silencieuses. Richesses qui glissent, s'échappent sur le papier glacé du temps. Cadences dor"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:40:02",
+      "texte": "Diamants, aciers, éclatent aux aurores. Trésors secrètes des rues, murmures des mouches, chuchotements des étoiles en or."
     }
   ]
 }
