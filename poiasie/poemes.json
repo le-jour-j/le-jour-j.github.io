@@ -1487,6 +1487,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:52:51",
       "texte": "argent court et sec, souffle rude des marchés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:54:17",
+      "texte": "Or fuilet et brûlant, vent du marché rugissant.\nCeux qui le chassent l'attrapent par intermittences.\nFausse promesse d'or, au cœur de la tempête."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:54:35",
+      "texte": "Coin en volée, flamboi le froid. \nFaible murmure du marché se tait.\nSilence des trésors s'épaissit."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:54:54",
+      "texte": "Miroir d'argent brille au crepuscule,\nEchos des billets dans la nuit silencieuse,\nGéants de papier déchiré poussent leur plaintive chanson."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:55:14",
+      "texte": "deniers murmurent au vent sous la lune argentée. Monnaies pleurent à la mélancolie des portefeuilles vides. Valeurs éphémères dans le creux des temps. Argent murmure l'histoire oubliée de mains qui n'avaient plus qu'à"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:55:46",
+      "texte": "Marcher en silence."
     }
   ]
 }
