@@ -425,6 +425,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:44:46",
       "texte": "Rumeurs siffleurs du marché,\nDoux ruisseaux d'argent se perdent.\nEspérance, valse inégale."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:47:59",
+      "texte": "Dans les veines du monde, courant le sang des échanges,\nDouleur et joie mêlés dans chaque transaction,\nLa richesse en fuite, toujours un loup errant."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:48:17",
+      "texte": "Papiers volent dans le vent,\nBancs sifflent d'ombres floues, or se dissipe,\nCoin sur la table.\n\nCoins rustiques dorment.\nMarché nocturne murmure secret,\nL'or change des mains sans trace.\n\nLes chiffres frissonnent"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:48:38",
+      "texte": "Miroirs d'argent effleurant la nuit,\nCoup de feu sur les comptes éteints,\nÉchanges secs comme les ossements mort-nés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:48:56",
+      "texte": "Valeurs volées dans la nuit noire, Silencie de billets effrayants, Richesses s'envolent, Dans le vide des coffres vides, L'argent murmure au fond du cœur."
     }
   ]
 }
