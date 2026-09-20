@@ -569,6 +569,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "14:09:46",
       "texte": "valeur des pièces, murmures financiers se murmurent.\nsilencieuse danse du change, échos d'argent.\ndraps des temps, drapeaux économiques flottants."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:12:58",
+      "texte": "Dans l'aube des échanges, un flot de billets,\nCouleurs diverses, harmonies dissonantes.\nValeur incertaine dans le vent, disparue."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:13:17",
+      "texte": "Papillons en quête d'or, effervescence du marché. Paires de chaussures marchent sur une dette insubstantielle. Silencieux crash des pièces dévaluées."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:13:36",
+      "texte": "Argent flottant dans le vide, son poids perdu,\nCinq centimes de souvenirs éclatés,\nRien ne vaut son prix d'antan."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:13:54",
+      "texte": "Bons pour cent, La danse des billets murmure un secret. Argent volé dans le souffle du vent, Trompe-l'œil des coffres bruyants. Valeur éphémère sous le regard impitoyable du temps."
     }
   ]
 }
