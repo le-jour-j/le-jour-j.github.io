@@ -1907,6 +1907,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:34:25",
       "texte": "l'economie murmure. argent danse vite. prix sous la pluie."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:35:53",
+      "texte": "Gloire de l'or, note d'argent clair.\nChangements s'écoulant comme la rivière.\nPoids des valeurs, un rituel sans fin."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:36:12",
+      "texte": "Dollars se meuvent, flux incessant. Argent murmure, vie s'éveille. Valeur changeante au creux de mains. Échos économiques dans le sable du temps."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:36:32",
+      "texte": "Montantes d'or dans la nuit des comptes-rendus.\nChemin de fer de papiers au coeur des fantômes.\nMiroir trompeur des billets, reflet d'une richeté fugace."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:36:51",
+      "texte": "Silence argenté murmurant sous les dents serrées de la prospérité. Flèche filante dans un désert financier.\n\nValeurs volatiles flottent sur le murmure du marché, une danse déchirée par la faim insatiable des richesses."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:37:22",
+      "texte": "argent, un feu consumeur, soif de pouvoir."
     }
   ]
 }
