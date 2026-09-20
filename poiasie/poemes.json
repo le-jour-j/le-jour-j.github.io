@@ -887,6 +887,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:54:57",
       "texte": "monnaie liquide, sentiments brisés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:56:21",
+      "texte": "Fortunes flottantes, cœurs en morceaux.\nL'or pur se transforme en tristesse.\nBillets d'échange, rêves en pièces fragmentées."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:56:38",
+      "texte": "Montée et descente du mur fiscal. Richesses glissent à travers les doigts effilochés.\n\nDons silencieux dans la nuit obscure des coffres verrouillés. La balance se tait entre le temps."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:56:57",
+      "texte": "Lunettes de métal doré en pleurs sur la richesse impuissante,\nCouleur rouge des notes échappées du trésor effrité,\nL'air riche d'odeurs de contrats secrèt"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:57:16",
+      "texte": "dons frémissants sur les chaînes des dettes, Valuations vagues dans un air dévoré. Échange murmuré, monnaie maudite."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:57:45",
+      "texte": "Marché frénétique, prière silencieuse. Valeurs évanouies dans le brouillard des affaires."
     }
   ]
 }
