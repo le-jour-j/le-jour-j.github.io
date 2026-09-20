@@ -353,6 +353,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:32:09",
       "texte": "Crises, cris argentins, notes déchirées. Valeurs s'effondrant sur la symphonie des défaillances. Repos financiers, illusion de sommeil doré."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:35:23",
+      "texte": "Montants éblouis dans les ténèbres,\nRêve d'abondance au bord du chas,\nTrompe-l'œil de la richesse."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:35:43",
+      "texte": "Manteaux dorés se défendent contre le vent, Faux joyau glissant dans un souffle froid."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:36:02",
+      "texte": "Échos d'or dans la banque des rêves,\nFusils qui tirent des billets d'un soleil mort,\nRichesse noire comme l'ombre du prochain jour."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:36:20",
+      "texte": "Piles argentées murmurent des secrets financiers sous une lune froide. Comptes tissés dans le vent, la monnaie murmure des vies achetées. Richesses volatiles dans les mains vides de ceux qui rêvent encore."
     }
   ]
 }
