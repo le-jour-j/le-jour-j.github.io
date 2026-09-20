@@ -401,6 +401,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:40:32",
       "texte": "bancs murmurent des promesses chères. Argent s'effleure silently. Riches rires se perdent. Valeur volée par le vent de la folie. Charmes d'union, échos dorés. Mains du marché, danse des silences argenté"
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:43:47",
+      "texte": "Ombres des pots-au-feu, richesses en chemin,\nCours des eaux, reflets d'un monde caché,\nSous les ailes du commerce, espoir et peur entrelacés."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:44:07",
+      "texte": "Des billets s'envolent, murmures d'or. Grimaud se penche vers le vide.\n\nLes étoiles des changeurs scintillent silencieusement. Le marché respire la valeur inconnue."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:44:27",
+      "texte": "Les billets d'argent dansent au vent du commerce.\nLa richesse est une ombre en flammes sur le mur de l'obscurité.\nLe bonheur, une monnaie éphémère dans la banque des rêves"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:44:46",
+      "texte": "Rumeurs siffleurs du marché,\nDoux ruisseaux d'argent se perdent.\nEspérance, valse inégale."
     }
   ]
 }
