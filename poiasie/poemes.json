@@ -185,6 +185,30 @@
       "modele": "microsoft_phi-4-mini-instruct",
       "heure": "13:03:10",
       "texte": "écumes murmurent sur le fil du temps, argent volant dans les airs. Vents économiques soufflent, chassant les coquillages d'espoir. Les serrures tournoyantes dans la danse de l'échange éternelle."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:06:23",
+      "texte": "Lumière d'or dans les tas d'ombre,\nRichesse cachée sous les coups de main,\nLe temps marche et les prix montent sans arrêt."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:06:41",
+      "texte": "Croissants des richesses se transforment en poussière. \nPaires d'or cachés, décevantes.\nMarché de l'espoir, effondrement brutal."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:07:01",
+      "texte": "Vieilles monnaies, fantômes du passé.\nBourse de rêves, chute vertigineuse.\nMillions de larmes en or, inutiles."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:07:18",
+      "texte": "Cartes chantantes, écho argenté. Les mains dans la pioche des chimeras. L'or murmure aux paupes impuissantes. La danse du dupatement discutable. Valeurs volées sur les vagues du gain. Richesse résonante, sour"
     }
   ]
 }
