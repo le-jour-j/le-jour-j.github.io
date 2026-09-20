@@ -1247,6 +1247,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:29:31",
       "texte": "Éclats brillants dans le crépuscule, échange d'énergie."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:30:56",
+      "texte": "Fugaces flammes du soleil couchant, dans un monde où la valeur s'effrite.\n\nUn monde de bilans et de comptes rendus, l'argent comme une fleur fuyante.\n\nLes nombres, les chiff"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:31:16",
+      "texte": "Rendus volatiles,\nArgent dans le vent murmure,\nFleur éphémère danse.\n\nNombres flétrissent sous la lune argentée,\nValeur fantôme s'envole."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:31:35",
+      "texte": "Oreilles d'or sifflent dans les échanges secrets,\nCœur en papier-monnaie secoue l'ombre de la fortune,\nVent d'argent foule la terre où poussent les banques."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:31:55",
+      "texte": "douro murmure secret,\npaires changeantes dans le vent des gains.\nvaleur danse, effervescence économique."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:32:24",
+      "texte": "Soleil d'argent brillait, puis cendres.\nMonnaie flottant sur eaux grises,\npaillettes qui s'évanouissent."
     }
   ]
 }
