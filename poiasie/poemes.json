@@ -2267,6 +2267,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:10:00",
       "texte": "candide abîme, trésor inaudible en frémissement."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:11:29",
+      "texte": "Or fleuri dans les tenebres, une promesse lointaine.\nBilan obscur des jours passés, écho du temps perdu.\nFortune flottante dans les vents, une chimère en souffle."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:11:48",
+      "texte": "Coin flétri sur le marché doré. Valeur éphémère, silence des coffres. Flocon d'or tombant."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:12:08",
+      "texte": "Étoile de fortune perdue dans la nuit bleue.\nRivière de cuivre courant vers les horizons déserts.\nÉchanges secrets sous le regard des statues en marbre."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:12:28",
+      "texte": "Pièces sonores des coffres se claquent dans un silence doré. Vents d'argent tourbillonnent, danseurs silencieux du temps et de la fortune.\n\nTapisseries de clochetons chantant une mélodie sans visage, trésors entremêlés, écho"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:13:00",
+      "texte": "argent liquide bat, murmures de monnaie, éclats d'or."
     }
   ]
 }
