@@ -827,6 +827,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:49:16",
       "texte": "argent dans la main danse sans miroir."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:50:40",
+      "texte": "Or entre mes mains, danse sans reflet.\nValeur cachée, échange tacite.\nPuissance éphémère, vente courte circule."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:50:58",
+      "texte": "Billets déchirés, silence murmure. L'or scintille, échappant à la main du temps. Coin clandestin de transactions voilé par le jour."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:51:16",
+      "texte": "Monnaie de fer flottant dans un ciel d'azur,\nBillets d'or qui font danser les ombres du passé,\nCoins tordus au souffle des ventes éclatantes."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:51:35",
+      "texte": "Gravés dans le silence, Écho d'un virement volé. Les cris de la dette se perdent sur un son vide.\n\nMarchandises aux portes fermées, Silencieux échangeurs murmurants. La toile du temps, déchirée et tordue à l"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:52:06",
+      "texte": "Paysages brumeux. Argent court, chaleur étranglée, silence dans les rues."
     }
   ]
 }
