@@ -1457,6 +1457,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "15:49:51",
       "texte": "désirs, frénésie éclatante,\npoids et forces, se réchauffent,\nargent flotte, rêve s'envole, la lune accroche son blé."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:51:20",
+      "texte": "Fidélité aux promesses, l'or brille dans les ténèbres, la fortune somnambule entre les mains.\n\nCommerce et bourses, danse macabre des nombres, l'écart se creuse entre richess"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:51:39",
+      "texte": "Bancs vacillants,\nMorceaux de papier flou affluent,\nRichesses s'éclipsent.\n\nValeurs changeantes,\n\nChangeur murmure,\nCouleur du dollar, glissant à travers le temps,\nInégalités dorées."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "15:51:59",
+      "texte": "Patines de billets d'or dans la nuit, Richesses somnambuliques en fuite, Fortunes fantomatiques dans l'espace.\n\nMiroir de l'argent, esclave à la banque, Chaînes"
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "15:52:19",
+      "texte": "Douces cliquetements des pièces, danse du gain,\nÉcho argenté sur le sable, ombre face aux gains.\nCoin coin, murmure secret du frisson économique, effroi silent sous les chaînes d'or."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "15:52:51",
+      "texte": "argent court et sec, souffle rude des marchés."
     }
   ]
 }
