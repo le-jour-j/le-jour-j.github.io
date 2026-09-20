@@ -2177,6 +2177,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:01:05",
       "texte": "Éclat d'or noir, la nuit s'agrandit."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:02:33",
+      "texte": "Fortune somnambule, au coeur des ténèbres.\nAiles de plomb, dans l'abîme des pots-de-vin.\nRichesse invisible, ombres qui nous guident."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:02:53",
+      "texte": "Papiers glissent silencieusement.\nÉchos monétaires dans le vide.\n\nMarchandises volées de rêves.\nCachette glaciale du profit."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:03:13",
+      "texte": "Oreille d'économie tigrée dans le portefeuille des mirages,\nMonnaies fantômes dans une banque de nuit,\nValeur de la lune gravée sur les pierres précieuses du ciel."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:03:33",
+      "texte": "billets bruissant dans le vent des bazars.  \ncrédit chantant à travers les serrures des ombres des coffres.  \nvaleur murmurante aux coins de la rue où chuchotent les âmes."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:04:05",
+      "texte": "argent danse au coin d'un marché."
     }
   ]
 }
