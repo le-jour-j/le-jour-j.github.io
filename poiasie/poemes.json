@@ -1937,6 +1937,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "16:37:22",
       "texte": "argent, un feu consumeur, soif de pouvoir."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:38:48",
+      "texte": "Or, un brasier vorace, affamé de contrôle.\nEchanges, fleuves d'énergie, circulant sans limite.\nValeur, une énigme, changer, se répandre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:39:08",
+      "texte": "Pavés argentins murmurent des rumeurs économiques. Rivières tourbillonnent, frayant la foudre de la confiance. Coincisions silencieuses du temps financier."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "16:39:28",
+      "texte": "Étoiles d'or dans les montagnes des comptoirs,\nRouleaux de notes chuchotant à l'oreille du marché,\nChants funèbres de l'argent qui s'évapore au soleil."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "16:39:49",
+      "texte": "écorches des coffres, rires discordans, échos des vides portefeuilles. mules grattent la terre, marchant sur le sangluft financier.\n\ndiamètres déchirés, cœurs fracturés, poids du silence de l'oubliance"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "16:40:21",
+      "texte": "échange. frappe les mains. vente d'espoirs."
     }
   ]
 }
