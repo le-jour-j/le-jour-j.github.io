@@ -184,12 +184,6 @@ function LocationRow({ loc, books, activeBook, tour, isOverlap, user, sold }) {
           </p>
         )}
 
-        {loc.field_note && !isOverlap && (
-          <p className="location-fieldnote" title="Note prise sur place lors de la tournée n°1">
-            Sur place : {loc.field_note}
-          </p>
-        )}
-
         {!isOverlap && loc.website && (
           <a
             className="location-link"

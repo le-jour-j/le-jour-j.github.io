@@ -122,18 +122,12 @@ export default function Catalogue({ catalogue }) {
           <p className="form-message">Chargement du catalogue…</p>
         )}
         {catalogue.state === "error" && (
-          <div className="notice-card">
-            <strong>Le catalogue public n'est pas joignable pour le moment.</strong>
-            <p>
-              Ce n'est pas la même chose qu'un catalogue vide : on ne sait juste pas, là, ce que les autres
-              ont déposé. La carte, les 467 lieux, les tronçons et les notes de terrain restent consultables
-              normalement, eux ne dépendent pas de cette connexion.
-              {" "}Si tu as toi-même déposé un livre sans compte, il reste ci-dessous.
-            </p>
-          </div>
+          <p className="form-message">
+            Les livres des autres n'ont pas pu être chargés. Ceux d'en dessous sont les tiens, gardés dans ce navigateur.
+          </p>
         )}
 
-        {books.length === 0 && catalogue.state !== "loading" && catalogue.state !== "error" && (
+        {books.length === 0 && catalogue.state !== "loading" && (
           <div className="notice-card">
             <strong>Le catalogue est encore vide.</strong>
             <p>
