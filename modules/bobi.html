@@ -73,6 +73,13 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+        /* Deux colonnes étaient imposées à toutes les largeurs : sur 360 px,
+           deux cartes de 140 px avec des paragraphes hachurés. */
+        @media (max-width: 600px) {
+            .upgrades { grid-template-columns: 1fr; }
+            body { padding: 10px; }
+            .container { padding: 12px; }
+        }
         .upgrade-card {
             background-color: #333;
             border: 1px solid #555;
@@ -132,6 +139,8 @@
     </div>
 
     <button class="btn-main" onclick="mineTemps()">Extraire du Temps Mort</button>
+    <button class="btn-upgrade" id="btn-change" onclick="changerJetons()" style="margin-top:10px">Changer ses Jetons Noirs au guichet</button>
+    <button class="btn-upgrade" id="btn-reset" onclick="reinitialiser()" style="margin-top:6px;opacity:.7">Liquider le protocole</button>
 
     <div class="upgrades">
         <div class="upgrade-card">
@@ -172,7 +181,12 @@
     </div>
 </div>
 
+<script src="btm-caisse.js"></script>
 <script>
+    // ─── TARIFS (UL de base ; l'inflation du site est appliquée par la caisse) ──
+    const COUT_ENREGISTREMENT = 1; // droit de dossier sur chaque acquisition
+    const TAUX_CHANGE = 0.25;      // 1 Jeton Noir = 0,25 UL, avant frais
+
     // Variables de ressources
     let temps = 0;
     let lingots = 0;
@@ -192,17 +206,33 @@
         spore: 20
     };
 
+    function majEtiquettes() {
+        ['btn-latence','btn-presse','btn-banque','btn-spore'].forEach(id => {
+            const b = document.getElementById(id);
+            if (!b) return;
+            const base = (id === 'btn-spore') ? 'Propager' : 'Acquérir';
+            b.textContent = base + BTM.etiquette(COUT_ENREGISTREMENT);
+        });
+    }
+    if (window.BTM) { BTM.surEtat(majEtiquettes); setTimeout(majEtiquettes, 0); }
+
     function log(msg) {
         const logBox = document.getElementById('log');
-        logBox.innerHTML += `<div>>> ${msg}</div>`;
+        // Avant : `innerHTML +=` reparsait tout le journal à chaque ligne, et
+        // le journal grossissait sans limite.
+        const ligne = document.createElement('div');
+        ligne.textContent = '>> ' + msg;
+        logBox.appendChild(ligne);
+        while (logBox.children.length > 50) logBox.removeChild(logBox.firstChild);
         logBox.scrollTop = logBox.scrollHeight;
     }
 
     function updateUI() {
         // Affichage des ressources
-        document.getElementById('res-temps').innerText = Math.floor(temps);
-        document.getElementById('res-lingots').innerText = Math.floor(lingots);
-        document.getElementById('res-jetons').innerText = Math.floor(jetons);
+        const f = (v) => Math.floor(v).toLocaleString('fr-FR');
+        document.getElementById('res-temps').innerText = f(temps);
+        document.getElementById('res-lingots').innerText = f(lingots);
+        document.getElementById('res-jetons').innerText = f(jetons);
 
         // Affichage des coûts
         document.getElementById('cost-latence').innerText = Math.floor(costs.latence);
@@ -228,8 +258,10 @@
         updateUI();
     }
 
-    function buyLatence() {
+    async function buyLatence() {
         if (temps >= costs.latence) {
+            const ok = await BTM.payer("Droit d'enregistrement — Zone de Latence", COUT_ENREGISTREMENT);
+            if (!ok) { log("Dossier refusé : droit d'enregistrement impayé."); return; }
             temps -= costs.latence;
             latenceCount++;
             costs.latence *= 1.5;
@@ -238,8 +270,10 @@
         }
     }
 
-    function buyPresse() {
+    async function buyPresse() {
         if (temps >= costs.presse) {
+            const ok = await BTM.payer("Droit d'enregistrement — Presse à compacter", COUT_ENREGISTREMENT);
+            if (!ok) { log("Dossier refusé : droit d'enregistrement impayé."); return; }
             temps -= costs.presse;
             presseCount++;
             costs.presse *= 1.5;
@@ -248,8 +282,10 @@
         }
     }
 
-    function buyBanque() {
+    async function buyBanque() {
         if (lingots >= costs.banque) {
+            const ok = await BTM.payer("Droit d'enregistrement — Banque Fantôme", COUT_ENREGISTREMENT);
+            if (!ok) { log("Dossier refusé : droit d'enregistrement impayé."); return; }
             lingots -= costs.banque;
             banqueCount++;
             costs.banque *= 1.5;
@@ -258,14 +294,32 @@
         }
     }
 
-    function buySpore() {
+    async function buySpore() {
         if (jetons >= costs.spore) {
+            const ok = await BTM.payer("Droit d'enregistrement — Spore", COUT_ENREGISTREMENT);
+            if (!ok) { log("Dossier refusé : droit d'enregistrement impayé."); return; }
             jetons -= costs.spore;
             sporeCount++;
             costs.spore *= 2;
             log("Spore libérée. Le mycélium contamine les structures (Rendement x2).");
             updateUI();
         }
+    }
+
+    // ─── GUICHET DE CHANGE FANTÔME ───────────────────────────────────────
+    // Les Jetons Noirs n'avaient aucune existence hors du module. Ils se
+    // changent maintenant en unités du site, à un taux dérisoire et après
+    // frais — et le site plafonne ce qu'il reverse par ouverture de module.
+    async function changerJetons() {
+        const dispo = Math.floor(jetons);
+        if (dispo < 4) { log("Change refusé : il faut au moins 4 Jetons Noirs."); return; }
+        const montant = Math.round(dispo * TAUX_CHANGE * 100) / 100;
+        jetons -= dispo;
+        updateUI();
+        const ok = await BTM.crediter("Change fantôme — " + dispo + " Jetons Noirs", montant);
+        log(ok
+            ? "Bordereau de change émis : " + dispo + " Jetons Noirs → " + montant.toFixed(2) + " unités portées au compte."
+            : "Guichet fermé : le change n'a rien versé (plafond atteint ou hors-site).");
     }
 
     // Boucle principale (1 fois par seconde)
@@ -276,23 +330,78 @@
         temps += latenceCount * mult;
 
         // La Presse consomme du Temps Mort pour faire des Lingots
-        let tempsToConvert = presseCount * 5 * mult;
-        if (temps >= tempsToConvert && presseCount > 0) {
-            temps -= tempsToConvert;
-            lingots += presseCount * mult;
+        // (au prorata de ce qui est disponible, pas en tout-ou-rien)
+        if (presseCount > 0) {
+            const demande = presseCount * 5 * mult;
+            const conv = Math.min(temps, demande);
+            temps -= conv;
+            lingots += (conv / 5);
         }
 
         // La Banque Fantôme consomme des Lingots pour faire des Jetons Noirs
-        let lingotsToConvert = banqueCount * 2 * mult;
-        if (lingots >= lingotsToConvert && banqueCount > 0) {
-            lingots -= lingotsToConvert;
-            jetons += banqueCount * mult;
+        if (banqueCount > 0) {
+            const demande = banqueCount * 2 * mult;
+            const conv = Math.min(lingots, demande);
+            lingots -= conv;
+            jetons += (conv / 2);
         }
 
         updateUI();
+        sauvegarder();
     }, 1000);
 
+    // ─── SAUVEGARDE ─────────────────────────────────────────────────────
+    // Un jeu d'attente sans sauvegarde : le RELOAD du moniteur, la
+    // réactivation ou un simple rafraîchissement effaçaient tout.
+    const CLE_SAVE = 'bobi_protocole_v1';
+
+    function sauvegarder() {
+        try {
+            localStorage.setItem(CLE_SAVE, JSON.stringify({
+                temps, lingots, jetons, latenceCount, presseCount, banqueCount, sporeCount, costs,
+                horodatage: Date.now(),
+            }));
+        } catch { /* stockage indisponible : on continue sans sauvegarde */ }
+    }
+
+    function charger() {
+        let d;
+        try { d = JSON.parse(localStorage.getItem(CLE_SAVE)); } catch { return; }
+        if (!d || typeof d !== 'object') return;
+        temps = Number(d.temps) || 0;
+        lingots = Number(d.lingots) || 0;
+        jetons = Number(d.jetons) || 0;
+        latenceCount = Number(d.latenceCount) || 0;
+        presseCount = Number(d.presseCount) || 0;
+        banqueCount = Number(d.banqueCount) || 0;
+        sporeCount = Number(d.sporeCount) || 0;
+        if (d.costs && typeof d.costs === 'object') costs = { ...costs, ...d.costs };
+
+        // Production différée : le sujet du jeu, c'est d'exploiter l'attente.
+        // L'attente hors ligne compte donc, plafonnée à 8 heures.
+        const ecoule = Math.max(0, Math.floor((Date.now() - (d.horodatage || Date.now())) / 1000));
+        const compte = Math.min(ecoule, 8 * 3600);
+        if (compte > 5 && latenceCount > 0) {
+            const mult = Math.pow(2, sporeCount);
+            temps += latenceCount * mult * compte;
+            const h = Math.floor(compte / 3600), m = Math.floor((compte % 3600) / 60);
+            log(`PRODUCTION DIFFÉRÉE — ${h} h ${String(m).padStart(2,'0')} de latence comptabilisées.`);
+        }
+    }
+
+    function reinitialiser() {
+        if (!window.confirm("Liquider le protocole ? Tout repart de zéro.")) return;
+        try { localStorage.removeItem(CLE_SAVE); } catch { /* ignoré */ }
+        temps = 0; lingots = 0; jetons = 0;
+        latenceCount = 0; presseCount = 0; banqueCount = 0; sporeCount = 0;
+        costs = { latence: 10, presse: 50, banque: 10, spore: 20 };
+        log("Protocole liquidé. La Chambre recommence à zéro.");
+        updateUI();
+        sauvegarder();
+    }
+
     // Init
+    charger();
     updateUI();
 </script>
 

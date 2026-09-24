@@ -214,64 +214,113 @@
 
     <div class="scroll-hint" id="scrollHint"></div>
 
+    <script src="btm-caisse.js"></script>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // CONFIG FIREBASE (REMETS TES INFOS ICI)
-        const firebaseConfig = {
-            apiKey: "TON_API_KEY",
-            authDomain: "TON_PROJET.firebaseapp.com",
-            databaseURL: "https://boite-a-nom-default-rtdb.europe-west1.firebasedatabase.app/",
-            projectId: "TON_PROJET",
-            storageBucket: "TON_PROJET.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
-        };
+        // ─── TARIFS (UL de base ; l'inflation du site est appliquée par la caisse) ──
+        const COUT_DEPOT = 10;      // déposer un nom
+        const COUT_RAYER = 2;       // rayer / dé-rayer un nom
+        const COUT_SUPPRIMER = 25;  // radier définitivement
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        const ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
-
-        async function hashPassword(string) {
-            const utf8 = new TextEncoder().encode(string);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        function afficherRefus(texte) {
+            let el = document.getElementById('btm-refus');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'btm-refus';
+                el.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:9999;background:#2a0810;border:1px solid #ff5570;color:#ffb0c0;padding:8px 16px;font-size:12px;font-family:sans-serif;border-radius:6px;';
+                document.body.appendChild(el);
+            }
+            el.textContent = texte;
+            el.style.display = 'block';
+            clearTimeout(el._t);
+            el._t = setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
+
+        // Les tarifs sont annoncés sur les boutons « OK » de chaque boîte.
+        function majTarifs() {
+            document.querySelectorAll('.box button').forEach(b => {
+                if (b.classList.contains('del-btn')) return;
+                b.textContent = 'OK' + BTM.etiquette(COUT_DEPOT);
+            });
+        }
+        BTM.surEtat(majTarifs);
+        setTimeout(majTarifs, 0);
+
+        // ─── BANDEAU D'ÉTAT DU REGISTRE ────────────────────────────────────
+        function etatRegistre(texte) {
+            let el = document.getElementById('etat-registre');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'etat-registre';
+                el.style.cssText = 'text-align:center;font-size:12px;font-family:sans-serif;padding:6px 10px;margin:0 0 12px;border-radius:6px;background:rgba(74,144,226,0.12);color:#9fc4ea;border:1px solid rgba(74,144,226,0.4);';
+                const premier = document.querySelector('.box');
+                if (premier && premier.parentElement) premier.parentElement.insertBefore(el, premier);
+                else document.body.prepend(el);
+            }
+            el.textContent = texte;
+        }
+
+        // ─── REGISTRE LOCAL ────────────────────────────────────────────────
+        // Décision du 12/09/2026 : pas de partage entre visiteurs. La base
+        // Firebase distante est retirée (config à trous, base publique ouverte
+        // en écriture à n'importe qui, mot de passe d'administration = « admin »,
+        // et un import CDN dont l'échec tuait toute la page). Les noms vivent
+        // dans le navigateur de celui qui les dépose.
+        function creerRegistreLocal() {
+            const CLE = 'btm_boites_local_v1';
+            const lire = () => { try { return JSON.parse(localStorage.getItem(CLE)) || {}; } catch { return {}; } };
+            const ecrire = (d) => { try { localStorage.setItem(CLE, JSON.stringify(d)); } catch { /* stockage indisponible */ } };
+            const abonnes = {};
+            const notifier = (id) => (abonnes[id] || []).forEach(cb => cb(lire()[id] || null));
+            return {
+                abonner(id, cb) { (abonnes[id] = abonnes[id] || []).push(cb); cb(lire()[id] || null); },
+                ajouter(id, valeur) { const d = lire(); d[id] = d[id] || {}; d[id]['l' + Date.now() + Math.random().toString(36).slice(2, 6)] = valeur; ecrire(d); notifier(id); },
+                modifier(id, cle, patch) { const d = lire(); if (d[id] && d[id][cle]) { Object.assign(d[id][cle], patch); ecrire(d); notifier(id); } },
+                supprimer(id, cle) { const d = lire(); if (d[id]) { delete d[id][cle]; ecrire(d); notifier(id); } },
+            };
+        }
+
+        const registre = creerRegistreLocal();
+        etatRegistre("Registre personnel : les noms déposés restent dans ce navigateur.");
 
         function initBox(id) {
             const el = document.getElementById('box-' + id);
             const input = el.querySelector('input');
             const btn = el.querySelector('button');
             const list = el.querySelector('ul');
-            const dbRef = ref(db, 'boites/' + id);
 
-            // Lecture en temps réel
-            onValue(dbRef, (snap) => {
+            // Lecture en temps réel (distante ou locale selon le registre actif)
+            registre.abonner(id, (data) => {
                 list.innerHTML = '';
-                const data = snap.val();
                 if (data) {
                     Object.entries(data).reverse().forEach(([key, val]) => {
                         const li = document.createElement('li');
                         li.className = val.used ? 'used' : '';
-                        li.innerHTML = `<span>${val.text}</span><button class="del-btn">Suppr</button>`;
+                        // Le texte vient d'un visiteur quelconque : il est
+                        // inséré comme TEXTE, jamais comme HTML (XSS stockée).
+                        const span = document.createElement('span');
+                        span.textContent = val.text;
+                        const del = document.createElement('button');
+                        del.className = 'del-btn';
+                        del.textContent = 'Suppr';
+                        li.appendChild(span);
+                        li.appendChild(del);
 
-                        // Toggle rayé
-                        li.onclick = (e) => {
+                        // Toggle rayé — radiation d'une dénomination : payante.
+                        li.onclick = async (e) => {
                             if (e.target.tagName !== 'BUTTON') {
-                                update(ref(db, `boites/${id}/${key}`), { used: !val.used });
+                                const ok = await BTM.payer("Radiation d'une dénomination", COUT_RAYER);
+                                if (!ok) return afficherRefus("Radiation refusée : provision insuffisante.");
+                                registre.modifier(id, key, { used: !val.used });
                             }
                         };
 
                         // Supprimer
-                        li.querySelector('button').onclick = async (e) => {
+                        del.onclick = async (e) => {
                             e.stopPropagation();
-                            const p = prompt("Pass?");
-                            if (p && await hashPassword(p) === ADMIN_HASH) {
-                                remove(ref(db, `boites/${id}/${key}`));
-                            }
+                            const ok = await BTM.payer("Radiation définitive — frais de dossier", COUT_SUPPRIMER);
+                            if (!ok) return afficherRefus("Radiation refusée : frais de dossier impayés.");
+                            registre.supprimer(id, key);
                         };
                         list.appendChild(li);
                     });
@@ -279,9 +328,11 @@
             });
 
             // Ajouter
-            const add = () => {
+            const add = async () => {
                 if (input.value.trim()) {
-                    push(dbRef, { text: input.value.trim(), used: false });
+                    const ok = await BTM.payer("Dépôt d'un nom au registre — " + id, COUT_DEPOT);
+                    if (!ok) return afficherRefus("Dépôt refusé : provision insuffisante.");
+                    registre.ajouter(id, { text: input.value.trim(), used: false });
                     input.value = '';
                     document.body.classList.add('rainbow-active');
                     setTimeout(() => document.body.classList.remove('rainbow-active'), 800);
