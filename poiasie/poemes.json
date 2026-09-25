@@ -2687,6 +2687,66 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "17:52:15",
       "texte": "valeur danse entre sourire et ombre."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:53:43",
+      "texte": "Richesse fuite dans les mains vides,\nDans la nuit des carnets d'économie,\nLa lumière de l'or s'efface derrière le vent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:54:03",
+      "texte": "Pièces dévalent dans la danse silencieuse des temps. Valeur éphémère en main invisible. Affaires se cachent au coin de la monnaie.\n\nLe soleil perçoit les trésors enfouis. Argent glisse sur un sol inconnu. Richesse, spectre fugace"
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "17:54:24",
+      "texte": "Enterré. L'argent roule sur un sol inconnu. Richesses, spectres évadés. Éclat d'or disparaissant."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "17:54:44",
+      "texte": "Cloche tonnerre des coffres, silence de la marchandise. Argent volé en échos frémissants.\n\nSilencieux murmurant du marché s'effondrant sous le poids. Valeurs flottent, vagues sans maître. Richesse se fondante, spectre d"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "17:55:17",
+      "texte": "Cachée dans le vide, écho de mots usés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:48:53",
+      "texte": "Trésors des abysses, souffles d'argent qui nous guident.\nValeur immatérielle, échos des changements imprévisibles.\nRichesse en mouvement, danseuse des échanges infinis."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:49:14",
+      "texte": "Montant chuter, silence argenté. Balise du temps effilochée. Valeur éphémère."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:49:34",
+      "texte": "Nuages de billets volants, une danse éblouissante. Lignes invisibles sur la carte monétaire. Fantômes d'or se dissippant."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:49:50",
+      "texte": "Échos des coffres fermés, silence du liquide. Fluctuations de valeur dans un murmure secret.\nClarté déformée, le glissement des métaux. Trésors éthérés, fugaces en danse."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:50:19",
+      "texte": "mains agissent, voilà la valeur."
     }
   ]
 }
