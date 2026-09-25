@@ -2957,6 +2957,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:09:33",
       "texte": "Désert des promesses. Rêve d'or en mousse."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:11:05",
+      "texte": "Trésor caché sous les coups de soleil,\nRichesse de sable qui brille la nuit,\nÉchanges secrets dans le vent aride."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:11:29",
+      "texte": "monnaies s'enfuient sous les ombres dorées.  \ncartes de crédit pleurent sur des mains vides.  \nvaleur vacillante du rêve d'or."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:11:56",
+      "texte": "Étoiles chutent dans les portefeuilles, poids de l'espérance.\nMarchands se dissimulent sous leur propre argent.\nSoleil coule vers la banque en flammes d'ambition."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:12:23",
+      "texte": "Échange des murmures au marché sous les rires de mercenaires financiers. Balise temporelle des richesses volées par le vent incessant du temps, affluent et se fige dans un sillon doré. Échos argentins des décrets fiscaux murmurent des cont"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:13:03",
+      "texte": "lants de la banque. Vautours flottent dans la brume."
     }
   ]
 }
