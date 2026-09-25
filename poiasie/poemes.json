@@ -2867,6 +2867,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:01:21",
       "texte": "Écoute la monnaie, elle parle à des voix invisibles. Le silence est la plus belle musique."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:02:47",
+      "texte": "Argent doré sous les doigts, une danse du pouvoir.\nCe qui compte ne pèse pas, le vent seul sait l'évaluer.\nRichesses cachées dans un regard sincère."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:03:05",
+      "texte": "Vent murmure les secrets des champs dorés.\n\nPieds sur le sol fertile du commerce marchent silencieusement.\n\nRichesse transmutée sous la dent des saisons."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:03:24",
+      "texte": "Argent dormant dans les veines de pierres,\nMarchandises enchantées dans le souffle du vent,\nCapitals fantômes dans les reflets de l'océan."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:03:41",
+      "texte": "Cœurs battants craignent le froid des comptes arides. Fluctuations argentées, murmurant les faux espoirs. Richesses s'enfuiront si la balance se déséquilibre. Argent d'un souffle, éphémère et frêle. Valeurs vol"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:04:11",
+      "texte": "Échanges chuintent,\nArgent sèche en fleuve,\nValeurs volent bas."
     }
   ]
 }
