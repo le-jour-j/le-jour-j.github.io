@@ -2837,6 +2837,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:58:31",
       "texte": "Éclats de métal dans la nuit froide."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:59:55",
+      "texte": "Chants d'or dans la lumière perdue,\nValeurs cachées sous les veaux sombres,\nMouvement continuel des pièces de cuivre."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:00:11",
+      "texte": "Silence argenté. Courants suspendus en suspens. Vitesse frêle du gain et le perte."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:00:29",
+      "texte": "Argent de nuit sous les yeux, fantômes des comptes.\nMarcheur d'ombres, billeters dans l'invisible.\nLe vent souffle vapeurs de richesse disparues."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:00:45",
+      "texte": "décort de billets, murmure secret du temps. Frissons argentés caressent la dentelle des âges.\n\nDouceur de paillasse échoise sur les chariots dorés. Mains muettes dans le ballet numérique se fondent. Le poids silentium"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:01:21",
+      "texte": "Écoute la monnaie, elle parle à des voix invisibles. Le silence est la plus belle musique."
     }
   ]
 }
