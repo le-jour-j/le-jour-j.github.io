@@ -2927,6 +2927,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:06:51",
       "texte": "sous des drapeaux de papier argenté, le vent murmure à travers les coins tristes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:08:13",
+      "texte": "Monnaie d'or, songeau la nuit des richesses perdues.\nCœur de commerce, écho des cris de l'espoir vaincu.\nFragile balance, poids de la ferveur de nos esprits."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:08:31",
+      "texte": "Papiers volent dans le vent. Rentes chuchotent des secrets. Argent liquide, silence glacial.\n\nCendres du temps. Les mains tissent les richesses invisibles. Valeurs s'effondrent sur les flots changeants."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:08:50",
+      "texte": "Orpheline des bourses fantômes. Lumière verte des comptes effondrés. Métal blanc sous la lune fugitive."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:09:05",
+      "texte": "Billets chuchotant dans le vide silencieux, écho de valeur disparue. Argent scintillant, reflet trompeur sur les dents défigurées par le temps impitoyable. Valeurs volantes dans un ballet d'ombres et de lumières. Richesse murmurée"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:09:33",
+      "texte": "Désert des promesses. Rêve d'or en mousse."
     }
   ]
 }
