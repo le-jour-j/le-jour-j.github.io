@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /banque-fantome/compte
+Disallow: /banque-fantome/messages
+
+# Un domaine peut annoncer plusieurs sitemaps. Le premier couvre le site
+# racine, le second l'application Banque Fantôme, qui a son propre build et
+# tient la liste de ses routes (banque-fantome/scripts/prerender.mjs).
+Sitemap: https://jeansonpechin.com/sitemap.xml
+Sitemap: https://jeansonpechin.com/banque-fantome/sitemap.xml

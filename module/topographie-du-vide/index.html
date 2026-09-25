@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="fr"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topographie du vide — application jouable | Jeanson Péchin</title>
+  <meta name="description" content="Cartographier ce qu'il n'y a pas : une exploration du vide comme territoire mesurable.">
+
+  <meta property="og:title" content="Topographie du vide — application jouable | Jeanson Péchin">
+  <meta property="og:url" content="https://jeansonpechin.com/module/topographie-du-vide/">
+  <meta property="og:image" content="https://jeansonpechin.com/images/cheque/cheque_A_jeanson_pechin.jpg">
+  <meta property="og:site_name" content="Jeanson Péchin">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+
+  <link rel="manifest" href="/site.webmanifest">
+  <script type="module" crossorigin="" src="/assets/index-BwkogJhp.js"></script>
+  <link rel="stylesheet" crossorigin="" href="/assets/index-BokUHoNR.css">
+<link rel="canonical" href="https://jeansonpechin.com/module/topographie-du-vide/"><meta property="og:description" content="Cartographier ce qu'il n'y a pas : une exploration du vide comme territoire mesurable."><meta property="og:type" content="article"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Topographie du vide — application jouable | Jeanson Péchin"><meta name="twitter:description" content="Cartographier ce qu'il n'y a pas : une exploration du vide comme territoire mesurable."><meta name="twitter:image" content="https://jeansonpechin.com/images/cheque/cheque_A_jeanson_pechin.jpg"><meta name="robots" content="index, follow"></head>
+
+<body>
+  <div id="root"><div id="app-shell" style="display: flex; height: 100vh; width: 100vw; background: var(--bg); color: var(--text); font-family: var(--font-main);"><style>
+        .mycelium-radial {
+          position: fixed;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          background: radial-gradient(circle at 20% 30%, rgba(57,255,106,0.02) 0%, transparent 30%),
+                      radial-gradient(circle at 80% 70%, rgba(255,179,71,0.02) 0%, transparent 30%);
+          animation: breathe 20s ease-in-out infinite;
+        }
+        @keyframes breathe {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.6; }
+        }
+        .mycelium-canvas {
+          position: fixed;
+          inset: 0;
+          width: 100vw;
+          height: 100vh;
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.15;
+        }
+      </style><div class="mycelium-radial"></div><canvas class="mycelium-canvas" width="1280" height="720"></canvas><style>
+      @keyframes liquidationPulseDynamic {
+        0% { transform: scale(1); box-shadow: 0 0 0 rgba(0,0,0,0); }
+        45% { transform: scale(1.040); box-shadow: 0 0 18px rgba(57,255,106,0.6); }
+        100% { transform: scale(1); box-shadow: 0 0 0 rgba(0,0,0,0); }
+      }
+      .liquidation-btn-dynamic {
+        background: #39ff6a;
+        border: 1px solid #22cc55;
+        animation: liquidationPulseDynamic 1.40s infinite;
+      }
+      .liquidation-btn-dynamic:active {
+        animation-play-state: paused;
+        transform: scale(0.95);
+      }
+    </style><style>
+        @keyframes cartBounceKf {
+          0% { transform: scale(1) rotate(0deg); }
+          30% { transform: scale(1.28) rotate(-8deg); background: #39ff6a; box-shadow: 0 0 16px rgba(57,255,106,0.85); }
+          55% { transform: scale(0.94) rotate(5deg); }
+          100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes soldeFlashKf {
+          0%, 100% { transform: scale(1); color: #000000; }
+          35% { transform: scale(1.22); color: #ff3b3b; }
+        }
+        .cart-bounce { animation: cartBounceKf 0.5s ease; }
+        .solde-flash { animation: soldeFlashKf 0.42s ease-out; }
+      </style><nav style="width: 260px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; transition: width 0.2s;"><style>
+        @keyframes minmaxGoldPulse {
+          /* filter:drop-shadow (pas box-shadow/text-shadow) : une règle
+             globale force text-shadow/box-shadow à none !important sur
+             tout le site, y compris pendant une animation — drop-shadow
+             n'est pas concerné et rend correctement le glow. */
+          0% { transform: scale(1); color: var(--text); filter: drop-shadow(0 0 0 rgba(246,166,35,0)); }
+          45% { transform: scale(1.3); color: #f6a623; filter: drop-shadow(0 0 8px rgba(246,166,35,0.8)); }
+          70% { transform: scale(0.95); color: #f6a623; filter: drop-shadow(0 0 3px rgba(246,166,35,0.3)); }
+          100% { transform: scale(1); color: var(--text); filter: drop-shadow(0 0 0 rgba(246,166,35,0)); }
+        }
+        .minmax-pulse { animation: minmaxGoldPulse 0.6s ease; }
+      </style><div style="border-bottom: 1px solid var(--border); padding: 12px 16px; display: grid; grid-template-columns: 24px 1fr 24px; align-items: center;"><span></span><div id="minmax-title" style="font-family: var(--font-mono); font-size: 20px; letter-spacing: 0.12em; font-weight: bold; text-align: center; display: inline-block;">Minmax</div><button style="justify-self: end; background: none; border: 1px solid var(--border); width: 24px; height: 24px; cursor: pointer; color: var(--text);">«</button></div><div style="flex: 1 1 0%; overflow-y: auto;"><div style="padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 9px; color: var(--text-muted);">// SYSTÈMES</span><span style="font-size: 9px; color: rgb(255, 68, 68); font-family: var(--font-mono);">INF: +4%</span></div><button title="Hub central — tableau de bord" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">SYS-000</span><span>Galerie</span></button><button title="Inventaire des œuvres matérielles" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">BTM-REG</span><span>Arts Visuels</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><button title="Ventes flash à durée limitée" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">FLS-001</span><span>Bio</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><button title="Archives audio" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">AUD-SYS</span><span>Musique</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><div style="padding: 16px 16px 4px; font-size: 9px; color: var(--text-muted);">// MODULES</div><button title="Simulations complexes &amp; Bacs à sable" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">SIM-001</span><span>Applications</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><div style="padding: 16px 16px 4px; font-size: 9px; color: var(--text-muted);">// ARCHIVES</div><button title="Espace sécurisé — archives téléchargeables" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">DOC-SYS</span><span>Downloads</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><button title="Canaux de transmission vidéo directs" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--text); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">POV-SYS</span><span>Vidéo</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><div style="padding: 16px 16px 4px; font-size: 9px; color: var(--text-muted);">// FINANCEMENT</div><button title="Sites et applications réalisés" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(246, 166, 35); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">CDT-001</span><span>Sites annexes</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><button title="Écrire un message" style="background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(232, 212, 122); font-family: var(--font-main); font-size: 12px; padding: 10px 16px; cursor: pointer; text-align: left; width: 100%; display: flex; align-items: center; gap: 10px; opacity: 1; transition: background 0.2s;"><span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); min-width: 60px;">MSG-001</span><span>Message</span><span style="margin-left: auto; font-size: 9px; font-family: var(--font-mono); color: rgb(246, 166, 35);">🔒 3.66€</span></button><div style="padding: 12px 16px;"><button style="width: 100%; background: transparent; color: rgb(246, 166, 35); border: 1px solid rgb(246, 166, 35); padding: 9px 10px; cursor: pointer; font-family: var(--font-mono); font-size: 10px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Version gratuite</button><button style="width: 100%; margin-top: 8px; background: transparent; color: rgb(255, 68, 68); border: 1px solid rgb(255, 68, 68); padding: 9px 10px; cursor: pointer; font-family: var(--font-mono); font-size: 10px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Réinitialiser</button></div></div><div style="border-top: 1px solid var(--border); padding: 15px 16px;"><div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text); display: flex; align-items: center; gap: 6px;"><span style="color: var(--text-muted);">CAPITAL GLOBAL</span><span style="font-weight: 500;">4 837 219 €</span><span style="background: var(--bg); border: 1px solid var(--border); padding: 2px 6px; font-size: 9px;">+14€/min</span></div></div></nav><div style="position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 999998; width: min(520px, -32px + 100vw); background: rgba(8, 8, 10, 0.96); border: 1px solid var(--border); box-shadow: rgba(0, 0, 0, 0.65) 0px 18px 60px, rgba(204, 255, 0, 0.12) 0px 0px 18px; padding: 20px; color: rgb(255, 244, 184); font-family: var(--font-main);"><button aria-label="Fermer la fenêtre d’accueil" title="FERMER [-0.02 €]" style="position: absolute; right: 10px; top: 10px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: rgb(240, 216, 120); color: rgb(11, 11, 11); border: 1px solid var(--border); cursor: pointer; font-family: var(--font-mono); font-weight: bold; font-size: 16px; line-height: 1;">×</button><div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: rgb(240, 216, 120); margin-bottom: 14px;">NOTICE D’ACCÈS</div><div style="padding-right: 28px; font-size: 15px; line-height: 1.65; color: rgb(255, 244, 184);"><p style="margin: 0px 0px 10px;">Hello, bienvenu·e·s sur mon site où tout a un prix.</p><p style="margin: 0px 0px 10px;">Pour découvrir mon travail, il vous suffit d'acheter et de vendre.</p><p style="margin: 0px;">Pour une navigation rapide, une version gratuite est proposée.</p></div><div style="margin-top: 16px; font-family: var(--font-mono); font-size: 10px; color: rgb(216, 195, 106);">FERMETURE DE LA NOTICE : -0.02 €</div></div><div style="flex: 1 1 0%; display: flex; flex-direction: column; overflow: hidden; z-index: 10;"><div style="border-bottom: 1px solid var(--border); background: var(--bg2); padding: 8px 12px; min-height: auto; max-height: none; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: nowrap; flex-shrink: 0; overflow: hidden; box-sizing: border-box;"><div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 1 1 0%; min-width: 0px; overflow: auto hidden;"><div style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; min-width: 0px; flex-shrink: 0;"><div style="display: none; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; font-style: italic;">Votre temps mon argent</div></div><div style="font-size: 12px; color: var(--text); font-family: var(--font-mono); font-weight: bold; display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; justify-content: flex-end; min-width: 0px; flex-shrink: 0; white-space: nowrap;"><span style="display: inline-block;">CPT: 12.53 €</span><span style="color: var(--text); background: rgba(100, 100, 100, 0.15); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border); font-weight: normal; font-size: 9px;">ACHAT: 0.00 €</span><button class="liquidation-btn-dynamic" title="LIQUIDER SES ACTIFS — frais : -2.19 € — urgence : 0%" style="color: rgb(0, 0, 0); padding: 5px 8px; font-size: 8px; cursor: pointer; font-family: var(--font-mono); font-weight: bold; letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap;">LIQUIDER</button><span style="display: inline-block; overflow: hidden; padding: 4px;"><button style="background: rgb(245, 230, 168); color: rgb(5, 5, 5); border: 1px solid rgb(201, 162, 39); padding: 6px 10px; font-size: 9px; cursor: pointer; font-family: var(--font-mono); font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; opacity: 1; white-space: nowrap; box-shadow: rgba(232, 212, 122, 0.35) 0px 0px 10px; display: inline-block;">PANIER (0)</button></span><button title="Voir l'inventaire complet dans Galerie — revoir, réécouter, relancer ce que vous possédez" style="background: rgba(94, 200, 255, 0.12); color: rgb(94, 200, 255); border: 1px solid rgb(94, 200, 255); padding: 6px 8px; font-size: 10px; line-height: 1; cursor: pointer; font-family: var(--font-mono); font-weight: bold; white-space: nowrap;">→</button></div></div></div><div style="background: var(--bg2); border-bottom: 1px solid var(--border); padding: 10px 20px; height: 82px; box-sizing: border-box; overflow: hidden; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: stretch; flex-shrink: 0;"><div style="flex: 1 1 0%; min-width: 0px; overflow: hidden;"><div style="margin-bottom: 5px; letter-spacing: 0.1em;">// FLUX FINANCIER EN TEMPS RÉEL</div><div style="color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Aucune transaction enregistrée pour le moment.</div></div><div style="display: flex; align-items: center; gap: 10px; opacity: 0.8;"><div style="width: 80px; height: 15px; background: rgb(17, 17, 17); border: 1px solid rgb(51, 51, 51); position: relative; overflow: hidden;"><div style="position: absolute; top: 0px; bottom: 0px; left: 0px; width: 0%; background: repeating-linear-gradient(45deg, rgb(246, 166, 35), rgb(246, 166, 35) 2px, rgb(17, 17, 17) 2px, rgb(17, 17, 17) 4px); transition: width 0.3s;"></div></div><div style="font-family: var(--font-mono); font-size: 9px; color: rgb(102, 102, 102);">VOLATILITÉ</div></div></div><div style="flex: 1 1 0%; display: flex; overflow: hidden; position: relative; background: transparent;"><div style="display: flex; flex-direction: column; height: 100%; width: 100%; overflow: hidden;"><div style="padding: 10px 20px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 0px; flex-shrink: 0; z-index: 10;"><div style="display: flex; align-items: center; gap: 12px; min-width: 0px;"><span style="font-family: var(--font-mono); font-size: 12px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0px;">SIMULATION EN COURS: Topographie du vide</span><span style="font-family: var(--font-mono); font-size: 9px; color: rgb(204, 255, 0); border: 1px solid rgb(204, 255, 0); padding: 2px 8px; letter-spacing: 0.15em; flex-shrink: 0;">MODULE NATIF</span></div><div style="display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;"><button style="background: black; color: rgb(204, 255, 0); border: 1px solid rgb(204, 255, 0); padding: 8px 14px; cursor: pointer; font-family: var(--font-mono); font-size: 10px; font-weight: bold; letter-spacing: 0.1em; border-radius: 4px; opacity: 1;">⛶ PLEIN ÉCRAN [-0.59 €]</button><button style="background: var(--text); color: var(--bg); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; padding: 8px 16px; cursor: pointer; font-family: var(--font-mono); font-size: 10px; font-weight: bold; letter-spacing: 0.1em; border-radius: 4px; opacity: 1;">← FERMER LES APPLICATIONS [-0.37 €]</button></div></div><div style="flex: 1 1 0%; display: flex; align-items: safe center; justify-content: safe center; overflow: auto; position: relative; min-height: 0px; background: transparent; padding: 16px;"><div class="app"><style>
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+    /* Ces variables portaient les mêmes noms que celles du site (--bg, --text,
+       --border…) et les écrasaient sur toute la page tant que le module était
+       ouvert : le shell entier virait au violet. Elles sont désormais préfixées
+       et posées sur .app, pas sur :root. */
+    .app, .app *, .app *::before, .app *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .app {
+      --bg: #050407;
+      --surface: #0C0A10;
+      --border: #1A1520;
+      --text: #E0D8F0;
+      --muted: #504870;
+      --accent: #7B00FF;
+      --accent2: #FF003C;
+      min-height: 100%;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .noise {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      opacity: 0.6;
+      mix-blend-mode: overlay;
+    }
+
+    .scanline {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+    }
+
+    .floater {
+      position: absolute;
+      bottom: -60px;
+      color: var(--muted);
+      font-family: 'Unbounded', sans-serif;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear forwards;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: var(--op); }
+      50%  { transform: translateY(-45vh) rotate(180deg); }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .screen {
+      position: relative; z-index: 2;
+      min-height: 100%;
+      height: 100%;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── INTRO ── */
+    .intro-glyph {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px #1A1520;
+      line-height: 1;
+      user-select: none;
+      animation: breathe 6s ease-in-out infinite;
+      position: relative;
+    }
+    .intro-glyph::after {
+      content: attr(data-text);
+      position: absolute; inset: 0;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+      animation: glitchStroke 8s steps(1) infinite;
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(1.02); }
+    }
+    @keyframes glitchStroke {
+      0%,89%   { opacity: 0; transform: none; }
+      90%      { opacity: 1; transform: translateX(-4px); }
+      92%      { opacity: 1; transform: translateX(4px); }
+      94%      { opacity: 0; }
+    }
+
+    .intro-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .intro-title.glitch {
+      animation: titleGlitch 0.6s steps(2) forwards;
+    }
+    @keyframes titleGlitch {
+      0%   { clip-path: none; transform: none; }
+      20%  { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: skewX(-10deg) translateX(8px); color: var(--accent2); }
+      40%  { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: skewX(8deg) translateX(-6px); color: var(--accent); }
+      60%  { clip-path: none; transform: skewX(-4deg); }
+      100% { clip-path: none; transform: none; }
+    }
+
+    .intro-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .intro-desc {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #7A7090;
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    /* ── BUTTON ── */
+    .btn {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--muted);
+      color: var(--text);
+      padding: 1rem 2.8rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .btn:hover { border-color: var(--accent); color: #fff; }
+    .btn:hover::before { transform: scaleX(1); }
+
+    .btn-reset {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid #2A1A2E;
+      color: #3A2848;
+      padding: 0.6rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      z-index: 100;
+    }
+    .btn-reset:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ── PROGRESS ── */
+    .progress-bar-wrap {
+      width: 100%; max-width: 600px;
+      height: 2px;
+      background: #100D18;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.5s ease;
+      position: relative;
+    }
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute; right: -4px; top: 50%;
+      width: 8px; height: 8px;
+      background: var(--accent2);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 8px var(--accent2);
+    }
+
+    /* ── QUESTION CARD ── */
+    .q-card {
+      max-width: 640px; width: 100%;
+    }
+    .q-label {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .q-label-num {
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    .q-text {
+      font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+    }
+
+    /* ── OPTIONS ── */
+    .opt-btn {
+      display: block; width: 100%;
+      background: transparent;
+      border: 1px solid #1A1520;
+      color: #9080A8;
+      padding: 1.1rem 1.5rem;
+      text-align: left;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      transition: all 0.2s;
+      position: relative;
+      overflow: visible;
+    }
+    .opt-btn::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.2s ease;
+    }
+    .opt-btn:hover {
+      border-color: #2A1A40;
+      color: var(--text);
+      background: rgba(123,0,255,0.04);
+    }
+    .opt-btn:hover::before { transform: scaleY(1); }
+    .opt-btn.selected {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(123,0,255,0.08);
+    }
+
+    /* ── CLICK SPARK ── */
+    .click-spark {
+      position: absolute;
+      pointer-events: none;
+      z-index: 999;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.4rem;
+      color: var(--accent2);
+      animation: sparkPop 0.9s ease-out forwards;
+    }
+    @keyframes sparkPop {
+      0%   { opacity: 1; transform: scale(0.5) translate(-50%, -50%); }
+      40%  { opacity: 1; transform: scale(2.5) translate(-50%, -70%); }
+      100% { opacity: 0; transform: scale(0.8) translate(-50%, -160%); }
+    }
+
+    /* ── WACKY BUTTON ANIMS ── */
+    .anim-spin   { animation: wSpin   0.45s ease forwards !important; }
+    .anim-rubber { animation: wRubber 0.45s ease forwards !important; }
+    .anim-shake  { animation: wShake  0.45s ease forwards !important; }
+    .anim-flip   { animation: wFlip   0.45s ease forwards !important; }
+    .anim-bounce { animation: wBounce 0.45s ease forwards !important; }
+    .anim-glitch { animation: wGlitch 0.45s steps(3) forwards !important; }
+    .anim-zoom   { animation: wZoom   0.45s ease forwards !important; }
+    .anim-skew   { animation: wSkew   0.45s ease forwards !important; }
+
+    @keyframes wSpin   { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+    @keyframes wRubber { 0%{transform:scale(1,1)} 30%{transform:scale(1.35,.65)} 60%{transform:scale(.75,1.2)} 100%{transform:scale(1,1)} }
+    @keyframes wShake  { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-12px) rotate(-3deg)} 40%{transform:translateX(12px) rotate(3deg)} 60%{transform:translateX(-8px)} 80%{transform:translateX(8px)} }
+    @keyframes wFlip   { 0%{transform:rotateY(0)} 50%{transform:rotateY(180deg)} 100%{transform:rotateY(360deg)} }
+    @keyframes wBounce { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-24px)} 70%{transform:translateY(-12px)} }
+    @keyframes wGlitch { 0%{transform:none;color:inherit} 33%{transform:translateX(6px) skewX(5deg);color:var(--accent2)} 66%{transform:translateX(-6px) skewX(-5deg);color:var(--accent)} 100%{transform:none;color:inherit} }
+    @keyframes wZoom   { 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
+    @keyframes wSkew   { 0%,100%{transform:skewX(0)} 25%{transform:skewX(-16deg)} 75%{transform:skewX(16deg)} }
+
+    /* ── RESULT ── */
+    .result-glyph {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(3rem, 12vw, 8rem);
+      font-weight: 900;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 1rem;
+      animation: resultPulse 4s ease-in-out infinite;
+    }
+    @keyframes resultPulse {
+      0%,100% { filter: drop-shadow(0 0 12px currentColor); }
+      50%     { filter: drop-shadow(0 0 32px currentColor) drop-shadow(0 0 64px currentColor); }
+    }
+
+    .result-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+    .result-sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+    .result-quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #8070A0;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+      max-width: 480px;
+      text-align: center;
+    }
+    .result-desc {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #9080A8;
+      max-width: 520px;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .result-practice {
+      border: 1px solid #1A1020;
+      padding: 1.5rem 2rem;
+      max-width: 520px;
+      width: 100%;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .result-practice::before {
+      content: 'PRATIQUE';
+      position: absolute;
+      top: -0.6rem; left: 1.5rem;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      background: var(--bg);
+      padding: 0 0.5rem;
+      color: var(--muted);
+    }
+    .result-practice p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #B0A0C8;
+    }
+
+    .others-grid {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      justify-content: center;
+      max-width: 520px;
+      margin-bottom: 3rem;
+    }
+    .other-chip {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #1A1020;
+      color: #3A2848;
+      text-transform: uppercase;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--muted), transparent);
+      margin: 1.5rem auto;
+    }
+  </style><div class="noise"></div><div class="scanline"></div><div class="screen"><div class="intro-glyph " data-text="∅">∅</div><div class="divider"></div><h1 class="intro-title ">Topographie<br>du Vide</h1><p class="intro-sub">Une archéologie de l'absence</p><p class="intro-desc">Dix questions pour cartographier la forme de votre vide existentiel. Sartre, Camus, Frankl, Bauman ou la Vacuité — quel philosophe habite votre creux intérieur ?</p><button class="btn">Entrer dans le vide [-0.37 €]</button><p style="margin-top: 1rem; font-size: 0.7rem; color: var(--muted);">Chaque réponse [-0.07 €] · levée des scellés du verdict [-1.83 €]</p></div></div></div></div></div></div></div></div>
+
+
+</body></html>
