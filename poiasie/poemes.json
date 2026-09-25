@@ -2897,6 +2897,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:04:11",
       "texte": "Échanges chuintent,\nArgent sèche en fleuve,\nValeurs volent bas."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:05:34",
+      "texte": "Étoiles chancelantes dans les portefeuilles,\nNuages d'or dans les cieux des banques,\nMarchés de la terre aux mains qui tremblent."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:05:50",
+      "texte": "Argent pleure sous le soleil affamé. Coin fiscal se dessèche.\n\nPapier-valeur dans le vent cruellement soufflé. Valeur vacillante, spectre errant."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:06:08",
+      "texte": "Orbite lunaire d'un aube de billet,\nChangement en flux, échos éphémères,\nMiroirs du reflet des rêves dévalués."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:06:24",
+      "texte": "Dollars dans le vent se glissent et s'envolent, un ballet effréné de murmures vides. Éléphants d'or renient la vérité frêle. Trésors chuchotent en sommeil, les mains froides du temps grattent lentement. Vale"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "13:06:51",
+      "texte": "sous des drapeaux de papier argenté, le vent murmure à travers les coins tristes."
     }
   ]
 }
