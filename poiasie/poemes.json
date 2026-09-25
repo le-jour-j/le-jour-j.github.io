@@ -2807,6 +2807,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:55:52",
       "texte": "Échanges brûlent, mains nues marchent,\nValeurs tombées s'éveillent aux songes oubliés."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:57:15",
+      "texte": "Traces d'or dans les ombres, Écho d'un temps perdu, Miroir du désir infini.\n\nCouleurs vertes des billets, Crescendo de l'argent mouvant, La danse des abstra"
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:57:32",
+      "texte": "Des billets dans le vent,\nSymphonie numérique au son du marché,\nSilence-value transitoire."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:57:49",
+      "texte": "Orpheline du zéro point, danseuse de la croissance,\nLumière d'échanges dans l'ombre des nombres,\nMiroir fracturé aux reflets du destin."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:58:03",
+      "texte": "Chuchotements argentins murmurent les secrets de la nuit. Chutes cristallines dans le silence doré.\n\nPapier-monnaie scintillant sous un ciel austère, échos d'échange murmureurs."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:58:31",
+      "texte": "Éclats de métal dans la nuit froide."
     }
   ]
 }
