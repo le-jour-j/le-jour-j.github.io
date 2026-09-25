@@ -2747,6 +2747,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:50:19",
       "texte": "mains agissent, voilà la valeur."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:51:53",
+      "texte": "Oui, l'argent en mouvement, c'est le sang des échanges.\nLe temps qui passe, c'est une monnaie de sable.\nLa richesse, un mirage fuyant à l'horizon."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:52:11",
+      "texte": "Silice scintille. Richesse éphémère. Aube brumeuse.\n\nSable murmure. Noyé en argent. Éclipse des flèches d'or."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:52:29",
+      "texte": "Étoile au cœur de l'or du soleil,\nVieille monnaie enfantée dans les rues,\nLune qui plonge dans la poche d'argent vide."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:52:44",
+      "texte": "boum, boum, billets chuchotants. crumpets en cendre des rêves perdus.\n\nsilences murmurent le frottement des coins dorés. effroi du frisson de la dévaluation."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:53:13",
+      "texte": "brume des marchés flottant. prix des rêves s'évanouissent. sang du commerce coule froid."
     }
   ]
 }
