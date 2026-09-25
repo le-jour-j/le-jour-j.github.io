@@ -11,12 +11,18 @@ import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
 import Senrichir from './pages/Senrichir'
+import { applySeo } from './lib/seo'
 
 export default function App() {
   const location = useLocation()
 
   // Retour en haut à chaque changement de page
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [location.pathname])
+
+  // Titre, description, canonical et Open Graph de la page courante. Le
+  // prérendu pose déjà ces balises dans le fichier statique : cet effet les
+  // tient à jour quand on navigue dans l'appli sans recharger.
+  useEffect(() => { applySeo(location.pathname) }, [location.pathname])
 
   return (
     <AuthProvider>

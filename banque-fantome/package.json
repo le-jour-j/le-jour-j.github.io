@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "node ./node_modules/vite/dist/node/cli.js",
-    "build": "node ./node_modules/vite/dist/node/cli.js build",
-    "preview": "node ./node_modules/vite/dist/node/cli.js preview"
+    "build": "node ./node_modules/vite/dist/node/cli.js build && node scripts/prerender.mjs",
+    "preview": "node ./node_modules/vite/dist/node/cli.js preview",
+    "prerender": "node scripts/prerender.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
