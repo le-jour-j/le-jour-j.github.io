@@ -2777,6 +2777,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "12:53:13",
       "texte": "brume des marchés flottant. prix des rêves s'évanouissent. sang du commerce coule froid."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:54:36",
+      "texte": "Éclats d'or dans les vaisseaux,\nLuxe éphémère sur la terre brûlée,\nDétournant le regard de l'espérance."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:54:51",
+      "texte": "Cœur glacé, change d'or,\nMurmures des chartes échangent.\nSilence des coquillages dorés."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "12:55:08",
+      "texte": "Tortues en or se bousculant dans les silex de la Bourse,\nDans leur nacreux choc, des notes disparaissent,\nCœurs d'argent battant rythmique contre l'inconnu."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "12:55:24",
+      "texte": "Cavaliers au son du changement, fracas des billets volés. L'écume s'échappe sur la lame, le froid de la dévaluation cruelle. Les échos dorment dans les coffres vides, silencieux rêve fiscal."
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "12:55:52",
+      "texte": "Échanges brûlent, mains nues marchent,\nValeurs tombées s'éveillent aux songes oubliés."
     }
   ]
 }
