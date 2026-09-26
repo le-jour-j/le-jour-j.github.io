@@ -3107,6 +3107,30 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:06:35",
       "texte": "lumière vacille dans la nuit. Valeurs se perdent en silence."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:07:57",
+      "texte": "Mots d'or effondrés sur le sol. Flots financiers qui coulent sans cesse. Soleil obscurci par les affaires."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:08:13",
+      "texte": "Argents murmurants dans le vent froid. Trésors enfouis dorment. La lune se fige sur une monnaie creuse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:08:33",
+      "texte": "Miroir d'étoiles, éclat de métal purs,\nFantômes des pochettes vides, danseurs sans souci,\nRêve d'or massif, matrice de faillites."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:08:49",
+      "texte": "Crises chantent la fin des rires, notes discordantes du destin financier. Valeur volée dans le souffle glacé des coffres vides. Argent murmure, énigme silencieuse sur les lèvres des voleurs."
     }
   ]
 }
