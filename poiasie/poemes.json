@@ -3017,6 +3017,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "13:16:36",
       "texte": "Dorures ternissent le destin des époques."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:59:14",
+      "texte": "Métal précieux sous la poussière d'un monde en perpétuel mouvement,\nChangements constantes dans les mains de l'histoire,\nAu rythme du temps qui s'écoule, la valeur se dissipe."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "13:59:35",
+      "texte": "Coin chute dans le vide. Les chiffres murmurent des pertes. Richesses éphémères.\n\nSilence monétaire, éclats d'or effondrent. Chronos dévore les fortunes. Valeurs volatiles, ombres fugaces."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "13:59:56",
+      "texte": "Étoiles d'argent brossées par le vent des spéculations,\nChant des ténèbres de la banque en ruines,\nRichesse fantasme dans une nuit de billets crétinés."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:00:14",
+      "texte": "Échos argentins se brisent sur les murs dorés des décrets vides. Valeurs volées flottent sous le voile du sommeil économique. Mains avides, danse macabre au rythme des faux dollars. L'héritage liquide s'effrite dans une symphonie de trom"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:00:47",
+      "texte": "Pièces dévaluées. Le patrimoine en fuite dans un concert d'énigmes."
     }
   ]
 }
