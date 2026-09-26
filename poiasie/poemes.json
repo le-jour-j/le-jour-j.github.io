@@ -3047,6 +3047,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:00:47",
       "texte": "Pièces dévaluées. Le patrimoine en fuite dans un concert d'énigmes."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:02:14",
+      "texte": "Fortunes flottantes dans le vent,\nRichesses fantômes au bord du vide,\nArgent qui murmure les secrets des étoiles."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:02:30",
+      "texte": "Richesses flottantes au vent, silence argenté. Échange sous le clair de lune. Valeur s'échappe dans la nuit."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:02:56",
+      "texte": "Champ-prix d'ombre et lumière,\nMétal qui chante au fond des poches,\nNuage d'or s'évaporant vers les étoiles."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:03:15",
+      "texte": "Cliquetements en coffres verrouillés sous la lune argentée. Murmures de billets dans le vent soufflant. Richesses murmurent à travers les échos silencieux des pièces perdues. La danse du dollar danse avec l'espoir frôlant. Le tissu des"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:03:46",
+      "texte": "mais en soi perd de sa valeur."
     }
   ]
 }
