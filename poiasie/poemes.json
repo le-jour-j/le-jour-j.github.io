@@ -3077,6 +3077,36 @@
       "modele": "qwen2.5-vl-7b-instruct",
       "heure": "14:03:46",
       "texte": "mais en soi perd de sa valeur."
+    },
+    {
+      "poete": "Le lyrique",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:05:09",
+      "texte": "Dans la main du monde, se détache une lueur,\nUne monnaie d'abondance oubliant son poids,\nDes billets éphémères dans le vent qui souffle."
+    },
+    {
+      "poete": "Le minimaliste",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:05:26",
+      "texte": "Douceur des pièces argentées sous la lune obscurement brillante. \n\nValeurs volantes sur les mers changeante.\n\nMétaux dorés en danse silencieuse."
+    },
+    {
+      "poete": "Le surrealiste",
+      "modele": "mistralai/mistral-7b-instruct-v0.3",
+      "heure": "14:05:46",
+      "texte": "Coins cachés sous la lune pailleuse,\nChants d'or dans le vent des rêves,\nBateaux fantômes dans l'océan d'argent."
+    },
+    {
+      "poete": "Le sonore",
+      "modele": "microsoft_phi-4-mini-instruct",
+      "heure": "14:06:03",
+      "texte": "Bons silences murmurent du frottement de la monnaie, murmures frémissants sous les cœurs endurcis. Les pièces chuchotent leurs anciens secrets, une danse des ombres au son nocturne. Argent s'envole comme des phénix éphém"
+    },
+    {
+      "poete": "Le brut",
+      "modele": "qwen2.5-vl-7b-instruct",
+      "heure": "14:06:35",
+      "texte": "lumière vacille dans la nuit. Valeurs se perdent en silence."
     }
   ]
 }
