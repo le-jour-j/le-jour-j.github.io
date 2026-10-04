@@ -13,6 +13,7 @@ import Senrichir from './pages/Senrichir'
 import Actu from './pages/Actu'
 import Admin from './pages/Admin'
 import Participer from './pages/Participer'
+import Lettre from './pages/Lettre'
 import { applySeo } from './lib/seo'
 
 export default function App() {
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/compte"     element={<Compte />} />
           <Route path="/messages"   element={<Messages />} />
           <Route path="/admin"      element={<Admin />} />
+          <Route path="/lettre"     element={<Lettre />} />
         </Routes>
       </main>
       <InstallPWA />

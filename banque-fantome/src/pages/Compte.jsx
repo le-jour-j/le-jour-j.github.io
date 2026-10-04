@@ -6,6 +6,7 @@ import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import Notif from '../components/Notif'
 import { estVente, estEnCours, echeance, tempsRestant, messageErreur } from '../utils/encheres'
+import { monAbonnement, enregistrerAbonnement, emailValide } from '../lib/lettre'
 
 function ChangerMdp() {
   const [mdp, setMdp]         = useState('')
@@ -37,6 +38,61 @@ function ChangerMdp() {
       <button className="btn btn-outline" onClick={submit} disabled={loading}>
         {loading ? '…' : 'Changer le mot de passe'}
       </button>
+    </div>
+  )
+}
+
+// La lettre de la banque : l'adresse ne sert qu'à elle, et ne se voit pas sur le site
+function LettreCompte({ userId }) {
+  const [abo, setAbo]       = useState(undefined) // undefined = chargement, null = jamais inscrit
+  const [email, setEmail]   = useState('')
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg]       = useState(null)
+
+  useEffect(() => {
+    monAbonnement(userId).then(a => { setAbo(a); setEmail(a?.email || '') }).catch(() => setAbo(null))
+  }, [userId])
+
+  // Arrivée par le bouton « Recevoir la lettre » (/compte#lettre)
+  useEffect(() => {
+    if (abo !== undefined && window.location.hash === '#lettre')
+      document.getElementById('lettre')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [abo])
+
+  async function enregistrer(actif) {
+    if (actif && !emailValide(email)) { setMsg({ t: 'err', m: 'Adresse e-mail invalide' }); return }
+    setLoading(true)
+    try {
+      await enregistrerAbonnement(userId, actif ? email : (abo?.email || email), actif)
+      const a = await monAbonnement(userId)
+      setAbo(a)
+      setMsg({ t: 'ok', m: actif ? 'Inscrit·e : la lettre arrivera le lundi.' : 'Désinscrit·e : vous ne recevrez plus la lettre.' })
+    } catch (e) { setMsg({ t: 'err', m: e.message }) }
+    setLoading(false)
+  }
+
+  if (abo === undefined) return null
+  const inscrit = !!abo?.actif
+
+  return (
+    <div style={{ maxWidth: 520 }}>
+      <p className="texte-aide" style={{ marginBottom: '1rem' }}>
+        Une fois par semaine, les nouvelles de la banque en résumé : expositions, ateliers, billets.
+        {' '}{inscrit ? <strong>Vous êtes inscrit·e.</strong> : 'Vous n\'êtes pas inscrit·e.'}
+      </p>
+      <div className="field">
+        <label>E-mail</label>
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="vous@exemple.fr" />
+      </div>
+      {msg && <div className={msg.t === 'ok' ? 'msg-ok' : 'msg-err'} role="status">{msg.m}</div>}
+      <div style={{ display: 'flex', gap: '.6rem', flexWrap: 'wrap' }}>
+        {inscrit
+          ? <>
+              {email.trim() !== abo.email && <button className="btn btn-noir" onClick={() => enregistrer(true)} disabled={loading}>Changer d'adresse</button>}
+              <button className="btn btn-outline" onClick={() => enregistrer(false)} disabled={loading}>{loading ? '…' : 'Se désinscrire'}</button>
+            </>
+          : <button className="btn btn-noir" onClick={() => enregistrer(true)} disabled={loading}>{loading ? '…' : '✉ Recevoir la lettre'}</button>}
+      </div>
     </div>
   )
 }
@@ -229,6 +285,12 @@ export default function Compte() {
             </div>
           </>
         )}
+
+        {/* La lettre de la banque */}
+        <div id="lettre" style={{ marginTop: '3rem', scrollMarginTop: '6rem' }}>
+          <div className="section-head"><h2 style={{ fontSize: '2rem' }}>La lettre de la banque</h2></div>
+          <LettreCompte userId={user.id} />
+        </div>
 
         {/* Changer mot de passe */}
         <div style={{ marginTop: '3rem' }}>

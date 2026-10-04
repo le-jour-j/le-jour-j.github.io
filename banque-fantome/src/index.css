@@ -697,6 +697,12 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .admin-table td.pos { color: var(--vert); }
 .admin-table td.neg { color: var(--rouge-txt); }
 .admin-role { margin-left: .5rem; font-size: .6rem; padding: 1px 6px; }
+/* La lettre de la banque (2026-10-04) */
+.actu-lettre { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; border: 2px solid var(--noir); background: var(--jaune-fond); padding: .7rem 1rem; margin-bottom: 2rem; }
+.lettre-apercu { width: 100%; height: 640px; border: 2px solid var(--noir); background: var(--gris-clair); }
+.admin-table tr.lettre-inactif td { color: var(--gris); }
+.admin-table td.admin-actions { display: table-cell; text-align: right; white-space: nowrap; }
+.admin-table td.admin-actions .btn + .btn { margin-left: .4rem; }
 @media (max-width: 860px) { .admin-deux { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .admin-ligne { grid-template-columns: 56px 1fr; }

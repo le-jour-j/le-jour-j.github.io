@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
 import RecoveryCodeReveal from '../components/RecoveryCodeReveal'
 import { generateRecoveryCode, hashRecoveryCode } from '../utils/recoveryCode'
+import { emailValide, enregistrerAbonnement } from '../lib/lettre'
 
 function fakeEmail(pseudo) {
   return `${pseudo.toLowerCase().replace(/[^a-z0-9]/g, '_')}@banquefantome.local`
@@ -13,7 +14,12 @@ function fakeEmail(pseudo) {
 export default function Connexion() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const [mode, setMode]         = useState('login') // 'login' | 'register' | 'reset'
+  // ?lettre=1 : on arrive du bouton « Recevoir la lettre » → nouveau compte, case cochée
+  const [params] = useSearchParams()
+  const depuisLettre = params.get('lettre') === '1'
+  const [mode, setMode]         = useState(depuisLettre ? 'register' : 'login') // 'login' | 'register' | 'reset'
+  const [lettre, setLettre]     = useState(depuisLettre)
+  const [emailLettre, setEmailLettre] = useState('')
   const [pseudo, setPseudo]     = useState('')
   const [mdp, setMdp]           = useState('')
   const [code, setCode]         = useState('')
@@ -33,6 +39,7 @@ export default function Connexion() {
     if (mode === 'login' || mode === 'register') {
       if (!mdp || mdp.length < 6) e.mdp = 'Mot de passe requis (min 6 caractères)'
     }
+    if (mode === 'register' && lettre && !emailValide(emailLettre)) e.emailLettre = 'Adresse e-mail requise pour recevoir la lettre'
     if (mode === 'reset') {
       if (!code.trim()) e.code = 'Code de récupération requis'
       if (!nouveauMdp || nouveauMdp.length < 6) e.nouveauMdp = 'Min 6 caractères'
@@ -53,6 +60,11 @@ export default function Connexion() {
           const recoveryCode = generateRecoveryCode()
           const recoveryHash = await hashRecoveryCode(recoveryCode)
           await supabase.from('profiles').upsert({ id: data.user.id, pseudo: pseudo.trim(), recovery_code_hash: recoveryHash })
+          // Le compte existe : un souci d'inscription à la lettre ne doit pas le bloquer
+          if (lettre) {
+            try { await enregistrerAbonnement(data.user.id, emailLettre) }
+            catch (err) { setNotif({ msg: `Compte créé, mais la lettre : ${err.message} (à refaire dans Mon compte)`, type: 'err' }) }
+          }
           setRevealCode(recoveryCode)
         }
 
@@ -124,6 +136,22 @@ export default function Connexion() {
                 {errors.mdp && <span className="error-msg">{errors.mdp}</span>}
               </div>
           }
+
+          {mode === 'register' && (
+            <>
+              <label className="check-line">
+                <input type="checkbox" checked={lettre} onChange={e => setLettre(e.target.checked)} />
+                Recevoir la lettre de la banque (les nouvelles du projet, une fois par semaine)
+              </label>
+              {lettre && (
+                <div className="field">
+                  <label>E-mail (pour la lettre seulement)</label>
+                  <input type="email" value={emailLettre} onChange={e => setEmailLettre(e.target.value)} placeholder="vous@exemple.fr" onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
+                  {errors.emailLettre && <span className="error-msg">{errors.emailLettre}</span>}
+                </div>
+              )}
+            </>
+          )}
 
           {mode === 'reset' && (
             <div className="field">

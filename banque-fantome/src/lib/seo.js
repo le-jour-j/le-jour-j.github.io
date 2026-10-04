@@ -97,6 +97,7 @@ export const PAGES = [
   { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets émis et ventes en cours.", noindex: true },
   { path: "/messages", title: "Messages | Banque Fantôme", description: "Messagerie entre comptes.", noindex: true },
   { path: "/admin", title: "Admin | Banque Fantôme", description: "Espace du banquier.", noindex: true },
+  { path: "/lettre", title: "La lettre de la banque | Banque Fantôme", description: "Se désinscrire de la lettre de la Banque Fantôme.", noindex: true },
 ];
 
 const PAR_PATH = new Map(PAGES.map((p) => [p.path, p]));

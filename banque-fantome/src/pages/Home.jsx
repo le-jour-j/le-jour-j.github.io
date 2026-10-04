@@ -8,6 +8,7 @@ import Journal from '../components/Journal'
 import { MurBillets } from '../components/GuichetEmission'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
+import BoutonLettre from '../components/BoutonLettre'
 
 // Compteur animé (le chiffre "monte" jusqu'à sa valeur)
 function Compteur({ valeur }) {
@@ -82,6 +83,7 @@ export default function Home() {
             <Link to="/connexion" className="btn btn-jaune">→ Ouvrir un compte</Link>
             <Link to="/senrichir" className="btn btn-outline">Fabriquer son argent</Link>
             <Link to="/market" className="btn btn-outline">Entrer dans le market</Link>
+            <BoutonLettre />
           </div>
         </div>
       </section>
