@@ -11,6 +11,7 @@ import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
 import Senrichir from './pages/Senrichir'
+import Actu from './pages/Actu'
 import { applySeo } from './lib/seo'
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/market"     element={<Inventaire />} />
           <Route path="/inventaire" element={<Navigate to="/market" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
+          <Route path="/actu"       element={<Actu />} />
           <Route path="/deposer"    element={<Deposer />} />
           <Route path="/connexion"  element={<Connexion />} />
           <Route path="/compte"     element={<Compte />} />

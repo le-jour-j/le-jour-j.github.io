@@ -615,3 +615,53 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
   .ticker { animation: none; padding-left: 0; }
   .click-ink, .ripple { display: none; }
 }
+
+/* Bandeau d'accueil plus discret sur grand écran (2026-10-04) : titre sur une ligne, moins de marge */
+@media (min-width: 769px) {
+  .hero { padding: 2.6rem 0 2.4rem; }
+  .hero::before { font-size: 13rem; top: -2rem; }
+  .hero-eyebrow { margin-bottom: .9rem; }
+  .hero-title { font-size: clamp(3rem, 5.2vw, 4.4rem); margin-bottom: .8rem; }
+  .hero-br { display: none; }
+  .hero-sub { font-size: 1.02rem; line-height: 1.6; margin-bottom: 1.6rem; }
+}
+
+/* ── Fil d'actu (2026-10-04) : journal du projet, façon blog ── */
+.container-actu { max-width: 900px; }
+.fil-actu { display: flex; flex-direction: column; gap: 2.2rem; }
+.actu { border-top: 2px solid var(--noir); padding-top: 1.1rem; }
+.actu-brouillon { background: repeating-linear-gradient(-45deg, transparent 0 14px, var(--jaune-fond) 14px 28px); padding: 1.1rem 1.1rem 1.2rem; border: 2px dashed var(--noir); }
+.actu-tete { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: .4rem; }
+.actu-date { font-family: var(--mono); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--gris-fonce); }
+.actu-titre { font-family: var(--bebas); font-size: clamp(1.8rem, 3.2vw, 2.4rem); line-height: 1.05; letter-spacing: .01em; margin-bottom: .6rem; }
+.actu-texte { max-width: 68ch; color: var(--gris-fonce); line-height: 1.7; }
+.actu-texte p + p { margin-top: .8rem; }
+.actu-photos { display: grid; gap: .5rem; margin-top: 1rem; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 170px; }
+.actu-photo { position: relative; padding: 0; border: 2px solid var(--noir); background: var(--gris-clair); cursor: zoom-in; overflow: hidden; }
+.actu-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--moyen); }
+.actu-photo:hover img { transform: scale(1.04); }
+.actu-plus { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(26,26,26,.6); color: var(--blanc); font-family: var(--bebas); font-size: 2.4rem; }
+/* une photo : bandeau large ; deux : côte à côte ; trois et plus : une grande + les autres */
+.actu-photos.n1 { grid-template-columns: 1fr; grid-auto-rows: 360px; }
+.actu-photos.n2 { grid-template-columns: 1fr 1fr; grid-auto-rows: 300px; }
+.actu-photos.n3 .actu-photo:first-child, .actu-photos.n4 .actu-photo:first-child, .actu-photos.n5 .actu-photo:first-child { grid-column: span 2; grid-row: span 2; }
+.actu-photos.n3 { grid-template-columns: 2fr 1fr 1fr; }
+.actu-photos.n3 .actu-photo:first-child { grid-column: span 1; }
+.actu-photos.n3 .actu-photo:not(:first-child) { grid-column: span 2; }
+.actu-photos.n4 { grid-template-columns: repeat(4, 1fr); }
+.actu-photos.n4 .actu-photo:nth-child(4) { grid-column: span 2; }
+.actu-actions { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; }
+.actu-form { border: 2px solid var(--noir); box-shadow: 6px 6px 0 var(--jaune); background: var(--blanc); padding: 1.4rem; margin-bottom: 2.2rem; }
+.actu-form-ligne { display: grid; grid-template-columns: 1fr 190px; gap: 1rem; }
+.actu-form-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .actu-form { padding: 1rem; box-shadow: 4px 4px 0 var(--jaune); }
+  .actu-form-ligne { grid-template-columns: 1fr; gap: 0; }
+  .actu-photos, .actu-photos.n4 { grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; }
+  .actu-photos.n1 { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  .actu-photos.n2 { grid-auto-rows: 180px; }
+  .actu-photos.n3 { grid-template-columns: 1fr 1fr; }
+  .actu-photos .actu-photo:first-child, .actu-photos.n3 .actu-photo:first-child { grid-column: span 2; grid-row: span 2; }
+  .actu-photos.n3 .actu-photo:not(:first-child), .actu-photos.n4 .actu-photo:nth-child(4) { grid-column: span 1; }
+  .actu-photos.n4 .actu-photo:nth-child(4) { grid-column: span 2; }
+}

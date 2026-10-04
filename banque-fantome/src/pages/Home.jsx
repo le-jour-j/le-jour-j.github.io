@@ -3,21 +3,11 @@ import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
-import ImageLightbox from '../components/ImageLightbox'
+import FilActu from '../components/FilActu'
 import Journal from '../components/Journal'
 import { MurBillets } from '../components/GuichetEmission'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
-
-const BASE = import.meta.env.BASE_URL
-const visuels = [
-  `${BASE}images/visuels/visuels-001.png`,
-  `${BASE}images/visuels/visuels-002.png`,
-  `${BASE}images/visuels/visuels-003.png`,
-  `${BASE}images/visuels/visuels-004.png`,
-  `${BASE}images/visuels/visuels-005.png`,
-  `${BASE}images/visuels/visuels-006.png`,
-]
 
 // Compteur animé (le chiffre "monte" jusqu'à sa valeur)
 function Compteur({ valeur }) {
@@ -52,7 +42,6 @@ export default function Home() {
   const [stats, setStats] = useState(null) // stats_banque() : trésor, billets en circulation…
   const [selected, setSelected] = useState(null)
   const [openInfo, setOpenInfo] = useState(false)
-  const [visuelIndex, setVisuelIndex] = useState(null)
   const heroRef = useRef(null)
   const [notif, setNotif] = useState(null)
 
@@ -85,7 +74,7 @@ export default function Home() {
       <section className="hero hero-light" ref={heroRef} onMouseMove={onHeroMove}>
         <div className="container">
           <div className="hero-eyebrow">On va faire du pognon</div>
-          <h1 className="hero-title">BANQUE<br /><span>FANTÔME</span></h1>
+          <h1 className="hero-title">BANQUE<br className="hero-br" /> <span>FANTÔME</span></h1>
           <p className="hero-sub">
             La Banque Fantôme propose d'ouvrir un compte, de fabriquer sa propre monnaie et d'obtenir des objets, des œuvres ou des services présents dans le market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
@@ -185,16 +174,10 @@ export default function Home() {
       <section style={{ padding: '1rem 0 3rem' }}>
         <div className="container">
           <div className="section-head">
-            <h2>Visuels de la banque</h2>
-            <span className="count">Cliquer pour agrandir</span>
+            <h2>Le fil de la banque</h2>
+            <Link to="/actu" className="count">Tout le fil →</Link>
           </div>
-          <div className="visual-grid">
-            {visuels.map((src, index) => (
-              <button key={src} type="button" className={`visual-card ${index === 0 ? 'visual-card-large' : ''}`} onClick={() => setVisuelIndex(index)} aria-label={`Agrandir le visuel ${index + 1}`}>
-                <img src={src} alt={`Visuel Banque Fantôme ${index + 1}`} loading={index === 0 ? 'eager' : 'lazy'} />
-              </button>
-            ))}
-          </div>
+          <FilActu limit={3} onNotif={setNotif} />
         </div>
       </section>
 
@@ -249,15 +232,6 @@ export default function Home() {
 
       {selected && <ObjetModal objet={selected} onClose={() => setSelected(null)} />}
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
-      {visuelIndex !== null && (
-        <ImageLightbox
-          images={visuels}
-          initialIndex={visuelIndex}
-          onClose={() => setVisuelIndex(null)}
-          onPrev={() => setVisuelIndex(i => (i - 1 + visuels.length) % visuels.length)}
-          onNext={() => setVisuelIndex(i => (i + 1) % visuels.length)}
-        />
-      )}
     </div>
   )
 }

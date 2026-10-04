@@ -59,6 +59,7 @@ export default function Navbar() {
             <li><NavLink to="/market">Market</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             <li><NavLink to="/deposer">Déposer</NavLink></li>
+            <li><NavLink to="/actu">Actu</NavLink></li>
             {user ? <>
               <li>
                 <NavLink to="/messages">

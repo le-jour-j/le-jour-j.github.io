@@ -37,6 +37,8 @@ export default defineConfig({
       workbox: {
         // L'appli (HTML/JS/CSS/polices/icônes) est mise en cache à l'installation.
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+        // Les photos du fil d'actu se chargent à l'affichage, pas toutes d'avance à l'installation
+        globIgnores: ['**/images/actu/**'],
         // Toute route de l'appli renvoie index.html (même hors ligne).
         navigateFallback: '/banque-fantome/index.html',
         navigateFallbackDenylist: [/^\/(?!banque-fantome)/],

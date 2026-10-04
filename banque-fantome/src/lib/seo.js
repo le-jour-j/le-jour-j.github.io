@@ -64,6 +64,17 @@ export const PAGES = [
       <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>`,
   },
 
+  {
+    path: "/actu",
+    title: "Le fil de la banque — expositions, ateliers, billets | Banque Fantôme",
+    description:
+      "Le journal du projet Banque Fantôme : expositions, ateliers, billets dessinés et installations, au fur et à mesure.",
+    priority: "0.7",
+    contenu: `
+      <h1>Le fil de la banque</h1>
+      <p>Expositions, ateliers, billets, installations : ce qui arrive à la Banque Fantôme, au fur et à mesure.</p>`,
+  },
+
   // Pages de compte : servies normalement, tenues hors de l'index. /deposer
   // affiche « Accès refusé » sans compte, les trois autres sont privées ou
   // sans contenu propre.
