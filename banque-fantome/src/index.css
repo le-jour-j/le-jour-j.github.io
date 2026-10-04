@@ -619,15 +619,22 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
   .click-ink, .ripple { display: none; }
 }
 
-/* Bandeau d'accueil plus discret sur grand écran (2026-10-04) : titre sur une ligne, moins de marge */
-@media (min-width: 769px) {
-  .hero { padding: 2.6rem 0 2.4rem; }
-  .hero::before { font-size: 13rem; top: -2rem; }
-  .hero-eyebrow { margin-bottom: .9rem; }
-  .hero-title { font-size: clamp(3rem, 5.2vw, 4.4rem); margin-bottom: .8rem; }
-  .hero-br { display: none; }
-  .hero-sub { font-size: 1.02rem; line-height: 1.6; margin-bottom: 1.6rem; }
-}
+/* Bandeau d'accueil resserré (2026-10-05, Jiiji : « toujours trop gros », « regarder le site de la
+   Caisse d'Épargne »). Remplace le réglage du 2026-10-04, qui ne valait qu'au-dessus de 768 px et
+   laissait le titre bondir d'une taille à l'autre. Ici, à toutes les largeurs : un titre qui grandit
+   doucement avec la fenêtre sans jamais déborder, une accroche courte, et des chiffres rangés en
+   grille régulière (une seule ligne dès que la place le permet, plus de « Statut » orphelin). */
+.hero { padding: 1.9rem 0 1.7rem; }
+.hero::before { font-size: clamp(7rem, 13vw, 11rem); top: -1.2rem; right: -.5rem; }
+.hero-eyebrow { font-size: .68rem; margin-bottom: .7rem; }
+.hero-title { font-size: clamp(2.2rem, 2.4vw + 1.2rem, 3.2rem); margin-bottom: .55rem; }
+.hero-br { display: none; }
+.hero-sub { font-size: .98rem; line-height: 1.55; max-width: 640px; margin-bottom: 1.25rem; }
+.hero-actions { gap: .6rem; }
+.stats-bar { padding: .75rem 0; }
+.stats-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: .6rem 1.4rem; align-items: end; }
+.stat-item .stat-label { font-size: .63rem; letter-spacing: .12em; }
+.stat-item .stat-value { font-size: 1.55rem; }
 
 /* ── Fil d'actu (2026-10-04) : journal du projet, façon blog ── */
 .container-actu { max-width: 900px; }

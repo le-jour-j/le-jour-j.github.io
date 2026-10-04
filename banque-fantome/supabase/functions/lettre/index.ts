@@ -22,6 +22,8 @@
 //                       GMAIL_USER (Paramètres → Comptes → « Envoyer des e-mails en
 //                       tant que »), sinon Gmail remet GMAIL_USER à sa place.
 //   SITE_URL            facultatif, https://jeansonpechin.com/banque-fantome par défaut
+// Sans ces secrets, les trois identifiants Gmail sont lus dans le coffre de la base
+// (vault : gmail_user, gmail_app_password, gmail_from), voir supabase_lettre.sql partie 6.
 // Le code de l'appel du lundi n'est pas un secret de la fonction : il est dans le
 // coffre de la base (vault, « bf_lettre_secret »), vérifié par lettre_verifier_secret.
 //
@@ -40,9 +42,6 @@ const CORS_HEADERS = {
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SITE = (Deno.env.get('SITE_URL') || 'https://jeansonpechin.com/banque-fantome').replace(/\/+$/, '')
 const FONCTION = `${SUPABASE_URL}/functions/v1/lettre`
-const GMAIL_USER = Deno.env.get('GMAIL_USER') || ''
-const GMAIL_PASS = (Deno.env.get('GMAIL_APP_PASSWORD') || '').replace(/\s+/g, '')
-const EXPEDITEUR = Deno.env.get('GMAIL_FROM') || GMAIL_USER
 
 // Au-delà, on montre seulement les titres (une lettre se lit en deux minutes)
 const ACTUS_DETAILLEES = 6
@@ -50,6 +49,25 @@ const ACTUS_DETAILLEES = 6
 const PLAFOND_GMAIL = 450
 
 const admin = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
+
+// Identifiants Gmail : les secrets de la fonction s'ils sont posés, sinon le coffre
+// de la base (vault, lu par lettre_identifiants_gmail, réservée au service_role)
+type Gmail = { user: string, pass: string, from: string }
+let gmail: Gmail | null = null
+async function identifiantsGmail(): Promise<Gmail> {
+  if (gmail) return gmail
+  let user = Deno.env.get('GMAIL_USER') || ''
+  let pass = Deno.env.get('GMAIL_APP_PASSWORD') || ''
+  let from = Deno.env.get('GMAIL_FROM') || ''
+  if (!user || !pass) {
+    const { data } = await admin.rpc('lettre_identifiants_gmail')
+    user = user || data?.user || ''
+    pass = pass || data?.pass || ''
+    from = from || data?.from || ''
+  }
+  gmail = { user, pass: pass.replace(/\s+/g, ''), from: from || user }
+  return gmail
+}
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } })
@@ -179,10 +197,11 @@ async function composer(): Promise<Lettre> {
 type Destinataire = { email: string, jeton: string }
 
 async function expedier(lettre: Lettre, destinataires: Destinataire[]) {
-  if (!GMAIL_USER || !GMAIL_PASS) throw new Error('Secrets GMAIL_USER et GMAIL_APP_PASSWORD manquants.')
+  const { user, pass, from: EXPEDITEUR } = await identifiantsGmail()
+  if (!user || !pass) throw new Error('Identifiants Gmail manquants (secrets de la fonction ou coffre de la base).')
   const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com', port: 465, secure: true, // le port 587 est fermé chez Supabase
-    auth: { user: GMAIL_USER, pass: GMAIL_PASS },
+    auth: { user, pass },
     pool: true, maxConnections: 1,
   })
   let envoyes = 0
@@ -282,12 +301,12 @@ Deno.serve(async (req) => {
       return json({
         vide: lettre.vide, objet: lettre.objet, nb_actus: lettre.actus.length, nb_destinataires: liste.length,
         html: lettre.html.replaceAll(JETON_ICI, '00000000-0000-0000-0000-000000000000'),
-        expediteur: EXPEDITEUR || null,
+        expediteur: (await identifiantsGmail()).from || null,
       })
     }
 
     if (action === 'test') {
-      const email = String(body?.email || EXPEDITEUR).trim()
+      const email = String(body?.email || (await identifiantsGmail()).from).trim()
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json({ error: 'Adresse de test invalide.' }, 400)
       const lettre = await composer()
       lettre.objet = `[TEST] ${lettre.objet}`

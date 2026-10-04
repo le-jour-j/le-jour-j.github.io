@@ -55,35 +55,24 @@ profils (qui eux sont publics) : chacun ne voit que la sienne, toi tu vois tout.
   Vérifié : la base appelle la fonction, la fonction répond « Envoi automatique désactivé ».
 - **L'envoi automatique est COUPÉ** : à cocher dans l'admin après un test réussi.
 
-**Reste à faire par Jiiji :**
+**Fait le 2026-10-05 vers 00:10 :**
 
-### 1. Gmail : envoyer depuis jeanson.pechin, signé banque.fantome
+- le site publié (les boutons, l'onglet Lettre, la page de désinscription) ;
+- 17 structures partenaires inscrites (depuis le tableau de bord CLEA et les adresses
+  données par Jiiji) ;
+- les identifiants Gmail rangés dans le **coffre de la base** (vault : `gmail_user`,
+  `gmail_app_password`, `gmail_from`), lus par la fonction. L'outil Supabase de Claude ne sait
+  pas poser les secrets de la fonction, d'où le coffre. Rien n'est écrit dans un fichier ;
+- deux lettres de test envoyées à dieu.pechin et village.simsclaude, parties signées
+  **banque.fantome@gmail.com** (vérifié dans les messages envoyés de jeanson.pechin).
 
-1. Dans le Gmail de **jeanson.pechin@gmail.com** : Paramètres → Voir tous les paramètres →
-   **Comptes et importation** → « Envoyer des e-mails en tant que ». Si
-   `banque.fantome@gmail.com` n'y est pas, l'ajouter (Gmail envoie un code de confirmation
-   dans la boîte de banque.fantome). Sans ça, Gmail signe avec jeanson.pechin.
-2. Sur le compte Google **jeanson.pechin** : la validation en deux étapes doit être active,
-   puis **myaccount.google.com/apppasswords** → créer « Lettre Banque Fantôme ». Google
-   affiche **16 lettres**. *Ce n'est pas le mot de passe du compte, on peut le révoquer.*
+**Reste à faire par Jiiji :** relire la lettre de test, puis cocher « Envoyer
+automatiquement chaque lundi matin » dans Admin → Lettre.
 
-### 2. Les secrets de la fonction
-
-Supabase → Edge Functions → **Secrets**
-(supabase.com/dashboard/project/eopygceibkbtkqmrgnxt/functions/secrets) :
-
-- `GMAIL_USER` = `jeanson.pechin@gmail.com`
-- `GMAIL_APP_PASSWORD` = les 16 lettres
-- `GMAIL_FROM` = `banque.fantome@gmail.com`
-
-### 3. Essayer
-
-Admin → Lettre → **Voir l'aperçu** → **Envoyer un test**. Si la lettre arrive et te plaît,
-cocher « Envoyer automatiquement chaque lundi matin ».
-
-### 4. Le site
-
-Publier le site (envoi sur GitHub : la mise en ligne suit toute seule).
+**Changer le mot de passe d'application** (s'il est révoqué chez Google) : en créer un
+nouveau sur myaccount.google.com/apppasswords (compte jeanson.pechin), puis dans le SQL
+Editor :
+`select vault.update_secret((select id from vault.secrets where name = 'gmail_app_password'), 'les16lettres');`
 
 ---
 

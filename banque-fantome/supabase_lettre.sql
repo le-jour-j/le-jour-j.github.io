@@ -155,4 +155,21 @@ $cron$);
 --   select count(*) from actus where publie and en_lettre_at is null;  -- en attente de la prochaine lettre
 --   select * from net._http_response order by created desc limit 5;    -- réponses des derniers appels
 -- Pour arrêter l'envoi du lundi pour de bon : select cron.unschedule('bf-lettre-hebdo');
+
+-- 6. Les identifiants Gmail dans le coffre (ajouté le 2026-10-05 vers 00:15)
+--    La fonction lit d'abord ses propres secrets (GMAIL_USER, GMAIL_APP_PASSWORD,
+--    GMAIL_FROM) ; s'ils ne sont pas posés, elle lit ces trois entrées du coffre.
+--    Les valeurs ne sont écrites dans aucun fichier : elles ont été rangées avec
+--      select vault.create_secret('<valeur>', 'gmail_user');          -- et gmail_app_password, gmail_from
+--    et se changent avec
+--      select vault.update_secret((select id from vault.secrets where name = 'gmail_app_password'), '<nouveau>');
+create or replace function lettre_identifiants_gmail()
+returns json language sql stable security definer set search_path = public as $$
+  select json_build_object(
+    'user', (select decrypted_secret from vault.decrypted_secrets where name = 'gmail_user'),
+    'pass', (select decrypted_secret from vault.decrypted_secrets where name = 'gmail_app_password'),
+    'from', (select decrypted_secret from vault.decrypted_secrets where name = 'gmail_from'))
+$$;
+revoke all on function lettre_identifiants_gmail() from public, anon, authenticated;
+grant execute on function lettre_identifiants_gmail() to service_role;
 -- (pour une pause, il suffit de décocher la case dans l'admin)
