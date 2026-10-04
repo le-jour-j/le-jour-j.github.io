@@ -239,19 +239,24 @@ begin
 end $$;
 
 -- Résout les ventes expirées (idempotent, appelable par tout le monde)
+-- Sans enchère, la vente n'expire plus : son chrono repart pour la même durée (2026-10-04, voir supabase_relance_auto.sql)
 create or replace function resoudre_ventes_expirees()
 returns int language plpgsql security definer as $$
-declare o record; n int := 0;
+declare o record; n int := 0; periode interval;
 begin
   perform set_config('bf.interne', '1', true);
-  for o in select id, encherisseur_id, enchere_courante from objets
+  for o in select id, encherisseur_id, enchere_courante, expire_at, duree_jours from objets
            where mise_depart is not null and statut = 'disponible' and expire_at <= now()
            for update skip locked
   loop
     if o.encherisseur_id is not null then
       perform bf_finaliser_vente(o.id, o.encherisseur_id, o.enchere_courante, 'enchère');
     else
-      update objets set statut = 'expiré' where id = o.id;
+      -- Personne n'a enchéri : on saute autant de tours complets que nécessaire
+      periode := make_interval(days => coalesce(o.duree_jours, 3));
+      update objets
+         set expire_at = o.expire_at + periode * (floor(extract(epoch from now() - o.expire_at) / extract(epoch from periode))::int + 1)
+       where id = o.id;
     end if;
     n := n + 1;
   end loop;
@@ -370,7 +375,8 @@ returns json language sql stable security definer as $$
     'commission_pct',    (select commission_pct from banque where id = 1),
     'en_circulation',    (select coalesce(sum(solde), 0) from profiles),
     'billets_emis',      (select count(*) from billets_emis where statut = 'valide'),
-    'ventes_en_cours',   (select count(*) from objets where mise_depart is not null and statut = 'disponible' and expire_at > now()),
+    'ventes_en_cours',   (select count(*) from objets where mise_depart is not null and statut = 'disponible'
+                                                          and (expire_at > now() or encherisseur_id is null)),
     'ventes_conclues',   (select count(*) from objets where mise_depart is not null and statut = 'échangé'),
     'volume_echange',    (select coalesce(sum(prix_final), 0) from objets where prix_final is not null)
   )

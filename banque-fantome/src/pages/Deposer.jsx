@@ -192,7 +192,7 @@ export default function Deposer() {
                   ))}
                 </div>
               </div>
-              <p className="caption-gris">À la clôture, le plus offrant l'emporte ; la banque prélève {COMMISSION_PCT} % sur le prix. Sans enchère, le dépôt expire et peut être remis en vente.</p>
+              <p className="caption-gris">À la clôture, le plus offrant l'emporte ; la banque prélève {COMMISSION_PCT} % sur le prix. Sans enchère, la vente repart automatiquement pour la même durée, jusqu'à ce que quelqu'un enchérisse.</p>
             </div>
             <div className="field">
               <label>Titre *</label>

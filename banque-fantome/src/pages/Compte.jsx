@@ -5,7 +5,7 @@ import { useAuth } from '../components/AuthContext'
 import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import Notif from '../components/Notif'
-import { estVente, estEnCours, tempsRestant, messageErreur } from '../utils/encheres'
+import { estVente, estEnCours, echeance, tempsRestant, messageErreur } from '../utils/encheres'
 
 function ChangerMdp() {
   const [mdp, setMdp]         = useState('')
@@ -143,7 +143,7 @@ export default function Compte() {
                     <span className={`stamp ${meneur ? 'stamp-jaune' : 'stamp-rouge'}`}>{meneur ? 'meneur' : 'surenchéri'}</span>
                     <strong className="ligne-titre">{o.titre}</strong>
                     <span className="ligne-prix">{o.enchere_courante} billets{!meneur && ` · par ${o.encherisseur_pseudo}`}</span>
-                    <span className="caption-gris">⏱ {tempsRestant(o.expire_at)}</span>
+                    <span className="caption-gris">⏱ {tempsRestant(echeance(o))}</span>
                   </button>
                 )
               })}
@@ -180,7 +180,7 @@ export default function Compte() {
                   <div className="compte-actions">
                     {estVente(o)
                       ? <span className="caption-gris" style={{ alignSelf: 'center' }}>
-                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(o.expire_at)}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : `${o.statut} — ouvrir la fiche pour remettre en vente`}
+                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(echeance(o))}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : `${o.statut} — ouvrir la fiche pour remettre en vente`}
                         </span>
                       : ['disponible', 'réservé', 'échangé'].map(s => (
                           <button key={s} className={`chip ${o.statut === s ? 'active' : ''}`} aria-pressed={o.statut === s} onClick={() => changeStatut(o.id, s)}>{s}</button>

@@ -14,8 +14,20 @@ export function estVente(objet) {
   return objet?.mise_depart != null
 }
 
+// Échéance réelle d'une vente. Sans enchère, une vente ne se termine jamais : à chaque fin de tour,
+// son chrono repart pour la même durée (même calcul que resoudre_ventes_expirees côté base,
+// qui ne passe qu'à l'ouverture du market : on n'attend pas son passage pour afficher le bon chrono).
+export function echeance(objet, maintenant = Date.now()) {
+  if (!objet?.expire_at) return objet?.expire_at
+  const fin = new Date(objet.expire_at).getTime()
+  if (fin > maintenant || objet.statut !== 'disponible' || objet.encherisseur_id) return objet.expire_at
+  const periode = (objet.duree_jours || 3) * 24 * 60 * 60 * 1000
+  const tours = Math.floor((maintenant - fin) / periode) + 1
+  return new Date(fin + tours * periode).toISOString()
+}
+
 export function estEnCours(objet) {
-  return estVente(objet) && objet.statut === 'disponible' && new Date(objet.expire_at) > new Date()
+  return estVente(objet) && objet.statut === 'disponible' && new Date(echeance(objet)) > new Date()
 }
 
 export function enchereMinimale(objet) {

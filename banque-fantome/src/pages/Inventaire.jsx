@@ -4,7 +4,7 @@ import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import { RARETES, rangRarete } from '../utils/rarete'
 
-const STATUTS = ['tous', 'disponible', 'échangé', 'expiré']
+const STATUTS = ['tous', 'disponible', 'échangé']
 const LIBELLES = { disponible: 'en vente', échangé: 'vendu', expiré: 'expiré', tous: 'tous' }
 const CATEGORIES = ['toutes', 'objet', 'œuvre', 'service']
 const RARETES_FILTRE = ['toutes', ...RARETES]
@@ -45,7 +45,7 @@ export default function Inventaire() {
 
   const [version, setVersion] = useState(0) // relance le chargement après une action dans une fiche
 
-  // Les ventes expirées sont clôturées à l'ouverture du market (idempotent)
+  // Les ventes échues sont adjugées (ou relancées si personne n'a enchéri) à l'ouverture du market (idempotent)
   useEffect(() => { supabase.rpc('resoudre_ventes_expirees').then(() => setVersion(v => v + 1)) }, [])
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
-import { DUREES, INCREMENT_MIN, estEnCours, enchereMinimale, tempsRestant, urgent, commission, messageErreur } from '../utils/encheres'
+import { DUREES, INCREMENT_MIN, estEnCours, echeance, enchereMinimale, tempsRestant, urgent, commission, messageErreur } from '../utils/encheres'
 
 // Bloc « hôtel des ventes » d'une fiche objet : enchère courante, compte à rebours,
 // formulaire d'enchère / achat immédiat, historique, actions du vendeur.
@@ -25,9 +25,9 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   // Compte à rebours (une fois par minute suffit, sauf dernière heure)
   useEffect(() => {
     if (!enCours) return
-    const t = setInterval(() => setTick(n => n + 1), urgent(objet.expire_at) ? 1000 : 30000)
+    const t = setInterval(() => setTick(n => n + 1), urgent(echeance(objet)) ? 1000 : 30000)
     return () => clearInterval(t)
-  }, [objet.expire_at, enCours])
+  }, [echeance(objet), enCours])
 
   // Le minimum bouge quand quelqu'un surenchérit
   useEffect(() => { setMontant(m => (m == null || m < minimum ? minimum : m)) }, [minimum])
@@ -120,7 +120,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
         </div>
         <div className="enchere-droite">
           <div className="meta-label">Se termine dans</div>
-          <div className={`enchere-timer ${urgent(objet.expire_at) ? 'urgent' : ''}`} key={tick}>{tempsRestant(objet.expire_at)}</div>
+          <div className={`enchere-timer ${urgent(echeance(objet)) ? 'urgent' : ''}`} key={tick}>{tempsRestant(echeance(objet))}</div>
           {objet.prix_achat && <div className="enchere-meneur">achat immédiat : <strong>{objet.prix_achat}</strong></div>}
         </div>
       </div>

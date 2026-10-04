@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getObjetImageUrls } from '../utils/images'
-import { estVente, estEnCours, tempsRestant, urgent } from '../utils/encheres'
+import { estVente, estEnCours, echeance, tempsRestant, urgent } from '../utils/encheres'
 
 export default function ObjetCard({ objet, onClick }) {
   const [imgErr, setImgErr] = useState(false)
@@ -28,7 +28,7 @@ export default function ObjetCard({ objet, onClick }) {
   // Pied de carte : temps restant ou statut
   let pied
   if (vente && enCours) {
-    pied = <span className={`card-timer ${urgent(objet.expire_at) ? 'urgent' : ''}`}>⏱ {tempsRestant(objet.expire_at)}{objet.nb_encheres > 0 && ` · ${objet.nb_encheres} ench.`}</span>
+    pied = <span className={`card-timer ${urgent(echeance(objet)) ? 'urgent' : ''}`}>⏱ {tempsRestant(echeance(objet))}{objet.nb_encheres > 0 && ` · ${objet.nb_encheres} ench.`}</span>
   } else if (vente && statut === 'disponible') {
     pied = <span className="card-statut expiré">clôture…</span>
   } else {
