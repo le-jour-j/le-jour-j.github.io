@@ -72,7 +72,9 @@ function pageHtml(route) {
   html = html.replace("</head>", `  ${baliser(seo)}\n  </head>`);
 
   if (seo.contenu) {
-    html = html.replace('<div id="root">', `<div id="root">${seo.contenu}`);
+    // Enveloppé dans .prerendu : visible sans JavaScript (robots, lecteurs), caché sinon
+    // pour ne pas montrer une page nue avant que React la remplace (index.html, html.js).
+    html = html.replace('<div id="root">', `<div id="root"><div class="prerendu">${seo.contenu}</div>`);
   }
   return html;
 }

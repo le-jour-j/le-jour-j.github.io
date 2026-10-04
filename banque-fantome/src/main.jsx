@@ -5,8 +5,10 @@ import App from './App.jsx'
 import './index.css'
 import { registerSW } from 'virtual:pwa-register'
 
-// Service worker (PWA) : mise en cache de l'appli, mise à jour automatique au prochain chargement.
-registerSW({ immediate: true })
+// Service worker (PWA) : mise en cache de l'appli. Une nouvelle version se télécharge en fond
+// et s'applique au prochain chargement : on ne recharge pas la page sous les yeux du visiteur
+// (par défaut le plugin fait window.location.reload() dès qu'elle est prête).
+registerSW({ immediate: true, onNeedReload() {} })
 
 // GitHub Pages n'a pas de rewrite serveur : le 404.html racine redirige
 // /banque-fantome/<route> vers /banque-fantome/ en gardant la route

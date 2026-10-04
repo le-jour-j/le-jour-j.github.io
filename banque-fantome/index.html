@@ -11,6 +11,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Banque Fantôme" />
+    <!-- Le texte prérendu pour les robots (.prerendu) ne s'affiche pas quand le site démarre :
+         sans ça on voyait une page nue, puis la vraie page, comme un rechargement. -->
+    <script>document.documentElement.classList.add('js')</script>
+    <style>html.js .prerendu { display: none; }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   </head>
