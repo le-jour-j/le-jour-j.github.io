@@ -11,6 +11,7 @@ const TECHNIQUES = ['feutre', 'crayon', 'aquarelle', 'collage', 'linogravure', '
 
 // Guichet d'émission : on fabrique un billet (c'est une œuvre : titre, artiste, technique, devise),
 // on le photographie, on choisit sa dénomination → la banque le crédite sur le compte.
+// Originaux seulement (2026-10-04) : les billets imprimés depuis les planches se jouent sur papier.
 // C'est la seule façon de s'enrichir. Le banquier peut annuler un billet (le compte est alors débité).
 export default function GuichetEmission({ onNotif }) {
   const { user, profile, solde, estBanquier, refreshProfile } = useAuth()
@@ -74,7 +75,7 @@ export default function GuichetEmission({ onNotif }) {
       <div className="guichet-tete">
         <div>
           <div className="meta-label">Guichet d'émission</div>
-          <h3 style={{ marginTop: '.2rem' }}>Fabriquez un billet, la banque le crédite.</h3>
+          <h3 style={{ marginTop: '.2rem' }}>Déposez un billet original, la banque le crédite.</h3>
         </div>
         {user && profile && (
           <div className="guichet-solde">
@@ -94,7 +95,7 @@ export default function GuichetEmission({ onNotif }) {
               <input ref={inputRef} type="file" accept="image/*" capture="environment" onChange={e => choisir(e.target.files?.[0])} />
               {preview
                 ? <img src={preview} alt="Votre billet" className="guichet-preview" />
-                : <><span className="uz-icon">🖨️</span><span className="uz-text">Photo de votre billet dessiné, colorié ou imprimé</span></>}
+                : <><span className="uz-icon">✎</span><span className="uz-text">Photo de votre billet original, fait à la main</span></>}
             </div>
             <div className="field" style={{ marginTop: '1rem' }}>
               <label>Dénomination</label>
@@ -135,7 +136,7 @@ export default function GuichetEmission({ onNotif }) {
               {busy ? 'Émission…' : `◈ Émettre ${valeur} ${cartel.devise || 'billets'}`}
             </button>
             <p className="caption-gris" style={{ marginTop: '.8rem' }}>
-              Crédité immédiatement. La banque se réserve le droit d'annuler un billet douteux (photocopie, image générée, billet déjà émis) — le compte est alors débité.
+              Crédité immédiatement. Seuls les originaux sont acceptés : les billets imprimés depuis les planches se jouent sur papier, hors du site. La banque annule tout billet imprimé, photocopié, généré ou déjà émis, et le compte est alors débité.
             </p>
           </div>
         </div>

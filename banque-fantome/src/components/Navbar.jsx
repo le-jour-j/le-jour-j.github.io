@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext'
 import { useJournal, phrase } from './Journal'
 
 export default function Navbar() {
-  const { user, profile } = useAuth()
+  const { user, profile, estBanquier } = useAuth()
   const navigate  = useNavigate()
   const location  = useLocation()
   const [unread, setUnread] = useState(0)
@@ -58,7 +58,7 @@ export default function Navbar() {
             <li><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
-            <li><NavLink to="/deposer">Déposer</NavLink></li>
+            <li><NavLink to="/participer">Participer</NavLink></li>
             <li><NavLink to="/actu">Actu</NavLink></li>
             {user ? <>
               <li>
@@ -67,6 +67,7 @@ export default function Navbar() {
                   {unread > 0 && <span className="nav-badge" aria-label={`${unread} non lu`}>{unread}</span>}
                 </NavLink>
               </li>
+              {estBanquier && <li><NavLink to="/admin">Admin</NavLink></li>}
               <li><NavLink to="/compte">Mon compte{profile && <span className="nav-solde" title="Votre solde de billets">◈ {profile.solde}</span>}</NavLink></li>
               <li><button className="btn btn-jaune btn-sm" onClick={logout}>Quitter</button></li>
             </> : (

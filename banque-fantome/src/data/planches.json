@@ -1,0 +1,622 @@
+[
+ {
+  "fichier": "planche-5euros-A4-01.pdf",
+  "apercu": "planche-5euros-A4-01.jpg",
+  "vignette": "planche-5euros-A4-01-vignette.jpg",
+  "valeur": 5,
+  "numero": 1,
+  "pages": 1,
+  "ko": 522,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-5euros-A4-05.pdf",
+  "apercu": "planche-5euros-A4-05.jpg",
+  "vignette": "planche-5euros-A4-05-vignette.jpg",
+  "valeur": 5,
+  "numero": 5,
+  "pages": 1,
+  "ko": 460,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-5euros-A4-06.pdf",
+  "apercu": "planche-5euros-A4-06.jpg",
+  "vignette": "planche-5euros-A4-06-vignette.jpg",
+  "valeur": 5,
+  "numero": 6,
+  "pages": 1,
+  "ko": 494,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-01.pdf",
+  "apercu": "planche-10euros-A4-01.jpg",
+  "vignette": "planche-10euros-A4-01-vignette.jpg",
+  "valeur": 10,
+  "numero": 1,
+  "pages": 1,
+  "ko": 701,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-05.pdf",
+  "apercu": "planche-10euros-A4-05.jpg",
+  "vignette": "planche-10euros-A4-05-vignette.jpg",
+  "valeur": 10,
+  "numero": 5,
+  "pages": 1,
+  "ko": 522,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-07.pdf",
+  "apercu": "planche-10euros-A4-07.jpg",
+  "vignette": "planche-10euros-A4-07-vignette.jpg",
+  "valeur": 10,
+  "numero": 7,
+  "pages": 1,
+  "ko": 503,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-09.pdf",
+  "apercu": "planche-10euros-A4-09.jpg",
+  "vignette": "planche-10euros-A4-09-vignette.jpg",
+  "valeur": 10,
+  "numero": 9,
+  "pages": 1,
+  "ko": 455,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-11.pdf",
+  "apercu": "planche-10euros-A4-11.jpg",
+  "vignette": "planche-10euros-A4-11-vignette.jpg",
+  "valeur": 10,
+  "numero": 11,
+  "pages": 1,
+  "ko": 518,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-14.pdf",
+  "apercu": "planche-10euros-A4-14.jpg",
+  "vignette": "planche-10euros-A4-14-vignette.jpg",
+  "valeur": 10,
+  "numero": 14,
+  "pages": 1,
+  "ko": 499,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-16.pdf",
+  "apercu": "planche-10euros-A4-16.jpg",
+  "vignette": "planche-10euros-A4-16-vignette.jpg",
+  "valeur": 10,
+  "numero": 16,
+  "pages": 1,
+  "ko": 546,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-19.pdf",
+  "apercu": "planche-10euros-A4-19.jpg",
+  "vignette": "planche-10euros-A4-19-vignette.jpg",
+  "valeur": 10,
+  "numero": 19,
+  "pages": 1,
+  "ko": 626,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-21.pdf",
+  "apercu": "planche-10euros-A4-21.jpg",
+  "vignette": "planche-10euros-A4-21-vignette.jpg",
+  "valeur": 10,
+  "numero": 21,
+  "pages": 1,
+  "ko": 476,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-24.pdf",
+  "apercu": "planche-10euros-A4-24.jpg",
+  "vignette": "planche-10euros-A4-24-vignette.jpg",
+  "valeur": 10,
+  "numero": 24,
+  "pages": 1,
+  "ko": 531,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-10euros-A4-27.pdf",
+  "apercu": "planche-10euros-A4-27.jpg",
+  "vignette": "planche-10euros-A4-27-vignette.jpg",
+  "valeur": 10,
+  "numero": 27,
+  "pages": 1,
+  "ko": 571,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-01.pdf",
+  "apercu": "planche-20euros-A4-01.jpg",
+  "vignette": "planche-20euros-A4-01-vignette.jpg",
+  "valeur": 20,
+  "numero": 1,
+  "pages": 1,
+  "ko": 654,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-04.pdf",
+  "apercu": "planche-20euros-A4-04.jpg",
+  "vignette": "planche-20euros-A4-04-vignette.jpg",
+  "valeur": 20,
+  "numero": 4,
+  "pages": 1,
+  "ko": 567,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-07.pdf",
+  "apercu": "planche-20euros-A4-07.jpg",
+  "vignette": "planche-20euros-A4-07-vignette.jpg",
+  "valeur": 20,
+  "numero": 7,
+  "pages": 1,
+  "ko": 453,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-09.pdf",
+  "apercu": "planche-20euros-A4-09.jpg",
+  "vignette": "planche-20euros-A4-09-vignette.jpg",
+  "valeur": 20,
+  "numero": 9,
+  "pages": 1,
+  "ko": 578,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-11.pdf",
+  "apercu": "planche-20euros-A4-11.jpg",
+  "vignette": "planche-20euros-A4-11-vignette.jpg",
+  "valeur": 20,
+  "numero": 11,
+  "pages": 1,
+  "ko": 613,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-16.pdf",
+  "apercu": "planche-20euros-A4-16.jpg",
+  "vignette": "planche-20euros-A4-16-vignette.jpg",
+  "valeur": 20,
+  "numero": 16,
+  "pages": 1,
+  "ko": 669,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-19.pdf",
+  "apercu": "planche-20euros-A4-19.jpg",
+  "vignette": "planche-20euros-A4-19-vignette.jpg",
+  "valeur": 20,
+  "numero": 19,
+  "pages": 1,
+  "ko": 697,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-22.pdf",
+  "apercu": "planche-20euros-A4-22.jpg",
+  "vignette": "planche-20euros-A4-22-vignette.jpg",
+  "valeur": 20,
+  "numero": 22,
+  "pages": 1,
+  "ko": 641,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-25.pdf",
+  "apercu": "planche-20euros-A4-25.jpg",
+  "vignette": "planche-20euros-A4-25-vignette.jpg",
+  "valeur": 20,
+  "numero": 25,
+  "pages": 1,
+  "ko": 796,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-26.pdf",
+  "apercu": "planche-20euros-A4-26.jpg",
+  "vignette": "planche-20euros-A4-26-vignette.jpg",
+  "valeur": 20,
+  "numero": 26,
+  "pages": 1,
+  "ko": 731,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-32.pdf",
+  "apercu": "planche-20euros-A4-32.jpg",
+  "vignette": "planche-20euros-A4-32-vignette.jpg",
+  "valeur": 20,
+  "numero": 32,
+  "pages": 1,
+  "ko": 572,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-35.pdf",
+  "apercu": "planche-20euros-A4-35.jpg",
+  "vignette": "planche-20euros-A4-35-vignette.jpg",
+  "valeur": 20,
+  "numero": 35,
+  "pages": 1,
+  "ko": 566,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-37.pdf",
+  "apercu": "planche-20euros-A4-37.jpg",
+  "vignette": "planche-20euros-A4-37-vignette.jpg",
+  "valeur": 20,
+  "numero": 37,
+  "pages": 1,
+  "ko": 590,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-40.pdf",
+  "apercu": "planche-20euros-A4-40.jpg",
+  "vignette": "planche-20euros-A4-40-vignette.jpg",
+  "valeur": 20,
+  "numero": 40,
+  "pages": 1,
+  "ko": 727,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-42.pdf",
+  "apercu": "planche-20euros-A4-42.jpg",
+  "vignette": "planche-20euros-A4-42-vignette.jpg",
+  "valeur": 20,
+  "numero": 42,
+  "pages": 1,
+  "ko": 656,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-44.pdf",
+  "apercu": "planche-20euros-A4-44.jpg",
+  "vignette": "planche-20euros-A4-44-vignette.jpg",
+  "valeur": 20,
+  "numero": 44,
+  "pages": 1,
+  "ko": 709,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-47.pdf",
+  "apercu": "planche-20euros-A4-47.jpg",
+  "vignette": "planche-20euros-A4-47-vignette.jpg",
+  "valeur": 20,
+  "numero": 47,
+  "pages": 1,
+  "ko": 586,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-20euros-A4-49.pdf",
+  "apercu": "planche-20euros-A4-49.jpg",
+  "vignette": "planche-20euros-A4-49-vignette.jpg",
+  "valeur": 20,
+  "numero": 49,
+  "pages": 1,
+  "ko": 598,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-01.pdf",
+  "apercu": "planche-50euros-A4-01.jpg",
+  "vignette": "planche-50euros-A4-01-vignette.jpg",
+  "valeur": 50,
+  "numero": 1,
+  "pages": 1,
+  "ko": 540,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-05.pdf",
+  "apercu": "planche-50euros-A4-05.jpg",
+  "vignette": "planche-50euros-A4-05-vignette.jpg",
+  "valeur": 50,
+  "numero": 5,
+  "pages": 1,
+  "ko": 486,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-07.pdf",
+  "apercu": "planche-50euros-A4-07.jpg",
+  "vignette": "planche-50euros-A4-07-vignette.jpg",
+  "valeur": 50,
+  "numero": 7,
+  "pages": 1,
+  "ko": 565,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-09.pdf",
+  "apercu": "planche-50euros-A4-09.jpg",
+  "vignette": "planche-50euros-A4-09-vignette.jpg",
+  "valeur": 50,
+  "numero": 9,
+  "pages": 1,
+  "ko": 516,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-11.pdf",
+  "apercu": "planche-50euros-A4-11.jpg",
+  "vignette": "planche-50euros-A4-11-vignette.jpg",
+  "valeur": 50,
+  "numero": 11,
+  "pages": 1,
+  "ko": 559,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-14.pdf",
+  "apercu": "planche-50euros-A4-14.jpg",
+  "vignette": "planche-50euros-A4-14-vignette.jpg",
+  "valeur": 50,
+  "numero": 14,
+  "pages": 1,
+  "ko": 448,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-16.pdf",
+  "apercu": "planche-50euros-A4-16.jpg",
+  "vignette": "planche-50euros-A4-16-vignette.jpg",
+  "valeur": 50,
+  "numero": 16,
+  "pages": 1,
+  "ko": 535,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-19.pdf",
+  "apercu": "planche-50euros-A4-19.jpg",
+  "vignette": "planche-50euros-A4-19-vignette.jpg",
+  "valeur": 50,
+  "numero": 19,
+  "pages": 1,
+  "ko": 535,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-21.pdf",
+  "apercu": "planche-50euros-A4-21.jpg",
+  "vignette": "planche-50euros-A4-21-vignette.jpg",
+  "valeur": 50,
+  "numero": 21,
+  "pages": 1,
+  "ko": 571,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-24.pdf",
+  "apercu": "planche-50euros-A4-24.jpg",
+  "vignette": "planche-50euros-A4-24-vignette.jpg",
+  "valeur": 50,
+  "numero": 24,
+  "pages": 1,
+  "ko": 650,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-26.pdf",
+  "apercu": "planche-50euros-A4-26.jpg",
+  "vignette": "planche-50euros-A4-26-vignette.jpg",
+  "valeur": 50,
+  "numero": 26,
+  "pages": 1,
+  "ko": 599,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-29.pdf",
+  "apercu": "planche-50euros-A4-29.jpg",
+  "vignette": "planche-50euros-A4-29-vignette.jpg",
+  "valeur": 50,
+  "numero": 29,
+  "pages": 1,
+  "ko": 596,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-32.pdf",
+  "apercu": "planche-50euros-A4-32.jpg",
+  "vignette": "planche-50euros-A4-32-vignette.jpg",
+  "valeur": 50,
+  "numero": 32,
+  "pages": 1,
+  "ko": 676,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-50euros-A4-34.pdf",
+  "apercu": "planche-50euros-A4-34.jpg",
+  "vignette": "planche-50euros-A4-34-vignette.jpg",
+  "valeur": 50,
+  "numero": 34,
+  "pages": 1,
+  "ko": 625,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-02.pdf",
+  "apercu": "planche-100euros-A4-02.jpg",
+  "vignette": "planche-100euros-A4-02-vignette.jpg",
+  "valeur": 100,
+  "numero": 2,
+  "pages": 1,
+  "ko": 599,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-05.pdf",
+  "apercu": "planche-100euros-A4-05.jpg",
+  "vignette": "planche-100euros-A4-05-vignette.jpg",
+  "valeur": 100,
+  "numero": 5,
+  "pages": 1,
+  "ko": 741,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-08.pdf",
+  "apercu": "planche-100euros-A4-08.jpg",
+  "vignette": "planche-100euros-A4-08-vignette.jpg",
+  "valeur": 100,
+  "numero": 8,
+  "pages": 1,
+  "ko": 626,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-11.pdf",
+  "apercu": "planche-100euros-A4-11.jpg",
+  "vignette": "planche-100euros-A4-11-vignette.jpg",
+  "valeur": 100,
+  "numero": 11,
+  "pages": 1,
+  "ko": 638,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-15.pdf",
+  "apercu": "planche-100euros-A4-15.jpg",
+  "vignette": "planche-100euros-A4-15-vignette.jpg",
+  "valeur": 100,
+  "numero": 15,
+  "pages": 1,
+  "ko": 606,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-19.pdf",
+  "apercu": "planche-100euros-A4-19.jpg",
+  "vignette": "planche-100euros-A4-19-vignette.jpg",
+  "valeur": 100,
+  "numero": 19,
+  "pages": 1,
+  "ko": 636,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-22.pdf",
+  "apercu": "planche-100euros-A4-22.jpg",
+  "vignette": "planche-100euros-A4-22-vignette.jpg",
+  "valeur": 100,
+  "numero": 22,
+  "pages": 1,
+  "ko": 618,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-26.pdf",
+  "apercu": "planche-100euros-A4-26.jpg",
+  "vignette": "planche-100euros-A4-26-vignette.jpg",
+  "valeur": 100,
+  "numero": 26,
+  "pages": 1,
+  "ko": 535,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-100euros-A4-28.pdf",
+  "apercu": "planche-100euros-A4-28.jpg",
+  "vignette": "planche-100euros-A4-28-vignette.jpg",
+  "valeur": 100,
+  "numero": 28,
+  "pages": 1,
+  "ko": 685,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-200euros-A4-01.pdf",
+  "apercu": "planche-200euros-A4-01.jpg",
+  "vignette": "planche-200euros-A4-01-vignette.jpg",
+  "valeur": 200,
+  "numero": 1,
+  "pages": 1,
+  "ko": 689,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-200euros-A4-05.pdf",
+  "apercu": "planche-200euros-A4-05.jpg",
+  "vignette": "planche-200euros-A4-05-vignette.jpg",
+  "valeur": 200,
+  "numero": 5,
+  "pages": 1,
+  "ko": 642,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-200euros-A4-10.pdf",
+  "apercu": "planche-200euros-A4-10.jpg",
+  "vignette": "planche-200euros-A4-10-vignette.jpg",
+  "valeur": 200,
+  "numero": 10,
+  "pages": 1,
+  "ko": 665,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-500euros-A4-01.pdf",
+  "apercu": "planche-500euros-A4-01.jpg",
+  "vignette": "planche-500euros-A4-01-vignette.jpg",
+  "valeur": 500,
+  "numero": 1,
+  "pages": 1,
+  "ko": 829,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-500euros-A4-04.pdf",
+  "apercu": "planche-500euros-A4-04.jpg",
+  "vignette": "planche-500euros-A4-04-vignette.jpg",
+  "valeur": 500,
+  "numero": 4,
+  "pages": 1,
+  "ko": 1649,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-500euros-A4-08.pdf",
+  "apercu": "planche-500euros-A4-08.jpg",
+  "vignette": "planche-500euros-A4-08-vignette.jpg",
+  "valeur": 500,
+  "numero": 8,
+  "pages": 1,
+  "ko": 780,
+  "portrait": true
+ },
+ {
+  "fichier": "planche-500euros-A4-11.pdf",
+  "apercu": "planche-500euros-A4-11.jpg",
+  "vignette": "planche-500euros-A4-11-vignette.jpg",
+  "valeur": 500,
+  "numero": 11,
+  "pages": 1,
+  "ko": 698,
+  "portrait": true
+ }
+]

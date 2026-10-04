@@ -6,12 +6,13 @@ import ClickEffects from './components/ClickEffects'
 import InstallPWA from './components/InstallPWA'
 import Home from './pages/Home'
 import Inventaire from './pages/Inventaire'
-import Deposer from './pages/Deposer'
 import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
 import Senrichir from './pages/Senrichir'
 import Actu from './pages/Actu'
+import Admin from './pages/Admin'
+import Participer from './pages/Participer'
 import { applySeo } from './lib/seo'
 
 export default function App() {
@@ -37,10 +38,12 @@ export default function App() {
           <Route path="/inventaire" element={<Navigate to="/market" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
-          <Route path="/deposer"    element={<Deposer />} />
+          <Route path="/participer" element={<Participer />} />
+          <Route path="/deposer"    element={<Navigate to="/participer?onglet=market" replace />} />
           <Route path="/connexion"  element={<Connexion />} />
           <Route path="/compte"     element={<Compte />} />
           <Route path="/messages"   element={<Messages />} />
+          <Route path="/admin"      element={<Admin />} />
         </Routes>
       </main>
       <InstallPWA />

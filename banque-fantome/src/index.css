@@ -34,12 +34,15 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* Sur ordinateur, tout le site est un cran plus petit (2026-10-04, « c'est vraiment trop gros tout ») :
+   les tailles sont en rem, elles suivent toutes cette base. Le téléphone garde 16 px. */
+@media (min-width: 769px) { html { font-size: 87.5%; } }
 
 body {
   background: var(--blanc);
   color: var(--noir);
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.65;
   min-height: 100vh;
   overflow-x: hidden;
@@ -53,7 +56,7 @@ img { max-width: 100%; }
 
 h1, h2, h3 { font-family: var(--bebas); font-weight: 400; letter-spacing: .04em; line-height: 1; }
 h1 { font-size: clamp(3.2rem, 9vw, 6.5rem); }
-h2 { font-size: clamp(2.1rem, 4.2vw, 3.2rem); }
+h2 { font-size: clamp(2.1rem, 3.6vw, 2.8rem); }
 h3 { font-size: 1.7rem; }
 p  { max-width: 68ch; }
 
@@ -665,3 +668,57 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
   .actu-photos.n3 .actu-photo:not(:first-child), .actu-photos.n4 .actu-photo:nth-child(4) { grid-column: span 1; }
   .actu-photos.n4 .actu-photo:nth-child(4) { grid-column: span 2; }
 }
+
+/* ── Admin du banquier (2026-10-04) ── */
+.admin-onglets { margin-bottom: 1.6rem; }
+.admin-panneau { display: flex; flex-direction: column; gap: 1.2rem; }
+.admin-barre { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.admin-liste { border: 2px solid var(--noir); background: var(--blanc); }
+.admin-ligne { display: grid; grid-template-columns: 72px 1fr auto; gap: 1rem; align-items: center; padding: .7rem .9rem; border-bottom: 2px solid var(--gris-bord); }
+.admin-ligne:last-child { border-bottom: 0; }
+.admin-ligne.barre .admin-titre { text-decoration: line-through; color: var(--gris); }
+.admin-vignette { width: 72px; height: 56px; border: 2px solid var(--noir); background: var(--gris-clair); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0; cursor: pointer; font-family: var(--bebas); color: var(--gris); }
+.admin-vignette img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.admin-infos { min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+.admin-titre { font-family: var(--bebas); font-size: 1.3rem; letter-spacing: .02em; line-height: 1.1; text-align: left; overflow-wrap: anywhere; }
+.admin-titre.lien-texte { background: none; border: 0; padding: 0; cursor: pointer; color: var(--noir); text-decoration: none; }
+.admin-titre.lien-texte:hover { text-decoration: underline; }
+.admin-statut { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.admin-actions { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.admin-motif { border: 2px solid var(--noir); padding: .3rem .5rem; font-family: var(--sans); font-size: .85rem; width: 170px; background: var(--blanc); }
+.admin-chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .8rem; }
+.admin-chiffre { border: 2px solid var(--noir); background: var(--jaune); padding: .8rem 1rem; }
+.admin-deux { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.6rem; align-items: start; }
+.admin-soustitre { font-family: var(--bebas); font-size: 1.6rem; margin-bottom: .6rem; }
+.admin-table { width: 100%; border-collapse: collapse; background: var(--blanc); border: 2px solid var(--noir); font-size: .88rem; }
+.admin-table th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--gris-fonce); background: var(--gris-clair); padding: .5rem .7rem; border-bottom: 2px solid var(--noir); }
+.admin-table td { padding: .5rem .7rem; border-bottom: 1px solid var(--gris-bord); vertical-align: top; }
+.admin-table td.num { font-family: var(--mono); text-align: right; white-space: nowrap; }
+.admin-table td.pos { color: var(--vert); }
+.admin-table td.neg { color: var(--rouge-txt); }
+.admin-role { margin-left: .5rem; font-size: .6rem; padding: 1px 6px; }
+@media (max-width: 860px) { .admin-deux { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .admin-ligne { grid-template-columns: 56px 1fr; }
+  .admin-vignette { width: 56px; height: 48px; }
+  .admin-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .admin-motif { width: 100%; }
+  .admin-table { font-size: .8rem; }
+  .admin-table th, .admin-table td { padding: .4rem .5rem; }
+}
+
+/* ── Planches à imprimer, page S'enrichir (2026-10-04) ── */
+.planches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }
+.planche-card { border: 2px solid var(--noir); background: var(--blanc); display: flex; flex-direction: column; transition: transform var(--moyen) var(--ressort), box-shadow var(--moyen); }
+.planche-card:hover { transform: translate(-2px, -2px); box-shadow: var(--ombre-tampon); }
+.planche-apercu { display: block; padding: 0; border: 0; border-bottom: 2px solid var(--noir); background: var(--gris-clair); cursor: zoom-in; aspect-ratio: 210 / 297; overflow: hidden; }
+.planche-apercu img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.planche-pied { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .55rem .7rem; }
+.planche-titre { font-family: var(--bebas); font-size: 1.35rem; line-height: 1; }
+.planche-titre small { font-family: var(--mono); font-size: .62rem; color: var(--gris); letter-spacing: .08em; }
+@media (max-width: 640px) { .planches-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; } }
+
+/* ── Participer + renvoi au guichet depuis S'enrichir (2026-10-04) ── */
+.participer-onglets { margin-bottom: 1.6rem; }
+.bande-guichet { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border: 2px solid var(--noir); background: var(--jaune-fond); padding: 1rem 1.2rem; margin-bottom: 3rem; }
+.bande-guichet p { margin: 0; }

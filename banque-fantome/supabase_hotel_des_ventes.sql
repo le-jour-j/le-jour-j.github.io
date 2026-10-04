@@ -375,6 +375,7 @@ returns json language sql stable security definer as $$
     'commission_pct',    (select commission_pct from banque where id = 1),
     'en_circulation',    (select coalesce(sum(solde), 0) from profiles),
     'billets_emis',      (select count(*) from billets_emis where statut = 'valide'),
+    'montant_emis',      (select coalesce(sum(valeur), 0) from billets_emis where statut = 'valide'),
     'ventes_en_cours',   (select count(*) from objets where mise_depart is not null and statut = 'disponible'
                                                           and (expire_at > now() or encherisseur_id is null)),
     'ventes_conclues',   (select count(*) from objets where mise_depart is not null and statut = 'échangé'),

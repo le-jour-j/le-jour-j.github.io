@@ -34,7 +34,7 @@ export const PAGES = [
       <h2>Ouvrir un compte</h2>
       <p>Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.</p>
       <h2>Fabriquer son argent</h2>
-      <p>Dessinez, coloriez, imprimez vos billets, puis photographiez-les au guichet : la banque les crédite sur votre compte.</p>
+      <p>Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.</p>
       <h2>Enchérir dans le market</h2>
       <p>Les dépôts sont mis aux enchères : objets, œuvres ou services. Le plus offrant l'emporte, la banque prélève sa commission et s'enrichit.</p>`,
   },
@@ -47,19 +47,19 @@ export const PAGES = [
     contenu: `
       <h1>Market</h1>
       <p>Les objets, œuvres et services déposés par les comptes de la Banque Fantôme, mis aux enchères.</p>
-      <p>Chaque dépôt part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On enchérit avec les billets qu'on a soi-même fabriqués et fait créditer au guichet. À la clôture, la banque prélève sa commission.</p>`,
+      <p>Chaque dépôt part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On enchérit avec les billets originaux qu'on a soi-même dessinés et fait créditer au guichet. À la clôture, la banque prélève sa commission.</p>`,
   },
   {
     path: "/senrichir",
-    title: "S'enrichir — émettre ses propres billets | Banque Fantôme",
+    title: "S'enrichir — planches de billets à imprimer | Banque Fantôme",
     description:
-      "Dessinez vos billets, photographiez-les au guichet d'émission : la Banque Fantôme les crédite sur votre compte. Modèles à imprimer et cours des devises.",
+      "Planches A4 de billets dessinés, de 5 à 500 €, à télécharger, imprimer et découper pour jouer sur papier. Billets émis et cours des devises.",
     priority: "0.7",
     contenu: `
       <h1>S'enrichir</h1>
-      <p>Le guichet d'émission de la Banque Fantôme. Dessinez un billet, choisissez sa dénomination, photographiez-le : la banque le crédite immédiatement sur votre compte.</p>
-      <h2>Billets à imprimer</h2>
-      <p>Des modèles vierges à imprimer, colorier et faire créditer.</p>
+      <p>Fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.</p>
+      <h2>Planches à imprimer</h2>
+      <p>Des planches A4 de billets dessinés, de 5 à 500 €, à télécharger en PDF, imprimer, découper et faire créditer.</p>
       <h2>Cours des devises</h2>
       <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>`,
   },
@@ -75,6 +75,20 @@ export const PAGES = [
       <p>Expositions, ateliers, billets, installations : ce qui arrive à la Banque Fantôme, au fur et à mesure.</p>`,
   },
 
+  {
+    path: "/participer",
+    title: "Participer — déposer un billet original ou un objet | Banque Fantôme",
+    description:
+      "Alimenter la Banque Fantôme : déposer au guichet un billet original dessiné à la main, crédité sur votre compte, ou mettre aux enchères un objet, une œuvre ou un service.",
+    priority: "0.7",
+    contenu: `
+      <h1>Participer</h1>
+      <h2>Déposer un billet original</h2>
+      <p>Photographiez un billet dessiné à la main, donnez-lui un titre, une devise et une dénomination : la banque le crédite sur votre compte.</p>
+      <h2>Mettre en vente au market</h2>
+      <p>Un objet, une œuvre ou un service, mis aux enchères pour un, trois ou sept jours.</p>`,
+  },
+
   // Pages de compte : servies normalement, tenues hors de l'index. /deposer
   // affiche « Accès refusé » sans compte, les trois autres sont privées ou
   // sans contenu propre.
@@ -82,6 +96,7 @@ export const PAGES = [
   { path: "/connexion", title: "Connexion | Banque Fantôme", description: "Ouvrir un compte ou se connecter à la Banque Fantôme.", noindex: true },
   { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets émis et ventes en cours.", noindex: true },
   { path: "/messages", title: "Messages | Banque Fantôme", description: "Messagerie entre comptes.", noindex: true },
+  { path: "/admin", title: "Admin | Banque Fantôme", description: "Espace du banquier.", noindex: true },
 ];
 
 const PAR_PATH = new Map(PAGES.map((p) => [p.path, p]));

@@ -50,6 +50,7 @@ export default function Compte() {
   const [encheres, setEncheres] = useState([])        // ventes où j'ai misé (en cours)
   const [achats, setAchats]     = useState([])        // ventes remportées
   const [livre, setLivre]       = useState([])        // grand livre
+  const [depots, setDepots]     = useState({ n: 0, total: 0 }) // billets déposés au guichet (valides)
   const [selected, setSelected] = useState(null)
   const [notif, setNotif]       = useState(null)
   const [deleting, setDeleting] = useState(null)
@@ -61,12 +62,15 @@ export default function Compte() {
   }, [user, authLoading])
 
   async function charger() {
-    const [d, e, a, l] = await Promise.all([
+    const [d, e, a, l, b] = await Promise.all([
       supabase.from('objets').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
       supabase.from('encheres').select('objet_id').eq('user_id', user.id),
       supabase.from('objets').select('*').eq('vendu_a', user.id).order('vendu_at', { ascending: false }),
       supabase.from('transactions').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(40),
+      supabase.from('billets_emis').select('valeur').eq('user_id', user.id).eq('statut', 'valide'),
     ])
+    const billets = b.data || []
+    setDepots({ n: billets.length, total: billets.reduce((t, x) => t + (x.valeur || 0), 0) })
     setObjets(d.data || [])
     setAchats(a.data || [])
     setLivre(l.data || [])
@@ -114,6 +118,10 @@ export default function Compte() {
           <div>
             <div className="eyebrow">SOLDE</div>
             <div className="nombre">{solde}<small> billets</small></div>
+          </div>
+          <div>
+            <div className="eyebrow">BILLETS DÉPOSÉS</div>
+            <div className="nombre">{depots.n}<small> · {depots.total} €</small></div>
           </div>
           <div>
             <div className="eyebrow">EN VENTE</div>
@@ -165,13 +173,13 @@ export default function Compte() {
         {/* ── Mes dépôts ── */}
         <div className="section-head" style={{ marginTop: (encheres.length || achats.length) ? '3rem' : 0 }}>
           <h2>Mes dépôts</h2>
-          <Link to="/deposer" className="count">+ Nouveau →</Link>
+          <Link to="/participer?onglet=market" className="count">+ Nouveau →</Link>
         </div>
 
         {objets.length === 0
           ? <div className="vide">
               <div className="titre">Aucun objet en circulation</div>
-              <Link to="/deposer" className="btn btn-noir">Déposer un objet →</Link>
+              <Link to="/participer?onglet=market" className="btn btn-noir">Déposer un objet →</Link>
             </div>
           : <div className="grid-3">
               {objets.map(o => (

@@ -1,86 +1,63 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import ImageLightbox from '../components/ImageLightbox'
-import GuichetEmission, { MurBillets } from '../components/GuichetEmission'
+import { Link } from 'react-router-dom'
+import { MurBillets } from '../components/GuichetEmission'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 
-const BASE = import.meta.env.BASE_URL
-const billets = [
-  `${BASE}images/billet/billet-a-colorier-001.jpg`,
-  `${BASE}images/billet/billet-a-colorier-002.png`,
-  `${BASE}images/billet/billet-a-colorier-003.png`,
-  `${BASE}images/billet/billet-a-colorier-004.png`,
-  `${BASE}images/billet/billet-a-colorier-005.png`,
-  `${BASE}images/billet/billet-a-colorier-006.png`,
-  `${BASE}images/billet/billet-a-colorier-007.png`,
-  `${BASE}images/billet/billet-a-colorier-008.jpg`,
-  `${BASE}images/billet/billet-a-colorier-009.jpg`,
-  `${BASE}images/billet/billet-a-colorier-010.jpg`,
-  `${BASE}images/billet/billet-a-colorier-011.jpg`,
-  `${BASE}images/billet/billet-a-colorier-012.jpg`,
-  `${BASE}images/billet/billet-a-colorier-013.jpg`,
-]
+import planches from '../data/planches.json'
 
-const prompts = [
-  {
-    label: 'Billet 5 €',
-    text: `Create a highly accurate artistic representation of a 5 euro banknote with the exact same dimensions, proportions, layout and composition as the official 5 euro banknote (120mm x 62mm aspect ratio), grey-green color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 10 €',
-    text: `Create a highly accurate artistic representation of a 10 euro banknote with the exact same dimensions, proportions, layout and composition as the official 10 euro banknote (127mm x 67mm aspect ratio), red color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 20 €',
-    text: `Create a highly accurate artistic representation of a 20 euro banknote with the exact same dimensions, proportions, layout and composition as the official 20 euro banknote (133mm x 72mm aspect ratio), blue color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 50 €',
-    text: `Create a highly accurate artistic representation of a 50 euro banknote with the exact same dimensions, proportions, layout and composition as the official 50 euro banknote (140mm x 77mm aspect ratio), orange color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 100 €',
-    text: `Create a highly accurate artistic representation of a 100 euro banknote with the exact same dimensions, proportions, layout and composition as the official 100 euro banknote (147mm x 82mm aspect ratio), green color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 200 €',
-    text: `Create a highly accurate artistic representation of a 200 euro banknote with the exact same dimensions, proportions, layout and composition as the official 200 euro banknote (153mm x 82mm aspect ratio), yellow-brown color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-  {
-    label: 'Billet 500 €',
-    text: `Create a highly accurate artistic representation of a 500 euro banknote with the exact same dimensions, proportions, layout and composition as the official 500 euro banknote (160mm x 82mm aspect ratio), purple color palette, featuring a stylized depiction of [INSÈRE TON MONUMENT OU IMAGE ICI] as the main central vignette, abstract contemporary artistic banknote style, geometric patterns, decorative security elements, clean professional composition, clearly fictional and artistic, not realistic counterfeit, fine line details, experimental typography, no real numbers or text that mimic genuine currency, ultra detailed, sharp edges, perfect aspect ratio, both front (recto) and back (verso) sides visible on the same image with recto on the left and verso on the right, 8k resolution, viewed straight on as a flat document`,
-  },
-]
+const BASE = import.meta.env.BASE_URL
+const VALEURS = [...new Set(planches.map(p => p.valeur))].sort((a, b) => a - b)
+const urlPlanche = f => `${BASE}planches/${f}`
+const urlApercu = f => `${BASE}planches/apercus/${f}`
 
 export default function Senrichir() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
-  const [copiedIndex, setCopiedIndex] = useState(null)
+  const [valeur, setValeur] = useState('toutes')
   const [notif, setNotif] = useState(null)
 
-  function copyPrompt(text, index) {
-    navigator.clipboard?.writeText(text).catch(() => {})
-    setCopiedIndex(index)
-    window.setTimeout(() => setCopiedIndex(null), 1600)
-  }
+  const visibles = useMemo(() => valeur === 'toutes' ? planches : planches.filter(p => p.valeur === valeur), [valeur])
+  const apercus = useMemo(() => visibles.map(p => urlApercu(p.apercu)), [visibles])
 
   return (
     <div className="page-pad">
       <div className="container">
         <div className="section-head">
           <h2>S'enrichir</h2>
-          <span className="count">Billets, modèles et prompts</span>
+          <span className="count">Planches à imprimer</span>
         </div>
 
-        <section style={{ marginBottom: '2.5rem' }}>
-          <div className="info-drawer" style={{ margin: 0 }}>
-            <div className="info-drawer-title">Mode d'emploi</div>
-            <p>
-              Ici, vous fabriquez votre monnaie. Téléchargez un billet, imprimez-le, coloriez-le, complétez-le — ou dessinez le vôtre — puis photographiez-le au guichet ci-dessous : la banque le crédite sur votre compte. Ce sont ces billets que vous misez dans le market. Plus vous produisez de faux argent, plus vous pouvez enchérir.
-            </p>
+        <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
+          Ici, vous fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.
+          {' '}{planches.length} planches A4, de 5 à 500 €. Cliquez sur une planche pour la voir en grand.
+        </p>
+        <section style={{ marginBottom: '2rem' }}>
+          <div className="filter-row" style={{ marginBottom: '1.4rem' }}>
+            <button type="button" className={`chip ${valeur === 'toutes' ? 'active' : ''}`} onClick={() => setValeur('toutes')}>toutes</button>
+            {VALEURS.map(v => (
+              <button key={v} type="button" className={`chip ${valeur === v ? 'active' : ''}`} onClick={() => setValeur(v)}>{v} €</button>
+            ))}
+          </div>
+          <div className="planches-grid">
+            {visibles.map((p, index) => (
+              <article key={p.fichier} className="planche-card">
+                <button type="button" className="planche-apercu" onClick={() => setLightboxIndex(index)} aria-label={`Aperçu de la planche ${p.valeur} € n° ${p.numero}`}>
+                  <img src={urlApercu(p.vignette)} alt={`Planche de billets de ${p.valeur} €, n° ${p.numero}`} loading="lazy" />
+                </button>
+                <div className="planche-pied">
+                  <div className="planche-titre">{p.valeur} € <small>n° {String(p.numero).padStart(2, '0')}</small></div>
+                  <a className="btn btn-noir btn-xs" href={urlPlanche(p.fichier)} download>↓ PDF</a>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
-        <GuichetEmission onNotif={setNotif} />
+        <div className="bande-guichet">
+          <p><strong>Vous avez dessiné un billet original ?</strong> Déposez-le au guichet : la banque le crédite sur votre compte, et c'est avec lui que vous enchérissez dans le market.</p>
+          <Link to="/participer" className="btn btn-jaune btn-sm">→ Déposer un original</Link>
+        </div>
 
         <MurBillets limit={12} onNotif={setNotif} />
 
@@ -92,65 +69,16 @@ export default function Senrichir() {
           <CoursDevises />
         </section>
 
-        <section style={{ marginBottom: '4rem' }}>
-          <div className="section-head">
-            <h2>Billets à imprimer</h2>
-            <span className="count">Cliquez pour agrandir</span>
-          </div>
-          <div className="grid-3">
-            {billets.map((src, index) => (
-              <article key={src} className="objet-card billet-card">
-                <span className="card-num">#{String(index + 1).padStart(2, '0')}</span>
-                <div className="img-wrap">
-                  <button className="enrichir-billet-button" onClick={() => setLightboxIndex(index)} aria-label={`Agrandir le billet ${index + 1}`}>
-                    <img src={src} alt={`Billet à colorier ${index + 1}`} loading="lazy" />
-                  </button>
-                </div>
-                <div className="card-body">
-                  <div className="card-title">Billet {String(index + 1).padStart(2, '0')}</div>
-                  <div className="card-desc">Support imprimable pour fabriquer votre monnaie et acheter dans le market.</div>
-                  <div className="card-foot">
-                    <button type="button" className="tag enrichir-zoom-tag" onClick={() => setLightboxIndex(index)}>⤢ agrandir</button>
-                    <a className="btn btn-noir btn-sm" href={src} download>
-                      ↓ Télécharger
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <div className="section-head">
-            <h2>Prompts</h2>
-            <span className="count">Billets personnalisés</span>
-          </div>
-          <div className="prompt-list">
-            {prompts.map((prompt, index) => (
-              <article key={prompt.label} className="prompt-card">
-                <div className="prompt-card-head">
-                  <h3>{prompt.label}</h3>
-                  <button className={`btn btn-sm ${copiedIndex === index ? 'btn-noir' : 'btn-outline'}`} onClick={() => copyPrompt(prompt.text, index)}>
-                    {copiedIndex === index ? '✓ Copié' : 'Copier le prompt'}
-                  </button>
-                </div>
-                {copiedIndex === index && <span className="stamp-copie" aria-hidden="true">Copié</span>}
-                <textarea value={prompt.text} readOnly onFocus={e => e.target.select()} aria-label={`Prompt ${prompt.label}`} />
-              </article>
-            ))}
-          </div>
-        </section>
       </div>
 
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
       {lightboxIndex !== null && (
         <ImageLightbox
-          images={billets}
+          images={apercus}
           initialIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex(i => (i === 0 ? billets.length - 1 : i - 1))}
-          onNext={() => setLightboxIndex(i => (i === billets.length - 1 ? 0 : i + 1))}
+          onPrev={() => setLightboxIndex(i => (i === 0 ? apercus.length - 1 : i - 1))}
+          onNext={() => setLightboxIndex(i => (i === apercus.length - 1 ? 0 : i + 1))}
         />
       )}
     </div>

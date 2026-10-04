@@ -32,7 +32,7 @@ function Compteur({ valeur }) {
 
 const PRINCIPE = [
   { n: '1', titre: 'Ouvrir un compte', texte: 'Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.', to: '/connexion', cta: 'Créer un compte' },
-  { n: '2', titre: 'Fabriquer son argent', texte: 'Dessinez, coloriez, imprimez vos billets, puis photographiez-les au guichet : la banque les crédite sur votre compte.', to: '/senrichir', cta: 'Émettre des billets' },
+  { n: '2', titre: 'Fabriquer son argent', texte: 'Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.', to: '/participer', cta: 'Déposer un original' },
   { n: '3', titre: 'Enchérir dans le market', texte: 'Les dépôts sont mis aux enchères : objets, œuvres ou services. Le plus offrant l’emporte, la banque prélève sa commission et s’enrichit.', to: '/market', cta: 'Entrer dans le market' },
 ]
 
@@ -94,8 +94,12 @@ export default function Home() {
               <div className="stat-value"><Compteur valeur={total} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Billets en circulation</div>
-              <div className="stat-value"><Compteur valeur={stats?.en_circulation} /></div>
+              <div className="stat-label">Billets déposés</div>
+              <div className="stat-value"><Compteur valeur={stats?.billets_emis} /></div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-label">Montant déposé</div>
+              <div className="stat-value"><Compteur valeur={stats?.montant_emis} /> €</div>
             </div>
             <div className="stat-item">
               <div className="stat-label">Trésor de la banque</div>
@@ -225,7 +229,7 @@ export default function Home() {
           </div>
           <div className="bande-actions">
             <Link to="/senrichir" className="btn btn-noir">Voir les billets</Link>
-            <Link to="/deposer" className="btn btn-outline">Déposer dans le market</Link>
+            <Link to="/participer?onglet=market" className="btn btn-outline">Déposer dans le market</Link>
           </div>
         </div>
       </section>

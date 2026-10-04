@@ -8,7 +8,8 @@ import { DUREES, COMMISSION_PCT } from '../utils/encheres'
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
-export default function Deposer() {
+// `integre` : rendu à l'intérieur de la page Participer (sans en-tête ni marges de page)
+export default function Deposer({ integre = false }) {
   const { user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', mise_depart: 10, prix_achat: '', duree_jours: 3 })
@@ -124,10 +125,7 @@ export default function Deposer() {
     </div>
   )
 
-  return (
-    <div className="page-pad">
-      <div className="container">
-        <div className="section-head"><h2>Déposer dans le market</h2><span className="count">* champs obligatoires</span></div>
+  const formulaire = (
         <div className="form-grid">
           <div>
             <p className="texte-aide" style={{ marginBottom: '2rem' }}>
@@ -217,8 +215,18 @@ export default function Deposer() {
             </button>
           </div>
         </div>
+  )
+
+  const notification = notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />
+  if (integre) return <>{formulaire}{notification}</>
+
+  return (
+    <div className="page-pad">
+      <div className="container">
+        <div className="section-head"><h2>Déposer dans le market</h2><span className="count">* champs obligatoires</span></div>
+        {formulaire}
       </div>
-      {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
+      {notification}
     </div>
   )
 }
