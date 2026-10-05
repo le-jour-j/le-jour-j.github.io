@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { AuthProvider } from './components/AuthContext'
+import { NouveautesProvider } from './components/Nouveautes'
 import Navbar from './components/Navbar'
 import ClickEffects from './components/ClickEffects'
 import InstallPWA from './components/InstallPWA'
@@ -29,6 +30,7 @@ export default function App() {
 
   return (
     <AuthProvider>
+    <NouveautesProvider>
       <ClickEffects />
       <Navbar />
       {/* key = pathname : relance l'animation d'entrée (.page) à chaque navigation */}
@@ -55,6 +57,7 @@ export default function App() {
           <span>La valeur ne préexiste pas : elle se dessine.</span>
         </div>
       </footer>
+    </NouveautesProvider>
     </AuthProvider>
   )
 }

@@ -719,6 +719,20 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
   .admin-table { font-size: .8rem; }
   .admin-table th, .admin-table td { padding: .4rem .5rem; }
 }
+/* Les nouveautés du banquier (2026-10-05) */
+.admin-nouveautes { border: 2px solid var(--noir); background: var(--jaune-fond); box-shadow: 5px 5px 0 var(--jaune); padding: .9rem 1.1rem; margin-bottom: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
+.admin-nouveautes-titre { font-family: var(--mono); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+.admin-nouveautes ul { list-style: none; display: flex; flex-direction: column; gap: .3rem; }
+.admin-nouveautes li button { background: none; border: 0; padding: 0; cursor: pointer; font-size: .95rem; text-align: left; color: var(--noir); }
+.admin-nouveautes li button:hover { text-decoration: underline; }
+.admin-nouveautes li button.fort { font-weight: 700; }
+.chip-compte { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--rouge); color: #fff; font-family: var(--mono); font-size: .62rem; letter-spacing: 0; }
+.admin-ligne.nouvelle, .admin-table tr.nouvelle td { background: var(--jaune-fond); }
+.admin-nouveau { margin-left: .5rem; font-size: .6rem; padding: 1px 6px; vertical-align: middle; }
+.lettre-seuil { display: flex; align-items: center; gap: .4rem 1rem; flex-wrap: wrap; }
+.lettre-seuil label { display: flex; align-items: center; gap: .5rem; font-size: .9rem; color: var(--gris-fonce); }
+.lettre-seuil select { border: 2px solid var(--noir); background: var(--blanc); font-family: var(--mono); font-size: .85rem; padding: .15rem .3rem; }
+.nav-burger-point { position: absolute; top: -6px; right: -6px; width: 14px; height: 14px; border-radius: 50%; background: var(--rouge); border: 2px solid var(--blanc); animation: pulse 1.6s ease-in-out infinite; }
 
 /* ── Planches à imprimer, page S'enrichir (2026-10-04) ── */
 .planches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }

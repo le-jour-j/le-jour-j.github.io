@@ -86,6 +86,29 @@ Editor :
 
 ---
 
+## Savoir quand la lettre est prête (et le reste)
+
+*Ajouté le 2026-10-05 à 20:40, à la demande de Jiiji : « toutes les 3 actus », et « une
+notification dans mon interface à moi en tant qu'admin ». Il envoie la lettre à la main.*
+
+- **La lettre est prête à partir de 3 actus en attente.** Le nombre se règle dans
+  Admin → Lettre (« Me prévenir quand … actus attendent », de 1 à 10). C'est seulement
+  un signal : « Envoyer maintenant » marche toujours, et l'envoi du lundi (s'il est
+  coché un jour) n'en tient pas compte.
+- **Un compteur rouge sur « Admin »** dans le menu du haut (et un point rouge sur le
+  bouton menu du téléphone) dit combien il y a de choses à voir.
+- **En haut de l'admin, le bloc « Nouveautés »** les détaille : lettre prête, nouveaux
+  comptes, billets déposés au guichet, dépôts au market, inscriptions et désinscriptions
+  à la lettre. Un clic ouvre le bon onglet.
+- **Ouvrir un onglet, c'est l'avoir vu** : son compteur tombe, et les lignes nouvelles y
+  restent surlignées en jaune avec un tampon « nouveau » le temps de la visite.
+- Ce que le banquier fait lui-même ne compte pas (ses billets, ses dépôts, les
+  partenaires qu'il inscrit). Au tout premier passage, on compte les 7 derniers jours.
+- Fichiers : `supabase_nouveautes.sql` (appliqué le 2026-10-05 vers 20:35),
+  `src/components/Nouveautes.jsx`, et l'admin.
+
+---
+
 ## Les limites à connaître
 
 - **Gmail plafonne à environ 500 envois par jour.** La fonction refuse d'envoyer au-delà de

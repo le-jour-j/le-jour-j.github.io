@@ -9,6 +9,7 @@ import Notif from '../components/Notif'
 import { getPublicImageUrl, getObjetImageUrls } from '../utils/images'
 import { estVente, echeance, tempsRestant, messageErreur } from '../utils/encheres'
 import { emailValide, messageLettre, fonctionLettre } from '../lib/lettre'
+import { useNouveautes, RUBRIQUE_DE_L_ONGLET } from '../components/Nouveautes'
 
 // Espace du banquier : fil d'actu, billets émis, market, comptes et chiffres.
 // La page n'est qu'un tableau de bord : les droits sont vérifiés côté base
@@ -24,18 +25,35 @@ const ONGLETS = [
 
 const dateCourte = d => d ? new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }) : ''
 const dateHeure = d => d ? new Date(d).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''
+const pluriel = (n, un, plusieurs) => `${n} ${n > 1 ? plusieurs : un}`
+// Une ligne est « nouvelle » si elle date d'après le dernier passage dans son onglet
+const estNouveau = (date, depuis) => !!date && !!depuis && new Date(date) > new Date(depuis)
+const Nouveau = () => <span className="stamp stamp-jaune admin-nouveau">nouveau</span>
 
 export default function Admin() {
   const { user, loading, estBanquier } = useAuth()
+  const { data: nouveautes, compte, lettrePrete, recharger, marquerVu } = useNouveautes()
   const [onglet, setOnglet] = useState(() => {
     try { return sessionStorage.getItem('bf-admin-onglet') || 'actu' } catch { return 'actu' }
   })
   const [notif, setNotif] = useState(null)
+  // Ce qui était nouveau en arrivant : reste souligné dans les listes le temps de la visite
+  const [depuis, setDepuis] = useState(null)
+
+  useEffect(() => {
+    if (!estBanquier) return
+    recharger().then(d => d && setDepuis({ comptes: d.comptes.depuis, billets: d.billets.depuis, market: d.market.depuis, abonnes: d.abonnes.depuis }))
+  }, [estBanquier, recharger])
+
+  // Ouvrir un onglet, c'est avoir vu ses nouveautés
+  useEffect(() => { if (depuis) marquerVu(RUBRIQUE_DE_L_ONGLET[onglet]) }, [onglet, depuis, marquerVu])
 
   function choisir(id) {
     setOnglet(id)
     try { sessionStorage.setItem('bf-admin-onglet', id) } catch { /* navigation privée */ }
   }
+
+  const aVoir = { comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
 
   if (loading) return <div className="loader">Chargement<span className="blink">_</span></div>
   if (!user || !estBanquier) return (
@@ -55,18 +73,57 @@ export default function Admin() {
           <h2>Admin</h2>
           <span className="count">◈ banquier</span>
         </div>
+        {nouveautes && <BlocNouveautes data={nouveautes} lettrePrete={lettrePrete} onOuvrir={choisir} />}
         <div className="filter-row admin-onglets" role="tablist">
           {ONGLETS.map(o => (
-            <button key={o.id} type="button" role="tab" aria-selected={onglet === o.id} className={`chip ${onglet === o.id ? 'active' : ''}`} onClick={() => choisir(o.id)}>{o.label}</button>
+            <button key={o.id} type="button" role="tab" aria-selected={onglet === o.id} className={`chip ${onglet === o.id ? 'active' : ''}`} onClick={() => choisir(o.id)}>
+              {o.label}
+              {aVoir[o.id] > 0 && <span className="chip-compte" aria-label={`${aVoir[o.id]} à voir`}>{aVoir[o.id]}</span>}
+            </button>
           ))}
         </div>
         {onglet === 'actu' && <OngletActu onNotif={setNotif} />}
-        {onglet === 'billets' && <OngletBillets onNotif={setNotif} />}
-        {onglet === 'market' && <OngletMarket onNotif={setNotif} />}
-        {onglet === 'comptes' && <OngletComptes />}
-        {onglet === 'lettre' && <OngletLettre onNotif={setNotif} />}
+        {onglet === 'billets' && <OngletBillets onNotif={setNotif} depuis={depuis?.billets} />}
+        {onglet === 'market' && <OngletMarket onNotif={setNotif} depuis={depuis?.market} />}
+        {onglet === 'comptes' && <OngletComptes depuis={depuis?.comptes} />}
+        {onglet === 'lettre' && <OngletLettre onNotif={setNotif} depuis={depuis?.abonnes} />}
       </div>
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
+    </div>
+  )
+}
+
+// ─── Nouveautés : ce qui s'est passé depuis la dernière visite de chaque onglet ───
+function BlocNouveautes({ data, lettrePrete, onOuvrir }) {
+  const { comptes, billets, market, abonnes, lettre } = data
+  const lignes = []
+  if (lettrePrete) lignes.push({ onglet: 'lettre', fort: true, texte: `La lettre est prête : ${lettre.en_attente} actus attendent d'être envoyées` })
+  if (comptes.n) lignes.push({ onglet: 'comptes', texte: pluriel(comptes.n, 'nouveau compte', 'nouveaux comptes') })
+  if (billets.n) lignes.push({ onglet: 'billets', texte: pluriel(billets.n, 'billet déposé au guichet', 'billets déposés au guichet') })
+  if (market.n) lignes.push({ onglet: 'market', texte: pluriel(market.n, 'dépôt au market', 'dépôts au market') })
+  const lettreMouvements = [
+    abonnes.n > 0 && pluriel(abonnes.n, 'inscription', 'inscriptions'),
+    abonnes.desinscrits > 0 && pluriel(abonnes.desinscrits, 'désinscription', 'désinscriptions'),
+  ].filter(Boolean)
+  if (lettreMouvements.length) lignes.push({ onglet: 'lettre', texte: `${lettreMouvements.join(', ')} à la lettre` })
+
+  return (
+    <div className="admin-nouveautes">
+      <div className="admin-nouveautes-titre">◈ Nouveautés</div>
+      {lignes.length === 0
+        ? <p className="caption-gris">Rien de neuf depuis ta dernière visite.</p>
+        : <ul>
+            {lignes.map(l => (
+              <li key={l.texte}>
+                <button type="button" className={l.fort ? 'fort' : ''} onClick={() => onOuvrir(l.onglet)}>{l.texte} →</button>
+              </li>
+            ))}
+          </ul>}
+      {!lettrePrete && (
+        <p className="caption-gris">
+          Lettre : {lettre.en_attente} actu{lettre.en_attente > 1 ? 's' : ''} en attente, elle sera prête à {lettre.seuil}.
+        </p>
+      )}
     </div>
   )
 }
@@ -88,7 +145,8 @@ function OngletActu({ onNotif }) {
 }
 
 // ─── Billets émis ───
-function OngletBillets({ onNotif }) {
+function OngletBillets({ onNotif, depuis }) {
+  const { user } = useAuth()
   const [billets, setBillets] = useState(null)
   const [filtre, setFiltre] = useState('valide')
   const [enAnnulation, setEnAnnulation] = useState(null) // { id, motif }
@@ -124,13 +182,15 @@ function OngletBillets({ onNotif }) {
       {billets === null ? <div className="loader">Chargement<span className="blink">_</span></div>
         : billets.length === 0 ? <p className="vide">Aucun billet.</p>
         : <div className="admin-liste">
-            {billets.map(b => (
-              <div key={b.id} className={`admin-ligne ${b.statut === 'annule' ? 'barre' : ''}`}>
+            {billets.map(b => {
+              const nouveau = b.user_id !== user?.id && estNouveau(b.created_at, depuis)
+              return (
+              <div key={b.id} className={`admin-ligne ${b.statut === 'annule' ? 'barre' : ''} ${nouveau ? 'nouvelle' : ''}`}>
                 <a className="admin-vignette" href={getPublicImageUrl(b.image_path)} target="_blank" rel="noreferrer">
                   <img src={getPublicImageUrl(b.image_path)} alt="" loading="lazy" />
                 </a>
                 <div className="admin-infos">
-                  <div className="admin-titre">{b.valeur} {b.devise || 'billets'}{b.titre ? ` · « ${b.titre} »` : ''}</div>
+                  <div className="admin-titre">{b.valeur} {b.devise || 'billets'}{b.titre ? ` · « ${b.titre} »` : ''}{nouveau && <Nouveau />}</div>
                   <div className="caption-gris">par <strong>{b.pseudo}</strong>{b.artiste && b.artiste !== b.pseudo ? ` (${b.artiste})` : ''} · {dateHeure(b.created_at)}{b.technique ? ` · ${b.technique}` : ''}</div>
                   {b.statut === 'annule' && <div className="caption-gris">Annulé le {dateCourte(b.annule_at)}{b.motif ? ` : ${b.motif}` : ''}</div>}
                 </div>
@@ -145,14 +205,16 @@ function OngletBillets({ onNotif }) {
                   {b.statut === 'annule' && <span className="stamp stamp-rouge">annulé</span>}
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>}
     </div>
   )
 }
 
 // ─── Market ───
-function OngletMarket({ onNotif }) {
+function OngletMarket({ onNotif, depuis }) {
+  const { user } = useAuth()
   const [objets, setObjets] = useState(null)
   const [filtre, setFiltre] = useState('disponible')
   const [aRetirer, setARetirer] = useState(null)
@@ -192,13 +254,14 @@ function OngletMarket({ onNotif }) {
             {objets.map(o => {
               const img = getObjetImageUrls(o)[0]
               const enVente = o.statut === 'disponible' || o.statut === 'réservé'
+              const nouveau = o.user_id !== user?.id && estNouveau(o.created_at, depuis)
               return (
-                <div key={o.id} className="admin-ligne">
+                <div key={o.id} className={`admin-ligne ${nouveau ? 'nouvelle' : ''}`}>
                   <button type="button" className="admin-vignette" onClick={() => setSelected(o)} aria-label={`Ouvrir ${o.titre}`}>
                     {img ? <img src={img} alt="" loading="lazy" /> : <span>BF</span>}
                   </button>
                   <div className="admin-infos">
-                    <button type="button" className="admin-titre lien-texte" onClick={() => setSelected(o)}>{o.titre}</button>
+                    <div><button type="button" className="admin-titre lien-texte" onClick={() => setSelected(o)}>{o.titre}</button>{nouveau && <Nouveau />}</div>
                     <div className="caption-gris">
                       par <strong>{o.pseudo || 'Anonyme'}</strong> · déposé le {dateCourte(o.created_at)} · <span className="admin-statut">{o.statut}</span>
                     </div>
@@ -228,7 +291,8 @@ function OngletMarket({ onNotif }) {
 }
 
 // ─── Comptes et chiffres ───
-function OngletComptes() {
+function OngletComptes({ depuis }) {
+  const { user } = useAuth()
   const [stats, setStats] = useState(null)
   const [comptes, setComptes] = useState(null)
   const [transactions, setTransactions] = useState(null)
@@ -278,14 +342,17 @@ function OngletComptes() {
             : <table className="admin-table">
                 <thead><tr><th>Pseudo</th><th>Solde</th><th>Billets déposés</th><th>Inscrit</th></tr></thead>
                 <tbody>
-                  {comptes.map(c => (
-                    <tr key={c.id}>
-                      <td>{c.pseudo}{c.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}</td>
+                  {comptes.map(c => {
+                    const nouveau = c.id !== user?.id && estNouveau(c.created_at, depuis)
+                    return (
+                    <tr key={c.id} className={nouveau ? 'nouvelle' : ''}>
+                      <td>{c.pseudo}{c.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}{nouveau && <Nouveau />}</td>
                       <td className="num">{c.solde}</td>
                       <td className="num">{depots.get(c.id)?.n || 0} · {depots.get(c.id)?.total || 0} €</td>
                       <td>{dateCourte(c.created_at)}</td>
                     </tr>
-                  ))}
+                    )
+                  })}
                 </tbody>
               </table>}
         </div>
@@ -326,7 +393,8 @@ function lireAdresses(texte) {
   }).filter(Boolean)
 }
 
-function OngletLettre({ onNotif }) {
+function OngletLettre({ onNotif, depuis }) {
+  const { data: nouveautes, recharger } = useNouveautes()
   const [reglages, setReglages] = useState(null)
   const [mot, setMot] = useState('')
   const [abonnes, setAbonnes] = useState(null)
@@ -395,6 +463,11 @@ function OngletLettre({ onNotif }) {
     setApercu(null)
     setMot('')
     setRecharge(n => n + 1)
+    recharger()
+  }
+
+  async function changerSeuil(seuil) {
+    if (await majReglages({ seuil_actus: seuil })) recharger()
   }
 
   async function ajouter(liste) {
@@ -448,6 +521,16 @@ function OngletLettre({ onNotif }) {
         <input type="checkbox" checked={reglages.envoi_auto} onChange={e => majReglages({ envoi_auto: e.target.checked })} />
         Envoyer automatiquement chaque lundi matin
       </label>
+      <div className="lettre-seuil">
+        <label>
+          Me prévenir quand
+          <select value={reglages.seuil_actus ?? 3} onChange={e => changerSeuil(Number(e.target.value))}>
+            {Array.from({ length: 10 }, (_, i) => i + 1).map(n => <option key={n} value={n}>{n}</option>)}
+          </select>
+          actu{(reglages.seuil_actus ?? 3) > 1 ? 's' : ''} attend{(reglages.seuil_actus ?? 3) > 1 ? 'ent' : ''}
+        </label>
+        {nouveautes && <span className="caption-gris">En ce moment : {pluriel(nouveautes.lettre.en_attente, 'actu en attente', 'actus en attente')}.</span>}
+      </div>
       <div className="field" style={{ marginBottom: 0 }}>
         <label>Le mot du banquier (facultatif, en tête de la prochaine lettre)</label>
         <textarea value={mot} onChange={e => setMot(e.target.value)} placeholder="Une annonce, une date d'expo, un mot aux partenaires…" />
@@ -506,9 +589,11 @@ function OngletLettre({ onNotif }) {
             <table className="admin-table">
               <thead><tr><th>Qui</th><th>E-mail</th><th>Depuis</th><th>Statut</th><th></th></tr></thead>
               <tbody>
-                {abonnes.map(a => (
-                  <tr key={a.id} className={a.actif ? '' : 'lettre-inactif'}>
-                    <td>{a.source === 'membre' ? <>{pseudos.get(a.user_id) || 'compte'} <span className="caption-gris">(compte)</span></> : (a.nom || <span className="caption-gris">partenaire</span>)}</td>
+                {abonnes.map(a => {
+                  const nouveau = a.actif ? a.source === 'membre' && estNouveau(a.created_at, depuis) : estNouveau(a.desinscrit_at, depuis)
+                  return (
+                  <tr key={a.id} className={`${a.actif ? '' : 'lettre-inactif'} ${nouveau ? 'nouvelle' : ''}`}>
+                    <td>{a.source === 'membre' ? <>{pseudos.get(a.user_id) || 'compte'} <span className="caption-gris">(compte)</span></> : (a.nom || <span className="caption-gris">partenaire</span>)}{nouveau && <Nouveau />}</td>
                     <td>{a.email}</td>
                     <td>{dateCourte(a.created_at)}</td>
                     <td>{a.actif ? 'inscrit' : `désinscrit${a.desinscrit_at ? ` le ${dateCourte(a.desinscrit_at)}` : ''}`}</td>
@@ -522,7 +607,8 @@ function OngletLettre({ onNotif }) {
                         : <button type="button" className="btn btn-outline btn-xs" onClick={() => setASupprimer(a.id)}>Retirer</button>}
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </div>}

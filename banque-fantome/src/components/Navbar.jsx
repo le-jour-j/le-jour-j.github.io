@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
 import { useJournal, phrase } from './Journal'
+import { useNouveautes } from './Nouveautes'
 
 export default function Navbar() {
   const { user, profile, estBanquier } = useAuth()
+  const { total: nouveautes } = useNouveautes()
   const navigate  = useNavigate()
   const location  = useLocation()
   const [unread, setUnread] = useState(0)
@@ -53,7 +55,7 @@ export default function Navbar() {
             aria-expanded={open}
             aria-controls="nav-menu"
             onClick={() => setOpen(v => !v)}
-          ><span /></button>
+          ><span />{!open && unread + nouveautes > 0 && <i className="nav-burger-point" aria-hidden="true" />}</button>
           <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
             <li><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
@@ -67,7 +69,14 @@ export default function Navbar() {
                   {unread > 0 && <span className="nav-badge" aria-label={`${unread} non lu`}>{unread}</span>}
                 </NavLink>
               </li>
-              {estBanquier && <li><NavLink to="/admin">Admin</NavLink></li>}
+              {estBanquier && (
+                <li>
+                  <NavLink to="/admin">
+                    Admin
+                    {nouveautes > 0 && <span className="nav-badge" aria-label={`${nouveautes} nouveauté${nouveautes > 1 ? 's' : ''}`}>{nouveautes}</span>}
+                  </NavLink>
+                </li>
+              )}
               <li><NavLink to="/compte">Mon compte{profile && <span className="nav-solde" title="Votre solde de billets">◈ {profile.solde}</span>}</NavLink></li>
               <li><button className="btn btn-jaune btn-sm" onClick={logout}>Quitter</button></li>
             </> : (
