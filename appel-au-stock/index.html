@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banque Fantôme, appel au stock</title>
+<meta name="description" content="La banque fantôme cherche des trésors sans valeur marchande à mettre en circulation dans le Beauvaisis.">
+<meta name="theme-color" content="#FFCC00">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Banque Fantôme, appel au stock">
+<meta property="og:description" content="La banque fantôme cherche des trésors sans valeur marchande à mettre en circulation dans le Beauvaisis.">
+<meta property="og:url" content="https://jeansonpechin.com/appel-au-stock/">
+<meta property="og:image" content="https://jeansonpechin.com/appel-au-stock/images/apercu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="676">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 116' ><path fill='%23FFCC00'  stroke='%23FFCC00' stroke-width='5' stroke-linejoin='round' d='M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44  L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z'/>  <circle cx='35' cy='50' r='7.5' fill='%230A0A0A'/><circle cx='65' cy='50' r='7.5' fill='%230A0A0A'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap">
+<style>
+:root { --creme: #FDF8EC; --jaune: #FFCC00; --noir: #0A0A0A; --beige: #F3ECD9; --gris: #8C887E; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+.pied .url { letter-spacing: .06em; }
+.surligne { background: var(--jaune); font-weight: 700; -webkit-box-decoration-break: clone;
+  box-decoration-break: clone; }
+.lien-site span { text-transform: uppercase; letter-spacing: .2em; margin-right: .6em; }
+
+:root { --marge: clamp(18px, 5vw, 64px); }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--creme); color: var(--noir); font-family: Arial, Arimo, 'Liberation Sans', sans-serif;
+  font-size: 16px; line-height: 1.5; }
+img { max-width: 100%; }
+.page { position: relative; max-width: 1280px; margin: 0 auto; padding: clamp(48px, 7vw, 96px) var(--marge) 72px; }
+.page:not(.photo):not(.couverture) + .page:not(.photo) { border-top: 1px solid #E6DFCC; }
+.pied { position: absolute; left: var(--marge); bottom: 24px; font-size: 11px; letter-spacing: .3em; color: var(--gris); }
+.pied:hover { color: var(--noir); }
+.num { display: none; }
+
+.entete { display: flex; align-items: center; gap: 16px; margin-bottom: clamp(24px, 3vw, 40px); }
+.entete .fantome { flex: none; width: 30px; }
+.surtitre { font-size: 12px; letter-spacing: .3em; color: #6E6A62; text-transform: uppercase; }
+.titre { font-size: clamp(26px, 3.4vw, 44px); line-height: 1.05; margin-top: 4px; text-transform: uppercase; font-weight: 400; }
+.sous { font-size: 17px; line-height: 1.5; color: #2B2B2B; margin-top: 8px; max-width: 46em; }
+
+/* 1. couverture */
+.couverture { display: grid; grid-template-columns: 1fr 44%; max-width: none; padding: 0; min-height: min(100vh, 820px); }
+.couv { display: flex; flex-direction: column; justify-content: center; padding: 64px var(--marge) 88px; }
+.couv .sur { font-size: 13px; letter-spacing: .3em; text-transform: uppercase; }
+.couv h1 { font-weight: 400; font-size: clamp(52px, 8vw, 112px); line-height: .97; margin-top: 16px;
+  text-shadow: .045em .037em 0 var(--jaune); }
+.couv p { font-size: clamp(17px, 1.7vw, 22px); line-height: 1.4; margin-top: 24px; max-width: 26em; }
+.etiquette { display: inline-block; align-self: flex-start; background: var(--noir); color: var(--jaune); font-size: 13px;
+  letter-spacing: .2em; padding: 11px 20px; transform: rotate(-1deg); text-transform: uppercase; }
+.couv .etiquette { margin-top: 26px; }
+.couv-photo { position: relative; min-height: 420px; }
+.couv-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.couv-fantome { position: absolute; left: -36px; bottom: 56px; display: block; width: 72px; }
+.couv-fantome .fantome { display: block; width: 100%; filter: drop-shadow(4px 4px 0 var(--noir)); }
+
+/* 2. c'est quoi */
+.colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); }
+.col-g p { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; }
+.bandeau { margin-top: 14px; background: var(--jaune); font-size: clamp(19px, 2.2vw, 28px); text-align: center;
+  padding: 18px 12px 15px; transform: rotate(-.9deg); box-shadow: 5px 5px 0 var(--noir); text-transform: uppercase; }
+.col-d p { font-size: 16px; line-height: 1.6; margin-bottom: 12px; }
+.bande { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: clamp(32px, 4vw, 56px); }
+.bande img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 2px solid var(--noir); }
+
+/* pages photo */
+.photo { max-width: none; padding: 0; }
+.plein { display: grid; gap: 6px; }
+.tri { grid-template-columns: repeat(3, 1fr); }
+.dip { grid-template-columns: repeat(2, 1fr); }
+.plein img { width: 100%; max-height: 92vh; object-fit: cover; }
+.tri img { aspect-ratio: 98.2 / 167.2; }
+.dip img { aspect-ratio: 147.9 / 167.2; }
+.plein-etiquette { position: absolute; left: var(--marge); bottom: 28px; }
+
+/* 4. le magot et les liquidites */
+.magot { display: grid; grid-template-columns: 157.2fr 112.4fr; gap: 14px; }
+.magot-d { display: flex; flex-direction: column; gap: 14px; }
+.cadre { position: relative; border: 2px solid var(--noir); overflow: hidden; background: var(--noir); }
+.cadre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cadre-grand { aspect-ratio: 157.2 / 119.3; }
+.cadre-dessin { flex: 66 1 0; }
+.cadre-billets { flex: 50.1 1 0; }
+.legende { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 10, .82); color: #F4F0E6;
+  font-size: 11px; letter-spacing: .15em; padding: 8px 12px; text-transform: uppercase; }
+
+/* 6. reconstituer le stock */
+.cartes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.carte { position: relative; background: var(--beige); border: 2px solid var(--noir); padding: 18px;
+  display: flex; flex-direction: column; }
+.carte .n { align-self: flex-start; background: var(--noir); color: var(--jaune); font-size: 13px; padding: 3px 9px; }
+.carte h3 { font-weight: 400; font-size: 17px; line-height: 1.25; margin-top: 12px; text-transform: uppercase; }
+.carte p { font-size: 15px; line-height: 1.6; margin: 8px 0 16px; }
+.carte img { width: 100%; aspect-ratio: 57.2 / 64; object-fit: cover; margin-top: auto; border: 2px solid var(--noir); }
+.arrange { position: absolute; top: -12px; right: -8px; background: var(--noir); color: var(--jaune); font-size: 10px;
+  letter-spacing: .2em; padding: 5px 9px; transform: rotate(4deg); box-shadow: 3px 3px 0 var(--jaune);
+  text-transform: uppercase; }
+.bas { display: grid; grid-template-columns: 152.3fr 117.2fr; gap: 16px; margin-top: 20px; }
+.nondemande { border: 2px dashed var(--noir); padding: 16px 20px; font-size: 15px; line-height: 1.5;
+  display: flex; align-items: center; }
+.rappel { background: var(--jaune); border: 2px solid var(--noir); display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; font-size: 15px; text-transform: uppercase; transition: box-shadow .15s; }
+.rappel:hover { box-shadow: 5px 5px 0 var(--noir); }
+.rappel .fantome { flex: none; width: 22px; }
+
+/* 7. fin */
+.fin { display: grid; grid-template-columns: 42% 1fr; max-width: none; padding: 0; min-height: min(100vh, 820px);
+  border-top: 1px solid #E6DFCC; }
+.fin-photo { position: relative; min-height: 420px; }
+.fin-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fin-voile { position: absolute; inset: 0; background: rgba(10, 10, 10, .5); }
+.tampon-lien { position: absolute; left: 50%; top: 46%; width: clamp(120px, 15vw, 170px); transform: translate(-50%, -50%); }
+.tampon-lien .tampon { display: block; width: 100%; }
+.fin-nom { position: absolute; left: 0; right: 0; top: calc(46% + clamp(76px, 9.5vw, 104px)); text-align: center;
+  font-size: 12px; letter-spacing: .3em; color: #E8E2D2; padding: 0 12px; }
+.fin-texte { align-self: center; padding: 64px var(--marge) 96px; max-width: 840px; }
+.fin-texte h2 { font-weight: 400; font-size: clamp(24px, 3vw, 40px); line-height: 1.05; text-transform: uppercase; }
+.fin-texte p { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.55; margin-top: 24px; }
+.surligne { padding: 1px 4px; }
+.ouvre { margin-top: 32px; font-size: 19px; color: var(--jaune); -webkit-text-stroke: .7px #2A2200; text-transform: uppercase; }
+.lien-site { display: inline-block; margin-top: 28px; background: var(--noir); color: var(--jaune); font-size: 16px;
+  padding: 12px 18px; transform: rotate(-1deg); transition: box-shadow .15s; white-space: nowrap; }
+.lien-site:hover { box-shadow: 4px 4px 0 var(--jaune); }
+.lien-site span { font-size: 12px; }
+.fin .pied { color: #B8B2A4; }
+
+.bas-de-page { text-align: center; padding: 40px var(--marge) 56px; font-size: 13px; letter-spacing: .06em; color: #5E5A52;
+  border-top: 1px solid #E6DFCC; }
+.bas-de-page a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1100px) {
+  .cartes { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .couverture, .fin { grid-template-columns: 1fr; min-height: 0; padding-bottom: 56px; }
+  .couv { padding: 56px var(--marge) 40px; }
+  .couv-photo, .fin-photo { min-height: 0; }
+  .couv-photo { aspect-ratio: 130.6 / 167.2; }
+  .fin-photo { aspect-ratio: 124.8 / 167.2; }
+  .couv-fantome { left: 14px; bottom: 14px; }
+  .couv-fantome { width: 56px; }
+  .fin-texte { padding: 40px var(--marge) 24px; }
+  .colonnes { grid-template-columns: 1fr; }
+  .bande { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .plein { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto;
+    scroll-snap-type: x mandatory; }
+  .plein img { max-height: none; scroll-snap-align: start; }
+  .plein-etiquette { bottom: 18px; font-size: 11px; padding: 9px 14px; }
+  .magot { grid-template-columns: 1fr; }
+  .magot-d { display: grid; }
+  .cadre-dessin { aspect-ratio: 112.4 / 66; }
+  .cadre-billets { aspect-ratio: 112.4 / 50.1; }
+  .cartes, .bas { grid-template-columns: 1fr; }
+  .lien-site { font-size: 15px; }
+  .lien-site span { display: block; margin: 0 0 5px; }
+}
+</style>
+</head>
+<body>
+<main><section class="page couverture">
+  <div class="couv">
+    <div class="sur">La banque va ouvrir ses portes</div>
+    <h1>APPEL<br>AU STOCK</h1>
+    <p>La banque fantôme cherche des trésors sans valeur marchande à mettre en circulation dans le Beauvaisis.</p>
+    <div class="etiquette">Échange, pas vente</div>
+  </div>
+  <div class="couv-photo"><img src="images/couv-5101.jpg" alt="Le mur de billets dessinés et une mallette ouverte, dans l'agence de la banque fantôme" loading="eager">
+    <a class="couv-fantome" href="https://jeansonpechin.com/banque-fantome/" aria-label="Le site de la banque fantôme"><svg class="fantome" viewBox="0 0 100 116" aria-hidden="true"><path fill="#FFCC00"
+ stroke="#FFCC00" stroke-width="5" stroke-linejoin="round" d="M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44
+ L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z"/>
+ <circle cx="35" cy="50" r="7.5" fill="#0A0A0A"/><circle cx="65" cy="50" r="7.5" fill="#0A0A0A"/></svg></a></div>
+  <a class="pied" href="https://jeansonpechin.com/banque-fantome/">BANQUE FANTÔME<span class="url"> · jeansonpechin.com/banque-fantome</span></a>
+</section><section class="page">
+  <div class="entete"><svg class="fantome" viewBox="0 0 100 116" aria-hidden="true"><path fill="#0A0A0A"
+ stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round" d="M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44
+ L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z"/>
+ <circle cx="35" cy="50" r="7.5" fill="#FFCC00"/><circle cx="65" cy="50" r="7.5" fill="#FFCC00"/></svg><div>
+    <div class="surtitre">C'est quoi, la banque fantôme&nbsp;?</div><h2 class="titre">Une banque qui n'existe pas vraiment</h2></div></div>
+  <div class="colonnes">
+  <div class="col-g">
+    <p><b>Depuis 2023, je dessine sur des chèques et je les échange contre des choses.</b> Pas de l'argent réel,
+    pas de fraude&nbsp;: des dessins, faits sur le support d'une monnaie, donnés en échange d'un service, d'un objet,
+    d'un moment.</p>
+    <div class="bandeau">On échange, on ne vend pas</div>
+  </div>
+  <div class="col-d">
+    <p>De là est née la banque fantôme, une fausse institution bancaire qui prend très au sérieux une question
+    simple&nbsp;: qu'est-ce qui a de la valeur, et qui décide&nbsp;? La banque imprime des supports de billets vierges,
+    formats et couleurs de vrais billets en euros, et je les termine à la main, en direct, devant les gens. Un
+    dessin posé sur une image de monnaie, ça ne se confond avec rien&nbsp;: ça devient une pièce.</p>
+    <p>La règle est toujours la même, et elle compte plus que tout le reste&nbsp;: <b>on échange, on ne vend pas.</b>
+    La frontière est fine mais elle existe. La banque fantôme a déjà produit <b>Claude Monnaie</b>, un carnet de
+    1&nbsp;000 chéquiers d'artiste imprimé en risographie, actuellement en dépôt dans des librairies et boutiques de
+    musées. Elle a tenu une agence temporaire au Quadrilatère de Beauvais lors des Journées du patrimoine, dans le
+    cadre d'une résidence CLEA avec la Communauté d'Agglomération du Beauvaisis.</p>
+    <p>Le projet gagne du terrain, mais une banque sans rien à mettre au guichet reste une coquille vide. C'est là
+    que vous entrez en scène.</p>
+  </div>
+  </div>
+  <div class="bande"><img src="images/bande-5085.jpg" alt="Trois billets dessinés à la main, posés sur une table" loading="lazy"><img src="images/bande-5051.jpg" alt="Des billets dessinés sur une table lumineuse" loading="lazy"><img src="images/bande-5089.jpg" alt="Un tas de billets dessinés" loading="lazy"><img src="images/bande-5121.jpg" alt="Le site de la banque fantôme sur l'écran du guichet" loading="lazy"><img src="images/bande-5080.jpg" alt="L'affiche «&nbsp;Be rich, create your monnaie&nbsp;»" loading="lazy"></div>
+  <a class="pied" href="https://jeansonpechin.com/banque-fantome/">BANQUE FANTÔME</a><div class="num">02</div>
+</section><section class="page photo">
+  <div class="plein tri"><img src="images/tri-5145.jpg" alt="L'agence temporaire&nbsp;: le bureau, l'écran et le mobilier jaune" loading="lazy"><img src="images/tri-5130.jpg" alt="Le fond de l'agence, derrière la vitre" loading="lazy"><img src="images/tri-5114.jpg" alt="Des tables lumineuses couvertes de billets, dans l'agence" loading="lazy"></div>
+  <div class="etiquette plein-etiquette">L'agence temporaire</div>
+</section><section class="page">
+  <div class="entete"><svg class="fantome" viewBox="0 0 100 116" aria-hidden="true"><path fill="#0A0A0A"
+ stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round" d="M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44
+ L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z"/>
+ <circle cx="35" cy="50" r="7.5" fill="#FFCC00"/><circle cx="65" cy="50" r="7.5" fill="#FFCC00"/></svg><div>
+    <div class="surtitre">Ça existe déjà, pour de vrai</div><h2 class="titre">Le magot et les liquidités</h2><div class="sous">La banque a son magot et ses liquidités. Il lui manque le stock.</div></div></div>
+  <div class="magot">
+    <div class="cadre cadre-grand"><img src="images/stock-grand.jpg" alt="Le magot&nbsp;: des piles de chéquiers blancs et jaunes sous deux affiches de la banque" loading="lazy"><div class="legende">Le magot&nbsp;: les chéquiers</div></div>
+    <div class="magot-d">
+      <div class="cadre cadre-dessin"><img src="images/stock-dessin.jpg" alt="Un chéquier ouvert sur un dessin d'oranges" loading="lazy"><div class="legende">Un dessin, une fois posé sur le chèque</div></div>
+      <div class="cadre cadre-billets"><img src="images/stock-billets.jpg" alt="Des billets de la banque fantôme étalés" loading="lazy"><div class="legende">Les liquidités&nbsp;: les billets</div></div>
+    </div>
+  </div>
+  <a class="pied" href="https://jeansonpechin.com/banque-fantome/">BANQUE FANTÔME</a><div class="num">04</div>
+</section><section class="page photo">
+  <div class="plein dip"><img src="images/dip-5076.jpg" alt="Un mur de billets dessinés et coloriés" loading="lazy"><img src="images/dip-5077.jpg" alt="Des billets de 100 dessinés&nbsp;: patates, arbre, route" loading="lazy"></div>
+  <div class="etiquette plein-etiquette">Les billets, terminés à la main</div>
+</section><section class="page">
+  <div class="entete"><svg class="fantome" viewBox="0 0 100 116" aria-hidden="true"><path fill="#0A0A0A"
+ stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round" d="M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44
+ L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z"/>
+ <circle cx="35" cy="50" r="7.5" fill="#FFCC00"/><circle cx="65" cy="50" r="7.5" fill="#FFCC00"/></svg><div>
+    <div class="surtitre">Ce qu'on cherche</div><h2 class="titre">Reconstituer le stock</h2><div class="sous">On s'arrange toujours sur la forme&nbsp;: un objet, une série, un dépôt ponctuel. Même un don de dessins, ça compte.</div></div></div>
+  <div class="cartes"><div class="carte"><div class="n">01</div><h3>Un objet fait main</h3><p>Une petite sculpture, une poterie, un objet bricolé, cousu, sculpté, réparé. Peu importe le niveau&nbsp;: la banque fantôme ne juge pas la technique, elle valorise le geste.</p><img src="images/carte-5059.jpg" alt="Une table de l'agence avec des livres" loading="lazy"></div><div class="carte"><div class="arrange">On s'arrange&nbsp;!</div><div class="n">02</div><h3>Un vieux dessin</h3><p>Un dessin d'atelier, une esquisse oubliée dans un tiroir, un travail d'enfant, un croquis de résident·e ou d'usager·ère. Ce qui compte, c'est qu'il ait existé pour quelqu'un.</p><img src="images/carte-5084.jpg" alt="Trois billets dessinés à la main" loading="lazy"></div><div class="carte"><div class="n">03</div><h3>Une valeur étrange</h3><p>Un objet dont la valeur ne se dit pas facilement en euros&nbsp;: un souvenir, un doublon de collection, un tesson de terre cuite médiéval, une pièce sans usage mais chargée de sens pour celleux qui l'ont fabriquée.</p><img src="images/carte-5081.jpg" alt="Une caisse rouge remplie de billets dessinés" loading="lazy"></div><div class="carte"><div class="n">04</div><h3>Ce que vous ne savez pas nommer</h3><p>Vous ne savez pas si ça rentre dans une case&nbsp;? C'est probablement exactement ce que cherche la banque fantôme. Proposez, on regarde ensemble.</p><img src="images/carte-5140.jpg" alt="L'agence vue derrière la vitre" loading="lazy"></div></div>
+  <div class="bas">
+    <div class="nondemande"><div><b>Ce qu'on ne demande pas&nbsp;:</b> de l'argent, du matériel neuf, ou un objet qui a
+    encore un usage ailleurs. La banque fantôme échange, elle ne collecte pas des surplus.</div></div>
+    <a class="rappel" href="https://jeansonpechin.com/banque-fantome/"><svg class="fantome" viewBox="0 0 100 116" aria-hidden="true"><path fill="#0A0A0A"
+ stroke="#0A0A0A" stroke-width="5" stroke-linejoin="round" d="M6 44 C6 20 25 4 50 4 C75 4 94 20 94 44
+ L94 98 L82 110 Q78 114 74 110 L64 100 L54 110 Q50 114 46 110 L36 100 L26 110 Q22 114 18 110 L6 98 Z"/>
+ <circle cx="35" cy="50" r="7.5" fill="#FFCC00"/><circle cx="65" cy="50" r="7.5" fill="#FFCC00"/></svg><span>Le stock sera mis aux enchères, contre la
+    monnaie qu'on fabrique ensemble.</span></a>
+  </div>
+  <a class="pied" href="https://jeansonpechin.com/banque-fantome/">BANQUE FANTÔME</a><div class="num">06</div>
+</section><section class="page fin">
+  <div class="fin-photo"><img src="images/fin-5125.jpg" alt="Le guichet de la banque, la caisse rouge et les mallettes" loading="lazy"><div class="fin-voile"></div>
+    <a class="tampon-lien" href="https://jeansonpechin.com/banque-fantome/"><svg class="tampon" viewBox="0 0 100 100" role="img" aria-label="Tampon Banque Fantôme, échange pas vente">
+ <g fill="none" stroke="#FDF8EC">
+ <circle cx="50" cy="50" r="46" stroke-width="3.4"/>
+ <circle cx="50" cy="50" r="39.5" stroke-width="1.7" stroke-dasharray="1.7 2.3"/></g>
+ <g transform="rotate(-8 50 50)" fill="#FDF8EC" font-family="Arial, Arimo, sans-serif" text-anchor="middle">
+ <text x="50" y="43" font-size="11">BANQUE</text><text x="50" y="56" font-size="11">FANTÔME</text>
+ <text x="50" y="67.5" font-size="5" letter-spacing=".35">ÉCHANGE • PAS VENTE</text>
+ </g></svg></a>
+    <div class="fin-nom">JEANSON PECHIN · BANQUE FANTÔME</div></div>
+  <div class="fin-texte">
+    <h2>On passe prendre<br>le café, et l'objet avec</h2>
+    <p>Le plus simple&nbsp;: on en parle directement avec la <span class="surligne">Communauté d'Agglomération du
+    Beauvaisis</span>, déjà partenaire de la résidence.</p>
+    <p>Vous pouvez aussi me déposer votre objet en main propre, où que vous soyez dans le Beauvaisis&nbsp;: je me
+    déplace.</p>
+    <div class="ouvre">La banque va ouvrir ses portes</div>
+    <a class="lien-site" href="https://jeansonpechin.com/banque-fantome/"><span>Le site de la banque</span>jeansonpechin.com/banque-fantome →</a>
+  </div>
+  <a class="pied" href="https://jeansonpechin.com/banque-fantome/">BANQUE FANTÔME</a><div class="num">07</div>
+</section></main>
+<footer class="bas-de-page"><a href="banque-fantome-appel-au-stock.pdf" download>Télécharger la version PDF</a>
+  &nbsp;·&nbsp; <a href="https://jeansonpechin.com/banque-fantome/">jeansonpechin.com/banque-fantome</a></footer>
+</body>
+</html>
