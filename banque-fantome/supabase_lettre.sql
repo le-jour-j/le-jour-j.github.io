@@ -173,3 +173,25 @@ $$;
 revoke all on function lettre_identifiants_gmail() from public, anon, authenticated;
 grant execute on function lettre_identifiants_gmail() to service_role;
 -- (pour une pause, il suffit de décocher la case dans l'admin)
+
+-- 7. Les clés d'IA dans le coffre (ajouté le 2026-10-05)
+--    Une IA lit les actus de la semaine et écrit l'ouverture de la lettre. Sans clé,
+--    la lettre part avec sa phrase fixe. Gemini d'abord (clé gratuite de Google AI
+--    Studio, compte jeanson.pechin, clé « Banque Fantome lettre »), sinon Claude.
+--    La clé se range (une fois) avec
+--      select vault.create_secret('<clé>', 'gemini_api_key');      -- ou 'anthropic_api_key'
+--    et se change avec
+--      select vault.update_secret((select id from vault.secrets where name = 'gemini_api_key'), '<nouvelle>');
+create or replace function lettre_cle_gemini()
+returns text language sql stable security definer set search_path = public as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'gemini_api_key'
+$$;
+revoke all on function lettre_cle_gemini() from public, anon, authenticated;
+grant execute on function lettre_cle_gemini() to service_role;
+
+create or replace function lettre_cle_ia()
+returns text language sql stable security definer set search_path = public as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'anthropic_api_key'
+$$;
+revoke all on function lettre_cle_ia() from public, anon, authenticated;
+grant execute on function lettre_cle_ia() to service_role;

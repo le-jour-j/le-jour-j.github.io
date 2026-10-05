@@ -66,6 +66,16 @@ profils (qui eux sont publics) : chacun ne voit que la sienne, toi tu vois tout.
 - deux lettres de test envoyées à dieu.pechin et village.simsclaude, parties signées
   **banque.fantome@gmail.com** (vérifié dans les messages envoyés de jeanson.pechin).
 
+**Fait le 2026-10-05 :** l'ouverture écrite par une IA. Chaque lundi, Gemini (l'IA de
+Google, gratuite) lit les actus de la semaine et écrit un court texte (70 à 130 mots)
+qui les raconte, en tête de la lettre, avant les actus elles-mêmes. Consigne : ne rien
+inventer qui ne soit pas dans les actus. La clé est une clé gratuite de Google AI Studio
+(aistudio.google.com, compte jeanson.pechin, nommée « Banque Fantome lettre »), rangée
+dans le coffre de la base sous le nom `gemini_api_key` (voir `supabase_lettre.sql`
+partie 7). Sans clé, ou si l'IA ne répond pas, la lettre part quand même avec sa phrase
+fixe. « Voir l'aperçu » montre le texte écrit ; il change un peu à chaque fois, celui du
+lundi sera écrit le lundi.
+
 **Reste à faire par Jiiji :** relire la lettre de test, puis cocher « Envoyer
 automatiquement chaque lundi matin » dans Admin → Lettre.
 
