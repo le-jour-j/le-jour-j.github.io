@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://jeansonpechin.com/galerie/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://jeansonpechin.com/registre/</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.9</priority>
@@ -44,11 +49,6 @@
     <loc>https://jeansonpechin.com/message/</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://jeansonpechin.com/actu/</loc>
-    <lastmod>2026-10-06</lastmod>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jeansonpechin.com/module/ghost-mining/</loc>
@@ -231,12 +231,37 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jeansonpechin.com/actu/nouvel-album-marathon-4/</loc>
+    <loc>https://jeansonpechin.com/projet/tour-de-phrance/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jeansonpechin.com/projet/banque-fantome/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jeansonpechin.com/actu/nouveau-projet-banque-fantome/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jeansonpechin.com/actu/nouveau-projet-tour-de-phrance/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jeansonpechin.com/actu/nouveau-projet-cheques-valeur/</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jeansonpechin.com/actu/nouveau-projet-magot-ateliers-3a/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jeansonpechin.com/actu/nouvel-album-marathon-4/</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.6</priority>
   </url>
