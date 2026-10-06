@@ -131,3 +131,13 @@ notification dans mon interface à moi en tant qu'admin ». Il envoie la lettre 
 | `src/pages/Lettre.jsx` | la page du lien de désinscription |
 | `src/pages/Admin.jsx` | l'onglet Lettre |
 | `src/pages/Compte.jsx`, `src/pages/Connexion.jsx` | l'inscription des comptes |
+
+---
+
+## Les tables jp_ dans cette base
+
+*Ajouté le 2026-10-06 à 20:05.* La base de la Banque Fantôme héberge aussi la liste des
+abonnés de la lettre du **site principal** jeansonpechin.com : tables `jp_abonnes`,
+`jp_admin_cle` et fonctions `jp_*`. Elles ne sont pas à la Banque Fantôme et n'en touchent
+aucune table. Les deux listes d'abonnés sont séparées. Le code et le mode d'emploi sont
+dans `chambre-compensation/admin/lettre/` (MODE-D-EMPLOI.md, supabase_lettre_site.sql).
