@@ -86,6 +86,9 @@ connexion) ne sont visibles que par ce chemin — cf. `tour-de-phrance/tests/REA
    (avec `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` injectés depuis les secrets).
 2. `rsync` de la racine vers `public-build/`, en excluant `.git`, `.github`,
    `public-build`, `tour-de-phrance`, `banque-fantome`, `scripts`.
+   Les deux noms d'applis sont ancrés à la racine (`/tour-de-phrance`, `/banque-fantome`) :
+   sans la barre, rsync écartait aussi `projet/tour-de-phrance/` et `images/banque-fantome/`
+   du site (corrigé le 2026-10-06).
 3. Les deux `dist/` sont recopiés dans `public-build/tour-de-phrance/` et
    `public-build/banque-fantome/`.
 4. `node scripts/inject-bf-redirect.cjs public-build/404.html`.

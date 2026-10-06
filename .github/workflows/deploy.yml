@@ -51,8 +51,8 @@ jobs:
             --exclude ".git" \
             --exclude ".github" \
             --exclude "public-build" \
-            --exclude "tour-de-phrance" \
-            --exclude "banque-fantome" \
+            --exclude "/tour-de-phrance" \
+            --exclude "/banque-fantome" \
             --exclude "scripts"
           mkdir -p public-build/tour-de-phrance
           cp -R tour-de-phrance/dist/* public-build/tour-de-phrance/
