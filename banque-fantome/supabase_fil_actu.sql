@@ -108,7 +108,7 @@ from (values
    array['images/actu/2026-10-07-lucioles-1.jpg', 'images/actu/2026-10-07-lucioles-2.jpg', 'images/actu/2026-10-07-lucioles-3.jpg', 'images/actu/2026-10-07-lucioles-4.jpg', 'images/actu/2026-10-07-lucioles-5.jpg']),
   (date '2026-10-07', 'Fin de journée au Quadrilatère',
    'En fin d''après-midi, nouvelle tablée au Quadrilatère. Les planches de 5, 10, 20, 50 et 100 attendent en piles, la tablette lumineuse sert à décalquer, et à la fin certains ont déjà une liasse en main.',
-   array['images/actu/2026-10-07-quadri-1.jpg', 'images/actu/2026-10-07-quadri-2.jpg', 'images/actu/2026-10-07-quadri-3.jpg', 'images/actu/2026-10-07-quadri-4.jpg']),
+   array['images/actu/2026-10-07-quadri-3.jpg', 'images/actu/2026-10-07-quadri-4.jpg', 'images/actu/2026-10-07-quadri-2.jpg', 'images/actu/2026-10-07-quadri-1.jpg']),
   (date '2026-10-09', 'Les sous de l''EHPAD',
    'Vendredi, la banque s''est installée à l''EHPAD. Feutres, gommettes étoiles et papillons, billets de 20 et de 200 : les résidents ont décoré leurs billets une gommette après l''autre, avec un soin qu''aucune banque centrale n''a jamais eu.',
    array['images/actu/2026-10-09-ehpad-1.jpg', 'images/actu/2026-10-09-ehpad-2.jpg', 'images/actu/2026-10-09-ehpad-3.jpg', 'images/actu/2026-10-09-ehpad-4.jpg', 'images/actu/2026-10-09-ehpad-5.jpg', 'images/actu/2026-10-09-ehpad-6.jpg', 'images/actu/2026-10-09-ehpad-7.jpg']),
