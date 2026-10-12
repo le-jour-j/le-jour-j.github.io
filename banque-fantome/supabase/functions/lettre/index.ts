@@ -319,7 +319,9 @@ async function expedier(lettre: Lettre, destinataires: Destinataire[]) {
           html: lettre.html.replaceAll(JETON_ICI, d.jeton),
           text: lettre.txt.replaceAll(JETON_ICI, d.jeton),
           headers: {
-            'List-Unsubscribe': `<${FONCTION}?desinscription=${d.jeton}>, <mailto:${EXPEDITEUR}?subject=desinscription>`,
+            // Lien seul, sans mailto : le bouton « Se désabonner » de Gmail envoyait sinon
+            // un mail que rien ne traite (retiré le 2026-10-12, comme pour la lettre du site)
+            'List-Unsubscribe': `<${FONCTION}?desinscription=${d.jeton}>`,
             'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
           },
         })
