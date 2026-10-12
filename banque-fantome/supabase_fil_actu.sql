@@ -89,3 +89,31 @@ select date '2026-09-25', 'Premier atelier au Quadrilatère : on fait du bifton'
        'Premier atelier de la Banque Fantôme au Quadrilatère. Feutres, crayons, une grande table : chacun dessine ses billets.',
        array['images/actu/2026-09-25-1.jpg', 'images/actu/2026-09-25-2.jpg', 'images/actu/2026-09-25-3.jpg'], false, null
 where not exists (select 1 from actus where titre = 'Premier atelier au Quadrilatère : on fait du bifton');
+
+-- 7. Six actus ajoutées le 2026-10-12 vers 21 h, publiées (photos de
+--    Bureau\Banque_Fantome\04_photos\actu-1 à actu-6). Visages des enfants et des
+--    participants du Quadrilatère couverts de fleurs ; EHPAD et GEM laissés tels quels,
+--    à la demande de Jiiji. La première photo de chaque actu est celle de la lettre.
+insert into actus (date_actu, titre, texte, images, publie, auteur)
+select v.date_actu, v.titre, v.texte, v.images, true, null
+from (values
+  (date '2026-10-06', 'École Simone-Veil, Bresles : la monnaie des CM1',
+   'Une matinée avec les CM1 du groupe scolaire Simone-Veil, à Bresles. Chacun reçoit sa planche de billets, du 5 au 200, et la remplit comme il l''entend : un cœur, une bouche, une pyramide avec un œil dedans, des gribouillis serrés jusqu''à faire disparaître le pont. Le billet n''a pas encore de valeur, mais il a déjà un style.',
+   array['images/actu/2026-10-06-veil-1.jpg', 'images/actu/2026-10-06-veil-2.jpg', 'images/actu/2026-10-06-veil-3.jpg', 'images/actu/2026-10-06-veil-4.jpg', 'images/actu/2026-10-06-veil-5.jpg', 'images/actu/2026-10-06-veil-6.jpg']),
+  (date '2026-10-06', 'Deux classes de maternelle à la banque',
+   'L''après-midi, deux classes de l''école maternelle Picasso sont venues au Quadrilatère. À cet âge, on ne fait pas de détail : le billet de 5 se colorie en entier, le 10 reçoit des ronds verts, rouges et roses. Personne n''a demandé combien ça valait.',
+   array['images/actu/2026-10-06-picasso-1.jpg', 'images/actu/2026-10-06-picasso-2.jpg', 'images/actu/2026-10-06-picasso-3.jpg', 'images/actu/2026-10-06-picasso-4.jpg']),
+  (date '2026-10-07', 'Les Lucioles, première séance',
+   'Première séance avec Les Lucioles. Autour de la table, des billets de 20, de 50 et de 200 à refaire à sa façon. Sur l''un, un prénom écrit en grand à la place du portrait ; sur un autre, un volcan qui crache sa lave en travers du billet.',
+   array['images/actu/2026-10-07-lucioles-1.jpg', 'images/actu/2026-10-07-lucioles-2.jpg', 'images/actu/2026-10-07-lucioles-3.jpg', 'images/actu/2026-10-07-lucioles-4.jpg', 'images/actu/2026-10-07-lucioles-5.jpg']),
+  (date '2026-10-07', 'Fin de journée au Quadrilatère',
+   'En fin d''après-midi, nouvelle tablée au Quadrilatère. Les planches de 5, 10, 20, 50 et 100 attendent en piles, la tablette lumineuse sert à décalquer, et à la fin certains ont déjà une liasse en main.',
+   array['images/actu/2026-10-07-quadri-1.jpg', 'images/actu/2026-10-07-quadri-2.jpg', 'images/actu/2026-10-07-quadri-3.jpg', 'images/actu/2026-10-07-quadri-4.jpg']),
+  (date '2026-10-09', 'Les sous de l''EHPAD',
+   'Vendredi, la banque s''est installée à l''EHPAD. Feutres, gommettes étoiles et papillons, billets de 20 et de 200 : les résidents ont décoré leurs billets une gommette après l''autre, avec un soin qu''aucune banque centrale n''a jamais eu.',
+   array['images/actu/2026-10-09-ehpad-1.jpg', 'images/actu/2026-10-09-ehpad-2.jpg', 'images/actu/2026-10-09-ehpad-3.jpg', 'images/actu/2026-10-09-ehpad-4.jpg', 'images/actu/2026-10-09-ehpad-5.jpg', 'images/actu/2026-10-09-ehpad-6.jpg', 'images/actu/2026-10-09-ehpad-7.jpg']),
+  (date '2026-10-12', 'Le GEM passe à la banque',
+   'Lundi, visite du GEM à la banque. Trois de ses membres posent avec leurs billets : une planche entière, une liasse déjà découpée, et le sourire de ceux qui viennent de fabriquer leur propre argent.',
+   array['images/actu/2026-10-12-gem-1.jpg'])
+) as v(date_actu, titre, texte, images)
+where not exists (select 1 from actus a where a.titre = v.titre);
