@@ -77,7 +77,17 @@ async function identifiantsGmail(): Promise<Gmail> {
 }
 
 // L'ouverture écrite par une IA à partir des actus de la semaine (et du mot du banquier)
-const MODELES_GEMINI = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest']
+// Le plus rapide d'abord : 2.5 Flash sans « réflexion » répond en quelques secondes ;
+// gemini-flash-latest réfléchit avant d'écrire et pouvait prendre plus d'une minute
+// (2026-10-12 : l'aperçu de l'admin mettait deux minutes).
+const MODELES_GEMINI: [string, Record<string, unknown>][] = [
+  ['gemini-2.5-flash', { thinkingConfig: { thinkingBudget: 0 } }],
+  ['gemini-flash-lite-latest', {}],
+  ['gemini-flash-latest', {}],
+]
+// Temps total laissé à l'IA. Au-delà, la lettre part avec sa phrase fixe : la fonction
+// est coupée par Supabase à 150 s, et un envoi coupé avant Gmail ne partirait pas.
+const BUDGET_IA_MS = 35000
 const MODELE_IA = 'claude-sonnet-5-5'
 const CONSIGNE_IA = `Tu écris l'ouverture de « la lettre de la banque », la lettre hebdomadaire de la Banque Fantôme.
 La Banque Fantôme est un projet artistique de Jeanson Pechin, dit Jiiji : une fausse banque qui fabrique sa propre monnaie dessinée, avec un guichet, des billets, un market où l'on enchérit. Il est en résidence d'artiste dans le Beauvaisis (CLEA), avec des écoles, des centres sociaux, des associations et des services de l'agglomération.
@@ -105,18 +115,21 @@ async function cle(env: string, rpc: string): Promise<string> {
 // passe au modèle suivant de la liste.
 async function demanderGemini(cleApi: string, consigne: string, demande: string): Promise<string> {
   let derniere = ''
-  for (const modele of MODELES_GEMINI) {
+  const limite = Date.now() + BUDGET_IA_MS
+  for (const [modele, reglage] of MODELES_GEMINI) {
     for (let essai = 0; essai < 2; essai++) {
-      if (essai) await new Promise(r => setTimeout(r, 4000))
+      if (essai) await new Promise(r => setTimeout(r, 2000))
+      const reste = limite - Date.now()
+      if (reste < 3000) throw new Error(`Gemini trop lent (${BUDGET_IA_MS / 1000} s dépassées) ; dernier essai : ${derniere}`)
       const rep = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent`, {
         method: 'POST',
         headers: { 'x-goog-api-key': cleApi, 'content-type': 'application/json' },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: consigne }] },
           contents: [{ role: 'user', parts: [{ text: demande }] }],
-          generationConfig: { maxOutputTokens: 4096, temperature: 0.8 },
+          generationConfig: { maxOutputTokens: 4096, temperature: 0.8, ...reglage },
         }),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(Math.min(25000, reste)),
       }).catch(e => { derniere = `${modele} : ${e}`; return null })
       if (!rep) continue
       if (rep.ok) {

@@ -561,8 +561,8 @@ function OngletLettre({ onNotif, depuis }) {
       </div>
       {busy === 'apercu' && (
         <p className="texte-aide">
-          L'IA écrit l'ouverture de la lettre à partir des actus : ça prend souvent une minute.
-          L'aperçu s'affichera juste ici.
+          L'IA écrit l'ouverture de la lettre à partir des actus : quelques secondes, rarement plus
+          d'une demi-minute. L'aperçu s'affichera juste ici.
         </p>
       )}
       {apercu && (
