@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
@@ -409,6 +409,13 @@ function OngletLettre({ onNotif, depuis }) {
   const [aSupprimer, setASupprimer] = useState(null)
   const [busy, setBusy] = useState(null) // nom de l'action en cours
   const [recharge, setRecharge] = useState(0)
+  const apercuRef = useRef(null)
+
+  // L'aperçu s'affiche sous les boutons, souvent hors de l'écran : on y descend
+  // (2026-10-12, Jiiji ne le voyait pas apparaître)
+  useEffect(() => {
+    if (apercu) apercuRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [apercu])
 
   useEffect(() => {
     supabase.from('lettre_reglages').select('*').eq('id', 1).maybeSingle()
@@ -444,6 +451,7 @@ function OngletLettre({ onNotif, depuis }) {
 
   async function voirApercu() {
     if (mot !== (reglages?.mot || '') && !(await majReglages({ mot: mot.trim() || null }))) return
+    setApercu(null)
     const r = await lancer('apercu')
     if (r) setApercu(r)
   }
@@ -538,7 +546,7 @@ function OngletLettre({ onNotif, depuis }) {
       <div className="admin-barre">
         <div className="admin-actions" style={{ justifyContent: 'flex-start' }}>
           {mot !== (reglages.mot || '') && <button type="button" className="btn btn-noir btn-sm" onClick={() => majReglages({ mot: mot.trim() || null }).then(ok => ok && onNotif({ msg: 'Mot enregistré pour la prochaine lettre.', type: 'ok' }))}>Enregistrer le mot</button>}
-          <button type="button" className="btn btn-outline btn-sm" disabled={!!busy} onClick={voirApercu}>{busy === 'apercu' ? '…' : "Voir l'aperçu"}</button>
+          <button type="button" className="btn btn-outline btn-sm" disabled={!!busy} onClick={voirApercu}>{busy === 'apercu' ? 'Aperçu en préparation…' : "Voir l'aperçu"}</button>
         </div>
         <div className="admin-actions">
           <input className="admin-motif" type="email" placeholder="Test à (vide = la banque)" value={emailTest} onChange={e => setEmailTest(e.target.value)} />
@@ -551,8 +559,14 @@ function OngletLettre({ onNotif, depuis }) {
             : <button type="button" className="btn btn-jaune btn-sm" disabled={!!busy || !actifs.length} onClick={() => setConfirmEnvoi(true)}>{busy === 'envoyer' ? 'Envoi en cours…' : `Envoyer maintenant à ${actifs.length}`}</button>}
         </div>
       </div>
+      {busy === 'apercu' && (
+        <p className="texte-aide">
+          L'IA écrit l'ouverture de la lettre à partir des actus : ça prend souvent une minute.
+          L'aperçu s'affichera juste ici.
+        </p>
+      )}
       {apercu && (
-        <div>
+        <div ref={apercuRef}>
           <div className="caption-gris" style={{ marginBottom: '.5rem' }}>
             {apercu.vide
               ? 'Rien à raconter pour l\'instant : aucune actu publiée depuis la dernière lettre, et pas de mot. Elle ne partirait pas.'
