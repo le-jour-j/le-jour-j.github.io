@@ -113,7 +113,7 @@ from (values
    'Vendredi, la banque s''est installée à l''EHPAD. Feutres, gommettes étoiles et papillons, billets de 20 et de 200 : les résidents ont décoré leurs billets une gommette après l''autre, avec un soin qu''aucune banque centrale n''a jamais eu.',
    array['images/actu/2026-10-09-ehpad-1.jpg', 'images/actu/2026-10-09-ehpad-2.jpg', 'images/actu/2026-10-09-ehpad-3.jpg', 'images/actu/2026-10-09-ehpad-4.jpg', 'images/actu/2026-10-09-ehpad-5.jpg', 'images/actu/2026-10-09-ehpad-6.jpg', 'images/actu/2026-10-09-ehpad-7.jpg']),
   (date '2026-10-12', 'Le GEM passe à la banque',
-   'Lundi, visite du GEM à la banque. Trois de ses membres posent avec leurs billets : une planche entière, une liasse déjà découpée, et le sourire de ceux qui viennent de fabriquer leur propre argent.',
+   'Lundi, le GEM est venu à la banque, au Quadrilatère. Trois de ses membres posent avec leurs billets : une planche entière, une liasse déjà découpée, et le sourire de ceux qui viennent de fabriquer leur propre argent.',
    array['images/actu/2026-10-12-gem-1.jpg'])
 ) as v(date_actu, titre, texte, images)
 where not exists (select 1 from actus a where a.titre = v.titre);
