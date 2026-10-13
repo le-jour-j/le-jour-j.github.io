@@ -51,7 +51,7 @@ const SITE = (Deno.env.get('SITE_URL') || 'https://jeansonpechin.com/banque-fant
 const FONCTION = `${SUPABASE_URL}/functions/v1/lettre`
 
 // Au-delà, on montre seulement les titres (une lettre se lit en deux minutes)
-const ACTUS_DETAILLEES = 6
+const ACTUS_DETAILLEES = 8
 // Gmail refuse au-delà d'environ 500 destinataires par jour
 const PLAFOND_GMAIL = 450
 

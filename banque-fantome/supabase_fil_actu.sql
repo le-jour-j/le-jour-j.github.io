@@ -117,3 +117,18 @@ from (values
    array['images/actu/2026-10-12-gem-1.jpg'])
 ) as v(date_actu, titre, texte, images)
 where not exists (select 1 from actus a where a.titre = v.titre);
+
+-- 8. Actu ajoutée le 2026-10-13 vers 18 h, à la demande de Jiiji (« les ajouts de billets
+--    doivent faire partie des actus ») : les 62 planches à imprimer de la page S'enrichir.
+--    Couverture en éventail fabriquée à partir des aperçus, puis une planche par valeur.
+--    Quand de nouvelles planches arrivent sur le site, une actu les annonce de la même façon.
+insert into actus (date_actu, titre, texte, images, publie, auteur)
+select date '2026-10-13', '62 planches de billets à imprimer',
+  'Les billets dessinés en atelier ont maintenant leurs planches : 62 feuilles A4, du 5 au 500, à télécharger sur le site de la banque. On imprime chez soi, on découpe, et la monnaie circule en vrai papier.
+
+Il y a les rayures arc-en-ciel du 50, la souris du 100, l''ourson à la fleur, les zigzags du 20 : chaque planche reprend un billet tel qu''il a été dessiné, coups de feutre compris.
+
+Toutes les planches sont sur la page « S''enrichir ».',
+  array['images/actu/2026-10-13-planches-1.jpg', 'images/actu/2026-10-13-planches-2.jpg', 'images/actu/2026-10-13-planches-3.jpg', 'images/actu/2026-10-13-planches-4.jpg', 'images/actu/2026-10-13-planches-5.jpg', 'images/actu/2026-10-13-planches-6.jpg', 'images/actu/2026-10-13-planches-7.jpg', 'images/actu/2026-10-13-planches-8.jpg'],
+  true, null
+where not exists (select 1 from actus a where a.titre = '62 planches de billets à imprimer');
