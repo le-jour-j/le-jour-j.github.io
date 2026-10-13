@@ -1,0 +1,2 @@
+# PDF : fichiers binaires, git ne doit jamais toucher leurs fins de ligne (2026-10-13)
+*.pdf binary
