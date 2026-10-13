@@ -756,7 +756,7 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .presence-liste { list-style: none; margin: 0; padding: 0; border: 2px solid var(--noir); background: var(--blanc); }
 .presence-liste li { display: grid; grid-template-columns: 11rem 1fr auto; gap: .8rem; padding: .55rem .9rem; border-bottom: 1px solid var(--gris-bord); }
 .presence-liste li:last-child { border-bottom: 0; }
-.presence-jour { font-weight: 700; text-transform: capitalize; }
+.presence-jour { font-weight: 700; }
 .presence-lieu { font-family: var(--mono); font-size: .78rem; color: var(--gris-fonce); }
 @media (max-width: 640px) { .presence-liste li { grid-template-columns: 1fr; gap: .1rem; } }
 .presence-encart { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border: 2px solid var(--noir); background: var(--jaune-fond); padding: .9rem 1.2rem; margin: 2rem 0 0; }

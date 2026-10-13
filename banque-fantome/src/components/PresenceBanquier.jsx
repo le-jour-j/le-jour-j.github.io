@@ -4,6 +4,9 @@ import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere } from 
 
 // Où est le banquier ? Lu dans son agenda (table `presences`), rafraîchi chaque minute.
 // `compact` : une ligne pour l'accueil ; sinon l'état du moment et les prochains créneaux.
+// « jeudi 15 octobre » → « Jeudi 15 octobre » (le mois garde sa minuscule)
+const majuscule = s => s.charAt(0).toUpperCase() + s.slice(1)
+
 export default function PresenceBanquier({ compact = false }) {
   const [presences, setPresences] = useState(null)
   const [maintenant, setMaintenant] = useState(Date.now())
@@ -43,7 +46,7 @@ export default function PresenceBanquier({ compact = false }) {
         <ul className="presence-liste">
           {suivants.slice(0, 8).map(p => (
             <li key={p.debut + p.agence}>
-              <span className="presence-jour">{jour(p.debut)}</span>
+              <span className="presence-jour">{majuscule(jour(p.debut))}</span>
               <span>{creneau(p)}</span>
               <span className="presence-lieu">{AGENCES[p.agence].nom}</span>
             </li>
