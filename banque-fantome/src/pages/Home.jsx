@@ -9,6 +9,7 @@ import { MurBillets } from '../components/GuichetEmission'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 import BoutonLettre from '../components/BoutonLettre'
+import PresenceBanquier from '../components/PresenceBanquier'
 
 // Compteur animé (le chiffre "monte" jusqu'à sa valeur)
 function Compteur({ valeur }) {
@@ -117,6 +118,10 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="container">
+        <PresenceBanquier compact />
       </div>
 
       <section className="vivant">

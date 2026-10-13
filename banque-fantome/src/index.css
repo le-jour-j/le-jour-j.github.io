@@ -744,6 +744,31 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .planche-titre { font-family: var(--bebas); font-size: 1.35rem; line-height: 1; }
 .planche-titre small { font-family: var(--mono); font-size: .62rem; color: var(--gris); letter-spacing: .08em; }
 @media (max-width: 640px) { .planches-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; } }
+/* Billets à l'unité (2026-10-13) : le billet seul, en paysage, et l'affichage par paquets */
+.billet-card .planche-apercu { aspect-ratio: 2 / 1; }
+.planches-plus { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.4rem; }
+
+/* ── Infos pratiques : présence du banquier et agences (2026-10-13) ── */
+.info-titre { font-family: var(--bebas); font-size: 1.7rem; letter-spacing: .02em; margin: 0 0 .7rem; }
+.presence-point { color: var(--gris); margin-right: .25rem; }
+.presence-point.presence-la { color: #2E9E4F; animation: pulse 1.6s ease-in-out infinite; }
+.presence-etat { font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem; }
+.presence-liste { list-style: none; margin: 0; padding: 0; border: 2px solid var(--noir); background: var(--blanc); }
+.presence-liste li { display: grid; grid-template-columns: 11rem 1fr auto; gap: .8rem; padding: .55rem .9rem; border-bottom: 1px solid var(--gris-bord); }
+.presence-liste li:last-child { border-bottom: 0; }
+.presence-jour { font-weight: 700; text-transform: capitalize; }
+.presence-lieu { font-family: var(--mono); font-size: .78rem; color: var(--gris-fonce); }
+@media (max-width: 640px) { .presence-liste li { grid-template-columns: 1fr; gap: .1rem; } }
+.presence-encart { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border: 2px solid var(--noir); background: var(--jaune-fond); padding: .9rem 1.2rem; margin: 2rem 0 0; }
+.presence-encart p { margin: 0; font-weight: 700; }
+.agences { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.agence { border: 2px solid var(--noir); background: var(--blanc); padding: 1.1rem 1.2rem; }
+.agence-nom { font-family: var(--bebas); font-size: 1.6rem; margin: .7rem 0 .2rem; }
+.agence-adresse { margin: 0 0 .8rem; }
+.agence-horaires { margin: 0 0 .8rem; }
+.agence-horaires div { display: flex; justify-content: space-between; gap: 1rem; padding: .2rem 0; border-bottom: 1px dashed var(--gris-bord); }
+.agence-horaires dt { font-weight: 700; }
+.agence-horaires dd { margin: 0; }
 
 /* ── Participer + renvoi au guichet depuis S'enrichir (2026-10-04) ── */
 .participer-onglets { margin-bottom: 1.6rem; }

@@ -53,13 +53,15 @@ export const PAGES = [
     path: "/senrichir",
     title: "S'enrichir — planches de billets à imprimer | Banque Fantôme",
     description:
-      "Planches A4 de billets dessinés, de 5 à 500 €, à télécharger, imprimer et découper pour jouer sur papier. Billets émis et cours des devises.",
+      "Plus de 800 billets dessinés en atelier, de 5 à 500 €, en planches A4 ou un par page à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
     priority: "0.7",
     contenu: `
       <h1>S'enrichir</h1>
       <p>Fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.</p>
       <h2>Planches à imprimer</h2>
       <p>Des planches A4 de billets dessinés, de 5 à 500 €, à télécharger en PDF, imprimer, découper et faire créditer.</p>
+      <h2>Billets à l'unité</h2>
+      <p>Les billets dessinés en atelier, un par page A4 à taille réelle, avec traits de coupe : 772 dessins de 5 à 500 €.</p>
       <h2>Cours des devises</h2>
       <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>`,
   },
@@ -87,6 +89,20 @@ export const PAGES = [
       <p>Photographiez un billet dessiné à la main, donnez-lui un titre, une devise et une dénomination : la banque le crédite sur votre compte.</p>
       <h2>Mettre en vente au market</h2>
       <p>Un objet, une œuvre ou un service, mis aux enchères pour un, trois ou sept jours.</p>`,
+  },
+  {
+    path: "/info",
+    title: "Infos pratiques — agences et permanences du banquier | Banque Fantôme",
+    description:
+      "Où trouver la Banque Fantôme à Beauvais : l'agence du Quadrilatère, l'agence à venir de la médiathèque Centre ville, leurs horaires et les permanences du banquier.",
+    priority: "0.6",
+    contenu: `
+      <h1>Infos pratiques</h1>
+      <h2>Le banquier est-il au guichet ?</h2>
+      <p>Les permanences du banquier, tirées de son agenda et mises à jour toutes les quinze minutes.</p>
+      <h2>Les agences</h2>
+      <p>Agence actuelle : Le Quadrilatère, 22 rue Saint-Pierre, 60000 Beauvais. Mardi au vendredi de 12 h à 18 h, samedi et dimanche de 10 h à 18 h, fermé le lundi.</p>
+      <p>Agence à venir : Médiathèque Centre ville, 3 cour des Lettres, 60000 Beauvais. Mardi, jeudi et vendredi de 13 h à 18 h 30, mercredi de 9 h 30 à 18 h 30, samedi de 9 h 30 à 18 h, fermé le lundi.</p>`,
   },
 
   // Pages de compte : servies normalement, tenues hors de l'index. /deposer

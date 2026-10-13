@@ -62,6 +62,7 @@ export default function Navbar() {
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             <li><NavLink to="/participer">Participer</NavLink></li>
             <li><NavLink to="/actu">Actu</NavLink></li>
+            <li><NavLink to="/info">Info</NavLink></li>
             {user ? <>
               <li>
                 <NavLink to="/messages">

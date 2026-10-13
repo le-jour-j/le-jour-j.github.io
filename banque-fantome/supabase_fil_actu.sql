@@ -132,3 +132,20 @@ Toutes les planches sont sur la page « S''enrichir ».',
   array['images/actu/2026-10-13-planches-1.jpg', 'images/actu/2026-10-13-planches-2.jpg', 'images/actu/2026-10-13-planches-3.jpg', 'images/actu/2026-10-13-planches-4.jpg', 'images/actu/2026-10-13-planches-5.jpg', 'images/actu/2026-10-13-planches-6.jpg', 'images/actu/2026-10-13-planches-7.jpg', 'images/actu/2026-10-13-planches-8.jpg'],
   true, null
 where not exists (select 1 from actus a where a.titre = '62 planches de billets à imprimer');
+
+-- 9. Actu ajoutée le 2026-10-13 vers 20 h : les billets de l'atelier (chiffres de la session
+--    atelier-billets, comptés page par page dans les PDF d'impression A4) et les 772 billets à
+--    l'unité de SCAN-BILLET-2. Les PDF, aperçus et vignettes vivent dans le dépôt
+--    billets-banque-fantome (servi à jeansonpechin.com/billets-banque-fantome/) ; seules les
+--    images de l'actu sont livrées avec le site. Jiiji : tous en ligne, sans tri ; les billets
+--    sont « prêts à imprimer », pas encore imprimés.
+insert into actus (date_actu, titre, texte, images, publie, auteur)
+select date '2026-10-13', '837 dessins, 8 381 billets prêts à imprimer',
+  'Tous les billets dessinés en atelier sont passés au scanner : 837 dessins originaux, d''enfants et d''adultes, pour une valeur de 45 810 €. Chacun est tiré à dix exemplaires, ce qui fait 8 381 billets prêts à imprimer, pour 459 290 €. Le détail par coupure est dans le tableau.
+
+Les 772 dessins du dernier scan sont aussi en ligne un par un, chacun sur sa page A4, à taille réelle, avec ses traits de coupe. On en choisit un, on l''imprime, on le découpe, et il circule. Ils sont sur la page « S''enrichir », onglet « Billets à l''unité ».
+
+Parmi eux : des papillons, des extraterrestres en soucoupe, une fusée, un Pac-Man, un ours, une plage à palmiers, et un « We ♥ Beauvais » sur un 500.',
+  array['images/actu/2026-10-13-billets-1.jpg', 'images/actu/2026-10-13-billets-tableau.jpg', 'images/actu/2026-10-13-billets-2.jpg', 'images/actu/2026-10-13-billets-3.jpg', 'images/actu/2026-10-13-billets-4.jpg', 'images/actu/2026-10-13-billets-5.jpg', 'images/actu/2026-10-13-billets-6.jpg', 'images/actu/2026-10-13-billets-7.jpg', 'images/actu/2026-10-13-billets-8.jpg'],
+  true, null
+where not exists (select 1 from actus a where a.titre = '837 dessins, 8 381 billets prêts à imprimer');
