@@ -5,40 +5,30 @@ import { MurBillets } from '../components/GuichetEmission'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 
-import planches from '../data/planches.json'
-import billetsUnite from '../data/billets-unite.json'
+import planchesScan1 from '../data/planches.json'
+import planchesScan2 from '../data/planches-scan2.json'
 
 const BASE = import.meta.env.BASE_URL
-// Les billets à l'unité (SCAN-BILLET-2, 2026-10-13) sont trop lourds pour ce dépôt :
-// ils vivent dans le dépôt billets-banque-fantome, servi par GitHub Pages sous le même domaine.
-const DEPOT_BILLETS = 'https://jeansonpechin.com/billets-banque-fantome/'
+// Les planches de SCAN-BILLET-2 (772, 2026-10-13) sont trop lourdes pour ce dépôt : elles
+// vivent dans le dépôt billets-banque-fantome, servi par GitHub Pages sous le même domaine.
+// Numérotées à la suite de celles de SCAN-BILLET-1, valeur par valeur.
+const DEPOT_SCAN2 = 'https://jeansonpechin.com/billets-banque-fantome/'
 const PAR_PAQUET = 60
 
-const BILLETS = billetsUnite.filter(b => b.pdf_pret !== false)
-const COLLECTIONS = {
-  planches: {
-    liste: planches, carte: 'planche-card', mot: 'planche',
-    pdf: f => `${BASE}planches/${f}`, apercu: f => `${BASE}planches/apercus/${f}`,
-  },
-  unite: {
-    liste: BILLETS, carte: 'planche-card billet-card', mot: 'billet',
-    pdf: f => `${DEPOT_BILLETS}pdf/${f}`, apercu: f => `${DEPOT_BILLETS}apercus/${f}`,
-  },
-}
+const PLANCHES = [...planchesScan1, ...planchesScan2].sort((a, b) => a.valeur - b.valeur || a.numero - b.numero)
+const VALEURS = [...new Set(PLANCHES.map(p => p.valeur))].sort((a, b) => a - b)
+const urlPlanche = p => p.serie === 2 ? `${DEPOT_SCAN2}pdf/${p.fichier}` : `${BASE}planches/${p.fichier}`
+const urlApercu = (p, f) => p.serie === 2 ? `${DEPOT_SCAN2}apercus/${f}` : `${BASE}planches/apercus/${f}`
 
 export default function Senrichir() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
-  const [collection, setCollection] = useState('planches')
   const [valeur, setValeur] = useState('toutes')
   const [montres, setMontres] = useState(PAR_PAQUET)
   const [notif, setNotif] = useState(null)
 
-  const c = COLLECTIONS[collection]
-  const valeurs = useMemo(() => [...new Set(c.liste.map(p => p.valeur))].sort((a, b) => a - b), [c])
-  const visibles = useMemo(() => valeur === 'toutes' ? c.liste : c.liste.filter(p => p.valeur === valeur), [c, valeur])
-  const apercus = useMemo(() => visibles.map(p => c.apercu(p.apercu)), [c, visibles])
+  const visibles = useMemo(() => valeur === 'toutes' ? PLANCHES : PLANCHES.filter(p => p.valeur === valeur), [valeur])
+  const apercus = useMemo(() => visibles.map(p => urlApercu(p, p.apercu)), [visibles])
 
-  function choisirCollection(id) { setCollection(id); setValeur('toutes'); setMontres(PAR_PAQUET) }
   function choisirValeur(v) { setValeur(v); setMontres(PAR_PAQUET) }
 
   return (
@@ -46,34 +36,29 @@ export default function Senrichir() {
       <div className="container">
         <div className="section-head">
           <h2>S'enrichir</h2>
-          <span className="count">Billets à imprimer</span>
+          <span className="count">Planches à imprimer</span>
         </div>
 
         <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
-          Ici, vous fabriquez votre monnaie : téléchargez un PDF, imprimez-le, découpez vos billets et jouez avec, en vrai papier.
-          {' '}{planches.length} planches A4 de plusieurs billets, et {BILLETS.length} billets dessinés en atelier, un par page A4 à taille réelle.
-          {' '}Cliquez sur un billet pour le voir en grand.
+          Ici, vous fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.
+          {' '}{PLANCHES.length} planches A4, de 5 à 500 € : chacune reprend un billet dessiné en atelier, à taille réelle. Cliquez sur une planche pour la voir en grand.
         </p>
         <section style={{ marginBottom: '2rem' }}>
-          <div className="filter-row participer-onglets" role="tablist">
-            <button type="button" role="tab" aria-selected={collection === 'planches'} className={`chip ${collection === 'planches' ? 'active' : ''}`} onClick={() => choisirCollection('planches')}>Planches · {planches.length}</button>
-            <button type="button" role="tab" aria-selected={collection === 'unite'} className={`chip ${collection === 'unite' ? 'active' : ''}`} onClick={() => choisirCollection('unite')}>Billets à l'unité · {BILLETS.length}</button>
-          </div>
           <div className="filter-row" style={{ marginBottom: '1.4rem' }}>
-            <button type="button" className={`chip ${valeur === 'toutes' ? 'active' : ''}`} onClick={() => choisirValeur('toutes')}>toutes</button>
-            {valeurs.map(v => (
+            <button type="button" className={`chip ${valeur === 'toutes' ? 'active' : ''}`} onClick={() => choisirValeur('toutes')}>toutes · {PLANCHES.length}</button>
+            {VALEURS.map(v => (
               <button key={v} type="button" className={`chip ${valeur === v ? 'active' : ''}`} onClick={() => choisirValeur(v)}>{v} €</button>
             ))}
           </div>
           <div className="planches-grid">
             {visibles.slice(0, montres).map((p, index) => (
-              <article key={p.fichier} className={c.carte}>
-                <button type="button" className="planche-apercu" onClick={() => setLightboxIndex(index)} aria-label={`Aperçu du ${c.mot} ${p.valeur} € n° ${p.numero}`}>
-                  <img src={c.apercu(p.vignette)} alt={`${collection === 'planches' ? 'Planche de billets' : 'Billet'} de ${p.valeur} €, n° ${p.numero}`} loading="lazy" />
+              <article key={p.fichier} className="planche-card">
+                <button type="button" className="planche-apercu" onClick={() => setLightboxIndex(index)} aria-label={`Aperçu de la planche ${p.valeur} € n° ${p.numero}`}>
+                  <img src={urlApercu(p, p.vignette)} alt={`Planche de billets de ${p.valeur} €, n° ${p.numero}`} loading="lazy" />
                 </button>
                 <div className="planche-pied">
-                  <div className="planche-titre">{p.valeur} € <small>n° {String(p.numero).padStart(collection === 'planches' ? 2 : 3, '0')}</small></div>
-                  <a className="btn btn-noir btn-xs" href={c.pdf(p.fichier)} download>↓ PDF</a>
+                  <div className="planche-titre">{p.valeur} € <small>n° {String(p.numero).padStart(2, '0')}</small></div>
+                  <a className="btn btn-noir btn-xs" href={urlPlanche(p)} download>↓ PDF</a>
                 </div>
               </article>
             ))}
@@ -81,7 +66,7 @@ export default function Senrichir() {
           {visibles.length > montres && (
             <div className="planches-plus">
               <button type="button" className="btn btn-outline btn-sm" onClick={() => setMontres(m => m + PAR_PAQUET)}>
-                Voir {Math.min(PAR_PAQUET, visibles.length - montres)} de plus
+                Voir {Math.min(PAR_PAQUET, visibles.length - montres)} planches de plus
               </button>
               <span className="caption-gris">{montres} sur {visibles.length}</span>
             </div>
@@ -90,7 +75,7 @@ export default function Senrichir() {
 
         <div className="bande-guichet">
           <p><strong>Vous avez dessiné un billet original ?</strong> Déposez-le au guichet : la banque le crédite sur votre compte, et c'est avec lui que vous enchérissez dans le market.</p>
-          <Link to="/participer" className="btn btn-jaune btn-sm">→ Déposer un original</Link>
+          <Link to="/participer?onglet=billet" className="btn btn-jaune btn-sm">→ Déposer un original</Link>
         </div>
 
         <MurBillets limit={12} onNotif={setNotif} />

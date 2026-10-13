@@ -34,7 +34,7 @@ function Compteur({ valeur }) {
 
 const PRINCIPE = [
   { n: '1', titre: 'Ouvrir un compte', texte: 'Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.', to: '/connexion', cta: 'Créer un compte' },
-  { n: '2', titre: 'Fabriquer son argent', texte: 'Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.', to: '/participer', cta: 'Déposer un original' },
+  { n: '2', titre: 'Fabriquer son argent', texte: 'Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.', to: '/participer?onglet=billet', cta: 'Déposer un original' },
   { n: '3', titre: 'Enchérir dans le market', texte: 'Les dépôts sont mis aux enchères : objets, œuvres ou services. Le plus offrant l’emporte, la banque prélève sa commission et s’enrichit.', to: '/market', cta: 'Entrer dans le market' },
 ]
 

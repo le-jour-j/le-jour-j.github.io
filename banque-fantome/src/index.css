@@ -744,8 +744,7 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .planche-titre { font-family: var(--bebas); font-size: 1.35rem; line-height: 1; }
 .planche-titre small { font-family: var(--mono); font-size: .62rem; color: var(--gris); letter-spacing: .08em; }
 @media (max-width: 640px) { .planches-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; } }
-/* Billets à l'unité (2026-10-13) : le billet seul, en paysage, et l'affichage par paquets */
-.billet-card .planche-apercu { aspect-ratio: 2 / 1; }
+/* Planches affichées par paquets de 60 (2026-10-13, 834 planches) */
 .planches-plus { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.4rem; }
 
 /* ── Infos pratiques : présence du banquier et agences (2026-10-13) ── */

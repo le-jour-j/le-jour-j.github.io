@@ -53,15 +53,13 @@ export const PAGES = [
     path: "/senrichir",
     title: "S'enrichir — planches de billets à imprimer | Banque Fantôme",
     description:
-      "Plus de 800 billets dessinés en atelier, de 5 à 500 €, en planches A4 ou un par page à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
+      "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
     priority: "0.7",
     contenu: `
       <h1>S'enrichir</h1>
       <p>Fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.</p>
       <h2>Planches à imprimer</h2>
-      <p>Des planches A4 de billets dessinés, de 5 à 500 €, à télécharger en PDF, imprimer, découper et faire créditer.</p>
-      <h2>Billets à l'unité</h2>
-      <p>Les billets dessinés en atelier, un par page A4 à taille réelle, avec traits de coupe : 772 dessins de 5 à 500 €.</p>
+      <p>834 planches A4 de billets dessinés en atelier, de 5 à 500 € : chaque planche reprend un seul dessin, à taille réelle, avec traits de coupe. À télécharger en PDF, imprimer et découper.</p>
       <h2>Cours des devises</h2>
       <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>`,
   },
@@ -85,10 +83,10 @@ export const PAGES = [
     priority: "0.7",
     contenu: `
       <h1>Participer</h1>
-      <h2>Déposer un billet original</h2>
-      <p>Photographiez un billet dessiné à la main, donnez-lui un titre, une devise et une dénomination : la banque le crédite sur votre compte.</p>
       <h2>Mettre en vente au market</h2>
-      <p>Un objet, une œuvre ou un service, mis aux enchères pour un, trois ou sept jours.</p>`,
+      <p>Un objet, une œuvre ou un service, mis aux enchères pour un, trois ou sept jours.</p>
+      <h2>Déposer un billet original</h2>
+      <p>Photographiez un billet dessiné à la main, donnez-lui un titre, une devise et une dénomination : la banque le crédite sur votre compte.</p>`,
   },
   {
     path: "/info",
