@@ -7,7 +7,7 @@
   "numero": 1,
   "pages": 1,
   "ko": 522,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-5euros-A4-05.pdf",
@@ -17,7 +17,7 @@
   "numero": 5,
   "pages": 1,
   "ko": 460,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-5euros-A4-06.pdf",
@@ -27,7 +27,7 @@
   "numero": 6,
   "pages": 1,
   "ko": 494,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-10euros-A4-01.pdf",
@@ -147,7 +147,7 @@
   "numero": 1,
   "pages": 1,
   "ko": 654,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-04.pdf",
@@ -157,7 +157,7 @@
   "numero": 4,
   "pages": 1,
   "ko": 567,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-07.pdf",
@@ -167,7 +167,7 @@
   "numero": 7,
   "pages": 1,
   "ko": 453,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-09.pdf",
@@ -177,7 +177,7 @@
   "numero": 9,
   "pages": 1,
   "ko": 578,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-11.pdf",
@@ -187,7 +187,7 @@
   "numero": 11,
   "pages": 1,
   "ko": 613,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-16.pdf",
@@ -197,7 +197,7 @@
   "numero": 16,
   "pages": 1,
   "ko": 669,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-19.pdf",
@@ -207,7 +207,7 @@
   "numero": 19,
   "pages": 1,
   "ko": 697,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-22.pdf",
@@ -217,7 +217,7 @@
   "numero": 22,
   "pages": 1,
   "ko": 641,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-25.pdf",
@@ -227,7 +227,7 @@
   "numero": 25,
   "pages": 1,
   "ko": 796,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-26.pdf",
@@ -237,7 +237,7 @@
   "numero": 26,
   "pages": 1,
   "ko": 731,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-32.pdf",
@@ -247,7 +247,7 @@
   "numero": 32,
   "pages": 1,
   "ko": 572,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-35.pdf",
@@ -257,7 +257,7 @@
   "numero": 35,
   "pages": 1,
   "ko": 566,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-37.pdf",
@@ -267,7 +267,7 @@
   "numero": 37,
   "pages": 1,
   "ko": 590,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-40.pdf",
@@ -277,7 +277,7 @@
   "numero": 40,
   "pages": 1,
   "ko": 727,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-42.pdf",
@@ -287,7 +287,7 @@
   "numero": 42,
   "pages": 1,
   "ko": 656,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-44.pdf",
@@ -297,7 +297,7 @@
   "numero": 44,
   "pages": 1,
   "ko": 709,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-47.pdf",
@@ -307,7 +307,7 @@
   "numero": 47,
   "pages": 1,
   "ko": 586,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-20euros-A4-49.pdf",
@@ -317,7 +317,7 @@
   "numero": 49,
   "pages": 1,
   "ko": 598,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-01.pdf",
@@ -327,7 +327,7 @@
   "numero": 1,
   "pages": 1,
   "ko": 540,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-05.pdf",
@@ -337,7 +337,7 @@
   "numero": 5,
   "pages": 1,
   "ko": 486,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-07.pdf",
@@ -347,7 +347,7 @@
   "numero": 7,
   "pages": 1,
   "ko": 565,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-09.pdf",
@@ -357,7 +357,7 @@
   "numero": 9,
   "pages": 1,
   "ko": 516,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-11.pdf",
@@ -367,7 +367,7 @@
   "numero": 11,
   "pages": 1,
   "ko": 559,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-14.pdf",
@@ -377,7 +377,7 @@
   "numero": 14,
   "pages": 1,
   "ko": 448,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-16.pdf",
@@ -387,7 +387,7 @@
   "numero": 16,
   "pages": 1,
   "ko": 535,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-19.pdf",
@@ -397,7 +397,7 @@
   "numero": 19,
   "pages": 1,
   "ko": 535,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-21.pdf",
@@ -407,7 +407,7 @@
   "numero": 21,
   "pages": 1,
   "ko": 571,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-24.pdf",
@@ -417,7 +417,7 @@
   "numero": 24,
   "pages": 1,
   "ko": 650,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-26.pdf",
@@ -427,7 +427,7 @@
   "numero": 26,
   "pages": 1,
   "ko": 599,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-29.pdf",
@@ -437,7 +437,7 @@
   "numero": 29,
   "pages": 1,
   "ko": 596,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-32.pdf",
@@ -447,7 +447,7 @@
   "numero": 32,
   "pages": 1,
   "ko": 676,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-50euros-A4-34.pdf",
@@ -457,7 +457,7 @@
   "numero": 34,
   "pages": 1,
   "ko": 625,
-  "portrait": true
+  "portrait": false
  },
  {
   "fichier": "planche-100euros-A4-02.pdf",

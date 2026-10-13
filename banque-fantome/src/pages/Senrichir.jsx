@@ -15,6 +15,16 @@ const BASE = import.meta.env.BASE_URL
 const DEPOT_SCAN2 = 'https://jeansonpechin.com/billets-banque-fantome/'
 const PAR_PAQUET = 60
 
+// « toutes » : un ordre tiré au hasard à chaque visite (Jiiji, 2026-10-13) ; par coupure, l'ordre des numéros
+function melanger(liste) {
+  const l = [...liste]
+  for (let i = l.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [l[i], l[j]] = [l[j], l[i]]
+  }
+  return l
+}
+
 const PLANCHES = [...planchesScan1, ...planchesScan2].sort((a, b) => a.valeur - b.valeur || a.numero - b.numero)
 const VALEURS = [...new Set(PLANCHES.map(p => p.valeur))].sort((a, b) => a - b)
 const urlPlanche = p => p.serie === 2 ? `${DEPOT_SCAN2}pdf/${p.fichier}` : `${BASE}planches/${p.fichier}`
@@ -25,8 +35,9 @@ export default function Senrichir() {
   const [valeur, setValeur] = useState('toutes')
   const [montres, setMontres] = useState(PAR_PAQUET)
   const [notif, setNotif] = useState(null)
+  const [auHasard] = useState(() => melanger(PLANCHES))
 
-  const visibles = useMemo(() => valeur === 'toutes' ? PLANCHES : PLANCHES.filter(p => p.valeur === valeur), [valeur])
+  const visibles = useMemo(() => valeur === 'toutes' ? auHasard : PLANCHES.filter(p => p.valeur === valeur), [valeur, auHasard])
   const apercus = useMemo(() => visibles.map(p => urlApercu(p, p.apercu)), [visibles])
 
   function choisirValeur(v) { setValeur(v); setMontres(PAR_PAQUET) }

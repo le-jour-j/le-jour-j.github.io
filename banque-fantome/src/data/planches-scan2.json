@@ -6,7 +6,7 @@
   "valeur": 5,
   "numero": 7,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -16,7 +16,7 @@
   "valeur": 5,
   "numero": 8,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -26,7 +26,7 @@
   "valeur": 5,
   "numero": 9,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -36,7 +36,7 @@
   "valeur": 5,
   "numero": 10,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -46,7 +46,7 @@
   "valeur": 5,
   "numero": 11,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -56,7 +56,7 @@
   "valeur": 5,
   "numero": 12,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -66,8 +66,9 @@
   "valeur": 5,
   "numero": 13,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00016_02.pdf",
@@ -76,8 +77,9 @@
   "valeur": 5,
   "numero": 14,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00016_03.pdf",
@@ -86,8 +88,9 @@
   "valeur": 5,
   "numero": 15,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00016_04.pdf",
@@ -96,8 +99,9 @@
   "valeur": 5,
   "numero": 16,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00016_05.pdf",
@@ -106,8 +110,9 @@
   "valeur": 5,
   "numero": 17,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00016_06.pdf",
@@ -116,8 +121,9 @@
   "valeur": 5,
   "numero": 18,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_01.pdf",
@@ -126,8 +132,9 @@
   "valeur": 5,
   "numero": 19,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_02.pdf",
@@ -136,8 +143,9 @@
   "valeur": 5,
   "numero": 20,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_03.pdf",
@@ -146,8 +154,9 @@
   "valeur": 5,
   "numero": 21,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_04.pdf",
@@ -156,8 +165,9 @@
   "valeur": 5,
   "numero": 22,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_05.pdf",
@@ -166,8 +176,9 @@
   "valeur": 5,
   "numero": 23,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00019_06.pdf",
@@ -176,8 +187,9 @@
   "valeur": 5,
   "numero": 24,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155223-00020_01.pdf",
@@ -186,7 +198,7 @@
   "valeur": 5,
   "numero": 25,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -196,7 +208,7 @@
   "valeur": 5,
   "numero": 26,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -206,7 +218,7 @@
   "valeur": 5,
   "numero": 27,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -216,7 +228,7 @@
   "valeur": 5,
   "numero": 28,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -226,7 +238,7 @@
   "valeur": 5,
   "numero": 29,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -236,7 +248,7 @@
   "valeur": 5,
   "numero": 30,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -246,7 +258,7 @@
   "valeur": 5,
   "numero": 31,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -256,7 +268,7 @@
   "valeur": 5,
   "numero": 32,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -266,7 +278,7 @@
   "valeur": 5,
   "numero": 33,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -276,7 +288,7 @@
   "valeur": 5,
   "numero": 34,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -286,7 +298,7 @@
   "valeur": 5,
   "numero": 35,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -296,7 +308,7 @@
   "valeur": 5,
   "numero": 36,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -306,7 +318,7 @@
   "valeur": 5,
   "numero": 37,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -316,7 +328,7 @@
   "valeur": 5,
   "numero": 38,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -326,7 +338,7 @@
   "valeur": 5,
   "numero": 39,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -336,7 +348,7 @@
   "valeur": 5,
   "numero": 40,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -346,7 +358,7 @@
   "valeur": 5,
   "numero": 41,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -356,7 +368,7 @@
   "valeur": 5,
   "numero": 42,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -366,7 +378,7 @@
   "valeur": 5,
   "numero": 43,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -376,7 +388,7 @@
   "valeur": 5,
   "numero": 44,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -386,7 +398,7 @@
   "valeur": 5,
   "numero": 45,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -396,7 +408,7 @@
   "valeur": 5,
   "numero": 46,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -406,7 +418,7 @@
   "valeur": 5,
   "numero": 47,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -416,7 +428,7 @@
   "valeur": 5,
   "numero": 48,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -426,7 +438,7 @@
   "valeur": 5,
   "numero": 49,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -436,8 +448,9 @@
   "valeur": 5,
   "numero": 50,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155414-00008_03.pdf",
@@ -446,7 +459,7 @@
   "valeur": 5,
   "numero": 51,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -456,7 +469,7 @@
   "valeur": 5,
   "numero": 52,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -466,8 +479,9 @@
   "valeur": 5,
   "numero": 53,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155414-00008_06.pdf",
@@ -476,7 +490,7 @@
   "valeur": 5,
   "numero": 54,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -486,8 +500,9 @@
   "valeur": 5,
   "numero": 55,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155414-00014_02.pdf",
@@ -496,7 +511,7 @@
   "valeur": 5,
   "numero": 56,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -506,8 +521,9 @@
   "valeur": 5,
   "numero": 57,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155414-00014_04.pdf",
@@ -516,8 +532,9 @@
   "valeur": 5,
   "numero": 58,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-155414-00014_05.pdf",
@@ -526,7 +543,7 @@
   "valeur": 5,
   "numero": 59,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -536,8 +553,9 @@
   "valeur": 5,
   "numero": 60,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_01.pdf",
@@ -546,8 +564,9 @@
   "valeur": 5,
   "numero": 61,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_02.pdf",
@@ -556,8 +575,9 @@
   "valeur": 5,
   "numero": 62,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_03.pdf",
@@ -566,8 +586,9 @@
   "valeur": 5,
   "numero": 63,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_04.pdf",
@@ -576,8 +597,9 @@
   "valeur": 5,
   "numero": 64,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_05.pdf",
@@ -586,8 +608,9 @@
   "valeur": 5,
   "numero": 65,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00007_06.pdf",
@@ -596,8 +619,9 @@
   "valeur": 5,
   "numero": 66,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_01.pdf",
@@ -606,8 +630,9 @@
   "valeur": 5,
   "numero": 67,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_02.pdf",
@@ -616,8 +641,9 @@
   "valeur": 5,
   "numero": 68,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_03.pdf",
@@ -626,8 +652,9 @@
   "valeur": 5,
   "numero": 69,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_04.pdf",
@@ -636,8 +663,9 @@
   "valeur": 5,
   "numero": 70,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_05.pdf",
@@ -646,8 +674,9 @@
   "valeur": 5,
   "numero": 71,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00008_06.pdf",
@@ -656,8 +685,9 @@
   "valeur": 5,
   "numero": 72,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_01.pdf",
@@ -666,8 +696,9 @@
   "valeur": 5,
   "numero": 73,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_02.pdf",
@@ -676,8 +707,9 @@
   "valeur": 5,
   "numero": 74,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_03.pdf",
@@ -686,8 +718,9 @@
   "valeur": 5,
   "numero": 75,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_04.pdf",
@@ -696,8 +729,9 @@
   "valeur": 5,
   "numero": 76,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_05.pdf",
@@ -706,8 +740,9 @@
   "valeur": 5,
   "numero": 77,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00009_06.pdf",
@@ -716,8 +751,9 @@
   "valeur": 5,
   "numero": 78,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_01.pdf",
@@ -726,8 +762,9 @@
   "valeur": 5,
   "numero": 79,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_02.pdf",
@@ -736,8 +773,9 @@
   "valeur": 5,
   "numero": 80,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_03.pdf",
@@ -746,8 +784,9 @@
   "valeur": 5,
   "numero": 81,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_04.pdf",
@@ -756,8 +795,9 @@
   "valeur": 5,
   "numero": 82,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_05.pdf",
@@ -766,8 +806,9 @@
   "valeur": 5,
   "numero": 83,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00010_06.pdf",
@@ -776,8 +817,9 @@
   "valeur": 5,
   "numero": 84,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_01.pdf",
@@ -786,8 +828,9 @@
   "valeur": 5,
   "numero": 85,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_02.pdf",
@@ -796,8 +839,9 @@
   "valeur": 5,
   "numero": 86,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_03.pdf",
@@ -806,8 +850,9 @@
   "valeur": 5,
   "numero": 87,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_04.pdf",
@@ -816,8 +861,9 @@
   "valeur": 5,
   "numero": 88,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_05.pdf",
@@ -826,8 +872,9 @@
   "valeur": 5,
   "numero": 89,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00011_06.pdf",
@@ -836,8 +883,9 @@
   "valeur": 5,
   "numero": 90,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_01.pdf",
@@ -846,8 +894,9 @@
   "valeur": 5,
   "numero": 91,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_02.pdf",
@@ -856,8 +905,9 @@
   "valeur": 5,
   "numero": 92,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_03.pdf",
@@ -866,8 +916,9 @@
   "valeur": 5,
   "numero": 93,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_04.pdf",
@@ -876,8 +927,9 @@
   "valeur": 5,
   "numero": 94,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_05.pdf",
@@ -886,8 +938,9 @@
   "valeur": 5,
   "numero": 95,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00012_06.pdf",
@@ -896,8 +949,9 @@
   "valeur": 5,
   "numero": 96,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_01.pdf",
@@ -906,8 +960,9 @@
   "valeur": 5,
   "numero": 97,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_02.pdf",
@@ -916,8 +971,9 @@
   "valeur": 5,
   "numero": 98,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_03.pdf",
@@ -926,8 +982,9 @@
   "valeur": 5,
   "numero": 99,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_04.pdf",
@@ -936,8 +993,9 @@
   "valeur": 5,
   "numero": 100,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_05.pdf",
@@ -946,8 +1004,9 @@
   "valeur": 5,
   "numero": 101,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00013_06.pdf",
@@ -956,8 +1015,9 @@
   "valeur": 5,
   "numero": 102,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_01.pdf",
@@ -966,8 +1026,9 @@
   "valeur": 5,
   "numero": 103,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_02.pdf",
@@ -976,8 +1037,9 @@
   "valeur": 5,
   "numero": 104,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_03.pdf",
@@ -986,8 +1048,9 @@
   "valeur": 5,
   "numero": 105,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_04.pdf",
@@ -996,8 +1059,9 @@
   "valeur": 5,
   "numero": 106,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_05.pdf",
@@ -1006,8 +1070,9 @@
   "valeur": 5,
   "numero": 107,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00014_06.pdf",
@@ -1016,8 +1081,9 @@
   "valeur": 5,
   "numero": 108,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_01.pdf",
@@ -1026,8 +1092,9 @@
   "valeur": 5,
   "numero": 109,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_02.pdf",
@@ -1036,8 +1103,9 @@
   "valeur": 5,
   "numero": 110,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_03.pdf",
@@ -1046,8 +1114,9 @@
   "valeur": 5,
   "numero": 111,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_04.pdf",
@@ -1056,8 +1125,9 @@
   "valeur": 5,
   "numero": 112,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_05.pdf",
@@ -1066,8 +1136,9 @@
   "valeur": 5,
   "numero": 113,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00015_06.pdf",
@@ -1076,8 +1147,9 @@
   "valeur": 5,
   "numero": 114,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_01.pdf",
@@ -1086,8 +1158,9 @@
   "valeur": 5,
   "numero": 115,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_02.pdf",
@@ -1096,8 +1169,9 @@
   "valeur": 5,
   "numero": 116,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_03.pdf",
@@ -1106,8 +1180,9 @@
   "valeur": 5,
   "numero": 117,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_04.pdf",
@@ -1116,8 +1191,9 @@
   "valeur": 5,
   "numero": 118,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_05.pdf",
@@ -1126,8 +1202,9 @@
   "valeur": 5,
   "numero": 119,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00016_06.pdf",
@@ -1136,8 +1213,9 @@
   "valeur": 5,
   "numero": 120,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_01.pdf",
@@ -1146,8 +1224,9 @@
   "valeur": 5,
   "numero": 121,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_02.pdf",
@@ -1156,8 +1235,9 @@
   "valeur": 5,
   "numero": 122,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_03.pdf",
@@ -1166,8 +1246,9 @@
   "valeur": 5,
   "numero": 123,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_04.pdf",
@@ -1176,8 +1257,9 @@
   "valeur": 5,
   "numero": 124,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_05.pdf",
@@ -1186,8 +1268,9 @@
   "valeur": 5,
   "numero": 125,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00017_06.pdf",
@@ -1196,8 +1279,9 @@
   "valeur": 5,
   "numero": 126,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00018_01.pdf",
@@ -1206,7 +1290,7 @@
   "valeur": 5,
   "numero": 127,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1216,7 +1300,7 @@
   "valeur": 5,
   "numero": 128,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1226,7 +1310,7 @@
   "valeur": 5,
   "numero": 129,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1236,7 +1320,7 @@
   "valeur": 5,
   "numero": 130,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1246,7 +1330,7 @@
   "valeur": 5,
   "numero": 131,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1256,7 +1340,7 @@
   "valeur": 5,
   "numero": 132,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1266,8 +1350,9 @@
   "valeur": 5,
   "numero": 133,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00019_02.pdf",
@@ -1276,8 +1361,9 @@
   "valeur": 5,
   "numero": 134,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00019_03.pdf",
@@ -1286,8 +1372,9 @@
   "valeur": 5,
   "numero": 135,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00019_04.pdf",
@@ -1296,8 +1383,9 @@
   "valeur": 5,
   "numero": 136,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00019_05.pdf",
@@ -1306,8 +1394,9 @@
   "valeur": 5,
   "numero": 137,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00019_06.pdf",
@@ -1316,8 +1405,9 @@
   "valeur": 5,
   "numero": 138,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_01.pdf",
@@ -1326,8 +1416,9 @@
   "valeur": 5,
   "numero": 139,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_02.pdf",
@@ -1336,8 +1427,9 @@
   "valeur": 5,
   "numero": 140,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_03.pdf",
@@ -1346,8 +1438,9 @@
   "valeur": 5,
   "numero": 141,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_04.pdf",
@@ -1356,8 +1449,9 @@
   "valeur": 5,
   "numero": 142,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_05.pdf",
@@ -1366,8 +1460,9 @@
   "valeur": 5,
   "numero": 143,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00020_06.pdf",
@@ -1376,8 +1471,9 @@
   "valeur": 5,
   "numero": 144,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_01.pdf",
@@ -1386,8 +1482,9 @@
   "valeur": 5,
   "numero": 145,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_02.pdf",
@@ -1396,8 +1493,9 @@
   "valeur": 5,
   "numero": 146,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_03.pdf",
@@ -1406,8 +1504,9 @@
   "valeur": 5,
   "numero": 147,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_04.pdf",
@@ -1416,8 +1515,9 @@
   "valeur": 5,
   "numero": 148,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_05.pdf",
@@ -1426,8 +1526,9 @@
   "valeur": 5,
   "numero": 149,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00021_06.pdf",
@@ -1436,8 +1537,9 @@
   "valeur": 5,
   "numero": 150,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_01.pdf",
@@ -1446,8 +1548,9 @@
   "valeur": 5,
   "numero": 151,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_02.pdf",
@@ -1456,8 +1559,9 @@
   "valeur": 5,
   "numero": 152,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_03.pdf",
@@ -1466,8 +1570,9 @@
   "valeur": 5,
   "numero": 153,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_04.pdf",
@@ -1476,8 +1581,9 @@
   "valeur": 5,
   "numero": 154,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_05.pdf",
@@ -1486,8 +1592,9 @@
   "valeur": 5,
   "numero": 155,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160257-00022_06.pdf",
@@ -1496,8 +1603,9 @@
   "valeur": 5,
   "numero": 156,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00001_01.pdf",
@@ -1506,7 +1614,7 @@
   "valeur": 5,
   "numero": 157,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1516,7 +1624,7 @@
   "valeur": 5,
   "numero": 158,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1526,7 +1634,7 @@
   "valeur": 5,
   "numero": 159,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1536,7 +1644,7 @@
   "valeur": 5,
   "numero": 160,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1546,7 +1654,7 @@
   "valeur": 5,
   "numero": 161,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1556,7 +1664,7 @@
   "valeur": 5,
   "numero": 162,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1566,7 +1674,7 @@
   "valeur": 5,
   "numero": 163,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1576,7 +1684,7 @@
   "valeur": 5,
   "numero": 164,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1586,7 +1694,7 @@
   "valeur": 5,
   "numero": 165,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1596,7 +1704,7 @@
   "valeur": 5,
   "numero": 166,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1606,7 +1714,7 @@
   "valeur": 5,
   "numero": 167,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1616,7 +1724,7 @@
   "valeur": 5,
   "numero": 168,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1626,8 +1734,9 @@
   "valeur": 5,
   "numero": 169,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_02.pdf",
@@ -1636,8 +1745,9 @@
   "valeur": 5,
   "numero": 170,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_03.pdf",
@@ -1646,8 +1756,9 @@
   "valeur": 5,
   "numero": 171,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_04.pdf",
@@ -1656,8 +1767,9 @@
   "valeur": 5,
   "numero": 172,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_05.pdf",
@@ -1666,8 +1778,9 @@
   "valeur": 5,
   "numero": 173,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_06.pdf",
@@ -1676,8 +1789,9 @@
   "valeur": 5,
   "numero": 174,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_07.pdf",
@@ -1686,8 +1800,9 @@
   "valeur": 5,
   "numero": 175,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_08.pdf",
@@ -1696,8 +1811,9 @@
   "valeur": 5,
   "numero": 176,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_09.pdf",
@@ -1706,8 +1822,9 @@
   "valeur": 5,
   "numero": 177,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_10.pdf",
@@ -1716,8 +1833,9 @@
   "valeur": 5,
   "numero": 178,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_11.pdf",
@@ -1726,8 +1844,9 @@
   "valeur": 5,
   "numero": 179,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160420-00009_12.pdf",
@@ -1736,8 +1855,9 @@
   "valeur": 5,
   "numero": 180,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_01.pdf",
@@ -1746,8 +1866,9 @@
   "valeur": 5,
   "numero": 181,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_02.pdf",
@@ -1756,8 +1877,9 @@
   "valeur": 5,
   "numero": 182,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_03.pdf",
@@ -1766,8 +1888,9 @@
   "valeur": 5,
   "numero": 183,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_04.pdf",
@@ -1776,8 +1899,9 @@
   "valeur": 5,
   "numero": 184,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_05.pdf",
@@ -1786,8 +1910,9 @@
   "valeur": 5,
   "numero": 185,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_06.pdf",
@@ -1796,8 +1921,9 @@
   "valeur": 5,
   "numero": 186,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_07.pdf",
@@ -1806,8 +1932,9 @@
   "valeur": 5,
   "numero": 187,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_08.pdf",
@@ -1816,8 +1943,9 @@
   "valeur": 5,
   "numero": 188,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_09.pdf",
@@ -1826,8 +1954,9 @@
   "valeur": 5,
   "numero": 189,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_10.pdf",
@@ -1836,8 +1965,9 @@
   "valeur": 5,
   "numero": 190,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_11.pdf",
@@ -1846,8 +1976,9 @@
   "valeur": 5,
   "numero": 191,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00002_12.pdf",
@@ -1856,8 +1987,9 @@
   "valeur": 5,
   "numero": 192,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-160701-00005_01.pdf",
@@ -1866,7 +1998,7 @@
   "valeur": 5,
   "numero": 193,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1876,7 +2008,7 @@
   "valeur": 5,
   "numero": 194,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1886,7 +2018,7 @@
   "valeur": 5,
   "numero": 195,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1896,7 +2028,7 @@
   "valeur": 5,
   "numero": 196,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1906,7 +2038,7 @@
   "valeur": 5,
   "numero": 197,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1916,7 +2048,7 @@
   "valeur": 5,
   "numero": 198,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1926,7 +2058,7 @@
   "valeur": 5,
   "numero": 199,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1936,7 +2068,7 @@
   "valeur": 5,
   "numero": 200,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1946,7 +2078,7 @@
   "valeur": 5,
   "numero": 201,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1956,7 +2088,7 @@
   "valeur": 5,
   "numero": 202,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1966,7 +2098,7 @@
   "valeur": 5,
   "numero": 203,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1976,7 +2108,7 @@
   "valeur": 5,
   "numero": 204,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1986,7 +2118,7 @@
   "valeur": 5,
   "numero": 205,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -1996,7 +2128,7 @@
   "valeur": 5,
   "numero": 206,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2006,7 +2138,7 @@
   "valeur": 5,
   "numero": 207,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2016,7 +2148,7 @@
   "valeur": 5,
   "numero": 208,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2026,7 +2158,7 @@
   "valeur": 5,
   "numero": 209,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2036,7 +2168,7 @@
   "valeur": 5,
   "numero": 210,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2046,7 +2178,7 @@
   "valeur": 5,
   "numero": 211,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2056,7 +2188,7 @@
   "valeur": 5,
   "numero": 212,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2066,7 +2198,7 @@
   "valeur": 5,
   "numero": 213,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2076,7 +2208,7 @@
   "valeur": 5,
   "numero": 214,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2086,7 +2218,7 @@
   "valeur": 5,
   "numero": 215,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2096,7 +2228,7 @@
   "valeur": 5,
   "numero": 216,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2106,7 +2238,7 @@
   "valeur": 5,
   "numero": 217,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2116,8 +2248,9 @@
   "valeur": 5,
   "numero": 218,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-161733-00003_03.pdf",
@@ -2126,7 +2259,7 @@
   "valeur": 5,
   "numero": 219,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2136,7 +2269,7 @@
   "valeur": 5,
   "numero": 220,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2146,8 +2279,9 @@
   "valeur": 5,
   "numero": 221,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-161733-00003_06.pdf",
@@ -2156,7 +2290,7 @@
   "valeur": 5,
   "numero": 222,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2166,7 +2300,7 @@
   "valeur": 5,
   "numero": 223,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2176,7 +2310,7 @@
   "valeur": 5,
   "numero": 224,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2186,7 +2320,7 @@
   "valeur": 5,
   "numero": 225,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2196,8 +2330,9 @@
   "valeur": 5,
   "numero": 226,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-5euros-A4-162141_05.pdf",
@@ -2206,7 +2341,7 @@
   "valeur": 5,
   "numero": 227,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -2216,8 +2351,9 @@
   "valeur": 5,
   "numero": 228,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-155414-00005_01.pdf",
@@ -2267,7 +2403,8 @@
   "numero": 32,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-155414-00010_02.pdf",
@@ -2277,7 +2414,8 @@
   "numero": 33,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-155414-00010_03.pdf",
@@ -2287,7 +2425,8 @@
   "numero": 34,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-155414-00010_04.pdf",
@@ -2297,7 +2436,8 @@
   "numero": 35,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-155414-00011_01.pdf",
@@ -2907,7 +3047,8 @@
   "numero": 96,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00003_02.pdf",
@@ -2917,7 +3058,8 @@
   "numero": 97,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00003_03.pdf",
@@ -2927,7 +3069,8 @@
   "numero": 98,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00003_04.pdf",
@@ -2937,7 +3080,8 @@
   "numero": 99,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00004_01.pdf",
@@ -2947,7 +3091,8 @@
   "numero": 100,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00004_02.pdf",
@@ -2957,7 +3102,8 @@
   "numero": 101,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00004_03.pdf",
@@ -2967,7 +3113,8 @@
   "numero": 102,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160257-00004_04.pdf",
@@ -2977,7 +3124,8 @@
   "numero": 103,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_01.pdf",
@@ -2987,7 +3135,8 @@
   "numero": 104,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_02.pdf",
@@ -2997,7 +3146,8 @@
   "numero": 105,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_03.pdf",
@@ -3007,7 +3157,8 @@
   "numero": 106,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_04.pdf",
@@ -3017,7 +3168,8 @@
   "numero": 107,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_05.pdf",
@@ -3027,7 +3179,8 @@
   "numero": 108,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_06.pdf",
@@ -3037,7 +3190,8 @@
   "numero": 109,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_07.pdf",
@@ -3047,7 +3201,8 @@
   "numero": 110,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_08.pdf",
@@ -3057,7 +3212,8 @@
   "numero": 111,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_09.pdf",
@@ -3067,7 +3223,8 @@
   "numero": 112,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_10.pdf",
@@ -3077,7 +3234,8 @@
   "numero": 113,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_11.pdf",
@@ -3087,7 +3245,8 @@
   "numero": 114,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160420-00012_12.pdf",
@@ -3097,7 +3256,8 @@
   "numero": 115,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-160701-00007_01.pdf",
@@ -3247,7 +3407,8 @@
   "numero": 130,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-10euros-A4-162045_07.pdf",
@@ -3296,8 +3457,9 @@
   "valeur": 20,
   "numero": 50,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155223-00002_02.pdf",
@@ -3306,8 +3468,9 @@
   "valeur": 20,
   "numero": 51,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155223-00002_03.pdf",
@@ -3316,8 +3479,9 @@
   "valeur": 20,
   "numero": 52,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155223-00002_04.pdf",
@@ -3326,8 +3490,9 @@
   "valeur": 20,
   "numero": 53,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155223-00004_01.pdf",
@@ -3336,7 +3501,7 @@
   "valeur": 20,
   "numero": 54,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3346,7 +3511,7 @@
   "valeur": 20,
   "numero": 55,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3356,7 +3521,7 @@
   "valeur": 20,
   "numero": 56,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3366,7 +3531,7 @@
   "valeur": 20,
   "numero": 57,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3376,7 +3541,7 @@
   "valeur": 20,
   "numero": 58,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3386,7 +3551,7 @@
   "valeur": 20,
   "numero": 59,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3396,7 +3561,7 @@
   "valeur": 20,
   "numero": 60,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3406,7 +3571,7 @@
   "valeur": 20,
   "numero": 61,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3416,7 +3581,7 @@
   "valeur": 20,
   "numero": 62,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3426,7 +3591,7 @@
   "valeur": 20,
   "numero": 63,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3436,7 +3601,7 @@
   "valeur": 20,
   "numero": 64,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3446,7 +3611,7 @@
   "valeur": 20,
   "numero": 65,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3456,7 +3621,7 @@
   "valeur": 20,
   "numero": 66,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3466,7 +3631,7 @@
   "valeur": 20,
   "numero": 67,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3476,7 +3641,7 @@
   "valeur": 20,
   "numero": 68,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3486,7 +3651,7 @@
   "valeur": 20,
   "numero": 69,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3496,7 +3661,7 @@
   "valeur": 20,
   "numero": 70,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3506,7 +3671,7 @@
   "valeur": 20,
   "numero": 71,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3516,7 +3681,7 @@
   "valeur": 20,
   "numero": 72,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3526,7 +3691,7 @@
   "valeur": 20,
   "numero": 73,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3536,7 +3701,7 @@
   "valeur": 20,
   "numero": 74,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3546,7 +3711,7 @@
   "valeur": 20,
   "numero": 75,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3556,7 +3721,7 @@
   "valeur": 20,
   "numero": 76,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3566,7 +3731,7 @@
   "valeur": 20,
   "numero": 77,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3576,7 +3741,7 @@
   "valeur": 20,
   "numero": 78,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3586,7 +3751,7 @@
   "valeur": 20,
   "numero": 79,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3596,7 +3761,7 @@
   "valeur": 20,
   "numero": 80,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3606,7 +3771,7 @@
   "valeur": 20,
   "numero": 81,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3616,7 +3781,7 @@
   "valeur": 20,
   "numero": 82,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3626,7 +3791,7 @@
   "valeur": 20,
   "numero": 83,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3636,7 +3801,7 @@
   "valeur": 20,
   "numero": 84,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3646,7 +3811,7 @@
   "valeur": 20,
   "numero": 85,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3656,7 +3821,7 @@
   "valeur": 20,
   "numero": 86,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3666,7 +3831,7 @@
   "valeur": 20,
   "numero": 87,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3676,7 +3841,7 @@
   "valeur": 20,
   "numero": 88,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3686,7 +3851,7 @@
   "valeur": 20,
   "numero": 89,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3696,7 +3861,7 @@
   "valeur": 20,
   "numero": 90,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3706,7 +3871,7 @@
   "valeur": 20,
   "numero": 91,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3716,7 +3881,7 @@
   "valeur": 20,
   "numero": 92,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3726,7 +3891,7 @@
   "valeur": 20,
   "numero": 93,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3736,7 +3901,7 @@
   "valeur": 20,
   "numero": 94,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3746,7 +3911,7 @@
   "valeur": 20,
   "numero": 95,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3756,7 +3921,7 @@
   "valeur": 20,
   "numero": 96,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3766,7 +3931,7 @@
   "valeur": 20,
   "numero": 97,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3776,7 +3941,7 @@
   "valeur": 20,
   "numero": 98,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3786,7 +3951,7 @@
   "valeur": 20,
   "numero": 99,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3796,7 +3961,7 @@
   "valeur": 20,
   "numero": 100,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3806,7 +3971,7 @@
   "valeur": 20,
   "numero": 101,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3816,7 +3981,7 @@
   "valeur": 20,
   "numero": 102,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3826,7 +3991,7 @@
   "valeur": 20,
   "numero": 103,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3836,7 +4001,7 @@
   "valeur": 20,
   "numero": 104,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3846,7 +4011,7 @@
   "valeur": 20,
   "numero": 105,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3856,7 +4021,7 @@
   "valeur": 20,
   "numero": 106,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3866,7 +4031,7 @@
   "valeur": 20,
   "numero": 107,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3876,7 +4041,7 @@
   "valeur": 20,
   "numero": 108,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3886,7 +4051,7 @@
   "valeur": 20,
   "numero": 109,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3896,7 +4061,7 @@
   "valeur": 20,
   "numero": 110,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3906,7 +4071,7 @@
   "valeur": 20,
   "numero": 111,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3916,7 +4081,7 @@
   "valeur": 20,
   "numero": 112,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3926,7 +4091,7 @@
   "valeur": 20,
   "numero": 113,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -3936,8 +4101,9 @@
   "valeur": 20,
   "numero": 114,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00006_02.pdf",
@@ -3946,8 +4112,9 @@
   "valeur": 20,
   "numero": 115,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00006_03.pdf",
@@ -3956,8 +4123,9 @@
   "valeur": 20,
   "numero": 116,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00006_04.pdf",
@@ -3966,8 +4134,9 @@
   "valeur": 20,
   "numero": 117,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00007_01.pdf",
@@ -3976,8 +4145,9 @@
   "valeur": 20,
   "numero": 118,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00007_02.pdf",
@@ -3986,8 +4156,9 @@
   "valeur": 20,
   "numero": 119,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00007_03.pdf",
@@ -3996,8 +4167,9 @@
   "valeur": 20,
   "numero": 120,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-155414-00007_04.pdf",
@@ -4006,8 +4178,9 @@
   "valeur": 20,
   "numero": 121,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00001_01.pdf",
@@ -4016,7 +4189,7 @@
   "valeur": 20,
   "numero": 122,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4026,7 +4199,7 @@
   "valeur": 20,
   "numero": 123,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4036,7 +4209,7 @@
   "valeur": 20,
   "numero": 124,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4046,7 +4219,7 @@
   "valeur": 20,
   "numero": 125,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4056,7 +4229,7 @@
   "valeur": 20,
   "numero": 126,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4066,7 +4239,7 @@
   "valeur": 20,
   "numero": 127,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4076,7 +4249,7 @@
   "valeur": 20,
   "numero": 128,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4086,7 +4259,7 @@
   "valeur": 20,
   "numero": 129,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4096,7 +4269,7 @@
   "valeur": 20,
   "numero": 130,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4106,7 +4279,7 @@
   "valeur": 20,
   "numero": 131,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4116,7 +4289,7 @@
   "valeur": 20,
   "numero": 132,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4126,7 +4299,7 @@
   "valeur": 20,
   "numero": 133,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4136,7 +4309,7 @@
   "valeur": 20,
   "numero": 134,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4146,7 +4319,7 @@
   "valeur": 20,
   "numero": 135,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4156,7 +4329,7 @@
   "valeur": 20,
   "numero": 136,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4166,7 +4339,7 @@
   "valeur": 20,
   "numero": 137,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4176,7 +4349,7 @@
   "valeur": 20,
   "numero": 138,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4186,7 +4359,7 @@
   "valeur": 20,
   "numero": 139,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4196,7 +4369,7 @@
   "valeur": 20,
   "numero": 140,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4206,7 +4379,7 @@
   "valeur": 20,
   "numero": 141,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4216,8 +4389,9 @@
   "valeur": 20,
   "numero": 142,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00020_02.pdf",
@@ -4226,8 +4400,9 @@
   "valeur": 20,
   "numero": 143,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00020_03.pdf",
@@ -4236,8 +4411,9 @@
   "valeur": 20,
   "numero": 144,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00020_04.pdf",
@@ -4246,8 +4422,9 @@
   "valeur": 20,
   "numero": 145,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00021_01.pdf",
@@ -4256,8 +4433,9 @@
   "valeur": 20,
   "numero": 146,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00021_02.pdf",
@@ -4266,8 +4444,9 @@
   "valeur": 20,
   "numero": 147,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00021_03.pdf",
@@ -4276,8 +4455,9 @@
   "valeur": 20,
   "numero": 148,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00021_04.pdf",
@@ -4286,8 +4466,9 @@
   "valeur": 20,
   "numero": 149,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00022_01.pdf",
@@ -4296,8 +4477,9 @@
   "valeur": 20,
   "numero": 150,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00022_02.pdf",
@@ -4306,8 +4488,9 @@
   "valeur": 20,
   "numero": 151,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00022_03.pdf",
@@ -4316,8 +4499,9 @@
   "valeur": 20,
   "numero": 152,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00022_04.pdf",
@@ -4326,8 +4510,9 @@
   "valeur": 20,
   "numero": 153,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00023_01.pdf",
@@ -4336,8 +4521,9 @@
   "valeur": 20,
   "numero": 154,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00023_02.pdf",
@@ -4346,8 +4532,9 @@
   "valeur": 20,
   "numero": 155,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00023_03.pdf",
@@ -4356,8 +4543,9 @@
   "valeur": 20,
   "numero": 156,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160141-00023_04.pdf",
@@ -4366,8 +4554,9 @@
   "valeur": 20,
   "numero": 157,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00001_01.pdf",
@@ -4376,8 +4565,9 @@
   "valeur": 20,
   "numero": 158,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00001_02.pdf",
@@ -4386,8 +4576,9 @@
   "valeur": 20,
   "numero": 159,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00001_03.pdf",
@@ -4396,8 +4587,9 @@
   "valeur": 20,
   "numero": 160,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00001_04.pdf",
@@ -4406,8 +4598,9 @@
   "valeur": 20,
   "numero": 161,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00002_01.pdf",
@@ -4416,8 +4609,9 @@
   "valeur": 20,
   "numero": 162,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00002_02.pdf",
@@ -4426,8 +4620,9 @@
   "valeur": 20,
   "numero": 163,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00002_03.pdf",
@@ -4436,8 +4631,9 @@
   "valeur": 20,
   "numero": 164,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00002_04.pdf",
@@ -4446,8 +4642,9 @@
   "valeur": 20,
   "numero": 165,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00005_01.pdf",
@@ -4456,8 +4653,9 @@
   "valeur": 20,
   "numero": 166,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00005_02.pdf",
@@ -4466,8 +4664,9 @@
   "valeur": 20,
   "numero": 167,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00005_03.pdf",
@@ -4476,8 +4675,9 @@
   "valeur": 20,
   "numero": 168,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00005_04.pdf",
@@ -4486,8 +4686,9 @@
   "valeur": 20,
   "numero": 169,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00006_01.pdf",
@@ -4496,8 +4697,9 @@
   "valeur": 20,
   "numero": 170,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00006_02.pdf",
@@ -4506,8 +4708,9 @@
   "valeur": 20,
   "numero": 171,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00006_03.pdf",
@@ -4516,8 +4719,9 @@
   "valeur": 20,
   "numero": 172,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00006_04.pdf",
@@ -4526,8 +4730,9 @@
   "valeur": 20,
   "numero": 173,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00023_01.pdf",
@@ -4536,8 +4741,9 @@
   "valeur": 20,
   "numero": 174,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00023_02.pdf",
@@ -4546,8 +4752,9 @@
   "valeur": 20,
   "numero": 175,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00023_03.pdf",
@@ -4556,8 +4763,9 @@
   "valeur": 20,
   "numero": 176,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00023_04.pdf",
@@ -4566,8 +4774,9 @@
   "valeur": 20,
   "numero": 177,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00024_01.pdf",
@@ -4576,8 +4785,9 @@
   "valeur": 20,
   "numero": 178,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00024_02.pdf",
@@ -4586,8 +4796,9 @@
   "valeur": 20,
   "numero": 179,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00024_03.pdf",
@@ -4596,8 +4807,9 @@
   "valeur": 20,
   "numero": 180,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00024_04.pdf",
@@ -4606,8 +4818,9 @@
   "valeur": 20,
   "numero": 181,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00025_01.pdf",
@@ -4616,8 +4829,9 @@
   "valeur": 20,
   "numero": 182,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00025_02.pdf",
@@ -4626,8 +4840,9 @@
   "valeur": 20,
   "numero": 183,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00025_03.pdf",
@@ -4636,8 +4851,9 @@
   "valeur": 20,
   "numero": 184,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160257-00025_04.pdf",
@@ -4646,8 +4862,9 @@
   "valeur": 20,
   "numero": 185,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00002_01.pdf",
@@ -4656,7 +4873,7 @@
   "valeur": 20,
   "numero": 186,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4666,7 +4883,7 @@
   "valeur": 20,
   "numero": 187,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4676,7 +4893,7 @@
   "valeur": 20,
   "numero": 188,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4686,7 +4903,7 @@
   "valeur": 20,
   "numero": 189,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4696,7 +4913,7 @@
   "valeur": 20,
   "numero": 190,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4706,7 +4923,7 @@
   "valeur": 20,
   "numero": 191,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4716,7 +4933,7 @@
   "valeur": 20,
   "numero": 192,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4726,7 +4943,7 @@
   "valeur": 20,
   "numero": 193,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4736,7 +4953,7 @@
   "valeur": 20,
   "numero": 194,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4746,7 +4963,7 @@
   "valeur": 20,
   "numero": 195,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4756,8 +4973,9 @@
   "valeur": 20,
   "numero": 196,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_02.pdf",
@@ -4766,8 +4984,9 @@
   "valeur": 20,
   "numero": 197,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_03.pdf",
@@ -4776,8 +4995,9 @@
   "valeur": 20,
   "numero": 198,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_04.pdf",
@@ -4786,8 +5006,9 @@
   "valeur": 20,
   "numero": 199,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_05.pdf",
@@ -4796,8 +5017,9 @@
   "valeur": 20,
   "numero": 200,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_06.pdf",
@@ -4806,8 +5028,9 @@
   "valeur": 20,
   "numero": 201,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_07.pdf",
@@ -4816,8 +5039,9 @@
   "valeur": 20,
   "numero": 202,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_08.pdf",
@@ -4826,8 +5050,9 @@
   "valeur": 20,
   "numero": 203,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_09.pdf",
@@ -4836,8 +5061,9 @@
   "valeur": 20,
   "numero": 204,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160420-00005_10.pdf",
@@ -4846,8 +5072,9 @@
   "valeur": 20,
   "numero": 205,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-160701-00001_01.pdf",
@@ -4856,7 +5083,7 @@
   "valeur": 20,
   "numero": 206,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4866,7 +5093,7 @@
   "valeur": 20,
   "numero": 207,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4876,7 +5103,7 @@
   "valeur": 20,
   "numero": 208,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4886,7 +5113,7 @@
   "valeur": 20,
   "numero": 209,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4896,7 +5123,7 @@
   "valeur": 20,
   "numero": 210,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4906,7 +5133,7 @@
   "valeur": 20,
   "numero": 211,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4916,7 +5143,7 @@
   "valeur": 20,
   "numero": 212,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4926,7 +5153,7 @@
   "valeur": 20,
   "numero": 213,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4936,7 +5163,7 @@
   "valeur": 20,
   "numero": 214,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4946,7 +5173,7 @@
   "valeur": 20,
   "numero": 215,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4956,7 +5183,7 @@
   "valeur": 20,
   "numero": 216,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4966,7 +5193,7 @@
   "valeur": 20,
   "numero": 217,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4976,7 +5203,7 @@
   "valeur": 20,
   "numero": 218,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4986,7 +5213,7 @@
   "valeur": 20,
   "numero": 219,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -4996,7 +5223,7 @@
   "valeur": 20,
   "numero": 220,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5006,7 +5233,7 @@
   "valeur": 20,
   "numero": 221,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5016,7 +5243,7 @@
   "valeur": 20,
   "numero": 222,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5026,7 +5253,7 @@
   "valeur": 20,
   "numero": 223,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5036,7 +5263,7 @@
   "valeur": 20,
   "numero": 224,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5046,7 +5273,7 @@
   "valeur": 20,
   "numero": 225,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5056,7 +5283,7 @@
   "valeur": 20,
   "numero": 226,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5066,7 +5293,7 @@
   "valeur": 20,
   "numero": 227,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5076,7 +5303,7 @@
   "valeur": 20,
   "numero": 228,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5086,7 +5313,7 @@
   "valeur": 20,
   "numero": 229,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5096,7 +5323,7 @@
   "valeur": 20,
   "numero": 230,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5106,7 +5333,7 @@
   "valeur": 20,
   "numero": 231,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5116,7 +5343,7 @@
   "valeur": 20,
   "numero": 232,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5126,7 +5353,7 @@
   "valeur": 20,
   "numero": 233,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5136,7 +5363,7 @@
   "valeur": 20,
   "numero": 234,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5146,7 +5373,7 @@
   "valeur": 20,
   "numero": 235,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5156,7 +5383,7 @@
   "valeur": 20,
   "numero": 236,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5166,7 +5393,7 @@
   "valeur": 20,
   "numero": 237,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5176,7 +5403,7 @@
   "valeur": 20,
   "numero": 238,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5186,7 +5413,7 @@
   "valeur": 20,
   "numero": 239,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5196,7 +5423,7 @@
   "valeur": 20,
   "numero": 240,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5206,7 +5433,7 @@
   "valeur": 20,
   "numero": 241,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5216,7 +5443,7 @@
   "valeur": 20,
   "numero": 242,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5226,8 +5453,9 @@
   "valeur": 20,
   "numero": 243,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-20euros-A4-162141_01.pdf",
@@ -5236,7 +5464,7 @@
   "valeur": 20,
   "numero": 244,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5246,8 +5474,9 @@
   "valeur": 50,
   "numero": 35,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-155223-00001_02.pdf",
@@ -5256,8 +5485,9 @@
   "valeur": 50,
   "numero": 36,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-155223-00001_03.pdf",
@@ -5266,8 +5496,9 @@
   "valeur": 50,
   "numero": 37,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-155223-00001_04.pdf",
@@ -5276,8 +5507,9 @@
   "valeur": 50,
   "numero": 38,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-155223-00003_01.pdf",
@@ -5286,7 +5518,7 @@
   "valeur": 50,
   "numero": 39,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5296,7 +5528,7 @@
   "valeur": 50,
   "numero": 40,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5306,7 +5538,7 @@
   "valeur": 50,
   "numero": 41,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5316,7 +5548,7 @@
   "valeur": 50,
   "numero": 42,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5326,7 +5558,7 @@
   "valeur": 50,
   "numero": 43,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5336,7 +5568,7 @@
   "valeur": 50,
   "numero": 44,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5346,7 +5578,7 @@
   "valeur": 50,
   "numero": 45,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5356,7 +5588,7 @@
   "valeur": 50,
   "numero": 46,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5366,7 +5598,7 @@
   "valeur": 50,
   "numero": 47,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5376,7 +5608,7 @@
   "valeur": 50,
   "numero": 48,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5386,7 +5618,7 @@
   "valeur": 50,
   "numero": 49,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5396,7 +5628,7 @@
   "valeur": 50,
   "numero": 50,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5406,7 +5638,7 @@
   "valeur": 50,
   "numero": 51,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5416,7 +5648,7 @@
   "valeur": 50,
   "numero": 52,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5426,7 +5658,7 @@
   "valeur": 50,
   "numero": 53,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5436,7 +5668,7 @@
   "valeur": 50,
   "numero": 54,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5446,7 +5678,7 @@
   "valeur": 50,
   "numero": 55,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5456,7 +5688,7 @@
   "valeur": 50,
   "numero": 56,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5466,7 +5698,7 @@
   "valeur": 50,
   "numero": 57,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5476,7 +5708,7 @@
   "valeur": 50,
   "numero": 58,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5486,7 +5718,7 @@
   "valeur": 50,
   "numero": 59,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5496,7 +5728,7 @@
   "valeur": 50,
   "numero": 60,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5506,7 +5738,7 @@
   "valeur": 50,
   "numero": 61,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5516,7 +5748,7 @@
   "valeur": 50,
   "numero": 62,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5526,7 +5758,7 @@
   "valeur": 50,
   "numero": 63,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5536,7 +5768,7 @@
   "valeur": 50,
   "numero": 64,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5546,7 +5778,7 @@
   "valeur": 50,
   "numero": 65,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5556,7 +5788,7 @@
   "valeur": 50,
   "numero": 66,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5566,7 +5798,7 @@
   "valeur": 50,
   "numero": 67,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5576,7 +5808,7 @@
   "valeur": 50,
   "numero": 68,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5586,7 +5818,7 @@
   "valeur": 50,
   "numero": 69,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5596,7 +5828,7 @@
   "valeur": 50,
   "numero": 70,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5606,7 +5838,7 @@
   "valeur": 50,
   "numero": 71,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5616,7 +5848,7 @@
   "valeur": 50,
   "numero": 72,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5626,7 +5858,7 @@
   "valeur": 50,
   "numero": 73,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5636,7 +5868,7 @@
   "valeur": 50,
   "numero": 74,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5646,7 +5878,7 @@
   "valeur": 50,
   "numero": 75,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5656,7 +5888,7 @@
   "valeur": 50,
   "numero": 76,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5666,7 +5898,7 @@
   "valeur": 50,
   "numero": 77,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5676,7 +5908,7 @@
   "valeur": 50,
   "numero": 78,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5686,7 +5918,7 @@
   "valeur": 50,
   "numero": 79,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5696,7 +5928,7 @@
   "valeur": 50,
   "numero": 80,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5706,7 +5938,7 @@
   "valeur": 50,
   "numero": 81,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5716,7 +5948,7 @@
   "valeur": 50,
   "numero": 82,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5726,7 +5958,7 @@
   "valeur": 50,
   "numero": 83,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5736,7 +5968,7 @@
   "valeur": 50,
   "numero": 84,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5746,7 +5978,7 @@
   "valeur": 50,
   "numero": 85,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5756,7 +5988,7 @@
   "valeur": 50,
   "numero": 86,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5766,7 +5998,7 @@
   "valeur": 50,
   "numero": 87,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5776,7 +6008,7 @@
   "valeur": 50,
   "numero": 88,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5786,7 +6018,7 @@
   "valeur": 50,
   "numero": 89,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5796,7 +6028,7 @@
   "valeur": 50,
   "numero": 90,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5806,7 +6038,7 @@
   "valeur": 50,
   "numero": 91,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5816,7 +6048,7 @@
   "valeur": 50,
   "numero": 92,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5826,7 +6058,7 @@
   "valeur": 50,
   "numero": 93,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5836,7 +6068,7 @@
   "valeur": 50,
   "numero": 94,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5846,7 +6078,7 @@
   "valeur": 50,
   "numero": 95,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5856,7 +6088,7 @@
   "valeur": 50,
   "numero": 96,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5866,7 +6098,7 @@
   "valeur": 50,
   "numero": 97,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5876,7 +6108,7 @@
   "valeur": 50,
   "numero": 98,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5886,7 +6118,7 @@
   "valeur": 50,
   "numero": 99,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5896,7 +6128,7 @@
   "valeur": 50,
   "numero": 100,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5906,7 +6138,7 @@
   "valeur": 50,
   "numero": 101,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5916,7 +6148,7 @@
   "valeur": 50,
   "numero": 102,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5926,7 +6158,7 @@
   "valeur": 50,
   "numero": 103,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5936,7 +6168,7 @@
   "valeur": 50,
   "numero": 104,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5946,7 +6178,7 @@
   "valeur": 50,
   "numero": 105,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5956,7 +6188,7 @@
   "valeur": 50,
   "numero": 106,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5966,7 +6198,7 @@
   "valeur": 50,
   "numero": 107,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5976,7 +6208,7 @@
   "valeur": 50,
   "numero": 108,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5986,7 +6218,7 @@
   "valeur": 50,
   "numero": 109,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -5996,7 +6228,7 @@
   "valeur": 50,
   "numero": 110,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6006,7 +6238,7 @@
   "valeur": 50,
   "numero": 111,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6016,7 +6248,7 @@
   "valeur": 50,
   "numero": 112,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6026,7 +6258,7 @@
   "valeur": 50,
   "numero": 113,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6036,7 +6268,7 @@
   "valeur": 50,
   "numero": 114,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6046,7 +6278,7 @@
   "valeur": 50,
   "numero": 115,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6056,7 +6288,7 @@
   "valeur": 50,
   "numero": 116,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6066,7 +6298,7 @@
   "valeur": 50,
   "numero": 117,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6076,7 +6308,7 @@
   "valeur": 50,
   "numero": 118,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6086,7 +6318,7 @@
   "valeur": 50,
   "numero": 119,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6096,7 +6328,7 @@
   "valeur": 50,
   "numero": 120,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6106,7 +6338,7 @@
   "valeur": 50,
   "numero": 121,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6116,7 +6348,7 @@
   "valeur": 50,
   "numero": 122,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6126,7 +6358,7 @@
   "valeur": 50,
   "numero": 123,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6136,7 +6368,7 @@
   "valeur": 50,
   "numero": 124,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6146,8 +6378,9 @@
   "valeur": 50,
   "numero": 125,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_02.pdf",
@@ -6156,8 +6389,9 @@
   "valeur": 50,
   "numero": 126,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_03.pdf",
@@ -6166,8 +6400,9 @@
   "valeur": 50,
   "numero": 127,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_04.pdf",
@@ -6176,8 +6411,9 @@
   "valeur": 50,
   "numero": 128,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_05.pdf",
@@ -6186,8 +6422,9 @@
   "valeur": 50,
   "numero": 129,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_06.pdf",
@@ -6196,8 +6433,9 @@
   "valeur": 50,
   "numero": 130,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_07.pdf",
@@ -6206,8 +6444,9 @@
   "valeur": 50,
   "numero": 131,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_08.pdf",
@@ -6216,8 +6455,9 @@
   "valeur": 50,
   "numero": 132,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_09.pdf",
@@ -6226,8 +6466,9 @@
   "valeur": 50,
   "numero": 133,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-160701-00014_10.pdf",
@@ -6236,8 +6477,9 @@
   "valeur": 50,
   "numero": 134,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-161907_03.pdf",
@@ -6246,8 +6488,9 @@
   "valeur": 50,
   "numero": 135,
   "pages": 1,
-  "portrait": true,
-  "serie": 2
+  "portrait": false,
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-50euros-A4-161907_04.pdf",
@@ -6256,7 +6499,7 @@
   "valeur": 50,
   "numero": 136,
   "pages": 1,
-  "portrait": true,
+  "portrait": false,
   "serie": 2
  },
  {
@@ -6267,7 +6510,8 @@
   "numero": 29,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00005_02.pdf",
@@ -6277,7 +6521,8 @@
   "numero": 30,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00005_03.pdf",
@@ -6287,7 +6532,8 @@
   "numero": 31,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00006_01.pdf",
@@ -6297,7 +6543,8 @@
   "numero": 32,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00006_02.pdf",
@@ -6307,7 +6554,8 @@
   "numero": 33,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00006_03.pdf",
@@ -6317,7 +6565,8 @@
   "numero": 34,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00007_01.pdf",
@@ -6327,7 +6576,8 @@
   "numero": 35,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00007_02.pdf",
@@ -6337,7 +6587,8 @@
   "numero": 36,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00007_03.pdf",
@@ -6347,7 +6598,8 @@
   "numero": 37,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00008_01.pdf",
@@ -6357,7 +6609,8 @@
   "numero": 38,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00008_02.pdf",
@@ -6367,7 +6620,8 @@
   "numero": 39,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00008_03.pdf",
@@ -6377,7 +6631,8 @@
   "numero": 40,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00011_01.pdf",
@@ -6387,7 +6642,8 @@
   "numero": 41,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00011_02.pdf",
@@ -6397,7 +6653,8 @@
   "numero": 42,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00011_03.pdf",
@@ -6407,7 +6664,8 @@
   "numero": 43,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00012_01.pdf",
@@ -6417,7 +6675,8 @@
   "numero": 44,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00012_02.pdf",
@@ -6427,7 +6686,8 @@
   "numero": 45,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00012_03.pdf",
@@ -6437,7 +6697,8 @@
   "numero": 46,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-155223-00013_01.pdf",
@@ -6507,7 +6768,8 @@
   "numero": 53,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160420-00008_02.pdf",
@@ -6517,7 +6779,8 @@
   "numero": 54,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160420-00008_03.pdf",
@@ -6527,7 +6790,8 @@
   "numero": 55,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160420-00008_04.pdf",
@@ -6537,7 +6801,8 @@
   "numero": 56,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160420-00008_05.pdf",
@@ -6547,7 +6812,8 @@
   "numero": 57,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160420-00008_06.pdf",
@@ -6557,7 +6823,8 @@
   "numero": 58,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_01.pdf",
@@ -6567,7 +6834,8 @@
   "numero": 59,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_02.pdf",
@@ -6577,7 +6845,8 @@
   "numero": 60,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_03.pdf",
@@ -6587,7 +6856,8 @@
   "numero": 61,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_04.pdf",
@@ -6597,7 +6867,8 @@
   "numero": 62,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_05.pdf",
@@ -6607,7 +6878,8 @@
   "numero": 63,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00004_06.pdf",
@@ -6617,7 +6889,8 @@
   "numero": 64,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-160701-00006_01.pdf",
@@ -6977,7 +7250,8 @@
   "numero": 100,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-100euros-A4-162045_03.pdf",
@@ -6997,7 +7271,8 @@
   "numero": 102,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00014_01.pdf",
@@ -7007,7 +7282,8 @@
   "numero": 11,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00014_02.pdf",
@@ -7017,7 +7293,8 @@
   "numero": 12,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00014_03.pdf",
@@ -7027,7 +7304,8 @@
   "numero": 13,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00017_01.pdf",
@@ -7037,7 +7315,8 @@
   "numero": 14,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00017_02.pdf",
@@ -7047,7 +7326,8 @@
   "numero": 15,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00017_03.pdf",
@@ -7057,7 +7337,8 @@
   "numero": 16,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00029_01.pdf",
@@ -7067,7 +7348,8 @@
   "numero": 17,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00029_02.pdf",
@@ -7077,7 +7359,8 @@
   "numero": 18,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00029_03.pdf",
@@ -7087,7 +7370,8 @@
   "numero": 19,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00038_01.pdf",
@@ -7097,7 +7381,8 @@
   "numero": 20,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00038_02.pdf",
@@ -7107,7 +7392,8 @@
   "numero": 21,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00038_03.pdf",
@@ -7117,7 +7403,8 @@
   "numero": 22,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00042_01.pdf",
@@ -7127,7 +7414,8 @@
   "numero": 23,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00042_02.pdf",
@@ -7137,7 +7425,8 @@
   "numero": 24,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155223-00042_03.pdf",
@@ -7147,7 +7436,8 @@
   "numero": 25,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-155414-00003_01.pdf",
@@ -7337,7 +7627,8 @@
   "numero": 44,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160420-00010_02.pdf",
@@ -7347,7 +7638,8 @@
   "numero": 45,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160420-00010_03.pdf",
@@ -7357,7 +7649,8 @@
   "numero": 46,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160420-00010_04.pdf",
@@ -7367,7 +7660,8 @@
   "numero": 47,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160420-00010_05.pdf",
@@ -7377,7 +7671,8 @@
   "numero": 48,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160420-00010_06.pdf",
@@ -7387,7 +7682,8 @@
   "numero": 49,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_01.pdf",
@@ -7397,7 +7693,8 @@
   "numero": 50,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_02.pdf",
@@ -7407,7 +7704,8 @@
   "numero": 51,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_03.pdf",
@@ -7417,7 +7715,8 @@
   "numero": 52,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_04.pdf",
@@ -7427,7 +7726,8 @@
   "numero": 53,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_05.pdf",
@@ -7437,7 +7737,8 @@
   "numero": 54,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-200euros-A4-160701-00003_06.pdf",
@@ -7447,7 +7748,8 @@
   "numero": 55,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00018_01.pdf",
@@ -7457,7 +7759,8 @@
   "numero": 12,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00018_02.pdf",
@@ -7467,7 +7770,8 @@
   "numero": 13,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00018_03.pdf",
@@ -7477,7 +7781,8 @@
   "numero": 14,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00021_01.pdf",
@@ -7517,7 +7822,8 @@
   "numero": 18,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00032_02.pdf",
@@ -7527,7 +7833,8 @@
   "numero": 19,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00032_03.pdf",
@@ -7537,7 +7844,8 @@
   "numero": 20,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00046_01.pdf",
@@ -7547,7 +7855,8 @@
   "numero": 21,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00046_02.pdf",
@@ -7557,7 +7866,8 @@
   "numero": 22,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155223-00046_03.pdf",
@@ -7567,7 +7877,8 @@
   "numero": 23,
   "pages": 1,
   "portrait": true,
-  "serie": 2
+  "serie": 2,
+  "retournee": true
  },
  {
   "fichier": "planche-500euros-A4-155414-00001_01.pdf",
