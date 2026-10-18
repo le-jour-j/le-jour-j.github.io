@@ -13,7 +13,7 @@ import Messages from './pages/Messages'
 import Senrichir from './pages/Senrichir'
 import Actu from './pages/Actu'
 import Admin from './pages/Admin'
-import Participer from './pages/Participer'
+import Bourse from './pages/Bourse'
 import Lettre from './pages/Lettre'
 import Info from './pages/Info'
 import { applySeo } from './lib/seo'
@@ -42,8 +42,10 @@ export default function App() {
           <Route path="/inventaire" element={<Navigate to="/market" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
-          <Route path="/participer" element={<Participer />} />
-          <Route path="/deposer"    element={<Navigate to="/participer?onglet=market" replace />} />
+          <Route path="/bourse"     element={<Bourse />} />
+          {/* Participer (dépôt au market + guichet photo) a laissé place à la bourse, 2026-10-18 */}
+          <Route path="/participer" element={<Navigate to="/bourse?onglet=atelier" replace />} />
+          <Route path="/deposer"    element={<Navigate to="/bourse?onglet=atelier" replace />} />
           <Route path="/connexion"  element={<Connexion />} />
           <Route path="/compte"     element={<Compte />} />
           <Route path="/messages"   element={<Messages />} />

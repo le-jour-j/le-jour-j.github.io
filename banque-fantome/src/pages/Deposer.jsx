@@ -4,13 +4,16 @@ import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
 import { RARETES } from '../utils/rarete'
-import { DUREES, COMMISSION_PCT } from '../utils/encheres'
+import { DUREES } from '../utils/encheres'
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
-// `integre` : rendu à l'intérieur de la page Participer (sans en-tête ni marges de page)
-export default function Deposer({ integre = false }) {
-  const { user, loading: authLoading } = useAuth()
+// Mettre un objet en vente au market. Depuis le 2026-10-18, le market est la vitrine de la banque :
+// seul le banquier dépose (la base le vérifie aussi), et le formulaire vit dans l'Admin.
+// `integre` : rendu dans l'onglet Market de l'Admin (sans en-tête ni marges de page) ;
+// `onDepose` : appelé après la mise en vente, à la place du retour au market.
+export default function Deposer({ integre = false, onDepose }) {
+  const { user, loading: authLoading, estBanquier } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', mise_depart: 10, prix_achat: '', duree_jours: 3 })
   const [files, setFiles] = useState([])
@@ -107,7 +110,8 @@ export default function Deposer({ integre = false }) {
       const { error: insErr } = await supabase.from('objets').insert(payload)
       if (insErr) throw insErr
       setNotif({ msg: `Mis en vente pour ${form.duree_jours} jour${form.duree_jours > 1 ? 's' : ''}.`, type: 'ok' })
-      setTimeout(() => navigate('/market'), 1500)
+      if (onDepose) setTimeout(onDepose, 1200)
+      else setTimeout(() => navigate('/market'), 1500)
     } catch (e) {
       setNotif({ msg: e.message || 'Erreur lors du dépôt', type: 'err' })
     } finally { setLoading(false) }
@@ -115,12 +119,12 @@ export default function Deposer({ integre = false }) {
 
   if (authLoading) return <div className="loader">Chargement<span className="blink">_</span></div>
 
-  if (!user) return (
+  if (!user || !estBanquier) return (
     <div className="acces-refuse">
       <div>
-        <div className="titre">Accès refusé</div>
-        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Vous devez être connecté pour déposer une entrée dans le market.</p>
-        <Link to="/connexion" className="btn btn-noir">Se connecter →</Link>
+        <div className="titre">Réservé à la banque</div>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Le market est la vitrine de la banque. Pour vendre quelque chose, dessinez un billet et mettez-le en vente dans la bourse.</p>
+        <Link to="/bourse" className="btn btn-noir">La bourse aux billets →</Link>
       </div>
     </div>
   )
@@ -129,7 +133,7 @@ export default function Deposer({ integre = false }) {
         <div className="form-grid">
           <div>
             <p className="texte-aide" style={{ marginBottom: '2rem' }}>
-              Votre dépôt peut prendre la forme d'un objet, d'une œuvre ou d'un service. Il est mis aux enchères : les joueurs misent les billets qu'ils ont fabriqués, et le plus offrant l'emporte à la clôture.
+              Un objet, une œuvre ou un service que la banque met aux enchères. Les joueurs misent les billets qu'ils ont dessinés ; le plus offrant l'emporte à la clôture, et la remise se fait en main propre.
             </p>
             <div className="field">
               <label>Images (8 max, 5 Mo chacune)</label>
@@ -190,7 +194,7 @@ export default function Deposer({ integre = false }) {
                   ))}
                 </div>
               </div>
-              <p className="caption-gris">À la clôture, le plus offrant l'emporte ; la banque prélève {COMMISSION_PCT} % sur le prix. Sans enchère, la vente repart automatiquement pour la même durée, jusqu'à ce que quelqu'un enchérisse.</p>
+              <p className="caption-gris">À la clôture, le plus offrant l'emporte et le prix entier va au trésor de la banque. Sans enchère, la vente repart automatiquement pour la même durée, jusqu'à ce que quelqu'un enchérisse.</p>
             </div>
             <div className="field">
               <label>Titre *</label>
@@ -223,7 +227,7 @@ export default function Deposer({ integre = false }) {
   return (
     <div className="page-pad">
       <div className="container">
-        <div className="section-head"><h2>Déposer dans le market</h2><span className="count">* champs obligatoires</span></div>
+        <div className="section-head"><h2>Mettre en vente au market</h2><span className="count">* champs obligatoires</span></div>
         {formulaire}
       </div>
       {notification}

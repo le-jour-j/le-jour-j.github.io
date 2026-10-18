@@ -779,3 +779,23 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .participer-onglets { margin-bottom: 1.6rem; }
 .bande-guichet { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border: 2px solid var(--noir); background: var(--jaune-fond); padding: 1rem 1.2rem; margin-bottom: 3rem; }
 .bande-guichet p { margin: 0; }
+
+/* ── Bourse aux billets (2026-10-18) ── */
+/* Un billet est en paysage (≈ 1,9 : 1) : on le montre entier, sans le rogner en 4:3 */
+.objet-card.objet-billet .img-wrap { aspect-ratio: 16 / 9; background: var(--jaune-fond); }
+.objet-card.objet-billet .img-wrap img { object-fit: contain; padding: .5rem; }
+.objet-card.objet-billet:hover .img-wrap img { transform: scale(1.03) rotate(-.6deg); }
+.atelier-cartel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: .4rem; }
+@media (max-width: 640px) { .atelier-cartel { grid-template-columns: 1fr; gap: 0; } }
+.atelier-choix { max-width: 760px; }
+.dessins-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem; }
+@media (max-width: 400px) { .dessins-liste { grid-template-columns: 1fr; } }
+.dessin-carte { border: 2px solid var(--noir); background: var(--blanc); box-shadow: var(--ombre-tampon); display: flex; flex-direction: column; }
+.dessin-carte.encaisse, .dessin-carte.annule { box-shadow: none; opacity: .85; }
+.dessin-image { display: block; background: var(--jaune-fond); border-bottom: 2px solid var(--noir); padding: .6rem; }
+.dessin-image img { display: block; width: 100%; height: auto; }
+.dessin-infos { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }
+.dessin-titre { font-family: var(--bebas); font-size: 1.45rem; letter-spacing: .03em; line-height: 1.05; }
+.dessin-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.dessin-carte .remise-form { width: 100%; }
+.admin-depot { border: 2px solid var(--noir); background: var(--blanc); padding: 1.2rem; margin-bottom: 1.4rem; }

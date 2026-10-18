@@ -106,7 +106,7 @@ export default function Compte() {
   const [encheres, setEncheres] = useState([])        // ventes où j'ai misé (en cours)
   const [achats, setAchats]     = useState([])        // ventes remportées
   const [livre, setLivre]       = useState([])        // grand livre
-  const [depots, setDepots]     = useState({ n: 0, total: 0 }) // billets déposés au guichet (valides)
+  const [depots, setDepots]     = useState({ n: 0, total: 0 }) // billets encaissés par la banque (valides)
   const [selected, setSelected] = useState(null)
   const [notif, setNotif]       = useState(null)
   const [deleting, setDeleting] = useState(null)
@@ -176,8 +176,8 @@ export default function Compte() {
             <div className="nombre">{solde}<small> billets</small></div>
           </div>
           <div>
-            <div className="eyebrow">BILLETS DÉPOSÉS</div>
-            <div className="nombre">{depots.n}<small> · {depots.total} €</small></div>
+            <div className="eyebrow">BILLETS ENCAISSÉS</div>
+            <div className="nombre">{depots.n}<small> · {depots.total} billets</small></div>
           </div>
           <div>
             <div className="eyebrow">EN VENTE</div>
@@ -228,14 +228,14 @@ export default function Compte() {
 
         {/* ── Mes dépôts ── */}
         <div className="section-head" style={{ marginTop: (encheres.length || achats.length) ? '3rem' : 0 }}>
-          <h2>Mes dépôts</h2>
-          <Link to="/participer?onglet=market" className="count">+ Nouveau →</Link>
+          <h2>Mes ventes</h2>
+          <Link to="/bourse?onglet=collection" className="count">Ma collection de billets →</Link>
         </div>
 
         {objets.length === 0
           ? <div className="vide">
-              <div className="titre">Aucun objet en circulation</div>
-              <Link to="/participer?onglet=market" className="btn btn-noir">Déposer un objet →</Link>
+              <div className="titre">Aucune vente en cours</div>
+              <Link to="/bourse?onglet=atelier" className="btn btn-noir">Dessiner un billet →</Link>
             </div>
           : <div className="grid-3">
               {objets.map(o => (
@@ -244,13 +244,13 @@ export default function Compte() {
                   <div className="compte-actions">
                     {estVente(o)
                       ? <span className="caption-gris" style={{ alignSelf: 'center' }}>
-                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(echeance(o))}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : `${o.statut} — ouvrir la fiche pour remettre en vente`}
+                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(echeance(o))}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : o.dessin_id ? `${o.statut} : le billet est revenu dans votre collection` : o.vendeur_banque ? `${o.statut} : ouvrir la fiche pour remettre en vente` : o.statut}
                         </span>
                       : ['disponible', 'réservé', 'échangé'].map(s => (
                           <button key={s} className={`chip ${o.statut === s ? 'active' : ''}`} aria-pressed={o.statut === s} onClick={() => changeStatut(o.id, s)}>{s}</button>
                         ))
                     }
-                    {!(estVente(o) && (o.prix_final || (o.statut === 'disponible' && o.nb_encheres > 0))) && (
+                    {!o.dessin_id && !(estVente(o) && (o.prix_final || (o.statut === 'disponible' && o.nb_encheres > 0))) && (
                       <button className="btn btn-rouge btn-xs" disabled={deleting === o.id}
                         onClick={() => { if (confirm('Retirer cet objet ?')) deleteObjet(o.id) }}
                       >{deleting === o.id ? '…' : 'supprimer'}</button>

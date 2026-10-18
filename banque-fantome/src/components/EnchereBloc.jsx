@@ -18,6 +18,8 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
 
   const enCours = estEnCours(objet)
   const isOwn = user && objet.user_id === user.id
+  const billet = !!objet.dessin_id           // vente de la bourse : un billet dessiné dans l'atelier
+  const banque = !!objet.vendeur_banque      // vente de la banque : tout va au trésor, remise en main propre
   const meneur = user && objet.encherisseur_id === user.id
   const minimum = enchereMinimale(objet)
   const disponible = solde + (meneur ? objet.enchere_courante : 0) // ma mise en cours me revient si je surenchéris
@@ -83,14 +85,31 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
           </div>
           {vendu && <div className="enchere-meneur">à <strong>{objet.vendu_a_pseudo || '?'}</strong>{objet.vendu_at && ` · ${new Date(objet.vendu_at).toLocaleDateString('fr-FR')}`}</div>}
         </div>
-        {vendu && user && (isOwn || objet.vendu_a === user.id) && (
+        {vendu && user && billet && (isOwn || objet.vendu_a === user.id) && (
+          <p className="texte-aide" style={{ marginTop: '.8rem' }}>
+            {isOwn
+              ? `Vendu : vous touchez ${objet.prix_final - commission(objet.prix_final)} billets (commission ${commission(objet.prix_final)}). Le billet est passé dans la collection de ${objet.vendu_a_pseudo || "l'acheteur"}.`
+              : 'Le billet est dans votre collection. Vous pouvez le garder ou le remettre en vente depuis la bourse.'}
+          </p>
+        )}
+        {vendu && user && banque && (isOwn || objet.vendu_a === user.id) && (
+          <p className="texte-aide" style={{ marginTop: '.8rem' }}>
+            {isOwn ? 'Le prix est versé au trésor de la banque. ' : 'La banque a enregistré la transaction. '}
+            Reste la remise en main propre : {' '}
+            <button type="button" className="lien-texte" onClick={onContacter}>{isOwn ? "écrire à l'acheteur" : 'contacter la banque pour fixer le rendez-vous'}</button>.
+          </p>
+        )}
+        {vendu && user && !billet && !banque && (isOwn || objet.vendu_a === user.id) && (
           <p className="texte-aide" style={{ marginTop: '.8rem' }}>
             La banque a enregistré la transaction{isOwn ? ` (vous touchez ${objet.prix_final - commission(objet.prix_final)} billets, commission ${commission(objet.prix_final)})` : ''}.
             Reste la remise en main propre : {' '}
             <button type="button" className="lien-texte" onClick={onContacter}>{isOwn ? "écrire à l'acheteur" : 'écrire au vendeur'}</button>.
           </p>
         )}
-        {isOwn && (objet.statut === 'expiré' || objet.statut === 'retiré') && (
+        {isOwn && billet && objet.statut === 'retiré' && (
+          <p className="texte-aide" style={{ marginTop: '.8rem' }}>Le billet est revenu dans votre collection : la bourse permet de le remettre en vente.</p>
+        )}
+        {isOwn && banque && (objet.statut === 'expiré' || objet.statut === 'retiré') && (
           remise
             ? <div className="remise-form">
                 <div className="field"><label>Mise de départ</label><input type="number" min="1" step="5" value={remise.mise} onChange={e => setRemise({ ...remise, mise: e.target.value })} /></div>
@@ -127,7 +146,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
 
       {isOwn ? (
         <div className="enchere-actions">
-          <span className="texte-aide">C'est votre dépôt.</span>
+          <span className="texte-aide">{billet ? "C'est votre billet." : banque ? 'Vente de la banque.' : "C'est votre dépôt."}</span>
           {objet.nb_encheres === 0 && <button type="button" className="btn btn-outline btn-sm" disabled={busy} onClick={retirer}>Retirer la vente</button>}
         </div>
       ) : !user ? (
@@ -155,7 +174,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
           </div>
           <div className="enchere-aide">
             minimum {minimum} · votre solde {solde} billets{meneur ? ' (+ votre mise en cours)' : ''}
-            {Number(montant) > disponible && <span className="msg-err" style={{ margin: '0 0 0 .6rem', display: 'inline' }}>solde insuffisant — <button type="button" className="lien-texte" onClick={() => navigate('/senrichir')}>émettre des billets</button></span>}
+            {Number(montant) > disponible && <span className="msg-err" style={{ margin: '0 0 0 .6rem', display: 'inline' }}>solde insuffisant : <button type="button" className="lien-texte" onClick={() => navigate('/bourse?onglet=atelier')}>dessiner des billets</button></span>}
           </div>
         </>
       )}

@@ -24,34 +24,48 @@ export const DEFAULT_IMAGE = BASE_URL + "/icons/icon-512.png";
 export const PAGES = [
   {
     path: "/",
-    title: "Banque Fantôme — fabriquez votre monnaie, faites circuler vos objets",
+    title: "Banque Fantôme : dessinez votre monnaie, faites-la circuler",
     description:
-      "Institution de circulation : ouvrez un compte, dessinez et imprimez vos propres billets, puis enchérissez sur des objets, des œuvres et des services. La valeur ne préexiste pas : elle se dessine.",
+      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, échangez-les dans la bourse aux billets et enchérissez sur les objets de la banque. La valeur ne préexiste pas : elle se dessine.",
     priority: "0.9",
     contenu: `
       <h1>Banque Fantôme</h1>
       <p>Institution de circulation. La valeur ne préexiste pas : elle se dessine.</p>
       <h2>Ouvrir un compte</h2>
       <p>Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.</p>
-      <h2>Fabriquer son argent</h2>
-      <p>Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.</p>
-      <h2>Enchérir dans le market</h2>
-      <p>Les dépôts sont mis aux enchères : objets, œuvres ou services. Le plus offrant l'emporte, la banque prélève sa commission et s'enrichit.</p>`,
+      <h2>Dessiner son argent</h2>
+      <p>Dans l'atelier de la bourse, dessinez sur un billet de la banque. Encaissez-le : votre compte est crédité de sa valeur. Ou vendez-le aux enchères aux autres comptes.</p>
+      <h2>Dépenser</h2>
+      <p>Achetez les billets dessinés par les autres dans la bourse, ou enchérissez sur les objets que la banque met en vente au market, à retirer en main propre.</p>`,
   },
   {
     path: "/market",
-    title: "Market — enchères d'objets, d'œuvres et de services | Banque Fantôme",
+    title: "Market : les objets de la banque aux enchères | Banque Fantôme",
     description:
-      "Le market de la Banque Fantôme : objets, œuvres et services déposés par les comptes et mis aux enchères, payables en billets fabriqués à la main.",
+      "La vitrine de la Banque Fantôme : objets, œuvres et services que la banque met aux enchères, payables avec les billets dessinés sur le site et remis en main propre.",
     priority: "0.8",
     contenu: `
       <h1>Market</h1>
-      <p>Les objets, œuvres et services déposés par les comptes de la Banque Fantôme, mis aux enchères.</p>
-      <p>Chaque dépôt part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On enchérit avec les billets originaux qu'on a soi-même dessinés et fait créditer au guichet. À la clôture, la banque prélève sa commission.</p>`,
+      <p>La vitrine de la banque : les objets, œuvres et services qu'elle met aux enchères.</p>
+      <p>Chaque vente part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On enchérit avec les billets qu'on a dessinés et encaissés dans la bourse. Une fois l'enchère gagnée, on contacte la banque pour la remise en main propre.</p>`,
+  },
+  {
+    path: "/bourse",
+    title: "Bourse aux billets : dessiner, encaisser, échanger | Banque Fantôme",
+    description:
+      "L'atelier et la bourse de la Banque Fantôme : dessinez un billet sur le site, encaissez-le pour créditer votre compte ou vendez-le aux enchères aux autres comptes.",
+    priority: "0.8",
+    contenu: `
+      <h1>Bourse aux billets</h1>
+      <p>Ici, l'argent se dessine. Dans l'atelier, on dessine sur un billet habillé par la banque : cadre, guillochis, montant et numéro de série.</p>
+      <h2>Encaisser ou vendre</h2>
+      <p>Un billet terminé s'encaisse (la banque le garde et crédite le compte de sa valeur) ou se vend aux enchères aux autres comptes, qui paient avec les billets qu'ils ont encaissés.</p>
+      <h2>Collectionner</h2>
+      <p>Un billet acheté rejoint la collection de l'acheteur, qui peut le garder ou le revendre. Chaque vente reste inscrite au registre.</p>`,
   },
   {
     path: "/senrichir",
-    title: "S'enrichir — planches de billets à imprimer | Banque Fantôme",
+    title: "S'enrichir : planches de billets à imprimer | Banque Fantôme",
     description:
       "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
     priority: "0.7",
@@ -66,7 +80,7 @@ export const PAGES = [
 
   {
     path: "/actu",
-    title: "Le fil de la banque — expositions, ateliers, billets | Banque Fantôme",
+    title: "Le fil de la banque : expositions, ateliers, billets | Banque Fantôme",
     description:
       "Le journal du projet Banque Fantôme : expositions, ateliers, billets dessinés et installations, au fur et à mesure.",
     priority: "0.7",
@@ -76,21 +90,8 @@ export const PAGES = [
   },
 
   {
-    path: "/participer",
-    title: "Participer — déposer un billet original ou un objet | Banque Fantôme",
-    description:
-      "Alimenter la Banque Fantôme : déposer au guichet un billet original dessiné à la main, crédité sur votre compte, ou mettre aux enchères un objet, une œuvre ou un service.",
-    priority: "0.7",
-    contenu: `
-      <h1>Participer</h1>
-      <h2>Mettre en vente au market</h2>
-      <p>Un objet, une œuvre ou un service, mis aux enchères pour un, trois ou sept jours.</p>
-      <h2>Déposer un billet original</h2>
-      <p>Photographiez un billet dessiné à la main, donnez-lui un titre, une devise et une dénomination : la banque le crédite sur votre compte.</p>`,
-  },
-  {
     path: "/info",
-    title: "Infos pratiques — agences et permanences du banquier | Banque Fantôme",
+    title: "Infos pratiques : agences et permanences du banquier | Banque Fantôme",
     description:
       "Où trouver la Banque Fantôme à Beauvais : l'agence du Quadrilatère, l'agence à venir de la médiathèque Centre ville, leurs horaires et les permanences du banquier.",
     priority: "0.6",
@@ -103,12 +104,13 @@ export const PAGES = [
       <p>Agence à venir : Médiathèque Centre ville, 3 cour des Lettres, 60000 Beauvais. Mardi, jeudi et vendredi de 13 h à 18 h 30, mercredi de 9 h 30 à 18 h 30, samedi de 9 h 30 à 18 h, fermé le lundi.</p>`,
   },
 
-  // Pages de compte : servies normalement, tenues hors de l'index. /deposer
-  // affiche « Accès refusé » sans compte, les trois autres sont privées ou
-  // sans contenu propre.
-  { path: "/deposer", title: "Déposer dans le market | Banque Fantôme", description: "Mettre un objet, une œuvre ou un service aux enchères. Réservé aux comptes.", noindex: true },
+  // Pages de compte : servies normalement, tenues hors de l'index. /participer
+  // et /deposer ne sont plus que des renvois vers l'atelier de la bourse
+  // (2026-10-18), gardés pour que les anciens liens ne répondent pas 404.
+  { path: "/participer", title: "Bourse aux billets | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
+  { path: "/deposer", title: "Bourse aux billets | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
   { path: "/connexion", title: "Connexion | Banque Fantôme", description: "Ouvrir un compte ou se connecter à la Banque Fantôme.", noindex: true },
-  { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets émis et ventes en cours.", noindex: true },
+  { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets encaissés et ventes en cours.", noindex: true },
   { path: "/messages", title: "Messages | Banque Fantôme", description: "Messagerie entre comptes.", noindex: true },
   { path: "/admin", title: "Admin | Banque Fantôme", description: "Espace du banquier.", noindex: true },
   { path: "/lettre", title: "La lettre de la banque | Banque Fantôme", description: "Se désinscrire de la lettre de la Banque Fantôme.", noindex: true },

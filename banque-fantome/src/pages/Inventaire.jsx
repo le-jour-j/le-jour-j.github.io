@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import { RARETES, rangRarete } from '../utils/rarete'
 
 const STATUTS = ['tous', 'disponible', 'échangé']
-const LIBELLES = { disponible: 'en vente', échangé: 'vendu', expiré: 'expiré', tous: 'tous' }
+const LIBELLES = { disponible: 'en vente', échangé: 'vendu', expiré: 'expiré', retiré: 'retiré', tous: 'tous' }
 const CATEGORIES = ['toutes', 'objet', 'œuvre', 'service']
 const RARETES_FILTRE = ['toutes', ...RARETES]
 const TRIS = [
@@ -50,8 +51,11 @@ export default function Inventaire() {
 
   useEffect(() => {
     setLoading(true)
-    let q = supabase.from('objets').select('*', { count: 'exact' })
+    // Le market ne montre que les objets : les billets dessinés vivent dans la bourse (2026-10-18).
+    // Les ventes retirées n'y ont plus leur place.
+    let q = supabase.from('objets').select('*', { count: 'exact' }).is('dessin_id', null)
     if (statut !== 'tous') q = q.eq('statut', statut)
+    else q = q.neq('statut', 'retiré')
     if (categorie !== 'toutes') q = q.eq('categorie', categorie)
     if (rarete !== 'toutes') q = q.eq('rarete', rarete)
     if (search.trim()) q = q.ilike('titre', `%${search.trim()}%`)
@@ -76,6 +80,10 @@ export default function Inventaire() {
           <h2>Market</h2>
           <span className="count" aria-live="polite">{total} entrée{total !== 1 ? 's' : ''}</span>
         </div>
+        <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
+          La vitrine de la banque. Ce qu'elle met en vente se paie en billets et se retire en main propre :
+          une fois l'enchère gagnée, on se contacte pour le rendez-vous. Pas encore de billets ? <Link to="/bourse?onglet=atelier" className="lien-texte">Dessinez-en un →</Link>
+        </p>
 
         <div className="market-toolbar">
           <div className="market-search">
@@ -107,8 +115,8 @@ export default function Inventaire() {
           ? <div className="loader">Chargement<span className="blink">_</span></div>
           : objets.length === 0
             ? <div className="market-vide">
-                <div className="titre">{filtresActifs ? 'Aucune entrée ne correspond' : 'Market vide'}</div>
-                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'Déposez la première entrée dans le circuit.'}</p>
+                <div className="titre">{filtresActifs ? 'Aucune entrée ne correspond' : 'Vitrine vide'}</div>
+                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'La banque prépare sa prochaine vente. En attendant, la bourse aux billets est ouverte.'}</p>
                 {filtresActifs && <button type="button" className="btn btn-noir" style={{ marginTop: '1.2rem' }} onClick={reset}>Tout afficher</button>}
               </div>
             : <div className="grid-3" key={`${statut}-${categorie}-${rarete}-${tri}-${search}`}>

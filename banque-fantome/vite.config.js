@@ -51,7 +51,7 @@ export default defineConfig({
         ],
         shortcuts: [
           { name: 'Market', url: '/banque-fantome/market', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
-          { name: 'Déposer', url: '/banque-fantome/deposer', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
+          { name: 'Dessiner un billet', url: '/banque-fantome/bourse?onglet=atelier', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
           { name: "S'enrichir", url: '/banque-fantome/senrichir', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
         ],
       },

@@ -34,12 +34,12 @@ function Compteur({ valeur }) {
 
 const PRINCIPE = [
   { n: '1', titre: 'Ouvrir un compte', texte: 'Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.', to: '/connexion', cta: 'Créer un compte' },
-  { n: '2', titre: 'Fabriquer son argent', texte: 'Imprimez les planches pour jouer sur papier, ou dessinez un billet original et déposez-le au guichet : la banque le crédite sur votre compte.', to: '/participer?onglet=billet', cta: 'Déposer un original' },
-  { n: '3', titre: 'Enchérir dans le market', texte: 'Les dépôts sont mis aux enchères : objets, œuvres ou services. Le plus offrant l’emporte, la banque prélève sa commission et s’enrichit.', to: '/market', cta: 'Entrer dans le market' },
+  { n: '2', titre: 'Dessiner son argent', texte: 'Dans l’atelier de la bourse, dessinez sur un billet de la banque. Encaissez-le : votre compte est crédité de sa valeur. Ou vendez-le aux enchères aux autres comptes.', to: '/bourse?onglet=atelier', cta: 'Ouvrir l’atelier' },
+  { n: '3', titre: 'Dépenser', texte: 'Achetez les billets dessinés par les autres dans la bourse, ou enchérissez sur les objets que la banque met en vente au market, à retirer en main propre.', to: '/market', cta: 'Entrer dans le market' },
 ]
 
 export default function Home() {
-  const [recent, setRecent] = useState([])
+  const [recent, setRecent] = useState(null)
   const [total, setTotal] = useState(0)
   const [stats, setStats] = useState(null) // stats_banque() : trésor, billets en circulation…
   const [selected, setSelected] = useState(null)
@@ -54,7 +54,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    supabase.from('objets').select('*', { count: 'exact' })
+    supabase.from('objets').select('*', { count: 'exact' }).neq('statut', 'retiré')
       .order('created_at', { ascending: false }).limit(3)
       .then(({ data, count }) => { setRecent(data || []); setTotal(count || 0) })
     supabase.rpc('stats_banque').then(({ data }) => setStats(data || null))
@@ -78,11 +78,11 @@ export default function Home() {
           <div className="hero-eyebrow">On va faire du pognon</div>
           <h1 className="hero-title">BANQUE<br className="hero-br" /> <span>FANTÔME</span></h1>
           <p className="hero-sub">
-            La Banque Fantôme propose d'ouvrir un compte, de fabriquer sa propre monnaie et d'obtenir des objets, des œuvres ou des services présents dans le market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
+            La Banque Fantôme propose d'ouvrir un compte, de dessiner sa propre monnaie, de l'échanger dans la bourse aux billets et d'obtenir les objets que la banque met en vente au market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
           <div className="hero-actions">
             <Link to="/connexion" className="btn btn-jaune">→ Ouvrir un compte</Link>
-            <Link to="/senrichir" className="btn btn-outline">Fabriquer son argent</Link>
+            <Link to="/bourse?onglet=atelier" className="btn btn-outline">Dessiner son argent</Link>
             <Link to="/market" className="btn btn-outline">Entrer dans le market</Link>
             <BoutonLettre />
           </div>
@@ -137,7 +137,7 @@ export default function Home() {
             <div>
               <div className="section-head">
                 <h2>Cours des devises</h2>
-                <Link to="/senrichir" className="count">Émettre →</Link>
+                <Link to="/bourse?onglet=atelier" className="count">Dessiner →</Link>
               </div>
               <CoursDevises compact />
             </div>
@@ -147,7 +147,7 @@ export default function Home() {
 
       <section style={{ padding: '3rem 0 0' }}>
         <div className="container">
-          <MurBillets limit={8} titre="Les billets du moment" sousTitre="Chaque billet est une œuvre — cliquer pour le cartel" onNotif={setNotif} />
+          <MurBillets limit={8} titre="Les billets du moment" sousTitre="Chaque billet est une œuvre : cliquer pour le cartel" onNotif={setNotif} />
         </div>
       </section>
 
@@ -164,7 +164,7 @@ export default function Home() {
             <div className="info-drawer">
               <div className="info-drawer-title">Ici, vous créez votre monnaie et vous achetez avec.</div>
               <p>
-                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs fabriquent leurs propres billets, les font créditer au guichet, puis les misent aux enchères pour obtenir un objet, une œuvre ou un service déposé sur le site. Sur chaque vente, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
+                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs dessinent leurs propres billets sur le site : encaissés, ils deviennent de l'argent ; mis en vente, ils s'échangent dans la bourse contre l'argent des autres. Avec cet argent, on enchérit aussi sur les objets que la banque met en vente au market, et qu'on vient chercher en main propre. Sur chaque vente de la bourse, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
               </p>
             </div>
           )}
@@ -199,9 +199,9 @@ export default function Home() {
           </div>
           <div className="grid-3">
             {[
-              ['01', 'Télécharger un billet', "Choisissez un modèle, imprimez-le et transformez-le en monnaie active de la Banque Fantôme."],
-              ['02', 'Enchérir', "Parcourez le market, misez vos billets sur un objet, une œuvre ou un service. Surenchéri ? Vos billets vous reviennent."],
-              ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte, le vendeur encaisse, la banque prend 5 %. Les choses passent, se racontent et prennent une nouvelle valeur."],
+              ['01', 'Dessiner un billet', "Ouvrez l'atelier, choisissez une coupure et dessinez sur le billet. Encaissez-le pour créditer votre compte, ou gardez-le pour le vendre."],
+              ['02', 'Enchérir', "Misez vos billets sur ceux des autres dans la bourse, ou sur les objets de la banque au market. Surenchéri ? Vos billets vous reviennent."],
+              ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte. Un billet acheté se garde ou se revend ; un objet de la banque se retire en main propre."],
             ].map(([n, titre, desc]) => (
               <div key={n} className="etape">
                 <div className="etape-num">{n}</div>
@@ -217,10 +217,12 @@ export default function Home() {
         <div className="container">
           <div className="section-head">
             <h2>Entrées récentes dans le circuit</h2>
-            <Link to="/market" className="count">Voir le market →</Link>
+            <Link to="/bourse" className="count">Voir la bourse →</Link>
           </div>
-          {recent.length === 0
+          {recent === null
             ? <div className="loader">Chargement<span className="blink">_</span></div>
+            : recent.length === 0
+            ? <p className="texte-aide">Rien encore : <Link to="/bourse?onglet=atelier" className="lien-texte">dessinez le premier billet →</Link></p>
             : <div className="grid-3">{recent.map(o => <ObjetCard key={o.id} objet={o} onClick={setSelected} />)}</div>
           }
         </div>
@@ -231,12 +233,12 @@ export default function Home() {
           <div>
             <div className="eyebrow">FAUX ARGENT</div>
             <p>
-              Imprimez les billets, fabriquez votre propre réserve, puis utilisez-la pour obtenir un élément du market. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
+              Dessinez vos billets, fabriquez votre propre réserve, puis utilisez-la pour obtenir un billet d'un autre joueur ou un objet du market. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
             </p>
           </div>
           <div className="bande-actions">
-            <Link to="/senrichir" className="btn btn-noir">Voir les billets</Link>
-            <Link to="/participer?onglet=market" className="btn btn-outline">Déposer dans le market</Link>
+            <Link to="/bourse?onglet=atelier" className="btn btn-noir">Dessiner un billet</Link>
+            <Link to="/bourse" className="btn btn-outline">La bourse aux billets</Link>
           </div>
         </div>
       </section>

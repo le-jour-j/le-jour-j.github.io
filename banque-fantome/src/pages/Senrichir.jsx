@@ -85,8 +85,8 @@ export default function Senrichir() {
         </section>
 
         <div className="bande-guichet">
-          <p><strong>Vous avez dessiné un billet original ?</strong> Déposez-le au guichet : la banque le crédite sur votre compte, et c'est avec lui que vous enchérissez dans le market.</p>
-          <Link to="/participer?onglet=billet" className="btn btn-jaune btn-sm">→ Déposer un original</Link>
+          <p><strong>Les planches se jouent sur papier.</strong> Pour avoir de l'argent sur votre compte, dessinez un billet dans l'atelier de la bourse : encaissé, il crédite votre compte de sa valeur.</p>
+          <Link to="/bourse?onglet=atelier" className="btn btn-jaune btn-sm">→ Ouvrir l'atelier</Link>
         </div>
 
         <MurBillets limit={12} onNotif={setNotif} />

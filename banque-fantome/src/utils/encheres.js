@@ -60,5 +60,7 @@ export function commission(prix) {
 // Message d'erreur Supabase/Postgres → texte lisible
 export function messageErreur(e) {
   const m = e?.message || String(e || 'Erreur')
-  return m.replace(/^.*?:\s*/, '') // enlève un éventuel préfixe technique
+  // Enlève un préfixe technique (« ERROR: », « P0001: ») sans toucher aux « : » des messages de la banque :
+  // l'ancienne version coupait « Enchère minimale : 25 billets. » en « 25 billets. »
+  return m.replace(/^(ERROR|[A-Z0-9]{5})\s*:\s*/, '')
 }

@@ -5,6 +5,7 @@ import { useAuth } from '../components/AuthContext'
 import FilActu from '../components/FilActu'
 import ActuForm from '../components/ActuForm'
 import ObjetModal from '../components/ObjetModal'
+import Deposer from './Deposer'
 import Notif from '../components/Notif'
 import { getPublicImageUrl, getObjetImageUrls } from '../utils/images'
 import { estVente, echeance, tempsRestant, messageErreur } from '../utils/encheres'
@@ -99,7 +100,7 @@ function BlocNouveautes({ data, lettrePrete, onOuvrir }) {
   const lignes = []
   if (lettrePrete) lignes.push({ onglet: 'lettre', fort: true, texte: `La lettre est prête : ${lettre.en_attente} actus attendent d'être envoyées` })
   if (comptes.n) lignes.push({ onglet: 'comptes', texte: pluriel(comptes.n, 'nouveau compte', 'nouveaux comptes') })
-  if (billets.n) lignes.push({ onglet: 'billets', texte: pluriel(billets.n, 'billet déposé au guichet', 'billets déposés au guichet') })
+  if (billets.n) lignes.push({ onglet: 'billets', texte: pluriel(billets.n, 'billet encaissé', 'billets encaissés') })
   if (market.n) lignes.push({ onglet: 'market', texte: pluriel(market.n, 'dépôt au market', 'dépôts au market') })
   const lettreMouvements = [
     abonnes.n > 0 && pluriel(abonnes.n, 'inscription', 'inscriptions'),
@@ -217,6 +218,8 @@ function OngletMarket({ onNotif, depuis }) {
   const { user } = useAuth()
   const [objets, setObjets] = useState(null)
   const [filtre, setFiltre] = useState('disponible')
+  const [rayon, setRayon] = useState('market')   // market (ventes de la banque et anciens dépôts) | bourse (billets dessinés)
+  const [depot, setDepot] = useState(false)      // formulaire de mise en vente ouvert
   const [aRetirer, setARetirer] = useState(null)
   const [selected, setSelected] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -225,8 +228,9 @@ function OngletMarket({ onNotif, depuis }) {
   useEffect(() => {
     let q = supabase.from('objets').select('*').order('created_at', { ascending: false }).limit(300)
     if (filtre !== 'tous') q = q.eq('statut', filtre)
+    q = rayon === 'bourse' ? q.not('dessin_id', 'is', null) : q.is('dessin_id', null)
     q.then(({ data }) => setObjets(data || []))
-  }, [filtre, recharge])
+  }, [filtre, rayon, recharge])
 
   async function retirer(o) {
     setBusy(true)
@@ -240,6 +244,23 @@ function OngletMarket({ onNotif, depuis }) {
 
   return (
     <div className="admin-panneau">
+      <div className="admin-barre">
+        <div className="filter-row">
+          {[['market', 'Market de la banque'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
+            <button key={v} type="button" className={`chip ${rayon === v ? 'active' : ''}`} onClick={() => setRayon(v)}>{l}</button>
+          ))}
+        </div>
+        {rayon === 'market' && (
+          <button type="button" className={`btn btn-sm ${depot ? 'btn-outline' : 'btn-jaune'}`} onClick={() => setDepot(d => !d)}>
+            {depot ? '✕ Fermer le formulaire' : '+ Mettre un objet en vente'}
+          </button>
+        )}
+      </div>
+      {depot && rayon === 'market' && (
+        <div className="admin-depot">
+          <Deposer integre onDepose={() => { setDepot(false); setFiltre('disponible'); setRecharge(n => n + 1) }} />
+        </div>
+      )}
       <div className="admin-barre">
         <div className="filter-row">
           {[['disponible', 'en vente'], ['échangé', 'vendus'], ['retiré', 'retirés'], ['tous', 'tous']].map(([v, l]) => (

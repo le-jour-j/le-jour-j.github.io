@@ -59,8 +59,8 @@ export default function Navbar() {
           <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
             <li><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
+            <li><NavLink to="/bourse">Bourse</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
-            <li><NavLink to="/participer">Participer</NavLink></li>
             <li><NavLink to="/actu">Actu</NavLink></li>
             <li><NavLink to="/info">Info</NavLink></li>
             {user ? <>

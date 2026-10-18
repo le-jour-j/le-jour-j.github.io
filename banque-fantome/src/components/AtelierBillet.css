@@ -1,0 +1,54 @@
+/* ── Atelier : le Paint billet (2026-10-18) ── */
+.atelier { display: flex; flex-direction: column; gap: .9rem; }
+.atelier-entete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; }
+.atelier-coupures { display: flex; flex-wrap: wrap; gap: .4rem; }
+.atelier-coupures .chip { padding: .35rem .7rem; }
+
+/* le billet : trois toiles superposées (habillage, dessin posé, trait en cours) */
+.atelier-scene { position: relative; width: 100%; border: 2px solid var(--noir); box-shadow: 6px 6px 0 var(--noir); background: var(--blanc); }
+.atelier-scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.atelier-vif { touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; }
+.atelier-scene[data-outil="gomme"] .atelier-vif { cursor: cell; }
+.atelier-scene[data-outil="texte"] .atelier-vif { cursor: text; }
+
+/* la barre d'outils */
+.atelier-outils { display: flex; flex-wrap: wrap; gap: .3rem; align-items: stretch; }
+.atelier-outil { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: .45rem .7rem; border: 2px solid var(--noir); background: var(--blanc); color: var(--noir); cursor: pointer; transition: background var(--vite), transform var(--vite); }
+.atelier-outil:hover:not(:disabled) { background: var(--jaune-fond); transform: translateY(-1px); }
+.atelier-outil.actif { background: var(--noir); color: var(--jaune); }
+.atelier-outil:disabled { opacity: .4; cursor: not-allowed; }
+.atelier-sep { width: 2px; background: var(--gris-bord); margin: 0 .2rem; }
+
+/* le pinceau */
+.atelier-pinceau { display: flex; flex-wrap: wrap; gap: .6rem 1.1rem; align-items: center; padding: .8rem; border: 2px solid var(--gris-bord); background: var(--gris-clair); }
+.atelier-tons { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+.atelier-pastille { width: 26px; height: 26px; border: 2px solid var(--noir); padding: 0; cursor: pointer; position: relative; transition: transform var(--vite); }
+.atelier-pastille:hover { transform: translateY(-1px); }
+.atelier-pastille.actif { box-shadow: 3px 3px 0 var(--noir); transform: translate(-1px, -1px); outline: 2px solid var(--jaune); outline-offset: -5px; }
+.atelier-pipette { display: inline-block; overflow: hidden; background: conic-gradient(#ff2fb3, #ffe600, #33e07a, #00c8ff, #7a3cff, #ff2fb3); }
+.atelier-pipette input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+.atelier-reglage { display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gris-fonce); }
+.atelier-reglage input[type="range"] { width: 110px; accent-color: var(--noir); }
+.atelier-reglage select, .atelier-reglage input[type="number"], .atelier-reglage input[type="text"] { font-family: var(--sans); font-size: .9rem; padding: .3rem .5rem; border: 2px solid var(--gris-bord); background: var(--blanc); color: var(--noir); border-radius: 0; text-transform: none; letter-spacing: 0; }
+.atelier-reglage input[type="number"] { width: 4.2rem; }
+.atelier-texte input[type="text"] { width: 14rem; max-width: 60vw; }
+.atelier-case input { accent-color: var(--noir); width: 1rem; height: 1rem; }
+.atelier-tampons { display: flex; flex-wrap: wrap; gap: .25rem; }
+.atelier-tampon { font-size: 1.05rem; line-height: 1; width: 34px; height: 34px; border: 2px solid var(--noir); background: var(--blanc); cursor: pointer; }
+.atelier-tampon.actif { background: var(--jaune); box-shadow: 2px 2px 0 var(--noir); }
+.atelier-aide { margin: 0; }
+
+.atelier-pied { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; }
+.atelier-pied .caption-gris { font-family: var(--mono); }
+
+/* téléphone : le billet prend toute la largeur, les outils restent sous le pouce */
+@media (max-width: 760px) {
+  .atelier-scene { box-shadow: 4px 4px 0 var(--noir); }
+  .atelier-outils { position: sticky; bottom: 0; z-index: 5; flex-wrap: nowrap; overflow-x: auto; background: var(--blanc); padding: .4rem 0; border-top: 2px solid var(--noir); -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .atelier-outils::-webkit-scrollbar { display: none; }
+  .atelier-outil { flex: 0 0 auto; flex-direction: column; gap: .1rem; padding: .35rem .5rem; font-size: .6rem; min-width: 52px; }
+  .atelier-outil > span:first-child { font-size: 1.1rem; }
+  .atelier-pinceau { gap: .5rem .8rem; padding: .6rem; }
+  .atelier-reglage input[type="range"] { width: 90px; }
+  .atelier-pied .btn { width: 100%; }
+}

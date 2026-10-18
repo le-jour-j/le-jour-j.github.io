@@ -25,6 +25,8 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
   const isOwn = user && objet.user_id === user.id
   const statut = objet.statut || 'disponible'
   const vente = estVente(objet)
+  const billet = !!objet.dessin_id
+  const banque = !!objet.vendeur_banque
   const stampStatut = statut === 'réservé' ? 'stamp-rouge' : statut === 'échangé' ? 'stamp-noir' : statut === 'expiré' || statut === 'retiré' ? 'stamp-rouge' : 'stamp-vert'
   const libelleStatut = vente ? (statut === 'disponible' ? 'en vente' : statut === 'échangé' ? 'adjugé' : statut) : statut
 
@@ -38,15 +40,15 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
               #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
-            {vente && <span className="stamp stamp-noir">◈ Hôtel des ventes</span>}
+            {vente && <span className="stamp stamp-noir">{banque ? '◈ Vente de la banque' : billet ? '◈ Bourse aux billets' : '◈ Hôtel des ventes'}</span>}
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
-            <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>
+            {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>}
           </div>
           <h3 id="objet-titre" className="modal-titre">{objet.titre}</h3>
           <div className="meta-label" style={{ marginBottom: '1rem' }}>
-            Déposé par {objet.pseudo || 'Anonyme'} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
+            {banque ? 'Mis en vente par la banque' : billet ? `Vendu par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
           </div>
           {vente && <EnchereBloc objet={objet} onChange={majObjet} onNotif={setNotif} onContacter={() => setShowMsg(true)} />}
           {!!imgUrls.length &&
@@ -67,6 +69,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             </div>
           }
           <p className="modal-texte">{objet.description}</p>
+          {banque && <p className="texte-aide">À retirer en main propre : la banque vous contacte, ou vous la contactez, pour fixer le rendez-vous.</p>}
           {objet.histoire &&
             <div className="modal-histoire">
               <div className="meta-label" style={{ marginBottom: '.4rem' }}>Histoire</div>
@@ -84,7 +87,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             }
             {!isOwn && objet.user_id && vente && statut === 'disponible' &&
               <button className="btn btn-outline btn-sm" onClick={() => setShowMsg(true)}>
-                ✉ Question au vendeur
+                {banque ? '✉ Contacter la banque' : '✉ Question au vendeur'}
               </button>
             }
           </div>

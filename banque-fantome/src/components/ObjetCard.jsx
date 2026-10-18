@@ -7,6 +7,7 @@ export default function ObjetCard({ objet, onClick }) {
   const imgUrls = getObjetImageUrls(objet)
   const imgUrl = imgUrls[0] || null
   const vente = estVente(objet)
+  const billet = !!objet.dessin_id // billet de la bourse : image au format billet, sans rareté
   const enCours = estEnCours(objet)
   const statut = objet.statut || 'disponible'
   const numero = String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')
@@ -38,7 +39,7 @@ export default function ObjetCard({ objet, onClick }) {
 
   return (
     <article
-      className={`objet-card ${vente ? 'vente' : ''} ${statut === 'échangé' || statut === 'expiré' || statut === 'retiré' ? 'terminee' : ''}`}
+      className={`objet-card ${vente ? 'vente' : ''} ${billet ? 'objet-billet' : ''} ${statut === 'échangé' || statut === 'expiré' || statut === 'retiré' ? 'terminee' : ''}`}
       role="button"
       tabIndex={0}
       aria-label={`Voir ${objet.titre}`}
@@ -58,7 +59,7 @@ export default function ObjetCard({ objet, onClick }) {
       <div className="card-body">
         <div className="card-tags">
           {objet.categorie && <span className="tag">{objet.categorie}</span>}
-          <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>
+          {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>}
         </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 90)}{objet.description?.length > 90 ? '…' : ''}</div>
