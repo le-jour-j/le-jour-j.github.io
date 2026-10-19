@@ -843,3 +843,5 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 a.creer-carte { text-decoration: none; color: inherit; }
 .market-creer { margin-bottom: 1.2rem; }
 .market-creer a.chip { text-decoration: none; }
+/* La mise à jour de l'appli, quand on est en train de dessiner ou d'écrire (main.jsx, 2026-10-19) */
+.bf-maj { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: .8rem; padding: .6rem .8rem .6rem 1rem; background: var(--jaune); color: var(--noir); border: 2px solid var(--noir); box-shadow: 4px 4px 0 var(--noir); font-weight: 700; max-width: calc(100vw - 2rem); }
