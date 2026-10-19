@@ -63,9 +63,9 @@ export default function App() {
           <Route path="/creer"      element={<Creer />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/market"     element={<Market />} />
-          {/* Le supermarket est un rayon du market depuis le 2026-10-19 */}
-          <Route path="/supermarket" element={<Navigate to="/market?rayon=supermarket" replace />} />
-          <Route path="/inventaire" element={<Navigate to="/market?rayon=supermarket" replace />} />
+          {/* Le supermarket est le rayon « La banque vend » du market depuis le 2026-10-19 */}
+          <Route path="/supermarket" element={<Navigate to="/market?rayon=banque" replace />} />
+          <Route path="/inventaire" element={<Navigate to="/market?rayon=boncoin" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
           <Route path="/bourse"     element={<Bourse />} />

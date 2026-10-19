@@ -26,7 +26,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   const banque = !!objet.vendeur_banque      // vente de la banque (affichage, contact)
   // Le market (2026-10-19) : on enchérit en promesses de billets papier, rien n'est débité,
   // le gagnant paie en main propre. Seule la bourse se paie avec l'argent du site.
-  // Bourse et œuvres du market se paient en argent du site ; le rayon supermarket, en billets papier.
+  // Bourse et E-market se paient en argent du site ; le bon coin et la banque vend, en billets papier.
   const papier = !billet && !oeuvre
   const chose = billet ? 'Le billet' : 'L’œuvre'
   const vendeur = banque ? 'la banque' : objet.pseudo || 'le vendeur'
@@ -86,6 +86,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   const remettre = () => rpc('remettre_en_vente', { p_objet: objet.id, p_mise: Number(remise.mise), p_prix_achat: remise.prix ? Number(remise.prix) : null, p_duree: Number(remise.duree) }, 'Remis en vente.')
   // Market : l'acheteur ne vient pas. Le vendeur ou la banque défait la vente (supabase_garde_fous.sql).
   const defaire = () => rpc('annuler_adjudication_papier', { p_objet: objet.id }, 'Vente défaite : l’objet est de nouveau à vous, vous pouvez le remettre en vente.')
+  const payer = () => rpc('payer_avec_compte', { p_objet: objet.id }, 'Réglé avec votre compte. Reste à venir chercher l’objet à la banque.')
 
   // ─── Vente terminée ───
   if (!enCours) {
@@ -109,17 +110,31 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
         )}
         {vendu && user && papier && (isOwn || objet.vendu_a === user.id) && (
           <p className="texte-aide" style={{ marginTop: '.8rem' }}>
-            {isOwn
-              ? `${objet.vendu_a_pseudo || "L'acheteur"} vous doit ${objet.prix_final} billets papier. `
-              : `Vous devez ${objet.prix_final} billets papier à ${vendeur}. `}
+            {objet.regle_compte_at
+              ? (isOwn ? `${objet.vendu_a_pseudo || "L'acheteur"} a réglé avec son compte. ` : 'Réglé avec votre compte. ')
+              : isOwn
+                ? `${objet.vendu_a_pseudo || "L'acheteur"} vous doit ${objet.prix_final} billets papier. `
+                : `Vous devez ${objet.prix_final} billets papier à ${vendeur}${banque ? ', ou réglez avec votre compte' : ''}. `}
             Reste la remise en main propre : {' '}
-            <button type="button" className="lien-texte" onClick={onContacter}>{isOwn ? "écrire à l'acheteur" : banque ? 'contacter la banque pour fixer le rendez-vous' : 'écrire au vendeur'}</button>.
+            <button type="button" className="lien-texte" onClick={onContacter}>{isOwn ? "écrire à l'acheteur" : banque ? 'contacter la banque (rendez-vous ou livraison)' : 'écrire au vendeur'}</button>.
           </p>
+        )}
+        {/* La banque vend aussi contre l'argent du site (supabase_bon_coin.sql, payer_avec_compte) */}
+        {vendu && user && banque && papier && objet.vendu_a === user.id && !objet.regle_compte_at && (
+          aConfirmer === 'payer'
+            ? <div className="enchere-actions" style={{ marginTop: '.8rem' }}>
+                <span className="texte-aide">{objet.prix_final} billets seront débités de votre solde ({solde ?? 0} disponibles).</span>
+                <button type="button" className="btn btn-jaune btn-sm" disabled={busy} onClick={payer}>Confirmer</button>
+                <button type="button" className="btn btn-outline btn-sm" onClick={() => setAConfirmer(null)}>Non</button>
+              </div>
+            : <button type="button" className="btn btn-jaune btn-sm" style={{ marginTop: '.8rem' }} disabled={busy || (solde ?? 0) < objet.prix_final} onClick={() => setAConfirmer('payer')}>
+                ◈ Payer avec mon compte · {objet.prix_final}
+              </button>
         )}
         {vendu && papier && (isOwn || estBanquier) && (
           aConfirmer === 'defaire'
             ? <div className="enchere-actions" style={{ marginTop: '.8rem' }}>
-                <span className="texte-aide">L'acheteur perd l'objet, et l'objet revient {isOwn ? 'dans vos ventes' : 'à son vendeur'}.</span>
+                <span className="texte-aide">L'acheteur perd l'objet{objet.regle_compte_at ? ' (il est remboursé sur son compte)' : ''}, et l'objet revient {isOwn ? 'dans vos ventes' : 'à son vendeur'}.</span>
                 <button type="button" className="btn btn-rouge btn-sm" disabled={busy} onClick={defaire}>Confirmer</button>
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setAConfirmer(null)}>Non</button>
               </div>

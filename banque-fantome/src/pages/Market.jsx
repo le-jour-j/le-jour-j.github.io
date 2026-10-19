@@ -6,13 +6,16 @@ import ObjetModal from '../components/ObjetModal'
 import { useAuth } from '../components/AuthContext'
 import { GENRES } from '../lib/oeuvres'
 
-// Le market (2026-10-19, demande de Jiiji : « on va merge les markets ») : deux rayons sous un
-// même toit. Les œuvres faites dans les ateliers de /creer, uniques, vendues aux enchères en
-// argent du site ; et le supermarket de la banque, ses objets physiques, en promesses de billets
-// papier remises en main propre. Les billets dessinés restent à la bourse.
-// ?rayon=oeuvres|supermarket ; sans paramètre, les deux mêlés.
+// Le market (2026-10-19 au soir, demande de Jiiji : « faut faire plein de différents market,
+// le E market, le bon coin, ce que vend la banque ») : trois rayons sous un même toit.
+//   • l'E-market : les œuvres des ateliers de /creer, uniques, en argent du site ;
+//   • le bon coin : les objets réels des joueurs, en billets papier, remise arrangée entre eux ;
+//   • la banque vend : le supermarket, en billets papier, à venir chercher à la banque.
+// Les billets dessinés restent à la bourse. ?rayon=emarket|boncoin|banque ; sans paramètre, tout.
 
-const RAYONS = [['tout', 'tout'], ['oeuvres', '✦ œuvres'], ['supermarket', '◈ supermarket de la banque']]
+const RAYONS = [['tout', 'tout'], ['emarket', '✦ E-market'], ['boncoin', '◇ Le bon coin'], ['banque', '◈ La banque vend']]
+// Les adresses d'avant la séparation en trois rayons
+const ANCIENS_RAYONS = { oeuvres: 'emarket', supermarket: 'banque' }
 const STATUTS = [['disponible', 'en vente'], ['échangé', 'adjugés']]
 const CATEGORIES = ['toutes', 'objet', 'œuvre', 'service']
 const TRIS = [['recent', 'Plus récent'], ['fin', 'Se termine bientôt'], ['prix_asc', 'Prix croissant'], ['prix_desc', 'Prix décroissant']]
@@ -21,7 +24,8 @@ const prix = o => o.statut === 'échangé' ? o.prix_final ?? 0 : o.enchere_coura
 export default function Market() {
   const { estBanquier } = useAuth()
   const [params, setParams] = useSearchParams()
-  const rayon = RAYONS.some(([v]) => v === params.get('rayon')) ? params.get('rayon') : 'tout'
+  const demande = ANCIENS_RAYONS[params.get('rayon')] || params.get('rayon')
+  const rayon = RAYONS.some(([v]) => v === demande) ? demande : 'tout'
   const [ventes, setVentes] = useState(null)
   const [erreur, setErreur] = useState(false)
   const [statut, setStatut] = useState('disponible')
@@ -44,15 +48,16 @@ export default function Market() {
 
   useEffect(() => {
     let annule = false
-    // Tout sauf les billets (la bourse). Au rayon des œuvres, oeuvre!inner : le filtre par
-    // atelier porte sur l'œuvre liée à la vente.
-    const jointure = rayon === 'oeuvres' ? 'oeuvre:oeuvres!inner(genre, auteur_pseudo, numero)' : 'oeuvre:oeuvres(genre, auteur_pseudo, numero)'
+    // Tout sauf les billets (la bourse). À l'E-market, oeuvre!inner : le filtre par atelier
+    // porte sur l'œuvre liée à la vente.
+    const jointure = rayon === 'emarket' ? 'oeuvre:oeuvres!inner(genre, auteur_pseudo, numero)' : 'oeuvre:oeuvres(genre, auteur_pseudo, numero)'
     let q = supabase.from('objets').select(`*, ${jointure}`).is('dessin_id', null).eq('statut', statut).limit(150)
-    if (rayon === 'oeuvres') {
+    if (rayon === 'emarket') {
       q = q.not('oeuvre_id', 'is', null)
       if (genre !== 'tous') q = q.eq('oeuvre.genre', genre)
-    } else if (rayon === 'supermarket') {
+    } else if (rayon === 'boncoin' || rayon === 'banque') {
       q = q.is('oeuvre_id', null)
+      q = rayon === 'banque' ? q.eq('vendeur_banque', true) : q.or('vendeur_banque.is.null,vendeur_banque.eq.false')
       if (categorie !== 'toutes') q = q.eq('categorie', categorie)
     }
     if (cherche) q = q.ilike('titre', `%${cherche}%`)
@@ -72,8 +77,9 @@ export default function Market() {
   const n = ventes?.length ?? 0
   const vide = {
     tout: ['Rien en vente', 'La première œuvre mise en vente fixera le goût de la maison.'],
-    oeuvres: ['Aucune œuvre en vente', 'La première œuvre mise en vente fixera le goût de la maison.'],
-    supermarket: ['Rayon vide', 'La banque n’a rien en rayon pour le moment.'],
+    emarket: ['Aucune œuvre en vente', 'La première œuvre mise en vente fixera le goût de la maison.'],
+    boncoin: ['Aucune annonce', 'Un objet qui dort chez vous ? Mettez-le en vente, il trouvera preneur.'],
+    banque: ['Rayon vide', 'La banque n’a rien en rayon pour le moment.'],
   }[rayon]
 
   return (
@@ -85,15 +91,15 @@ export default function Market() {
         </div>
         <div className="market-intro">
           <p className="texte-aide">
-            Deux rayons. <strong>Les œuvres</strong> faites dans les <Link to="/creer" className="lien-texte">ateliers</Link> : uniques, achetées aux
-            enchères avec l’argent du site (celui qu’on gagne en dessinant des <Link to="/creer?atelier=billet" className="lien-texte">billets</Link>),
-            elles rejoignent votre collection, en grand, à garder ou revendre. <strong>Le supermarket de la banque</strong> : des objets
-            à venir chercher en main propre, qu’on se dispute en <strong>billets papier</strong> (rien n’est débité sur le site ; des billets ?
-            imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>).
+            Trois rayons. <strong>L’E-market</strong> : les œuvres faites dans les <Link to="/creer" className="lien-texte">ateliers</Link>, uniques,
+            achetées avec l’argent du site (celui qu’on gagne en dessinant des <Link to="/creer?atelier=billet" className="lien-texte">billets</Link>) ;
+            elles rejoignent votre collection. <strong>Le bon coin</strong> : les objets réels des joueurs ; vendeur et acheteur
+            s’arrangent entre eux pour la remise. <strong>La banque vend</strong> : ses objets, à venir chercher à la banque. Au bon coin
+            et chez la banque, on paie en <strong>billets papier</strong>, rien n’est débité sur le site (des billets ? imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>).
           </p>
           <div className="market-intro-actions">
             <Link to="/creer" className="btn btn-jaune btn-sm">+ Créer une œuvre</Link>
-            {estBanquier && <Link to="/deposer" className="btn btn-outline btn-sm">+ Article au supermarket</Link>}
+            <Link to="/deposer" className="btn btn-outline btn-sm">{estBanquier ? '+ La banque vend' : '+ Annonce au bon coin'}</Link>
           </div>
         </div>
 
@@ -106,7 +112,7 @@ export default function Market() {
           </div>
           <div className="market-search">
             <div className="field">
-              <input type="search" placeholder={rayon === 'supermarket' ? 'Rechercher au supermarket…' : 'Rechercher au market…'} value={search} onChange={e => setSearch(e.target.value)} aria-label="Rechercher" />
+              <input type="search" placeholder="Rechercher au market…" value={search} onChange={e => setSearch(e.target.value)} aria-label="Rechercher" />
             </div>
             <div className="field">
               <select value={tri} onChange={e => setTri(e.target.value)} aria-label="Trier par">
@@ -114,7 +120,7 @@ export default function Market() {
               </select>
             </div>
           </div>
-          {rayon === 'oeuvres' && (
+          {rayon === 'emarket' && (
             <div className="filter-row" role="group" aria-label="Atelier">
               <span className="filter-label">Atelier</span>
               <button type="button" className={`chip ${genre === 'tous' ? 'active' : ''}`} aria-pressed={genre === 'tous'} onClick={() => setGenre('tous')}>tous</button>
@@ -123,7 +129,7 @@ export default function Market() {
               ))}
             </div>
           )}
-          {rayon === 'supermarket' && (
+          {(rayon === 'boncoin' || rayon === 'banque') && (
             <div className="filter-row" role="group" aria-label="Catégorie">
               <span className="filter-label">Catégorie</span>
               {CATEGORIES.map(c => (
@@ -152,7 +158,8 @@ export default function Market() {
               ? <div className="market-vide">
                   <div className="titre">{filtres ? 'Rien ne correspond' : statut === 'disponible' ? vide[0] : 'Rien d’adjugé pour le moment'}</div>
                   <p style={{ margin: '0 auto' }}>{filtres ? 'Essayez d’élargir vos filtres.' : vide[1]}</p>
-                  {rayon !== 'supermarket' && <Link to="/creer" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Créer une œuvre</Link>}
+                  {(rayon === 'tout' || rayon === 'emarket') && <Link to="/creer" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Créer une œuvre</Link>}
+                  {rayon === 'boncoin' && <Link to="/deposer" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Déposer une annonce</Link>}
                 </div>
               : <div className="grid-3">{ventes.map(o => <ObjetCard key={o.id} objet={o} onClick={setSelected} />)}</div>}
       </div>

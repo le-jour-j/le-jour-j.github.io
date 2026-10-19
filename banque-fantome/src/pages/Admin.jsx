@@ -254,7 +254,7 @@ function OngletMarket({ onNotif, depuis }) {
     <div className="admin-panneau">
       <div className="admin-barre">
         <div className="filter-row">
-          {[['supermarket', 'Supermarket'], ['market', 'Market (œuvres)'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
+          {[['supermarket', 'Objets réels (bon coin, la banque vend)'], ['market', 'E-market (œuvres)'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
             <button key={v} type="button" className={`chip ${rayon === v ? 'active' : ''}`} onClick={() => setRayon(v)}>{l}</button>
           ))}
         </div>
@@ -275,7 +275,7 @@ function OngletMarket({ onNotif, depuis }) {
             <button key={v} type="button" className={`chip ${filtre === v ? 'active' : ''}`} onClick={() => setFiltre(v)}>{l}</button>
           ))}
         </div>
-        <span className="caption-gris">Retirer une vente de la bourse ou du market rend ses billets au meilleur enchérisseur ; au supermarket, rien n'a été débité.</span>
+        <span className="caption-gris">Retirer une vente de la bourse ou du market rend ses billets au meilleur enchérisseur ; au bon coin et chez la banque, rien n'a été débité.</span>
       </div>
       {objets === null ? <div className="loader">Chargement<span className="blink">_</span></div>
         : objets.length === 0 ? <p className="vide">Aucun dépôt.</p>

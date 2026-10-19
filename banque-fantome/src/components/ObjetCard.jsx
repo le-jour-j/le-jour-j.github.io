@@ -63,8 +63,8 @@ export default function ObjetCard({ objet, onClick }) {
         <div className="card-tags">
           {oeuvre && objet.oeuvre?.genre ? <span className="tag">{nomGenre(objet.oeuvre.genre)}</span> : objet.categorie && <span className="tag">{objet.categorie}</span>}
           {!billet && !oeuvre && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
-          {/* Au market, œuvres et supermarket se mêlent : on voit d'un coup d'œil ce qui se paie en papier */}
-          {!billet && !oeuvre && vente && <span className="tag tag-papier">billets papier</span>}
+          {/* Au market, les trois rayons se mêlent : on voit d'un coup d'œil d'où vient l'objet, et qu'il se paie en papier */}
+          {!billet && !oeuvre && vente && <span className="tag tag-papier" title="en billets papier">{objet.vendeur_banque ? 'la banque vend' : 'bon coin'}</span>}
         </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 90)}{objet.description?.length > 90 ? '…' : ''}</div>

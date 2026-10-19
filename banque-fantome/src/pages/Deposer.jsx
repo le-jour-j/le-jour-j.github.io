@@ -12,11 +12,11 @@ const FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
-// Mettre un article en vente au supermarket : réservé à la banque depuis le 2026-10-19 (le
-// market est devenu numérique : les joueurs y vendent ce qu'ils font dans Créer). Les
-// enchères s'y font en billets papier, la remise en main propre.
-// `integre` : rendu dans l'onglet Supermarket de l'Admin (sans en-tête ni marges de page) ;
-// `onDepose` : appelé après la mise en vente, à la place du retour au rayon supermarket du market.
+// Mettre un objet réel en vente au market (2026-10-19 au soir) : un joueur dépose une annonce au
+// bon coin, la banque à son rayon « La banque vend » (supabase_bon_coin.sql). Les enchères s'y
+// font en billets papier, la remise en main propre.
+// `integre` : rendu dans l'onglet Ventes de l'Admin (sans en-tête ni marges de page) ;
+// `onDepose` : appelé après la mise en vente, à la place du retour au rayon du market.
 export default function Deposer({ integre = false, onDepose }) {
   const { user, profile, estBanquier, loading: authLoading } = useAuth()
   const navigate = useNavigate()
@@ -114,7 +114,7 @@ export default function Deposer({ integre = false, onDepose }) {
       setFini(true)
       setNotif({ msg: `Mis en vente pour ${form.duree_jours} jour${form.duree_jours > 1 ? 's' : ''}.`, type: 'ok' })
       if (onDepose) setTimeout(onDepose, 1200)
-      else setTimeout(() => navigate('/market?rayon=supermarket'), 1500)
+      else setTimeout(() => navigate(`/market?rayon=${estBanquier ? 'banque' : 'boncoin'}`), 1500)
     } catch (e) {
       setNotif({ msg: messageErreur(e) || 'Erreur lors du dépôt', type: 'err' })
     } finally { setLoading(false) }
@@ -126,35 +126,22 @@ export default function Deposer({ integre = false, onDepose }) {
     <div className="acces-refuse">
       <div>
         <div className="titre">Accès refusé</div>
-        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour créer et vendre vos œuvres.</p>
-        <Link to="/connexion?retour=%2Fcreer" className="btn btn-noir">Se connecter →</Link>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour mettre un objet en vente.</p>
+        <Link to="/connexion?retour=%2Fdeposer" className="btn btn-noir">Se connecter →</Link>
       </div>
     </div>
   )
 
   // Le profil arrive juste après la session : on l'attend avant de trancher
   if (!profile) return <div className="loader">Chargement<span className="blink">_</span></div>
-  if (!estBanquier) return (
-    <div className="acces-refuse">
-      <div>
-        <div className="titre">Le supermarket est à la banque</div>
-        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>
-          Les objets physiques sont vendus par la banque. Vos créations, elles, se font dans les ateliers
-          et se vendent au market, en argent du site.
-        </p>
-        <div className="dessin-actions" style={{ justifyContent: 'center' }}>
-          <Link to="/creer" className="btn btn-jaune">✦ Créer une œuvre</Link>
-          <Link to="/market" className="btn btn-outline">Le market →</Link>
-        </div>
-      </div>
-    </div>
-  )
 
   const formulaire = (
         <div className="form-grid">
           <div>
             <p className="texte-aide" style={{ marginBottom: '2rem' }}>
-              Un objet, une œuvre ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le plus offrant l'emporte à la clôture et vous paie en main propre, au moment de la remise.
+              {estBanquier
+                ? "La banque vend : un objet, une œuvre ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le gagnant vient le chercher à la banque et paie en main propre."
+                : <>Le bon coin : un objet, une œuvre physique ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le plus offrant l'emporte à la clôture ; vous vous arrangez avec lui par messages pour la remise et le paiement. Une création numérique ? Elle se fait dans <Link to="/creer" className="lien-texte">Créer</Link>.</>}
             </p>
             <div className="field">
               <label>Images (8 max, 5 Mo chacune)</label>
@@ -248,7 +235,7 @@ export default function Deposer({ integre = false, onDepose }) {
   return (
     <div className="page-pad">
       <div className="container">
-        <div className="section-head"><h2>Mettre un article au supermarket</h2><span className="count">* champs obligatoires</span></div>
+        <div className="section-head"><h2>{estBanquier ? 'La banque vend' : 'Annonce au bon coin'}</h2><span className="count">* champs obligatoires</span></div>
         {formulaire}
       </div>
       {notification}

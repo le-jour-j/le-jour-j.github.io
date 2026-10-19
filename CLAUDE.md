@@ -123,7 +123,7 @@ secrets : `BANQUE_FANTOME_SUPABASE_{URL,ANON_KEY}`,
 
 *Réécrit le 2026-10-19 après l'audit : l'ancienne version ne citait que 2 fichiers SQL.*
 
-Douze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
+Treize fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
 base Banque Fantôme, dans cet ordre :
 
 1. `supabase_setup.sql` : socle (`profiles`, `objets`, RLS, bucket `objets`).
@@ -140,6 +140,10 @@ base Banque Fantôme, dans cet ordre :
 9. `supabase_market_numerique.sql` (2026-10-19) : table `oeuvres`, `objets.oeuvre_id`, colonne
    générée `objets.numerique` (bourse ou market : on paie en argent du site), bucket privé
    `oeuvres-hd`, supermarket réservé à la banque. Les fonctions d'argent y sont reprises.
+10. `supabase_bon_coin.sql` (2026-10-19 au soir) : le dépôt physique rouvert aux joueurs (le bon
+   coin, 10 annonces par jour), relance des annonces sans enchère, `objets.regle_compte_at` et
+   `payer_avec_compte` (un objet de la banque se règle aussi avec le solde),
+   `annuler_adjudication_papier` refusée sur une vente en argent du site.
 
 Chaque fichier est rejouable, **mais pas dans le désordre** : `bf_garde_objets`,
 `placer_enchere`, `acheter_immediat`, `bf_finaliser_vente`, `remettre_en_vente`... sont
@@ -156,15 +160,17 @@ dans `/collection`) :
   `dessins`), puis `encaisser_dessin` (la banque garde le billet, compte crédité, 3 par
   jour, une ligne `billets_emis`) ou `mettre_dessin_en_vente` (une ligne `objets` avec
   `dessin_id`). Ces ventes se paient avec le solde, commission au trésor.
-- **Le market** (`/market`) : les œuvres des ateliers de `/creer` (Paint, Poésie, Image,
+- **L'E-market** (`/market?rayon=emarket`) : les œuvres des ateliers de `/creer` (Paint, Poésie, Image,
   Collage, dans `src/components/ateliers/`, contrat commun dans `commun.jsx`). `deposer_oeuvre`
   (aperçu public `objets/oeuvres/<uid>/`, HD privée `oeuvres-hd/<uid>/`, lue par le seul
   propriétaire), `mettre_oeuvre_en_vente`, `annuler_oeuvre` (banquier). Argent du site, 5 %.
-- **Le supermarket** (un rayon de `/market` depuis la fusion du 19/10 au soir :
-  `/market?rayon=supermarket`, `/supermarket` y renvoie ; `/deposer` réservé au banquier) : objets physiques
-  (`objets` sans dessin ni œuvre), enchères en promesses de billets papier, remise en main
-  propre. Les ventes physiques des joueurs d'avant expirent sans relance. Le vendeur ou le
-  banquier peut défaire une adjudication (`annuler_adjudication_papier`).
+- **Le bon coin** (`/market?rayon=boncoin`, dépôt par `/deposer`) et **la banque vend**
+  (`/market?rayon=banque`, `/supermarket` y renvoie ; `vendeur_banque` posé par la base) :
+  objets physiques (`objets` sans dessin ni œuvre), enchères en promesses de billets papier,
+  remise en main propre ; au bon coin les joueurs s'arrangent entre eux, chez la banque le
+  gagnant peut aussi `payer_avec_compte`. Le vendeur ou le banquier peut défaire une
+  adjudication (`annuler_adjudication_papier`, remboursée si elle était réglée avec le compte).
+  Les trois rayons (E-market, bon coin, la banque vend) partagent la page `/market`.
 
 **Piège des droits** : `profiles` n'est lisible que par colonnes (`id, pseudo, solde,
 role, created_at`). Un `select('*')` sur `profiles` ou un `upsert` qui met à jour

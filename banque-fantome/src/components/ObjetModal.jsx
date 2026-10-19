@@ -44,7 +44,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
               #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
-            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : oeuvre ? '◈ Market' : banque ? '◈ Supermarket de la banque' : '◈ Supermarket'}</span>}
+            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : oeuvre ? '◈ E-market' : banque ? '◈ La banque vend' : '◇ Le bon coin'}</span>}
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
@@ -73,7 +73,9 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             </div>
           }
           <p className="modal-texte">{objet.description}</p>
-          {vente && physique && <p className="texte-aide">Les enchères se font en billets papier, sans toucher à votre compte : le gagnant paie {banque ? 'la banque' : 'le vendeur'} en main propre, au moment de la remise.</p>}
+          {vente && physique && <p className="texte-aide">{banque
+            ? 'Les enchères se font en billets papier, sans toucher à votre compte : le gagnant paie en main propre en venant chercher l’objet, ou règle avec l’argent de son compte. Une livraison ? Écrivez à la banque.'
+            : 'Les enchères se font en billets papier, sans toucher à votre compte : le gagnant et le vendeur s’arrangent entre eux, par messages, pour la remise et le paiement.'}</p>}
           {objet.histoire &&
             <div className="modal-histoire">
               <div className="meta-label" style={{ marginBottom: '.4rem' }}>Histoire</div>
