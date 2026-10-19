@@ -39,25 +39,30 @@ export default function Senrichir() {
   const [valeur, setValeur] = useState('toutes')
   const [montres, setMontres] = useState(PAR_PAQUET)
   const [notif, setNotif] = useState(null)
-  const [auHasard] = useState(() => melanger(PLANCHES))
 
   // Les billets dessinés sur le site (2026-10-19) rejoignent les planches scannées, en tête :
   // leur planche A4 est fabriquée dans le navigateur au clic, depuis la trace du billet.
   const [dessins, setDessins] = useState([])
+  const [pret, setPret] = useState(false) // la grille attend les billets du site, pour n'être mélangée qu'une fois
   useEffect(() => {
     let annule = false
     supabase.from('dessins').select('id, numero, code, titre, devise, coupure, auteur_pseudo, image_path, statut, created_at')
       .neq('statut', 'annule').order('created_at', { ascending: false }).limit(300)
-      .then(({ data }) => { if (!annule) setDessins(data || []) })
+      .then(({ data }) => { if (!annule) { setDessins(data || []); setPret(true) } })
     return () => { annule = true }
   }, [])
 
   const total = PLANCHES.length + dessins.length
   const valeurs = useMemo(() => [...new Set([...VALEURS, ...dessins.map(d => d.coupure)])].sort((a, b) => a - b), [dessins])
-  const visibles = useMemo(() => [
-    ...dessins.filter(d => valeur === 'toutes' || d.coupure === valeur).map(d => ({ ...d, dessine: true })),
-    ...(valeur === 'toutes' ? auHasard : PLANCHES.filter(p => p.valeur === valeur)),
-  ], [valeur, auHasard, dessins])
+  // « toutes » : billets du site et planches scannées mêlés au hasard, tirés une fois par visite
+  // (Jiiji, 2026-10-19 : « les nouvelles planches doivent aussi être affichées en random ») ;
+  // par coupure, les billets du site d'abord, puis les planches dans l'ordre des numéros.
+  const billetsDuSite = useMemo(() => dessins.map(d => ({ ...d, dessine: true })), [dessins])
+  const auHasard = useMemo(() => melanger([...billetsDuSite, ...PLANCHES]), [billetsDuSite])
+  const visibles = useMemo(() => valeur === 'toutes' ? auHasard : [
+    ...billetsDuSite.filter(d => d.coupure === valeur),
+    ...PLANCHES.filter(p => p.valeur === valeur),
+  ], [valeur, auHasard, billetsDuSite])
   // Billets du site : la feuille A4 composée dans le navigateur (vignette, puis grand format à l'ouverture)
   const [feuilles, setFeuilles] = useState({}) // `${id}-${pxParMm}` -> url de l'aperçu
   const composer = (d, k) => apercuPlanche(d, k)
@@ -85,7 +90,7 @@ export default function Senrichir() {
         <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
           Ici, vous fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.
           {' '}{total} planches A4, de 5 à 500 €, chacune à taille réelle avec ses traits de coupe : les billets dessinés
-          dans l'<Link to="/bourse?onglet=atelier" className="lien-texte">atelier de la bourse</Link> d'abord, puis ceux de l'atelier papier.
+          dans l'<Link to="/bourse?onglet=atelier" className="lien-texte">atelier de la bourse</Link> et ceux de l'atelier papier, mêlés.
           Cliquez sur une planche pour voir le billet en grand.
         </p>
 
@@ -100,7 +105,7 @@ export default function Senrichir() {
               <button key={v} type="button" className={`chip ${valeur === v ? 'active' : ''}`} onClick={() => choisirValeur(v)}>{v} €</button>
             ))}
           </div>
-          <div className="planches-grid">
+          {!pret ? <div className="loader">Chargement<span className="blink">_</span></div> : <div className="planches-grid">
             {visibles.slice(0, montres).map((p, index) => p.dessine ? (
               <article key={p.id} className="planche-card">
                 <button type="button" className={`planche-apercu ${feuilles[`${p.id}-1.6`] ? 'planche-apercu-feuille' : 'planche-apercu-billet'}`} onClick={() => setLightboxIndex(index)} aria-label={`Voir la planche du billet ${p.code || p.numero} en grand`}>
@@ -122,8 +127,8 @@ export default function Senrichir() {
                 </div>
               </article>
             ))}
-          </div>
-          {visibles.length > montres && (
+          </div>}
+          {pret && visibles.length > montres && (
             <div className="planches-plus">
               <button type="button" className="btn btn-outline btn-sm" onClick={() => setMontres(m => m + PAR_PAQUET)}>
                 Voir {Math.min(PAR_PAQUET, visibles.length - montres)} planches de plus
