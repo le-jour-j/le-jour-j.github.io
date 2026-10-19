@@ -11,12 +11,18 @@ function fakeEmail(pseudo) {
   return `${pseudo.toLowerCase().replace(/[^a-z0-9]/g, '_')}@banquefantome.local`
 }
 
+// ?retour=/bourse?onglet=atelier : où revenir une fois connecté (chemin interne seulement)
+function cheminRetour(v) {
+  return v && v.startsWith('/') && !v.startsWith('//') && !v.includes('\\') ? v : null
+}
+
 export default function Connexion() {
-  const { user } = useAuth()
+  const { user, refreshProfile } = useAuth()
   const navigate = useNavigate()
   // ?lettre=1 : on arrive du bouton « Recevoir la lettre » → nouveau compte, case cochée
   const [params] = useSearchParams()
   const depuisLettre = params.get('lettre') === '1'
+  const retour = cheminRetour(params.get('retour'))
   const [mode, setMode]         = useState(depuisLettre ? 'register' : 'login') // 'login' | 'register' | 'reset'
   const [lettre, setLettre]     = useState(depuisLettre)
   const [emailLettre, setEmailLettre] = useState('')
@@ -28,10 +34,14 @@ export default function Connexion() {
   const [notif, setNotif]       = useState(null)
   const [errors, setErrors]     = useState({})
   const [revealCode, setRevealCode] = useState(null)
+  // Inscription ou nouveau mot de passe en cours : la session s'ouvre avant la fin,
+  // il ne faut pas quitter la page avant d'avoir montré le code de récupération.
+  const [garde, setGarde] = useState(false)
+  const partir = !!user && !garde && !revealCode
 
-  // Déjà connecté → mon compte (dans un effet, pas pendant le rendu)
-  useEffect(() => { if (user) navigate('/compte') }, [user])
-  if (user) return null
+  // Déjà connecté → page de retour ou mon compte (dans un effet, pas pendant le rendu)
+  useEffect(() => { if (partir) navigate(retour || '/compte', { replace: true }) }, [partir])
+  if (partir) return null
 
   function validate() {
     const e = {}
@@ -51,6 +61,7 @@ export default function Connexion() {
   async function handleSubmit() {
     if (!validate()) return
     setLoad(true)
+    if (mode !== 'login') setGarde(true)
     const email = fakeEmail(pseudo.trim())
     try {
       if (mode === 'register') {
@@ -59,7 +70,12 @@ export default function Connexion() {
         if (data.user) {
           const recoveryCode = generateRecoveryCode()
           const recoveryHash = await hashRecoveryCode(recoveryCode)
-          await supabase.from('profiles').upsert({ id: data.user.id, pseudo: pseudo.trim(), recovery_code_hash: recoveryHash })
+          // Insertion simple : le hash n'est plus lisible par les comptes, un upsert qui le
+          // réécrirait serait refusé (supabase_garde_fous.sql). Le profil n'existe pas encore.
+          const { error: profilErr } = await supabase.from('profiles')
+            .upsert({ id: data.user.id, pseudo: pseudo.trim(), recovery_code_hash: recoveryHash }, { ignoreDuplicates: true })
+          if (profilErr) throw profilErr
+          await refreshProfile?.(data.user)
           // Le compte existe : un souci d'inscription à la lettre ne doit pas le bloquer
           if (lettre) {
             try { await enregistrerAbonnement(data.user.id, emailLettre) }
@@ -71,8 +87,7 @@ export default function Connexion() {
       } else if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email, password: mdp })
         if (error) throw error
-        setNotif({ msg: 'Connexion réussie.', type: 'ok' })
-        setTimeout(() => navigate('/'), 1000)
+        // l'effet du haut renvoie vers la page de retour dès que la session est ouverte
 
       } else if (mode === 'reset') {
         const { data, error: fnErr } = await supabase.functions.invoke('reset-password', {
@@ -92,6 +107,7 @@ export default function Connexion() {
         : e.message?.includes('Invalid login') ? 'Pseudo ou mot de passe incorrect.'
         : e.message || 'Erreur'
       setNotif({ msg, type: 'err' })
+      setGarde(false)
     } finally { setLoad(false) }
   }
 
@@ -113,8 +129,10 @@ export default function Connexion() {
             <button type="button" role="tab" aria-selected={mode === 'register'} className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>Nouveau compte</button>
           </div>
           <p className="texte-aide" style={{ marginBottom: '1.6rem' }}>
-            {mode === 'login' && 'Identifiez-vous pour déposer des objets et gérer vos échanges.'}
-            {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo — vous devenez opérateur de la Banque.'}
+            {mode === 'login' && (retour?.startsWith('/bourse')
+              ? 'Connectez-vous pour déposer votre billet : votre dessin vous attend dans l’atelier.'
+              : 'Identifiez-vous pour déposer des objets et gérer vos échanges.')}
+            {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo : vous devenez opérateur de la Banque.'}
             {mode === 'reset' && 'Entrez votre pseudo, votre code de récupération, puis votre nouveau mot de passe.'}
           </p>
 
@@ -179,7 +197,7 @@ export default function Connexion() {
         </div>
       </div>
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
-      {revealCode && <RecoveryCodeReveal code={revealCode} onConfirm={() => navigate('/')} />}
+      {revealCode && <RecoveryCodeReveal code={revealCode} onConfirm={() => navigate(retour || '/compte', { replace: true })} />}
     </div>
   )
 }

@@ -49,7 +49,13 @@ export default function Inventaire() {
   // Les ventes échues sont adjugées (ou relancées si personne n'a enchéri) à l'ouverture du market (idempotent)
   useEffect(() => { supabase.rpc('resoudre_ventes_expirees').then(() => setVersion(v => v + 1)) }, [])
 
+  // La recherche part 300 ms après la dernière frappe, pas à chaque touche
+  const [cherche, setCherche] = useState('')
+  useEffect(() => { const t = setTimeout(() => setCherche(search.trim()), 300); return () => clearTimeout(t) }, [search])
+  const [erreur, setErreur] = useState(false)
+
   useEffect(() => {
+    let annule = false // une réponse en retard n'écrase pas la plus récente
     setLoading(true)
     // Le market ne montre que les objets : les billets dessinés vivent dans la bourse (2026-10-18).
     // Les ventes retirées n'y ont plus leur place.
@@ -58,20 +64,25 @@ export default function Inventaire() {
     else q = q.neq('statut', 'retiré')
     if (categorie !== 'toutes') q = q.eq('categorie', categorie)
     if (rarete !== 'toutes') q = q.eq('rarete', rarete)
-    if (search.trim()) q = q.ilike('titre', `%${search.trim()}%`)
-    if (tri === 'valeur_desc') q = q.order('enchere_courante', { ascending: false, nullsFirst: false }).order('valeur', { ascending: false, nullsFirst: false })
-    else if (tri === 'valeur_asc') q = q.order('enchere_courante', { ascending: true, nullsFirst: false }).order('valeur', { ascending: true, nullsFirst: false })
-    else if (tri === 'fin') q = q.order('expire_at', { ascending: true, nullsFirst: false })
-    else q = q.order('created_at', { ascending: false }) // 'recent' et 'rarete' (rarete triee cote client)
+    if (cherche) q = q.ilike('titre', `%${cherche}%`)
+    if (tri === 'fin') q = q.order('expire_at', { ascending: true, nullsFirst: false })
+    else q = q.order('created_at', { ascending: false }) // 'recent', 'rarete' et 'valeur' (triés côté client)
 
-    q.then(({ data, count }) => {
+    q.then(({ data, count, error }) => {
+      if (annule) return
+      setErreur(!!error)
       let result = data || []
+      // Valeur = l'enchère en cours, sinon la mise de départ (une vente à 500 sans enchère passait avant une enchère à 10)
+      const prix = o => o.enchere_courante ?? o.mise_depart ?? o.valeur ?? 0
       if (tri === 'rarete') result = [...result].sort((a, b) => rangRarete(b.rarete) - rangRarete(a.rarete))
+      else if (tri === 'valeur_asc') result = [...result].sort((a, b) => prix(a) - prix(b))
+      else if (tri === 'valeur_desc') result = [...result].sort((a, b) => prix(b) - prix(a))
       setObjets(result)
       setTotal(count || 0)
       setLoading(false)
     })
-  }, [statut, categorie, rarete, tri, search, version])
+    return () => { annule = true }
+  }, [statut, categorie, rarete, tri, cherche, version])
 
   return (
     <div className="page-pad">
@@ -117,13 +128,19 @@ export default function Inventaire() {
 
         {loading
           ? <div className="loader">Chargement<span className="blink">_</span></div>
+          : erreur
+            ? <div className="market-vide">
+                <div className="titre">Le market ne répond pas</div>
+                <p style={{ margin: '0 auto' }}>La connexion à la banque a échoué. Réessayez dans un instant.</p>
+                <button type="button" className="btn btn-noir" style={{ marginTop: '1.2rem' }} onClick={() => setVersion(v => v + 1)}>↻ Réessayer</button>
+              </div>
           : objets.length === 0
             ? <div className="market-vide">
                 <div className="titre">{filtresActifs ? 'Aucune entrée ne correspond' : 'Vitrine vide'}</div>
-                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'Déposez la première entrée dans le circuit.'}</p>
+                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'Mettez le premier objet en vente.'}</p>
                 {filtresActifs && <button type="button" className="btn btn-noir" style={{ marginTop: '1.2rem' }} onClick={reset}>Tout afficher</button>}
               </div>
-            : <div className="grid-3" key={`${statut}-${categorie}-${rarete}-${tri}-${search}`}>
+            : <div className="grid-3" key={`${statut}-${categorie}-${rarete}-${tri}-${cherche}`}>
                 {objets.map(o => <ObjetCard key={o.id} objet={o} onClick={setSelected} />)}
               </div>
         }

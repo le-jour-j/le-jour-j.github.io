@@ -7,7 +7,7 @@ export default function CoursDevises({ compact = false }) {
   useEffect(() => {
     const charger = () => supabase.rpc('cours_devises').then(({ data }) => setDevises(data || []))
     charger()
-    const channel = supabase.channel('cours-devises')
+    const channel = supabase.channel(`cours-devises-${Math.random().toString(36).slice(2)}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'billets_emis' }, charger)
       .subscribe()
     return () => supabase.removeChannel(channel)

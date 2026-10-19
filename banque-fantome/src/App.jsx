@@ -1,23 +1,27 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { AuthProvider } from './components/AuthContext'
 import { NouveautesProvider } from './components/Nouveautes'
 import Navbar from './components/Navbar'
 import ClickEffects from './components/ClickEffects'
 import InstallPWA from './components/InstallPWA'
+import Rattrapage from './components/Rattrapage'
 import Home from './pages/Home'
 import Inventaire from './pages/Inventaire'
 import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
-import Senrichir from './pages/Senrichir'
 import Actu from './pages/Actu'
-import Admin from './pages/Admin'
-import Bourse from './pages/Bourse'
 import Deposer from './pages/Deposer'
 import Lettre from './pages/Lettre'
 import Info from './pages/Info'
 import { applySeo } from './lib/seo'
+
+// Les pages lourdes se chargent à la demande : S'enrichir (le catalogue des 834 planches),
+// l'admin, et la bourse avec son atelier. Le reste du site ne les télécharge plus.
+const Senrichir = lazy(() => import('./pages/Senrichir'))
+const Admin = lazy(() => import('./pages/Admin'))
+const Bourse = lazy(() => import('./pages/Bourse'))
 
 export default function App() {
   const location = useLocation()
@@ -37,6 +41,8 @@ export default function App() {
       <Navbar />
       {/* key = pathname : relance l'animation d'entrée (.page) à chaque navigation */}
       <main className="page" key={location.pathname}>
+        <Rattrapage>
+        <Suspense fallback={<div className="loader">Chargement<span className="blink">_</span></div>}>
         <Routes>
           <Route path="/"           element={<Home />} />
           <Route path="/market"     element={<Inventaire />} />
@@ -54,11 +60,13 @@ export default function App() {
           <Route path="/lettre"     element={<Lettre />} />
           <Route path="/info"       element={<Info />} />
         </Routes>
+        </Suspense>
+        </Rattrapage>
       </main>
       <InstallPWA />
       <footer className="footer">
         <div className="container">
-          <span>◈ Banque Fantôme — institution de circulation</span>
+          <span>◈ Banque Fantôme ◈ institution de circulation</span>
           <span>La valeur ne préexiste pas : elle se dessine.</span>
         </div>
       </footer>

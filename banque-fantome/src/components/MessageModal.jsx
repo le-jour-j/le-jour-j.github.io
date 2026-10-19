@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import Portal from './Portal'
 import { useAuth } from './AuthContext'
@@ -8,39 +8,46 @@ import { useModal } from '../utils/useModal'
 export default function MessageModal({ objet, onClose, destinataire }) {
   // destinataire facultatif { id, pseudo } — par défaut le déposant de l'objet
   const dest = destinataire || { id: objet.user_id, pseudo: objet.pseudo }
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate  = useNavigate()
+  const location  = useLocation()
   const [contenu, setContenu] = useState('')
   const [sending, setSending] = useState(false)
   const [done, setDone]       = useState(false)
+  const [erreur, setErreur]   = useState(null)
   useModal(onClose)
+  const versConnexion = () => { onClose?.(); navigate(`/connexion?retour=${encodeURIComponent(location.pathname + location.search)}`) }
 
   async function send() {
     if (!contenu.trim()) return
-    if (!user) { navigate('/connexion'); return }
+    if (!user) { versConnexion(); return }
     setSending(true)
+    setErreur(null)
 
-    const { data: myProfile } = await supabase
-      .from('profiles').select('pseudo').eq('id', user.id).single()
-
+    // Le pseudo de l'expéditeur est imposé par la base (supabase_garde_fous.sql)
     const { error } = await supabase.from('messages').insert({
       objet_id:            objet.id,
       objet_titre:         objet.titre,
       expediteur_id:       user.id,
       destinataire_id:     dest.id,
-      expediteur_pseudo:   myProfile?.pseudo || 'Anonyme',
+      expediteur_pseudo:   profile?.pseudo || 'Anonyme',
       destinataire_pseudo: dest.pseudo || 'Anonyme',
       contenu:             contenu.trim(),
     })
 
     setSending(false)
-    if (!error) setDone(true)
+    if (error) setErreur("Le message n'est pas parti. Réessayez dans un instant.")
+    else setDone(true)
   }
+
+  const exemple = destinataire ? 'Bonjour, '
+    : objet.mise_depart != null ? 'Bonjour, une question sur cet objet : '
+    : 'Bonjour, je suis intéressé·e par cet objet. Je peux proposer en échange…'
 
   return (
     <Portal>
     <div className="modal-bg" onClick={onClose}>
-      <div className="modal" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="message-titre" onClick={e => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="Fermer">✕</button>
 
         {done
@@ -55,7 +62,7 @@ export default function MessageModal({ objet, onClose, destinataire }) {
               </button>
             </div>
           : <>
-              <h3 style={{ marginBottom: '.4rem' }}>{destinataire ? 'Écrire' : objet.mise_depart != null ? 'Question au vendeur' : 'Proposer un échange'}</h3>
+              <h3 id="message-titre" style={{ marginBottom: '.4rem' }}>{destinataire ? 'Écrire' : objet.mise_depart != null ? 'Question au vendeur' : 'Proposer un échange'}</h3>
               <div className="meta-label" style={{ marginBottom: '1.2rem' }}>
                 à {dest.pseudo} · re: {objet.titre}
               </div>
@@ -65,22 +72,24 @@ export default function MessageModal({ objet, onClose, destinataire }) {
                 </p>
               }
               <div className="field">
-                <label>Votre message</label>
+                <label htmlFor="message-contenu">Votre message</label>
                 <textarea
+                  id="message-contenu"
                   value={contenu}
                   onChange={e => setContenu(e.target.value)}
-                  placeholder="Bonjour, je suis intéressé·e par cet objet. Je peux proposer en échange…"
+                  placeholder={exemple}
                   style={{ minHeight: 120 }}
                   disabled={!user}
                 />
               </div>
               <button
                 className="btn btn-noir btn-bloc"
-                onClick={user ? send : () => navigate('/connexion')}
+                onClick={user ? send : versConnexion}
                 disabled={sending || (user && !contenu.trim())}
               >
                 {sending ? 'Envoi…' : !user ? '→ Se connecter pour écrire' : '→ Envoyer'}
               </button>
+              {erreur && <p className="msg-err">{erreur}</p>}
             </>
         }
       </div>

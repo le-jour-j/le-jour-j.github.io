@@ -22,6 +22,9 @@ const ONGLETS = [
   { id: 'coffre', label: 'Le coffre de la banque' },
 ]
 
+// Tout sauf la trace du dessin (25 à 50 Ko par billet, jusqu'à 2 Mo) : la carte n'affiche que l'image
+const COLONNES_DESSIN = 'id, numero, auteur_id, auteur_pseudo, proprietaire_id, proprietaire_pseudo, coupure, graine, code, titre, devise, image_path, nb_traits, nb_ventes, statut, billet_id, created_at'
+
 // Encaissements encore permis sur 24 h glissantes (même calcul que encaisser_dessin)
 function useQuota(user) {
   const [quota, setQuota] = useState(null)
@@ -46,6 +49,7 @@ export default function Bourse() {
   const [notif, setNotif] = useState(null)
   const [selected, setSelected] = useState(null) // vente ouverte en fiche
   const [quota, rechargerQuota] = useQuota(user)
+  const [fraicheur, setFraicheur] = useState(0) // recharge les ventes après une action dans une fiche
 
   const apresAction = useCallback(() => { rechargerQuota(); refreshProfile?.() }, [rechargerQuota, refreshProfile])
 
@@ -76,12 +80,12 @@ export default function Bourse() {
           ))}
         </div>
 
-        {onglet === 'vente' && <OngletVente onOuvrir={setSelected} />}
+        {onglet === 'vente' && <OngletVente onOuvrir={setSelected} fraicheur={fraicheur} />}
         {onglet === 'atelier' && <OngletAtelier quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />}
         {onglet === 'collection' && <OngletCollection quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />}
         {onglet === 'coffre' && <OngletCoffre />}
       </div>
-      {selected && <ObjetModal objet={selected} onClose={() => { setSelected(null); apresAction() }} />}
+      {selected && <ObjetModal objet={selected} onClose={() => { setSelected(null); apresAction(); setFraicheur(f => f + 1) }} />}
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
     </div>
   )
@@ -91,7 +95,7 @@ export default function Bourse() {
 const FILTRES = [['disponible', 'en vente'], ['échangé', 'adjugés']]
 const TRIS = [['recent', 'Plus récent'], ['fin', 'Se termine bientôt'], ['prix', 'Prix croissant']]
 
-function OngletVente({ onOuvrir }) {
+function OngletVente({ onOuvrir, fraicheur }) {
   const [ventes, setVentes] = useState(null)
   const [statut, setStatut] = useState('disponible')
   const [tri, setTri] = useState('recent')
@@ -104,11 +108,16 @@ function OngletVente({ onOuvrir }) {
     let annule = false
     let q = supabase.from('objets').select('*').not('dessin_id', 'is', null).eq('statut', statut).limit(120)
     if (tri === 'fin' && statut === 'disponible') q = q.order('expire_at', { ascending: true })
-    else if (tri === 'prix') q = q.order('enchere_courante', { ascending: true, nullsFirst: true }).order('mise_depart', { ascending: true })
     else q = q.order(statut === 'échangé' ? 'vendu_at' : 'created_at', { ascending: false })
-    q.then(({ data }) => { if (!annule) setVentes(data || []) })
+    // Prix = l'enchère en cours, sinon la mise de départ (trié ici : la base mettait les ventes sans enchère à part)
+    const prix = o => statut === 'échangé' ? o.prix_final ?? 0 : o.enchere_courante ?? o.mise_depart ?? 0
+    q.then(({ data }) => {
+      if (annule) return
+      const liste = data || []
+      setVentes(tri === 'prix' ? [...liste].sort((a, b) => prix(a) - prix(b)) : liste)
+    })
     return () => { annule = true }
-  }, [statut, tri, version])
+  }, [statut, tri, version, fraicheur])
 
   return (
     <>
@@ -143,7 +152,7 @@ function OngletAtelier({ quota, onNotif, onChange, onVoirVente }) {
 
   async function rechargerNouveau(id = nouveau?.id) {
     if (!id) return
-    const { data } = await supabase.from('dessins').select('*').eq('id', id).single()
+    const { data } = await supabase.from('dessins').select(COLONNES_DESSIN).eq('id', id).single()
     if (data) setNouveau(data)
   }
 
@@ -151,7 +160,7 @@ function OngletAtelier({ quota, onNotif, onChange, onVoirVente }) {
   async function valider({ blob, type, coupure, graine, numero, trace }) {
     if (!user) {
       onNotif({ msg: 'Connectez-vous pour déposer votre billet : votre dessin reste gardé dans ce navigateur.', type: 'err' })
-      navigate('/connexion')
+      navigate(`/connexion?retour=${encodeURIComponent('/bourse?onglet=atelier')}`)
       throw new Error('connexion requise')
     }
     setEnvoi(true)
@@ -200,7 +209,7 @@ function OngletAtelier({ quota, onNotif, onChange, onVoirVente }) {
       </div>
       {!user && (
         <p className="texte-aide" style={{ marginBottom: '1rem' }}>
-          Vous pouvez dessiner sans compte ; pour déposer le billet, il faudra <Link to="/connexion" className="lien-texte">ouvrir un compte</Link>.
+          Vous pouvez dessiner sans compte ; pour déposer le billet, il faudra <Link to="/connexion?retour=%2Fbourse%3Fonglet%3Datelier" className="lien-texte">ouvrir un compte</Link>.
         </p>
       )}
       {user && quota && (
@@ -224,14 +233,14 @@ function OngletCollection({ quota, onNotif, onChange, onVoirVente }) {
     if (!user) return
     let annule = false
     Promise.all([
-      supabase.from('dessins').select('*').eq('proprietaire_id', user.id).order('created_at', { ascending: false }).limit(200),
-      supabase.from('dessins').select('*').eq('auteur_id', user.id).in('statut', ['encaisse', 'annule']).order('created_at', { ascending: false }).limit(48),
+      supabase.from('dessins').select(COLONNES_DESSIN).eq('proprietaire_id', user.id).order('created_at', { ascending: false }).limit(200),
+      supabase.from('dessins').select(COLONNES_DESSIN).eq('auteur_id', user.id).in('statut', ['encaisse', 'annule']).order('created_at', { ascending: false }).limit(48),
     ]).then(([a, b]) => { if (!annule) { setMiens(a.data || []); setEncaisses(b.data || []) } })
     return () => { annule = true }
   }, [user, version])
 
   if (!user) return (
-    <p className="texte-aide">Votre collection apparaît ici une fois connecté. <Link to="/connexion" className="lien-texte">Se connecter →</Link></p>
+    <p className="texte-aide">Votre collection apparaît ici une fois connecté. <Link to="/connexion?retour=%2Fbourse%3Fonglet%3Dcollection" className="lien-texte">Se connecter →</Link></p>
   )
   if (miens === null) return <div className="loader">Chargement<span className="blink">_</span></div>
 
@@ -266,7 +275,7 @@ function OngletCoffre() {
 
   useEffect(() => {
     let annule = false
-    supabase.from('dessins').select('*').eq('statut', 'encaisse').order('created_at', { ascending: false }).limit(500)
+    supabase.from('dessins').select(COLONNES_DESSIN).eq('statut', 'encaisse').order('created_at', { ascending: false }).limit(500)
       .then(({ data }) => { if (!annule) setBillets(data || []) })
     return () => { annule = true }
   }, [])

@@ -5,7 +5,7 @@ import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
 
 export default function Messages() {
-  const { user, loading: authLoading } = useAuth()
+  const { user, profile, loading: authLoading } = useAuth()
   const navigate  = useNavigate()
 
   const [conversations, setConversations] = useState([]) // liste des interlocuteurs
@@ -56,6 +56,7 @@ export default function Messages() {
           unread:     0,
         }
       }
+      if (!map[key].objetTitre && m.objet_titre) map[key].objetTitre = m.objet_titre // les vieilles réponses n'avaient pas le titre
       if (!m.lu && m.destinataire_id === user.id) map[key].unread++
     })
 
@@ -65,32 +66,38 @@ export default function Messages() {
     setLoading(false)
   }
 
+  // Une conversation = un interlocuteur + un objet (ou aucun : .is null, .eq ne trouve jamais NULL)
+  const surObjet = (q, objetId) => objetId ? q.eq('objet_id', objetId) : q.is('objet_id', null)
+
   async function loadThread() {
-    const { data } = await supabase
+    const { data } = await surObjet(supabase
       .from('messages')
       .select('*')
-      .or(`and(expediteur_id.eq.${user.id},destinataire_id.eq.${selected.userId}),and(expediteur_id.eq.${selected.userId},destinataire_id.eq.${user.id})`)
-      .eq('objet_id', selected.objetId || null)
+      .or(`and(expediteur_id.eq.${user.id},destinataire_id.eq.${selected.userId}),and(expediteur_id.eq.${selected.userId},destinataire_id.eq.${user.id})`),
+      selected.objetId)
       .order('created_at', { ascending: true })
     setThread(data || [])
   }
 
   async function markRead() {
-    await supabase.from('messages')
+    if (!selected.unread) return
+    await surObjet(supabase.from('messages')
       .update({ lu: true })
       .eq('destinataire_id', user.id)
       .eq('expediteur_id', selected.userId)
+      .eq('lu', false), selected.objetId)
+    window.dispatchEvent(new Event('bf-messages-lus')) // le badge de la barre se recompte
+    loadConversations()
   }
 
   async function sendReply() {
     if (!reply.trim()) return
     setSending(true)
 
-    const { data: profile } = await supabase
-      .from('profiles').select('pseudo').eq('id', user.id).single()
-
+    // Le pseudo de l'expéditeur est imposé par la base (supabase_garde_fous.sql)
     const { error } = await supabase.from('messages').insert({
       objet_id:            selected.objetId || null,
+      objet_titre:         selected.objetTitre || null,
       expediteur_id:       user.id,
       destinataire_id:     selected.userId,
       expediteur_pseudo:   profile?.pseudo || 'Anonyme',
@@ -99,7 +106,7 @@ export default function Messages() {
     })
 
     if (error) {
-      setNotif({ msg: 'Erreur envoi', type: 'err' })
+      setNotif({ msg: "Le message n'est pas parti. Réessayez dans un instant.", type: 'err' })
     } else {
       setReply('')
       loadThread()
@@ -125,7 +132,7 @@ export default function Messages() {
             {loading
               ? <div className="loader">chargement<span className="blink">_</span></div>
               : conversations.length === 0
-                ? <div className="vide"><div className="titre">Aucun message</div><p style={{ margin: '0 auto' }}>Proposez un échange depuis une fiche du market pour démarrer une conversation.</p></div>
+                ? <div className="vide"><div className="titre">Aucun message</div><p style={{ margin: '0 auto' }}>Écrivez au vendeur depuis une fiche du market pour démarrer une conversation.</p></div>
                 : conversations.map(c => {
                     const key = `${c.userId}_${c.objetId}`
                     const isActive = selected?.userId === c.userId && selected?.objetId === c.objetId

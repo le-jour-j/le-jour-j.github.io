@@ -7,6 +7,7 @@ import ActuForm from '../components/ActuForm'
 import ObjetModal from '../components/ObjetModal'
 import Deposer from './Deposer'
 import Notif from '../components/Notif'
+import ImageLightbox from '../components/ImageLightbox'
 import { getPublicImageUrl, getObjetImageUrls } from '../utils/images'
 import { estVente, echeance, tempsRestant, messageErreur } from '../utils/encheres'
 import { emailValide, messageLettre, fonctionLettre } from '../lib/lettre'
@@ -32,7 +33,7 @@ const estNouveau = (date, depuis) => !!date && !!depuis && new Date(date) > new 
 const Nouveau = () => <span className="stamp stamp-jaune admin-nouveau">nouveau</span>
 
 export default function Admin() {
-  const { user, loading, estBanquier } = useAuth()
+  const { user, loading, profile, estBanquier } = useAuth()
   const { data: nouveautes, compte, lettrePrete, recharger, marquerVu } = useNouveautes()
   const [onglet, setOnglet] = useState(() => {
     try { return sessionStorage.getItem('bf-admin-onglet') || 'actu' } catch { return 'actu' }
@@ -56,7 +57,8 @@ export default function Admin() {
 
   const aVoir = { comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
 
-  if (loading) return <div className="loader">Chargement<span className="blink">_</span></div>
+  // On attend aussi le profil : sans lui, le banquier voyait « Accès refusé » au rechargement
+  if (loading || (user && !profile)) return <div className="loader">Chargement<span className="blink">_</span></div>
   if (!user || !estBanquier) return (
     <div className="acces-refuse">
       <div>
@@ -150,6 +152,7 @@ function OngletBillets({ onNotif, depuis }) {
   const { user } = useAuth()
   const [billets, setBillets] = useState(null)
   const [filtre, setFiltre] = useState('valide')
+  const [agrandi, setAgrandi] = useState(null) // image du billet ouverte en grand
   const [enAnnulation, setEnAnnulation] = useState(null) // { id, motif }
   const [busy, setBusy] = useState(false)
   const [recharge, setRecharge] = useState(0)
@@ -187,9 +190,9 @@ function OngletBillets({ onNotif, depuis }) {
               const nouveau = b.user_id !== user?.id && estNouveau(b.created_at, depuis)
               return (
               <div key={b.id} className={`admin-ligne ${b.statut === 'annule' ? 'barre' : ''} ${nouveau ? 'nouvelle' : ''}`}>
-                <a className="admin-vignette" href={getPublicImageUrl(b.image_path)} target="_blank" rel="noreferrer">
+                <button type="button" className="admin-vignette" onClick={() => setAgrandi(getPublicImageUrl(b.image_path))} aria-label="Voir le billet en grand">
                   <img src={getPublicImageUrl(b.image_path)} alt="" loading="lazy" />
-                </a>
+                </button>
                 <div className="admin-infos">
                   <div className="admin-titre">{b.valeur} {b.devise || 'billets'}{b.titre ? ` · « ${b.titre} »` : ''}{nouveau && <Nouveau />}</div>
                   <div className="caption-gris">par <strong>{b.pseudo}</strong>{b.artiste && b.artiste !== b.pseudo ? ` (${b.artiste})` : ''} · {dateHeure(b.created_at)}{b.technique ? ` · ${b.technique}` : ''}</div>
@@ -209,6 +212,7 @@ function OngletBillets({ onNotif, depuis }) {
               )
             })}
           </div>}
+      {agrandi && <ImageLightbox images={[agrandi]} onClose={() => setAgrandi(null)} />}
     </div>
   )
 }
@@ -338,8 +342,8 @@ function OngletComptes({ depuis }) {
   const CHIFFRES = [
     ['Trésor de la banque', stats?.tresor],
     ['Billets en circulation', stats?.en_circulation],
-    ['Billets déposés', stats?.billets_emis],
-    ['Montant déposé', stats?.montant_emis != null ? `${stats.montant_emis} €` : null],
+    ['Billets encaissés', stats?.billets_emis],
+    ['Montant encaissé', stats?.montant_emis != null ? `${stats.montant_emis} billets` : null],
     ['Ventes en cours', stats?.ventes_en_cours],
     ['Ventes conclues', stats?.ventes_conclues],
     ['Volume échangé', stats?.volume_echange],
@@ -351,7 +355,7 @@ function OngletComptes({ depuis }) {
         {CHIFFRES.map(([l, v]) => (
           <div key={l} className="admin-chiffre">
             <div className="stat-label">{l}</div>
-            <div className="stat-value">{v ?? '—'}</div>
+            <div className="stat-value">{v ?? '…'}</div>
           </div>
         ))}
       </div>
@@ -361,7 +365,7 @@ function OngletComptes({ depuis }) {
           <h3 className="admin-soustitre">Comptes ({comptes?.length ?? '…'})</h3>
           {comptes === null ? <div className="loader">Chargement<span className="blink">_</span></div>
             : <table className="admin-table">
-                <thead><tr><th>Pseudo</th><th>Solde</th><th>Billets déposés</th><th>Inscrit</th></tr></thead>
+                <thead><tr><th>Pseudo</th><th>Solde</th><th>Billets encaissés</th><th>Inscrit</th></tr></thead>
                 <tbody>
                   {comptes.map(c => {
                     const nouveau = c.id !== user?.id && estNouveau(c.created_at, depuis)
@@ -369,7 +373,7 @@ function OngletComptes({ depuis }) {
                     <tr key={c.id} className={nouveau ? 'nouvelle' : ''}>
                       <td>{c.pseudo}{c.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}{nouveau && <Nouveau />}</td>
                       <td className="num">{c.solde}</td>
-                      <td className="num">{depots.get(c.id)?.n || 0} · {depots.get(c.id)?.total || 0} €</td>
+                      <td className="num">{depots.get(c.id)?.n || 0} · {depots.get(c.id)?.total || 0} billets</td>
                       <td>{dateCourte(c.created_at)}</td>
                     </tr>
                     )

@@ -26,7 +26,7 @@ export const PAGES = [
     path: "/",
     title: "Banque Fantôme : dessinez votre monnaie, faites-la circuler",
     description:
-      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, échangez-les dans la bourse aux billets et enchérissez sur les objets de la banque. La valeur ne préexiste pas : elle se dessine.",
+      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, échangez-les dans la bourse aux billets et enchérissez au market en billets papier. La valeur ne préexiste pas : elle se dessine.",
     priority: "0.9",
     contenu: `
       <h1>Banque Fantôme</h1>
@@ -36,7 +36,7 @@ export const PAGES = [
       <h2>Dessiner son argent</h2>
       <p>Dans l'atelier de la bourse, dessinez sur un billet de la banque. Encaissez-le : votre compte est crédité de sa valeur. Ou vendez-le aux enchères aux autres comptes.</p>
       <h2>Dépenser</h2>
-      <p>Achetez les billets dessinés par les autres dans la bourse, ou enchérissez sur les objets que la banque met en vente au market, à retirer en main propre.</p>`,
+      <p>Achetez les billets dessinés par les autres dans la bourse. Au market, enchérissez sur les objets mis en vente par les comptes et par la banque : on y promet des billets papier, réglés en main propre.</p>`,
   },
   {
     path: "/market",

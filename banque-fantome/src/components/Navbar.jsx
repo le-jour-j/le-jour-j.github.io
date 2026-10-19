@@ -14,17 +14,21 @@ export default function Navbar() {
   const [open, setOpen]     = useState(false) // menu mobile
   const journal = useJournal(8)             // ticker vivant : les dernières opérations de la banque
 
+  // Non lus : recomptés à chaque message reçu ou marqué lu (temps réel), et quand la
+  // page Messages signale une lecture (événement bf-messages-lus).
+  const uid = user?.id
   useEffect(() => {
-    if (!user) { setUnread(0); return }
-    supabase.from('messages').select('id', { count: 'exact' })
-      .eq('destinataire_id', user.id).eq('lu', false)
+    if (!uid) { setUnread(0); return }
+    const recompter = () => supabase.from('messages').select('id', { count: 'exact', head: true })
+      .eq('destinataire_id', uid).eq('lu', false)
       .then(({ count }) => setUnread(count || 0))
-    const channel = supabase.channel('unread')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `destinataire_id=eq.${user.id}` },
-        () => setUnread(n => n + 1))
+    recompter()
+    const channel = supabase.channel(`non-lus-${uid}-${Math.random().toString(36).slice(2)}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages', filter: `destinataire_id=eq.${uid}` }, recompter)
       .subscribe()
-    return () => supabase.removeChannel(channel)
-  }, [user])
+    window.addEventListener('bf-messages-lus', recompter)
+    return () => { supabase.removeChannel(channel); window.removeEventListener('bf-messages-lus', recompter) }
+  }, [uid])
 
   // Ferme le menu mobile à chaque navigation, et sur Échap
   useEffect(() => { setOpen(false) }, [location.pathname])
@@ -88,7 +92,7 @@ export default function Navbar() {
       </nav>
       <div className="ticker-wrap" aria-hidden="true">
         <span className="ticker" key={journal.length}>
-          ◈ BANQUE FANTÔME — INSTITUTION DE CIRCULATION ◈ {journal.length
+          ◈ BANQUE FANTÔME ◈ INSTITUTION DE CIRCULATION ◈ {journal.length
             ? journal.map((e, i) => <span key={i} className={`ticker-item ${e.type}`}>{phrase(e)} ◈ </span>)
             : 'OUVREZ UN COMPTE ◈ FABRIQUEZ VOTRE FAUX ARGENT ◈ DÉPOSEZ · ENCHÉRISSEZ · FAITES CIRCULER ◈ '}
           CHAQUE OBJET PEUT DEVENIR UN ACTIF NARRATIF ◈ &nbsp;

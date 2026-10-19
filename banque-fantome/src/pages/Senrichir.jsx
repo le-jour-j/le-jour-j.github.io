@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import ImageLightbox from '../components/ImageLightbox'
 import { Link } from 'react-router-dom'
-import { MurBillets } from '../components/GuichetEmission'
+import MurBillets from '../components/MurBillets'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 

@@ -31,7 +31,7 @@ export default function BilletModal({ billet, onClose, onPrev, onNext, index, to
               {billet.technique && <><dt>Technique</dt><dd>{billet.technique}</dd></>}
               {billet.devise && <><dt>Devise</dt><dd>{billet.devise}</dd></>}
               <dt>Émis par</dt><dd>{billet.pseudo || 'anonyme'}</dd>
-              {billet.statut === 'annule' && <><dt>Statut</dt><dd className="msg-err" style={{ margin: 0 }}>Annulé par la banque{billet.motif ? ` — ${billet.motif}` : ''}</dd></>}
+              {billet.statut === 'annule' && <><dt>Statut</dt><dd className="msg-err" style={{ margin: 0 }}>Annulé par la banque{billet.motif ? ` : ${billet.motif}` : ''}</dd></>}
             </dl>
             {billet.description && <p className="cartel-desc">{billet.description}</p>}
             <div className="cartel-pied">

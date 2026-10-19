@@ -370,7 +370,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
     const s = r.current
     const ajout = symetriser(appliquerEffet(entrees, s.effet), s.symetrie, s.coupure)
     if (compterPoints(s.dessin) + compterPoints(ajout) > MAX_POINTS) {
-      avertir('Le billet est plein : 60 000 points au plus. Gommez un peu, ou émettez-le.')
+      avertir('Le billet est plein : 60 000 points au plus. Gommez un peu, ou déposez-le.')
       return
     }
     setMessage(null)

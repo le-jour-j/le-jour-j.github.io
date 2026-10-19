@@ -27,8 +27,8 @@ export default function PresenceBanquier({ compact = false }) {
   const prochain = suivants[0]
 
   const etat = enCours
-    ? <><span className="presence-point presence-la" aria-hidden="true">●</span> Le banquier est au guichet {AGENCES[enCours.agence].court}{journeeEntiere(enCours) ? ' aujourd\'hui' : ` jusqu'à ${heure(enCours.fin)}`}.</>
-    : <><span className="presence-point" aria-hidden="true">●</span> Le banquier n'est pas au guichet en ce moment.{prochain && <> Prochaine permanence {jour(prochain.debut)} {creneau(prochain)}, {AGENCES[prochain.agence].court}.</>}</>
+    ? <><span className="presence-point presence-la" aria-hidden="true">●</span> Le banquier est au guichet {AGENCES[enCours.agence]?.court ?? enCours.agence}{journeeEntiere(enCours) ? ' aujourd\'hui' : ` jusqu'à ${heure(enCours.fin)}`}.</>
+    : <><span className="presence-point" aria-hidden="true">●</span> Le banquier n'est pas au guichet en ce moment.{prochain && <> Prochaine permanence {jour(prochain.debut)} {creneau(prochain)}, {AGENCES[prochain.agence]?.court ?? prochain.agence}.</>}</>
 
   if (compact) {
     return (
@@ -48,7 +48,7 @@ export default function PresenceBanquier({ compact = false }) {
             <li key={p.debut + p.agence}>
               <span className="presence-jour">{majuscule(jour(p.debut))}</span>
               <span>{creneau(p)}</span>
-              <span className="presence-lieu">{AGENCES[p.agence].nom}</span>
+              <span className="presence-lieu">{AGENCES[p.agence]?.nom ?? p.agence}</span>
             </li>
           ))}
         </ul>

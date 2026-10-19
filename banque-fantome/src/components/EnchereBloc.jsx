@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
 import { DUREES, INCREMENT_MIN, estEnCours, echeance, enchereMinimale, tempsRestant, urgent, commission, messageErreur } from '../utils/encheres'
@@ -8,13 +8,16 @@ import { DUREES, INCREMENT_MIN, estEnCours, echeance, enchereMinimale, tempsRest
 // formulaire d'enchère / achat immédiat, historique, actions du vendeur.
 // `objet` est une vente (mise_depart non nulle). `onChange(objetMisAJour)` est appelé après chaque action.
 export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
-  const { user, solde, refreshProfile } = useAuth()
+  const { user, solde, estBanquier, refreshProfile } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const versConnexion = () => navigate(`/connexion?retour=${encodeURIComponent(location.pathname + location.search)}`)
   const [montant, setMontant] = useState(enchereMinimale(objet))
   const [encheres, setEncheres] = useState([])
   const [busy, setBusy] = useState(false)
   const [tick, setTick] = useState(0)
   const [remise, setRemise] = useState(null) // formulaire de remise en vente { mise, prix, duree }
+  const [aConfirmer, setAConfirmer] = useState(null) // 'encherir' | 'acheter' | 'defaire' : un geste qui engage se confirme
 
   const enCours = estEnCours(objet)
   const isOwn = user && objet.user_id === user.id
@@ -41,7 +44,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   // Historique des enchères + mise à jour en direct de l'objet
   useEffect(() => {
     chargerEncheres()
-    const channel = supabase.channel(`objet-${objet.id}`)
+    const channel = supabase.channel(`objet-${objet.id}-${Math.random().toString(36).slice(2)}`)
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'objets', filter: `id=eq.${objet.id}` },
         payload => { onChange?.({ ...objet, ...payload.new }); chargerEncheres() })
       .subscribe()
@@ -62,7 +65,8 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   }
 
   async function rpc(fn, args, okMsg) {
-    if (!user) { navigate('/connexion'); return }
+    if (!user) { versConnexion(); return }
+    setAConfirmer(null)
     setBusy(true)
     const { data, error } = await supabase.rpc(fn, args)
     setBusy(false)
@@ -77,6 +81,8 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   const acheter = () => rpc('acheter_immediat', { p_objet: objet.id }, conclu)
   const retirer = () => rpc('retirer_vente', { p_objet: objet.id }, 'Vente retirée.')
   const remettre = () => rpc('remettre_en_vente', { p_objet: objet.id, p_mise: Number(remise.mise), p_prix_achat: remise.prix ? Number(remise.prix) : null, p_duree: Number(remise.duree) }, 'Remis en vente.')
+  // Market : l'acheteur ne vient pas. Le vendeur ou la banque défait la vente (supabase_garde_fous.sql).
+  const defaire = () => rpc('annuler_adjudication_papier', { p_objet: objet.id }, 'Vente défaite : l’objet est de nouveau à vous, vous pouvez le remettre en vente.')
 
   // ─── Vente terminée ───
   if (!enCours) {
@@ -106,6 +112,17 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
             <button type="button" className="lien-texte" onClick={onContacter}>{isOwn ? "écrire à l'acheteur" : banque ? 'contacter la banque pour fixer le rendez-vous' : 'écrire au vendeur'}</button>.
           </p>
         )}
+        {vendu && papier && (isOwn || estBanquier) && (
+          aConfirmer === 'defaire'
+            ? <div className="enchere-actions" style={{ marginTop: '.8rem' }}>
+                <span className="texte-aide">L'acheteur perd l'objet, et l'objet revient {isOwn ? 'dans vos ventes' : 'à son vendeur'}.</span>
+                <button type="button" className="btn btn-rouge btn-sm" disabled={busy} onClick={defaire}>Confirmer</button>
+                <button type="button" className="btn btn-outline btn-sm" onClick={() => setAConfirmer(null)}>Non</button>
+              </div>
+            : <button type="button" className="btn btn-outline btn-sm" style={{ marginTop: '.8rem' }} onClick={() => setAConfirmer('defaire')}>
+                Défaire la vente (personne n'est venu)
+              </button>
+        )}
         {isOwn && billet && objet.statut === 'retiré' && (
           <p className="texte-aide" style={{ marginTop: '.8rem' }}>Le billet est revenu dans votre collection : la bourse permet de le remettre en vente.</p>
         )}
@@ -113,7 +130,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
           remise
             ? <div className="remise-form">
                 <div className="field"><label>Mise de départ</label><input type="number" min="1" step="5" value={remise.mise} onChange={e => setRemise({ ...remise, mise: e.target.value })} /></div>
-                <div className="field"><label>Achat immédiat (facultatif)</label><input type="number" min="1" step="5" value={remise.prix} onChange={e => setRemise({ ...remise, prix: e.target.value })} placeholder="—" /></div>
+                <div className="field"><label>Achat immédiat (facultatif)</label><input type="number" min="1" step="5" value={remise.prix} onChange={e => setRemise({ ...remise, prix: e.target.value })} placeholder="aucun" /></div>
                 <div className="field"><label>Durée</label>
                   <div className="filter-row">{DUREES.map(d => <button key={d.jours} type="button" className={`chip ${Number(remise.duree) === d.jours ? 'active' : ''}`} onClick={() => setRemise({ ...remise, duree: d.jours })}>{d.label}</button>)}</div>
                 </div>
@@ -152,7 +169,17 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
       ) : !user ? (
         <div className="enchere-actions">
           <span className="texte-aide">Connectez-vous pour enchérir.</span>
-          <button type="button" className="btn btn-noir btn-sm" onClick={() => navigate('/connexion')}>→ Se connecter</button>
+          <button type="button" className="btn btn-noir btn-sm" onClick={versConnexion}>→ Se connecter</button>
+        </div>
+      ) : aConfirmer === 'encherir' || aConfirmer === 'acheter' ? (
+        <div className="enchere-actions">
+          <span className="texte-aide">
+            {aConfirmer === 'acheter'
+              ? (papier ? `Vous vous engagez à payer ${objet.prix_achat} billets papier à ${vendeur}, en main propre.` : `${objet.prix_achat} billets seront débités de votre solde.`)
+              : (papier ? `Vous promettez ${Number(montant)} billets papier à ${vendeur}, payables en main propre si vous l'emportez.` : `${Number(montant)} billets seront bloqués sur votre solde tant que vous menez.`)}
+          </span>
+          <button type="button" className="btn btn-jaune btn-sm" disabled={busy} onClick={aConfirmer === 'acheter' ? acheter : encherir}>Confirmer</button>
+          <button type="button" className="btn btn-outline btn-sm" onClick={() => setAConfirmer(null)}>Non</button>
         </div>
       ) : (
         <>
@@ -163,11 +190,11 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
               <button type="button" className="chip" onClick={() => setMontant(m => Number(m) + INCREMENT_MIN)} aria-label="Plus">+</button>
               {[10, 50].map(n => <button key={n} type="button" className="chip" onClick={() => setMontant(m => Number(m) + n)}>+{n}</button>)}
             </div>
-            <button type="button" className="btn btn-jaune" disabled={busy || Number(montant) < minimum || (!papier && Number(montant) > disponible)} onClick={encherir}>
+            <button type="button" className="btn btn-jaune" disabled={busy || Number(montant) < minimum || (!papier && Number(montant) > disponible)} onClick={() => setAConfirmer('encherir')}>
               {papier ? '⚑ Promettre' : '⚑ Enchérir'} {Number(montant) || ''}
             </button>
             {objet.prix_achat && (
-              <button type="button" className="btn btn-noir" disabled={busy || (!papier && disponible < objet.prix_achat)} onClick={acheter}>
+              <button type="button" className="btn btn-noir" disabled={busy || (!papier && disponible < objet.prix_achat)} onClick={() => setAConfirmer('acheter')}>
                 {papier ? '⚡ Je le prends' : '⚡ Acheter maintenant'} · {objet.prix_achat}
               </button>
             )}

@@ -1,11 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Portal from './Portal'
 
 export default function Notif({ msg, type = 'ok', onClose }) {
+  // onClose est souvent une fonction recréée à chaque rendu : la garder dans une ref
+  // évite de relancer le minuteur pendant qu'on tape (la notif ne partait plus).
+  const fermer = useRef(onClose)
+  fermer.current = onClose
   useEffect(() => {
-    const t = setTimeout(onClose, 3500)
+    const t = setTimeout(() => fermer.current?.(), 3500)
     return () => clearTimeout(t)
-  }, [onClose])
+  }, [msg])
 
   return (
     <Portal>

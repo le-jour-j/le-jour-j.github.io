@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
@@ -140,9 +140,15 @@ export default function Compte() {
 
   async function deleteObjet(id) {
     setDeleting(id)
+    const objet = objets.find(o => o.id === id)
     const { error } = await supabase.from('objets').delete().eq('id', id)
     if (error) { setNotif({ msg: messageErreur(error), type: 'err' }) }
-    else { setObjets(prev => prev.filter(o => o.id !== id)); setNotif({ msg: 'Objet retiré.', type: 'ok' }) }
+    else {
+      // Les photos partent avec l'objet (elles restaient orphelines dans le stockage)
+      const photos = [...new Set([...(objet?.image_paths || []), objet?.image_path].filter(p => p && !p.startsWith('dessins/')))]
+      if (photos.length) supabase.storage.from(STORAGE_BUCKET).remove(photos)
+      setObjets(prev => prev.filter(o => o.id !== id)); setNotif({ msg: 'Objet supprimé.', type: 'ok' })
+    }
     setDeleting(null)
   }
 
@@ -168,7 +174,7 @@ export default function Compte() {
       <div className="compte-header">
         <div>
           <div className="eyebrow">OPÉRATEUR{estBanquier ? ' · BANQUIER' : ''}</div>
-          <div className="pseudo">{profile?.pseudo || '—'}</div>
+          <div className="pseudo">{profile?.pseudo || '…'}</div>
         </div>
         <div className="compte-chiffres">
           <div>
@@ -206,7 +212,7 @@ export default function Compte() {
                   <button key={o.id} type="button" className={`ligne-enchere ${meneur ? 'meneur' : 'surencheri'}`} onClick={() => setSelected(o)}>
                     <span className={`stamp ${meneur ? 'stamp-jaune' : 'stamp-rouge'}`}>{meneur ? 'meneur' : 'surenchéri'}</span>
                     <strong className="ligne-titre">{o.titre}</strong>
-                    <span className="ligne-prix">{o.enchere_courante} billets{!meneur && ` · par ${o.encherisseur_pseudo}`}</span>
+                    <span className="ligne-prix">{o.enchere_courante} {o.dessin_id ? 'billets' : 'billets papier'}{!meneur && ` · par ${o.encherisseur_pseudo}`}</span>
                     <span className="caption-gris">⏱ {tempsRestant(echeance(o))}</span>
                   </button>
                 )
@@ -255,7 +261,7 @@ export default function Compte() {
                     }
                     {!o.dessin_id && !(estVente(o) && (o.prix_final || (o.statut === 'disponible' && o.nb_encheres > 0))) && (
                       <button className="btn btn-rouge btn-xs" disabled={deleting === o.id}
-                        onClick={() => { if (confirm('Retirer cet objet ?')) deleteObjet(o.id) }}
+                        onClick={() => { if (confirm('Supprimer définitivement cet objet et ses photos ?')) deleteObjet(o.id) }}
                       >{deleting === o.id ? '…' : 'supprimer'}</button>
                     )}
                   </div>

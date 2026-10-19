@@ -5,7 +5,7 @@ import ObjetCard from '../components/ObjetCard'
 import ObjetModal from '../components/ObjetModal'
 import FilActu from '../components/FilActu'
 import Journal from '../components/Journal'
-import { MurBillets } from '../components/GuichetEmission'
+import MurBillets from '../components/MurBillets'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 import BoutonLettre from '../components/BoutonLettre'
@@ -29,7 +29,7 @@ function Compteur({ valeur }) {
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [valeur])
-  return <>{valeur == null ? '—' : n}</>
+  return <>{valeur == null ? '…' : n}</>
 }
 
 const PRINCIPE = [
@@ -97,12 +97,12 @@ export default function Home() {
               <div className="stat-value"><Compteur valeur={total} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Billets déposés</div>
+              <div className="stat-label">Billets encaissés</div>
               <div className="stat-value"><Compteur valeur={stats?.billets_emis} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Montant déposé</div>
-              <div className="stat-value"><Compteur valeur={stats?.montant_emis} /> €</div>
+              <div className="stat-label">Montant encaissé</div>
+              <div className="stat-value"><Compteur valeur={stats?.montant_emis} /> <small>billets</small></div>
             </div>
             <div className="stat-item">
               <div className="stat-label">Trésor de la banque</div>

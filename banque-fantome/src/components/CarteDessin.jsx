@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { getPublicImageUrl } from '../utils/images'
+import ImageLightbox from './ImageLightbox'
 import { DUREES, messageErreur } from '../utils/encheres'
 
 // Un billet dessiné dans l'atelier, tel qu'il apparaît dans « Ma collection » et juste
@@ -12,6 +13,7 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
   const [busy, setBusy] = useState(false)
   const [confirmer, setConfirmer] = useState(false)
   const [vente, setVente] = useState(null) // { mise, prix, duree } quand le formulaire est ouvert
+  const [agrandi, setAgrandi] = useState(false)
 
   const aMoi = moi && d.proprietaire_id === moi
   const auteur = moi && d.auteur_id === moi
@@ -43,9 +45,10 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
 
   return (
     <article className={`dessin-carte ${d.statut}`}>
-      <a className="dessin-image" href={getPublicImageUrl(d.image_path)} target="_blank" rel="noreferrer" aria-label="Voir le billet en grand">
+      <button type="button" className="dessin-image" onClick={() => setAgrandi(true)} aria-label="Voir le billet en grand">
         <img src={getPublicImageUrl(d.image_path)} alt={d.titre || `Billet de ${d.coupure}`} loading="lazy" />
-      </a>
+      </button>
+      {agrandi && <ImageLightbox images={[getPublicImageUrl(d.image_path)]} onClose={() => setAgrandi(false)} />}
       <div className="dessin-infos">
         <div className="dessin-titre">{d.titre || `Billet de ${d.coupure}`}</div>
         <div className="caption-gris">

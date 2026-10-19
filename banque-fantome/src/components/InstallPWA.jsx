@@ -57,7 +57,7 @@ export default function InstallPWA() {
     <>
       {offline && (
         <div className="hors-ligne" role="status">
-          ◈ Hors ligne — le market et les messages seront à jour au retour du réseau.
+          ◈ Hors ligne : le market et les messages seront à jour au retour du réseau.
         </div>
       )}
       {peutProposer && (

@@ -4,7 +4,11 @@ import { supabase, STORAGE_BUCKET } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import Notif from '../components/Notif'
 import { RARETES } from '../utils/rarete'
-import { DUREES } from '../utils/encheres'
+import { DUREES, messageErreur } from '../utils/encheres'
+
+// Les formats que le stockage accepte (supabase_garde_fous.sql) : pas de HEIC d'iPhone,
+// que les navigateurs n'affichent pas de toute façon.
+const FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
@@ -13,13 +17,14 @@ const CATEGORIES = ['objet', 'œuvre', 'service']
 // `integre` : rendu dans l'onglet Market de l'Admin (sans en-tête ni marges de page) ;
 // `onDepose` : appelé après la mise en vente, à la place du retour au market.
 export default function Deposer({ integre = false, onDepose }) {
-  const { user, loading: authLoading } = useAuth()
+  const { user, profile, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', mise_depart: 10, prix_achat: '', duree_jours: 3 })
   const [files, setFiles] = useState([])
   const [previews, setPreviews] = useState([])
   const [drag, setDrag] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [fini, setFini] = useState(false) // déposé : le bouton reste fermé jusqu'à la redirection
   const [notif, setNotif] = useState(null)
   const [errors, setErrors] = useState({})
   const inputRef = useRef()
@@ -35,8 +40,8 @@ export default function Deposer({ integre = false, onDepose }) {
     if (!selected.length) return
     const valid = []
     for (const f of selected) {
-      if (!f.type.startsWith('image/')) {
-        setNotif({ msg: 'Fichiers image uniquement', type: 'err' })
+      if (!FORMATS.includes(f.type)) {
+        setNotif({ msg: f.type.startsWith('image/') ? 'Format non accepté : JPEG, PNG, WebP ou GIF (sur iPhone, réglez l’appareil photo sur « Le plus compatible »)' : 'Fichiers image uniquement', type: 'err' })
         continue
       }
       if (f.size > 5 * 1024 * 1024) {
@@ -66,20 +71,16 @@ export default function Deposer({ integre = false, onDepose }) {
     if (!form.description.trim()) e.description = 'Description requise'
     if (!form.categorie.trim()) e.categorie = 'Catégorie requise'
     if (!(Number(form.mise_depart) >= 1)) e.mise_depart = 'Mise de départ requise (1 billet minimum)'
-    if (form.prix_achat !== '' && Number(form.prix_achat) < Number(form.mise_depart)) e.prix_achat = 'Doit être ≥ à la mise de départ'
+    if (form.prix_achat !== '' && Number(form.prix_achat) < Number(form.mise_depart)) e.prix_achat = 'Doit être au moins égal à la mise de départ'
     setErrors(e)
     return Object.keys(e).length === 0
   }
 
   async function submit() {
-    if (!validate()) return
+    if (!validate() || loading || fini) return
     setLoading(true)
     try {
-      let pseudo = 'Anonyme'
-      if (user) {
-        const { data: profile } = await supabase.from('profiles').select('pseudo').eq('id', user.id).single()
-        if (profile?.pseudo) pseudo = profile.pseudo
-      }
+      const pseudo = profile?.pseudo || 'Anonyme' // la base l'impose de toute façon (supabase_garde_fous.sql)
       const image_paths = []
       for (const file of files) {
         const ext = file.name.split('.').pop()
@@ -109,11 +110,12 @@ export default function Deposer({ integre = false, onDepose }) {
       }
       const { error: insErr } = await supabase.from('objets').insert(payload)
       if (insErr) throw insErr
+      setFini(true)
       setNotif({ msg: `Mis en vente pour ${form.duree_jours} jour${form.duree_jours > 1 ? 's' : ''}.`, type: 'ok' })
       if (onDepose) setTimeout(onDepose, 1200)
       else setTimeout(() => navigate('/market'), 1500)
     } catch (e) {
-      setNotif({ msg: e.message || 'Erreur lors du dépôt', type: 'err' })
+      setNotif({ msg: messageErreur(e) || 'Erreur lors du dépôt', type: 'err' })
     } finally { setLoading(false) }
   }
 
@@ -124,7 +126,7 @@ export default function Deposer({ integre = false, onDepose }) {
       <div>
         <div className="titre">Accès refusé</div>
         <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour mettre quelque chose en vente au market.</p>
-        <Link to="/connexion" className="btn btn-noir">Se connecter →</Link>
+        <Link to="/connexion?retour=%2Fdeposer" className="btn btn-noir">Se connecter →</Link>
       </div>
     </div>
   )
@@ -149,7 +151,7 @@ export default function Deposer({ integre = false, onDepose }) {
                       {previews.map((src, index) => (
                         <div key={src + index} className="upload-preview-item">
                           <img src={src} alt={`aperçu ${index + 1}`} />
-                          <button type="button" className="upload-preview-remove" onClick={e => { e.stopPropagation(); removeFile(index) }}>✕</button>
+                          <button type="button" className="upload-preview-remove" aria-label="Retirer cette image" onClick={e => { e.stopPropagation(); removeFile(index) }}>✕</button>
                         </div>
                       ))}
                     </div>
@@ -214,7 +216,7 @@ export default function Deposer({ integre = false, onDepose }) {
               <label>Lieu</label>
               <input value={form.lieu} onChange={e => set('lieu', e.target.value)} placeholder="ex : atelier, brocante, quartier, en ligne…" />
             </div>
-            <button className="btn btn-noir btn-bloc" onClick={submit} disabled={loading}>
+            <button className="btn btn-noir btn-bloc" onClick={submit} disabled={loading || fini}>
               {loading ? 'Dépôt en cours…' : '→ Mettre en vente'}
             </button>
           </div>

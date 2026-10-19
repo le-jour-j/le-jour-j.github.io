@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
 
   const refreshProfile = useCallback(async (u = user) => {
     if (!u) { setProfile(null); return null }
-    const { data } = await supabase.from('profiles').select('id, pseudo, solde, role').eq('id', u.id).single()
+    const { data } = await supabase.from('profiles').select('id, pseudo, solde, role').eq('id', u.id).maybeSingle()
     setProfile(data || null)
     return data
   }, [user])
@@ -26,16 +26,19 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  // Profil (pseudo + solde) : chargé à la connexion, tenu à jour en temps réel
+  // Profil (pseudo + solde) : chargé à la connexion, tenu à jour en temps réel.
+  // Dépend de l'id seul : l'objet user change à chaque rafraîchissement du jeton.
+  // INSERT aussi : à l'inscription, le profil naît après l'ouverture de la session.
+  const uid = user?.id
   useEffect(() => {
-    if (!user) { setProfile(null); return }
-    refreshProfile(user)
-    const channel = supabase.channel(`profil-${user.id}`)
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles', filter: `id=eq.${user.id}` },
-        payload => setProfile(p => ({ ...(p || {}), ...payload.new })))
+    if (!uid) { setProfile(null); return }
+    refreshProfile({ id: uid })
+    const channel = supabase.channel(`profil-${uid}-${Math.random().toString(36).slice(2)}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles', filter: `id=eq.${uid}` },
+        payload => payload.new?.id && setProfile(p => ({ ...(p || {}), ...payload.new })))
       .subscribe()
     return () => supabase.removeChannel(channel)
-  }, [user])
+  }, [uid])
 
   return (
     <AuthCtx.Provider value={{ user, loading, profile, solde: profile?.solde ?? 0, estBanquier: profile?.role === 'banquier', refreshProfile }}>

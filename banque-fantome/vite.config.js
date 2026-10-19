@@ -29,7 +29,9 @@ export default defineConfig({
     // PWA : manifeste + service worker (cache de l'appli pour installation sur téléphone)
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/*.png', 'images/**/*'],
+      // Les icônes seulement : 'images/**/*' faisait télécharger les 72 photos d'actu (14 Mo)
+      // à chaque installation, malgré le globIgnores plus bas (audit du 2026-10-19).
+      includeAssets: ['icons/*.png'],
       manifest: {
         id: '/banque-fantome/',
         name: 'Banque Fantôme',
