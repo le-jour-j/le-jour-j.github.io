@@ -66,7 +66,7 @@ export default function Bourse() {
           Dans l'atelier, vous dessinez sur un billet de la banque. Une fois terminé, deux possibilités :
           l'<strong>encaisser</strong> (la banque le garde et crédite votre compte de sa valeur), ou le <strong>vendre aux enchères</strong> aux
           autres comptes, qui paient avec les billets qu'ils ont encaissés. Un billet acheté rejoint votre collection : vous le gardez ou le revendez.
-          Les objets de la banque, eux, sont au <Link to="/market" className="lien-texte">market</Link>.
+          Les objets, eux, s'échangent au <Link to="/market" className="lien-texte">market</Link>, en billets papier.
         </p>
         <div className="filter-row participer-onglets" role="tablist">
           {ONGLETS.map(o => (

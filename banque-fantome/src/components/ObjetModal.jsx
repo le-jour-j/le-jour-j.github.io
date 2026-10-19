@@ -40,7 +40,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
               #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
-            {vente && <span className="stamp stamp-noir">{banque ? '◈ Vente de la banque' : billet ? '◈ Bourse aux billets' : '◈ Hôtel des ventes'}</span>}
+            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : banque ? '◈ Vente de la banque' : '◈ Market'}</span>}
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
@@ -69,7 +69,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             </div>
           }
           <p className="modal-texte">{objet.description}</p>
-          {banque && <p className="texte-aide">À retirer en main propre : la banque vous contacte, ou vous la contactez, pour fixer le rendez-vous.</p>}
+          {vente && !billet && <p className="texte-aide">Les enchères se font en billets papier, sans toucher à votre compte : le gagnant paie {banque ? 'la banque' : 'le vendeur'} en main propre, au moment de la remise.</p>}
           {objet.histoire &&
             <div className="modal-histoire">
               <div className="meta-label" style={{ marginBottom: '.4rem' }}>Histoire</div>

@@ -799,3 +799,6 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .dessin-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
 .dessin-carte .remise-form { width: 100%; }
 .admin-depot { border: 2px solid var(--noir); background: var(--blanc); padding: 1.2rem; margin-bottom: 1.4rem; }
+/* Intro du market + bouton de dépôt (2026-10-19) */
+.market-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.market-intro .texte-aide { margin: 0; flex: 1 1 28rem; }

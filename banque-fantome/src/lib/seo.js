@@ -40,14 +40,14 @@ export const PAGES = [
   },
   {
     path: "/market",
-    title: "Market : les objets de la banque aux enchères | Banque Fantôme",
+    title: "Market : objets, œuvres et services en billets papier | Banque Fantôme",
     description:
-      "La vitrine de la Banque Fantôme : objets, œuvres et services que la banque met aux enchères, payables avec les billets dessinés sur le site et remis en main propre.",
+      "Le market de la Banque Fantôme : objets, œuvres et services mis en vente par les comptes et par la banque, aux enchères en billets papier, réglés en main propre.",
     priority: "0.8",
     contenu: `
       <h1>Market</h1>
-      <p>La vitrine de la banque : les objets, œuvres et services qu'elle met aux enchères.</p>
-      <p>Chaque vente part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On enchérit avec les billets qu'on a dessinés et encaissés dans la bourse. Une fois l'enchère gagnée, on contacte la banque pour la remise en main propre.</p>`,
+      <p>Des objets, des œuvres et des services, mis en vente par les comptes et par la banque.</p>
+      <p>Chaque vente part d'une mise de départ, pour une durée d'un, trois ou sept jours, avec un achat immédiat facultatif. On y enchérit en billets papier : rien n'est débité sur le site, le gagnant paie le vendeur en main propre, au moment de la remise.</p>`,
   },
   {
     path: "/bourse",
@@ -105,10 +105,10 @@ export const PAGES = [
   },
 
   // Pages de compte : servies normalement, tenues hors de l'index. /participer
-  // et /deposer ne sont plus que des renvois vers l'atelier de la bourse
-  // (2026-10-18), gardés pour que les anciens liens ne répondent pas 404.
+  // n'est plus qu'un renvoi vers l'atelier de la bourse (2026-10-18), gardé pour
+  // que les anciens liens ne répondent pas 404.
   { path: "/participer", title: "Bourse aux billets | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
-  { path: "/deposer", title: "Bourse aux billets | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
+  { path: "/deposer", title: "Mettre en vente au market | Banque Fantôme", description: "Mettre un objet, une œuvre ou un service aux enchères, en billets papier. Réservé aux comptes.", noindex: true },
   { path: "/connexion", title: "Connexion | Banque Fantôme", description: "Ouvrir un compte ou se connecter à la Banque Fantôme.", noindex: true },
   { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets encaissés et ventes en cours.", noindex: true },
   { path: "/messages", title: "Messages | Banque Fantôme", description: "Messagerie entre comptes.", noindex: true },

@@ -80,10 +80,14 @@ export default function Inventaire() {
           <h2>Market</h2>
           <span className="count" aria-live="polite">{total} entrée{total !== 1 ? 's' : ''}</span>
         </div>
-        <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
-          La vitrine de la banque. Ce qu'elle met en vente se paie en billets et se retire en main propre :
-          une fois l'enchère gagnée, on se contacte pour le rendez-vous. Pas encore de billets ? <Link to="/bourse?onglet=atelier" className="lien-texte">Dessinez-en un →</Link>
-        </p>
+        <div className="market-intro">
+          <p className="texte-aide">
+            Des objets, des œuvres et des services, mis en vente par les comptes et par la banque. On y enchérit
+            en <strong>billets papier</strong> : rien n'est débité sur le site, la promesse se paie en main propre,
+            quand vendeur et acheteur se retrouvent. Des billets papier ? Imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>.
+          </p>
+          <Link to="/deposer" className="btn btn-jaune btn-sm">+ Mettre en vente</Link>
+        </div>
 
         <div className="market-toolbar">
           <div className="market-search">
@@ -116,7 +120,7 @@ export default function Inventaire() {
           : objets.length === 0
             ? <div className="market-vide">
                 <div className="titre">{filtresActifs ? 'Aucune entrée ne correspond' : 'Vitrine vide'}</div>
-                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'La banque prépare sa prochaine vente. En attendant, la bourse aux billets est ouverte.'}</p>
+                <p style={{ margin: '0 auto' }}>{filtresActifs ? 'Essayez d’élargir vos filtres.' : 'Déposez la première entrée dans le circuit.'}</p>
                 {filtresActifs && <button type="button" className="btn btn-noir" style={{ marginTop: '1.2rem' }} onClick={reset}>Tout afficher</button>}
               </div>
             : <div className="grid-3" key={`${statut}-${categorie}-${rarete}-${tri}-${search}`}>

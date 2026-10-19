@@ -229,13 +229,16 @@ export default function Compte() {
         {/* ── Mes dépôts ── */}
         <div className="section-head" style={{ marginTop: (encheres.length || achats.length) ? '3rem' : 0 }}>
           <h2>Mes ventes</h2>
-          <Link to="/bourse?onglet=collection" className="count">Ma collection de billets →</Link>
+          <span className="count"><Link to="/deposer">+ Au market</Link> · <Link to="/bourse?onglet=collection">Ma collection →</Link></span>
         </div>
 
         {objets.length === 0
           ? <div className="vide">
               <div className="titre">Aucune vente en cours</div>
-              <Link to="/bourse?onglet=atelier" className="btn btn-noir">Dessiner un billet →</Link>
+              <div style={{ display: 'flex', gap: '.6rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link to="/deposer" className="btn btn-noir">Mettre un objet au market →</Link>
+                <Link to="/bourse?onglet=atelier" className="btn btn-outline">Dessiner un billet →</Link>
+              </div>
             </div>
           : <div className="grid-3">
               {objets.map(o => (
@@ -244,7 +247,7 @@ export default function Compte() {
                   <div className="compte-actions">
                     {estVente(o)
                       ? <span className="caption-gris" style={{ alignSelf: 'center' }}>
-                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(echeance(o))}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : o.dessin_id ? `${o.statut} : le billet est revenu dans votre collection` : o.vendeur_banque ? `${o.statut} : ouvrir la fiche pour remettre en vente` : o.statut}
+                          {o.statut === 'disponible' ? `${o.nb_encheres} enchère${o.nb_encheres > 1 ? 's' : ''} · ${tempsRestant(echeance(o))}` : o.statut === 'échangé' ? `adjugé ${o.prix_final} à ${o.vendu_a_pseudo}` : o.dessin_id ? `${o.statut} : le billet est revenu dans votre collection` : `${o.statut} : ouvrir la fiche pour remettre en vente`}
                         </span>
                       : ['disponible', 'réservé', 'échangé'].map(s => (
                           <button key={s} className={`chip ${o.statut === s ? 'active' : ''}`} aria-pressed={o.statut === s} onClick={() => changeStatut(o.id, s)}>{s}</button>

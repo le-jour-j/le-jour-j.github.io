@@ -8,12 +8,12 @@ import { DUREES } from '../utils/encheres'
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
-// Mettre un objet en vente au market. Depuis le 2026-10-18, le market est la vitrine de la banque :
-// seul le banquier dépose (la base le vérifie aussi), et le formulaire vit dans l'Admin.
+// Mettre un objet en vente au market : ouvert à tous les comptes (de nouveau le 2026-10-19,
+// après un jour réservé à la banque). Les enchères s'y font en billets papier.
 // `integre` : rendu dans l'onglet Market de l'Admin (sans en-tête ni marges de page) ;
 // `onDepose` : appelé après la mise en vente, à la place du retour au market.
 export default function Deposer({ integre = false, onDepose }) {
-  const { user, loading: authLoading, estBanquier } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', mise_depart: 10, prix_achat: '', duree_jours: 3 })
   const [files, setFiles] = useState([])
@@ -119,12 +119,12 @@ export default function Deposer({ integre = false, onDepose }) {
 
   if (authLoading) return <div className="loader">Chargement<span className="blink">_</span></div>
 
-  if (!user || !estBanquier) return (
+  if (!user) return (
     <div className="acces-refuse">
       <div>
-        <div className="titre">Réservé à la banque</div>
-        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Le market est la vitrine de la banque. Pour vendre quelque chose, dessinez un billet et mettez-le en vente dans la bourse.</p>
-        <Link to="/bourse" className="btn btn-noir">La bourse aux billets →</Link>
+        <div className="titre">Accès refusé</div>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour mettre quelque chose en vente au market.</p>
+        <Link to="/connexion" className="btn btn-noir">Se connecter →</Link>
       </div>
     </div>
   )
@@ -133,7 +133,7 @@ export default function Deposer({ integre = false, onDepose }) {
         <div className="form-grid">
           <div>
             <p className="texte-aide" style={{ marginBottom: '2rem' }}>
-              Un objet, une œuvre ou un service que la banque met aux enchères. Les joueurs misent les billets qu'ils ont dessinés ; le plus offrant l'emporte à la clôture, et la remise se fait en main propre.
+              Un objet, une œuvre ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le plus offrant l'emporte à la clôture et vous paie en main propre, au moment de la remise.
             </p>
             <div className="field">
               <label>Images (8 max, 5 Mo chacune)</label>
@@ -194,7 +194,7 @@ export default function Deposer({ integre = false, onDepose }) {
                   ))}
                 </div>
               </div>
-              <p className="caption-gris">À la clôture, le plus offrant l'emporte et le prix entier va au trésor de la banque. Sans enchère, la vente repart automatiquement pour la même durée, jusqu'à ce que quelqu'un enchérisse.</p>
+              <p className="caption-gris">À la clôture, le plus offrant l'emporte : vous vous écrivez par la messagerie du site pour la remise. Sans enchère, la vente repart automatiquement pour la même durée, jusqu'à ce que quelqu'un enchérisse.</p>
             </div>
             <div className="field">
               <label>Titre *</label>
