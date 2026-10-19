@@ -1,5 +1,6 @@
 import { COUPURES } from './coupures'
 import { dessinerHabillage, dessinerTraits, chargerPolices } from './habillage'
+import { getPublicImageUrl } from '../../utils/images'
 
 // Planche A4 d'un billet dessiné dans l'atelier (2026-10-19, demande de Jiiji : « chaque
 // billet dessiné dans la bourse doit se retrouver en PDF A4 dans S'enrichir »).
@@ -97,6 +98,36 @@ export async function planchePdf(dessin) {
   c += `BT /F1 6.5 Tf 0.4 g ${p(MARGE)} ${p(Math.min(3.5, y0 - REPERE - 2.5))} Td (${cartel}) Tj ET\n`
 
   return ecrirePdf({ W: g.W, H: g.H, jpeg, largeurPx: cv.width, hauteurPx: cv.height, contenu: c })
+}
+
+// Aperçu de la planche en image (vignette et agrandissement de S'enrichir) : la même feuille
+// que le PDF, mais composée depuis l'image du billet, déjà en ligne, pour aller vite.
+const apercus = new Map()
+export function apercuPlanche(dessin, pxParMm = 3) {
+  const cle = `${dessin.id}-${pxParMm}`
+  if (!apercus.has(cle)) apercus.set(cle, (async () => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = getPublicImageUrl(dessin.image_path)
+    await img.decode()
+    const { l, h } = COUPURES[dessin.coupure]
+    const g = disposition(dessin.coupure)
+    const k = pxParMm
+    const cv = document.createElement('canvas')
+    cv.width = Math.round(g.W * k); cv.height = Math.round(g.H * k)
+    const ctx = cv.getContext('2d')
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height)
+    const x0 = (g.W - g.cols * l) / 2, y0 = (g.H - g.rangs * h) / 2
+    for (let i = 0; i < g.cols; i++) for (let j = 0; j < g.rangs; j++)
+      ctx.drawImage(img, (x0 + i * l) * k, (y0 + j * h) * k, l * k, h * k)
+    ctx.strokeStyle = '#999'; ctx.lineWidth = Math.max(1, 0.25 * k)
+    const x1 = x0 + g.cols * l, y1 = y0 + g.rangs * h, trait = (a, b, c, d) => { ctx.beginPath(); ctx.moveTo(a * k, b * k); ctx.lineTo(c * k, d * k); ctx.stroke() }
+    for (let i = 0; i <= g.cols; i++) { const x = x0 + i * l; trait(x, y0 - 1, x, y0 - 1 - REPERE); trait(x, y1 + 1, x, y1 + 1 + REPERE) }
+    for (let j = 0; j <= g.rangs; j++) { const y = y0 + j * h; trait(x0 - 1, y, x0 - 1 - REPERE, y); trait(x1 + 1, y, x1 + 1 + REPERE, y) }
+    const blob = await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.88))
+    return URL.createObjectURL(blob)
+  })().catch(e => { apercus.delete(cle); throw e }))
+  return apercus.get(cle)
 }
 
 export function nomPlanche(dessin) {

@@ -5,6 +5,7 @@ import MurBillets from '../components/MurBillets'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 import BoutonPlanche from '../components/BoutonPlanche'
+import { apercuPlanche } from '../lib/billet/planche'
 import { supabase } from '../lib/supabase'
 import { getPublicImageUrl } from '../utils/images'
 
@@ -57,7 +58,19 @@ export default function Senrichir() {
     ...dessins.filter(d => valeur === 'toutes' || d.coupure === valeur).map(d => ({ ...d, dessine: true })),
     ...(valeur === 'toutes' ? auHasard : PLANCHES.filter(p => p.valeur === valeur)),
   ], [valeur, auHasard, dessins])
-  const apercus = useMemo(() => visibles.map(p => p.dessine ? getPublicImageUrl(p.image_path) : urlApercu(p, p.apercu)), [visibles])
+  // Billets du site : la feuille A4 composée dans le navigateur (vignette, puis grand format à l'ouverture)
+  const [feuilles, setFeuilles] = useState({}) // `${id}-${pxParMm}` -> url de l'aperçu
+  const composer = (d, k) => apercuPlanche(d, k)
+    .then(url => setFeuilles(f => ({ ...f, [`${d.id}-${k}`]: url })))
+    .catch(e => console.error('[apercu planche]', e))
+  useEffect(() => { visibles.slice(0, montres).filter(p => p.dessine).forEach(d => composer(d, 1.6)) }, [visibles, montres])
+  useEffect(() => {
+    const d = lightboxIndex !== null && visibles[lightboxIndex]
+    if (d?.dessine) composer(d, 5)
+  }, [lightboxIndex, visibles])
+  const apercus = useMemo(() => visibles.map(p => p.dessine
+    ? feuilles[`${p.id}-5`] || feuilles[`${p.id}-1.6`] || getPublicImageUrl(p.image_path)
+    : urlApercu(p, p.apercu)), [visibles, feuilles])
 
   function choisirValeur(v) { setValeur(v); setMontres(PAR_PAQUET) }
 
@@ -90,8 +103,8 @@ export default function Senrichir() {
           <div className="planches-grid">
             {visibles.slice(0, montres).map((p, index) => p.dessine ? (
               <article key={p.id} className="planche-card">
-                <button type="button" className="planche-apercu planche-apercu-billet" onClick={() => setLightboxIndex(index)} aria-label={`Voir le billet ${p.code || p.numero} en grand`}>
-                  <img src={apercus[index]} alt={p.titre || `Billet de ${p.coupure}, par ${p.auteur_pseudo || 'un compte disparu'}`} loading="lazy" />
+                <button type="button" className={`planche-apercu ${feuilles[`${p.id}-1.6`] ? 'planche-apercu-feuille' : 'planche-apercu-billet'}`} onClick={() => setLightboxIndex(index)} aria-label={`Voir la planche du billet ${p.code || p.numero} en grand`}>
+                  <img src={feuilles[`${p.id}-1.6`] || getPublicImageUrl(p.image_path)} alt={p.titre || `Billet de ${p.coupure}, par ${p.auteur_pseudo || 'un compte disparu'}`} loading="lazy" />
                 </button>
                 <div className="planche-pied">
                   <div className="planche-titre">{p.coupure} € <small>{p.titre || `par ${p.auteur_pseudo || '?'}`}</small></div>
