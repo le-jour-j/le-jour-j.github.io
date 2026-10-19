@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>poïasie</title>
+<style>
+  :root {
+    --gris: #c0c0c0;
+    --gris-clair: #dfdfdf;
+    --gris-fonce: #808080;
+    --titre-a: #000080;
+    --titre-b: #1084d0;
+    --texte-cartel: #ece6d6;
+  }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body.cache-curseur, body.cache-curseur * { cursor: none !important; }
+  #toile { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; }
+
+  #crt {
+    position: fixed; inset: 0; pointer-events: none; display: none;
+    background:
+      repeating-linear-gradient(to bottom, rgba(0,0,0,0.0) 0px, rgba(0,0,0,0.0) 2px, rgba(0,0,0,0.28) 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.65) 100%);
+    /* pas de mix-blend-mode : du noir transparent assombrit pareil en melange normal,
+       et le melange "multiply" force le navigateur a recomposer tout l'ecran */
+  }
+  body.crt #crt { display: block; animation: scintille 0.12s infinite steps(2); }
+  @keyframes scintille { 50% { opacity: 0.93; } }
+
+  /* le cartel du poeme, comme au musee */
+  #cartel {
+    position: fixed; right: 24px; bottom: 22px; max-width: min(460px, calc(100vw - 48px));
+    text-align: right; color: var(--texte-cartel); font-family: Georgia, serif;
+    opacity: 0; transition: opacity 1.6s ease; pointer-events: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+  }
+  #cartel.visible { opacity: 0.88; }
+  #cartel .c-titre { font-style: italic; font-size: 17px; margin-bottom: 3px; }
+  #cartel .c-forme { font: 10px/1.5 Tahoma, sans-serif; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; }
+  #cartel .c-ligne { font: 11px/1.45 Tahoma, sans-serif; opacity: 0.7; }
+  body.clair #cartel { --texte-cartel: #2a241c; text-shadow: none; }
+
+  /* le direct : le poete en train d'ecrire */
+  #direct {
+    position: fixed; left: 16px; bottom: 16px; width: min(440px, calc(100vw - 32px));
+    font: 11px Tahoma, "MS Sans Serif", sans-serif; color: #000; display: none;
+  }
+  #direct.visible { display: block; }
+  #direct .contenu { padding: 6px 8px 8px; }
+  #direct .qui { font-weight: bold; }
+  #direct .ou { color: #404040; margin: 2px 0 5px; }
+  #direct .texte {
+    background: #fff; border: 2px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce);
+    padding: 5px 6px; min-height: 30px; max-height: 110px; overflow: hidden;
+    font: 13px/1.35 Georgia, serif; white-space: pre-wrap;
+  }
+  #direct .curseur { display: inline-block; width: 7px; height: 13px; background: #000; vertical-align: -2px; animation: clignote 1s steps(2) infinite; }
+  @keyframes clignote { 50% { opacity: 0; } }
+
+  #aide {
+    position: fixed; left: 50%; top: 18px; transform: translateX(-50%);
+    font: 11px Tahoma, sans-serif; color: #fff; background: rgba(0,0,0,0.55);
+    padding: 5px 10px; border: 1px solid rgba(255,255,255,0.25); transition: opacity 0.6s;
+    white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis;
+  }
+  #aide.cache { opacity: 0; pointer-events: none; }
+
+  /* ---------------------------------------------------- Windows 98 */
+  .fenetre {
+    position: fixed; background: var(--gris);
+    border: 2px solid; border-color: var(--gris-clair) #000 #000 var(--gris-clair);
+    box-shadow: inset 1px 1px #fff, inset -1px -1px var(--gris-fonce), 4px 4px 0 rgba(0,0,0,0.35);
+    font: 11px Tahoma, "MS Sans Serif", "Segoe UI", sans-serif; color: #000;
+  }
+  .barre {
+    background: linear-gradient(90deg, var(--titre-a), var(--titre-b)); color: #fff; font-weight: bold;
+    padding: 3px 3px 3px 5px; display: flex; align-items: center; justify-content: space-between;
+    cursor: move; user-select: none; gap: 6px;
+  }
+  .barre .nom { display: flex; align-items: center; gap: 5px; overflow: hidden; white-space: nowrap; }
+  .barre .icone { width: 14px; height: 14px; background: conic-gradient(#f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); border-radius: 2px; flex: none; }
+  .barre .boutons-barre { display: flex; gap: 2px; flex: none; }
+  .barre button {
+    width: 16px; height: 14px; padding: 0; font: bold 9px/10px Tahoma, sans-serif; color: #000;
+    background: var(--gris); border: 1px solid; border-color: #fff #000 #000 #fff;
+    box-shadow: inset -1px -1px var(--gris-fonce); cursor: pointer;
+  }
+  .onglets { display: flex; flex-wrap: wrap; padding: 6px 6px 0; }
+  .onglet {
+    padding: 3px 7px 2px; border: 1px solid; border-color: #fff var(--gris-fonce) transparent #fff;
+    border-radius: 3px 3px 0 0; margin-right: -1px; background: var(--gris); position: relative; top: 1px;
+    cursor: pointer; user-select: none;
+  }
+  .onglet.actif { padding-bottom: 4px; top: 0; z-index: 1; margin-bottom: -1px; }
+  .page {
+    border: 1px solid; border-color: #fff var(--gris-fonce) var(--gris-fonce) #fff;
+    margin: 0 6px; padding: 8px 10px; height: min(430px, calc(100vh - 170px)); overflow-y: auto;
+  }
+  .page[hidden] { display: none; }
+  fieldset {
+    border: 1px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce);
+    margin: 0 0 9px; padding: 6px 8px 7px;
+  }
+  legend { padding: 0 3px; }
+  .ligne { display: grid; grid-template-columns: 132px 1fr 40px; align-items: center; gap: 6px; margin: 3px 0; }
+  .ligne.case { grid-template-columns: 1fr; }
+  .ligne .val { text-align: right; font-variant-numeric: tabular-nums; }
+  .ligne label { display: flex; align-items: center; gap: 5px; }
+  select, input[type=text] {
+    font: inherit; background: #fff; border: 2px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce);
+    padding: 1px 2px; min-width: 0;
+  }
+  input[type=range] { width: 100%; accent-color: var(--titre-a); margin: 0; }
+  input[type=checkbox] { margin: 0; accent-color: var(--titre-a); }
+  .bouton {
+    min-width: 72px; padding: 4px 9px; background: var(--gris); font: inherit; color: #000;
+    border: 1px solid; border-color: #fff #000 #000 #fff;
+    box-shadow: inset -1px -1px var(--gris-fonce), inset 1px 1px var(--gris-clair); cursor: pointer;
+  }
+  .bouton:active { border-color: #000 #fff #fff #000; box-shadow: inset 1px 1px var(--gris-fonce); }
+  .bouton:disabled { color: var(--gris-fonce); text-shadow: 1px 1px #fff; }
+  .pied { display: flex; justify-content: flex-end; gap: 6px; padding: 8px 6px 7px; flex-wrap: wrap; }
+  .rangee { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+
+  .moniteur { width: 186px; margin: 2px auto 10px; }
+  .moniteur .ecran-mini {
+    background: #4a4a4a; padding: 9px 9px 11px; border-radius: 6px 6px 3px 3px;
+    border: 2px solid; border-color: #e8e4d8 #7c776a #7c776a #e8e4d8; background-color: #d6d0bf;
+  }
+  .moniteur canvas { display: block; width: 164px; height: 110px; background: #000; border: 2px solid; border-color: #7c776a #fff #fff #7c776a; }
+  .moniteur .pied-mini { width: 70px; height: 10px; margin: 0 auto; background: #c9c2af; border: 1px solid #7c776a; border-top: none; }
+  .moniteur .socle { width: 120px; height: 6px; margin: 0 auto; background: #c9c2af; border: 1px solid #7c776a; border-radius: 0 0 3px 3px; }
+
+  .apropos p { margin: 0 0 7px; line-height: 1.45; }
+  .apropos kbd { font: 10px Consolas, monospace; background: #fff; border: 1px solid var(--gris-fonce); padding: 0 3px; }
+  .etat-gen { padding: 6px; background: #fff; border: 2px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce); min-height: 34px; line-height: 1.45; }
+  .pastille { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: 0; background: #808080; }
+  .pastille.vert { background: #00a000; } .pastille.orange { background: #e08000; } .pastille.rouge { background: #c00000; }
+
+  /* la carte graphique : la toile 2D reste dessous (elle recoit les clics), le rendu WebGL par-dessus */
+  #gl { position: fixed; inset: 0; width: 100vw; height: 100vh; display: none; pointer-events: none; }
+  body.gl #gl { display: block; }
+  body.gl #toile { opacity: 0; }
+
+  /* l'annonce du pilotage en live (manette, clavier) */
+  #osd {
+    position: fixed; left: 50%; top: 38%; transform: translate(-50%, -50%) scale(0.96);
+    font: bold 26px Consolas, "Courier New", monospace; letter-spacing: 6px; color: #fff; white-space: nowrap;
+    text-shadow: 0 0 14px rgba(0,0,0,0.95), 0 0 3px #000; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  #osd.visible { opacity: 0.92; transform: translate(-50%, -50%) scale(1); }
+  #osd small { display: block; font-size: 12px; letter-spacing: 3px; opacity: 0.75; text-align: center; margin-top: 4px; }
+
+  .vumetre { display: block; width: 100%; height: 54px; background: #000; border: 2px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce); }
+  .manette { font: 10px/1.5 Consolas, monospace; background: #fff; border: 2px solid; border-color: var(--gris-fonce) #fff #fff var(--gris-fonce); padding: 5px 7px; white-space: pre; overflow-x: auto; }
+
+  @media (max-width: 640px) {
+    #panneau { left: 8px !important; top: 8px !important; width: calc(100vw - 16px) !important; }
+    .ligne { grid-template-columns: 104px 1fr 34px; }
+    #cartel { right: 16px; bottom: 16px; }
+  }
+</style>
+<meta name="robots" content="noindex">
+<style>
+  /* le site : rien d'ecrit sur l'image, pas de fenetre de reglages */
+  #panneau, #direct, #aide, #osd, #cartel { display: none !important; }
+  html, body { background: #000; touch-action: none; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+  body, body * { cursor: default; } body.cache-curseur, body.cache-curseur * { cursor: none !important; }
+</style>
+</head>
+<body>
+<canvas id="toile"></canvas>
+<canvas id="gl"></canvas>
+<div id="crt"></div>
+<div id="osd"></div>
+<div id="cartel"></div>
+
+<div id="direct" class="fenetre">
+  <div class="barre"><span class="nom"><span class="icone"></span><span id="d-titre">En direct</span></span></div>
+  <div class="contenu">
+    <div class="qui" id="d-qui"></div>
+    <div class="ou" id="d-ou"></div>
+    <div class="texte" id="d-texte"></div>
+  </div>
+</div>
+
+<div id="aide">P : réglages · ² : pilote automatique · Espace : suivant · F : plein écran · H : hasard · 1 à 0, Alt + 1 à 0 : scènes · W : combo · K R L B V X O Y U E I Q Z : effets · Tab : dégradé · N : palette · M : musique · ← → : poèmes · , ; : presets · : : mode · ! : un peu de hasard · * : un départ frais (Maj + * : comme avant) · manettes (jusqu'à 4) : une main et un poète chacune ; pavé tactile : un autre poète</div>
+
+<div id="panneau" class="fenetre" hidden style="left: 40px; top: 40px; width: 430px;">
+  <div class="barre" id="panneau-barre">
+    <span class="nom"><span class="icone"></span>Propriétés de poïasie</span>
+    <span class="boutons-barre"><button type="button" id="b-aide" title="À propos">?</button><button type="button" id="b-fermer" title="Fermer">×</button></span>
+  </div>
+  <div class="onglets" id="onglets"></div>
+  <div id="pages"></div>
+  <div class="pied">
+    <button type="button" class="bouton" id="b-hasard">Hasard</button>
+    <button type="button" class="bouton" id="b-defaut">Par défaut</button>
+    <button type="button" class="bouton" id="b-plein">Plein écran</button>
+    <button type="button" class="bouton" id="b-ok">OK</button>
+  </div>
+</div>
+
+<script>
+// Le moteur de poiasie, tel que le projet le publie : les memes fichiers que l'ecran, dans le meme ordre.
+const SITE_FICHIERS = ["site/site-stockage.js", "ecran/reglages.js", "site/site-config.js", "ecran/outils.js", "ecran/donnees.js", "site/site-donnees.js", "ecran/son.js", "ecran/mot.js", "ecran/vignettes.js", "ecran/scenes-premieres.js", "ecran/fond.js", "ecran/gpu.js", "ecran/musique.js", "ecran/pilote.js", "ecran/live.js", "ecran/scenes-banque.js", "ecran/calligramme.js", "ecran/poesie-outils.js", "ecran/scenes-poesie.js", "ecran/scenes-vj.js", "ecran/scenes-3d.js", "ecran/scenes-paysages.js", "ecran/combo.js", "ecran/orchestre.js", "ecran/panneau.js", "ecran/modes.js", "ecran/cv.js", "ecran/presets-categories.js", "ecran/rangement.js", "ecran/depart.js", "site/site.js"];
+for (const f of SITE_FICHIERS) document.write('<script src="' + f + '?v=0d8d4766"><' + '/script>');
+</script>
+</body>
+</html>

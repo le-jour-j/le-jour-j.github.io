@@ -1,213 +1,131 @@
 <!DOCTYPE html>
+<!-- poiasie-teaser -->
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>poïasie</title>
+<meta name="description" content="poïasie, un instrument de poésie visuelle de Jeanson Pechin : des poèmes écrits par des machines, lus en lettres qui bougent.">
+<meta property="og:title" content="poïasie">
+<meta property="og:description" content="Un instrument de poésie visuelle de Jeanson Pechin : des poèmes écrits par des machines, lus en lettres qui bougent.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico">
 <style>
   :root {
-    --fond: #FFFDF7;
-    --texte: #1A1A1A;
-    --sourdine: #7a7360;
-    --carte: #F5E27A;
-    --bordure: #1A1A1A;
+    --fond: #05060b;
+    --ligne: #0b0d16;
+    --texte: #8f93a3;
+    --texte-fort: #d9d6cb;
+    --accent: #e8c46a;
+    --teinte: 45;
+    --h-ligne: 34px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --fond: #1A1A1A;
-      --texte: #FFFDF7;
-      --sourdine: #cfc9a8;
-      --carte: #E8D66D;
-      --bordure: #FFFDF7;
-    }
-  }
-  :root[data-theme="dark"] {
-    --fond: #1A1A1A;
-    --texte: #FFFDF7;
-    --sourdine: #cfc9a8;
-    --carte: #E8D66D;
-    --bordure: #FFFDF7;
-  }
-
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    padding: 0 16px;
-    background: var(--fond);
-    color: var(--texte);
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.7;
+  html, body { margin: 0; height: 100%; background: var(--fond); }
+  body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; color: var(--texte); font: 12px/1.4 Georgia, "Times New Roman", serif; }
+  #scene { flex: 1 1 auto; min-height: 0; width: 100%; border: 0; display: block; background: #000; }
+  #scene:fullscreen { height: 100%; }
+
+  /* la ligne : sous l'image, jamais dessus */
+  #ligne {
+    flex: 0 0 auto; min-height: var(--h-ligne); display: flex; align-items: center; gap: 14px; flex-wrap: nowrap;
+    padding: 4px 14px calc(4px + env(safe-area-inset-bottom)); background: var(--ligne); border-top: 1px solid #181b2a; overflow: hidden;
   }
-  header {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 56px 0 24px;
-    text-align: center;
+  #ligne a { color: var(--texte-fort); text-decoration: none; border-bottom: 1px solid rgba(217,214,203,0.3); }
+  #ligne a:hover, #ligne a:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+  #legende { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #origine { flex: 0 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity 1.2s; }
+  #origine.vu { opacity: 1; }
+  #origine i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0; background: hsl(var(--teinte) 70% 62%); box-shadow: 0 0 6px hsl(var(--teinte) 80% 55% / 0.7); }
+  #gestes { flex: 0 0 auto; opacity: 0.75; white-space: nowrap; }
+  #gestes .g-tel { display: none; }
+  kbd { font: 11px Consolas, "Courier New", monospace; color: var(--texte-fort); border: 1px solid #2a2e44; border-radius: 3px; padding: 0 4px; }
+  .bouton { flex: 0 0 auto; font: inherit; color: var(--texte-fort); background: transparent; border: 1px solid #2a2e44; border-radius: 3px; padding: 1px 8px; cursor: pointer; min-height: 24px; }
+  .bouton:hover, .bouton:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+  .bouton[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 760px), (pointer: coarse) {
+    #ligne { gap: 6px 10px; padding-left: 10px; padding-right: 10px; flex-wrap: wrap; }
+    #origine .titre { display: none; }
+    #legende { flex: 1 1 100%; white-space: normal; font-size: 11px; line-height: 1.3; }
+    #gestes { flex: 1 1 100%; order: 3; white-space: normal; font-size: 11px; line-height: 1.3; opacity: 0.85; }
+    #gestes .g-pc { display: none; }
+    #gestes .g-tel { display: inline; }
+    .bouton { min-height: 30px; padding: 2px 10px; }
+    #b-suivant { order: 1; } #b-son { order: 1; } #b-plein { order: 1; } #origine { order: 2; }
   }
-  h1 {
-    font-size: 2.4rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin: 0 0 8px;
-    font-style: italic;
-  }
-  .sous-titre {
-    color: var(--sourdine);
-    font-size: 0.95rem;
-    font-family: -apple-system, "Segoe UI", sans-serif;
-  }
-  main {
-    max-width: 640px;
-    margin: 0 auto;
-    padding-bottom: 80px;
-  }
-  .poeme-infini {
-    background: var(--carte);
-    border: 2px solid var(--bordure);
-    border-radius: 4px;
-    padding: 40px 44px;
-    margin-bottom: 28px;
-    font-size: 1.2rem;
-    color: #1A1A1A;
-    overflow: hidden;
-  }
-  .poeme-infini .mot {
-    display: inline-block;
-    will-change: transform, opacity, filter;
-  }
-  .poeme-infini .saut {
-    display: block;
-    height: 0.9em;
-  }
-  .poeme-infini.tremble .mot {
-    animation: tremble 0.7s ease-in-out;
-  }
-  .poeme-infini.disperse .mot {
-    animation: disperse 1.7s ease-in forwards;
-    animation-delay: var(--delai);
-  }
-  .poeme-infini.reforme .mot {
-    animation: reforme 1.9s cubic-bezier(.2,.8,.2,1) forwards;
-    animation-delay: var(--delai);
-  }
-  @keyframes tremble {
-    0%, 100% { transform: translate(0,0) rotate(0deg); }
-    20% { transform: translate(calc(var(--dx) * 0.06), calc(var(--dy) * 0.06)) rotate(calc(var(--rot) * 0.15)); }
-    40% { transform: translate(calc(var(--dx) * -0.05), calc(var(--dy) * -0.05)) rotate(calc(var(--rot) * -0.12)); }
-    60% { transform: translate(calc(var(--dx) * 0.04), calc(var(--dy) * -0.04)) rotate(calc(var(--rot) * 0.1)); }
-    80% { transform: translate(calc(var(--dx) * -0.03), calc(var(--dy) * 0.03)) rotate(calc(var(--rot) * -0.08)); }
-  }
-  @keyframes disperse {
-    0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; filter: blur(0px); }
-    100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.6); opacity: 0; filter: blur(5px); }
-  }
-  @keyframes reforme {
-    0%   { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.6); opacity: 0; filter: blur(5px); }
-    100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; filter: blur(0px); }
-  }
-  .vide {
-    text-align: center;
-    color: var(--sourdine);
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    padding: 60px 0;
-  }
-  footer {
-    max-width: 640px;
-    margin: 0 auto;
-    text-align: center;
-    color: var(--sourdine);
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    font-size: 0.75rem;
-    padding-bottom: 40px;
-  }
+  @media (max-width: 460px) { #origine { display: none; } }
+  noscript { position: fixed; inset: 0; display: grid; place-items: center; color: var(--texte-fort); background: var(--fond); padding: 24px; text-align: center; }
 </style>
 </head>
 <body>
-<header>
-  <h1>poïasie</h1>
-  <div class="sous-titre">un seul poème, sans fin, écrit à l'aveugle par des intelligences locales qui ne se lisent jamais entièrement</div>
-</header>
-<main id="poeme">
-  <div class="vide">chargement…</div>
-</main>
-<footer>chaque voix ne voit que les derniers mots de la précédente, aucune ne signe</footer>
-
+<iframe id="scene" src="scene.html?v=0d8d4766" title="poïasie : des poèmes en lettres qui bougent" allow="fullscreen; autoplay" allowfullscreen></iframe>
+<div id="ligne">
+  <span id="legende">poïasie, un instrument de poésie visuelle de <a href="../" target="_blank" rel="noopener" title="le site de Jeanson Pechin (nouvel onglet)">Jeanson Pechin</a> · <a href="infini.html" target="_blank" rel="noopener">le poème infini</a></span>
+  <span id="origine" aria-live="off"></span>
+  <span id="gestes"><span class="g-pc"><kbd>clic</kbd> un mot · <kbd>glisser</kbd> en écrire · <kbd>appui long</kbd> éclater · <kbd>espace</kbd> poème suivant · <kbd>S</kbd> scène · <kbd>N</kbd> couleurs</span><span class="g-tel">touchez : un mot · glissez : une phrase · appui long : éclater</span></span>
+  <button class="bouton" id="b-suivant" type="button" title="poème suivant (espace)">poème suivant ›</button>
+  <button class="bouton" id="b-son" type="button" aria-pressed="false" title="allumer ou couper le son (coupé au départ)">son</button>
+  <button class="bouton" id="b-plein" type="button" title="plein écran (F)">plein écran</button>
+</div>
+<noscript>poïasie a besoin de JavaScript pour s'afficher. <a href="infini.html" target="_blank" rel="noopener">Le poème infini</a> s'en passe presque.</noscript>
 <script>
-let texteActuel = null;
-let premierChargement = true;
+(function () {
+  const cadre = document.getElementById("scene");
+  const origine = document.getElementById("origine");
+  const son = document.getElementById("b-son");
+  let fenetre = null;
 
-function attendre(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
+  function aLaScene(m) { try { cadre.contentWindow.postMessage(m, "*"); } catch (e) { /* pas prete */ } }
+  function prendreLaMain() { try { cadre.contentWindow.focus(); } catch (e) { /* tant pis */ } }
+  cadre.addEventListener("load", prendreLaMain);
 
-function construireMots(texte) {
-  const paragraphes = texte.split('\n\n');
-  return paragraphes.map(p => {
-    const mots = p.split(/\s+/).filter(Boolean);
-    return mots.map(m => {
-      const dx = (Math.random() * 2 - 1) * 220;
-      const dy = (Math.random() * 2 - 1) * 220;
-      const rot = (Math.random() * 2 - 1) * 200;
-      const delai = (Math.random() * 0.5).toFixed(2);
-      const echappe = m.replace(/</g, '&lt;');
-      return `<span class="mot" style="--dx:${dx}px;--dy:${dy}px;--rot:${rot}deg;--delai:${delai}s">${echappe}</span>`;
-    }).join(' ');
-  }).join('<span class="saut"></span>');
-}
-
-async function recupererTexte() {
-  const reponse = await fetch('poemes.json?t=' + Date.now());
-  const etat = await reponse.json();
-  const fragments = etat.fragments || [];
-  if (!fragments.length) return null;
-  return fragments.map(f => f.texte).join('\n\n');
-}
-
-async function afficherInitial() {
-  const conteneur = document.getElementById('poeme');
-  try {
-    texteActuel = await recupererTexte();
-    if (!texteActuel) {
-      conteneur.innerHTML = '<div class="vide">le poème n\'a pas encore commencé</div>';
-      return;
+  // ce que la scene raconte : le poeme qui passe et la machine qui l'a ecrit (sous l'image)
+  window.addEventListener("message", e => {
+    if (e.source !== cadre.contentWindow) return;
+    const m = e.data || {};
+    if (m.type === "poiasie-poeme") {
+      origine.textContent = "";
+      if (m.machine) {
+        const pastille = document.createElement("i");
+        origine.appendChild(pastille);
+        origine.appendChild(document.createTextNode(m.machine.toLowerCase()));
+        if (m.titre) {
+          const t = document.createElement("span");
+          t.className = "titre";
+          t.textContent = " · " + m.titre + (m.forme ? " (" + m.forme.toLowerCase() + ")" : "");
+          origine.appendChild(t);
+        }
+        if (m.teinte != null) document.documentElement.style.setProperty("--teinte", m.teinte);
+        origine.classList.add("vu");
+        origine.title = [m.forme, m.date ? m.date.slice(0, 16).replace("T", " ") : ""].filter(Boolean).join(" · ");
+      }
+    } else if (m.type === "poiasie-son-etat") {
+      son.setAttribute("aria-pressed", m.actif ? "true" : "false");
+      son.textContent = m.actif ? "son allumé" : "son";
+    } else if (m.type === "poiasie-son-bascule") {
+      bascule();
     }
-    conteneur.innerHTML = `<div class="poeme-infini">${construireMots(texteActuel)}</div>`;
-  } catch (e) {
-    conteneur.innerHTML = '<div class="vide">poème indisponible pour le moment</div>';
+  });
+
+  function bascule() { aLaScene({ type: "poiasie-son", actif: son.getAttribute("aria-pressed") !== "true" }); }
+  son.addEventListener("click", () => { bascule(); prendreLaMain(); });
+  document.getElementById("b-suivant").addEventListener("click", () => { aLaScene({ type: "poiasie-touche", key: " " }); prendreLaMain(); });
+  function plein() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (cadre.requestFullscreen) cadre.requestFullscreen().catch(() => {});
   }
-}
+  document.getElementById("b-plein").addEventListener("click", plein);
+  // le plein ecran garde la main de la scene
+  document.addEventListener("fullscreenchange", prendreLaMain);
 
-async function cycle() {
-  const bloc = document.querySelector('.poeme-infini');
-  if (!bloc) { return; }
-
-  bloc.classList.add('tremble');
-  await attendre(700);
-  bloc.classList.remove('tremble');
-
-  bloc.classList.add('disperse');
-  await attendre(1900);
-
-  try {
-    const nouveauTexte = await recupererTexte();
-    if (nouveauTexte) texteActuel = nouveauTexte;
-  } catch (e) {
-    // reseau indisponible ce tour : on redessine le meme texte
-  }
-  bloc.innerHTML = construireMots(texteActuel);
-  bloc.classList.remove('disperse');
-
-  bloc.classList.add('reforme');
-  await attendre(2000);
-  bloc.classList.remove('reforme');
-}
-
-(async function boucleAffichage() {
-  await afficherInitial();
-  while (true) {
-    await attendre(20000);
-    await cycle();
-  }
+  // les touches qui arrivent a la page (le focus n'est pas dans la scene) sont passees a la scene
+  window.addEventListener("keydown", e => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.target.closest && e.target.closest("button, a")) return;
+    if (/^( |arrowleft|arrowright|enter|s|n|f|a|m)$/i.test(e.key)) {
+      e.preventDefault();
+      if (e.key.toLowerCase() === "f") plein(); else aLaScene({ type: "poiasie-touche", key: e.key });
+    }
+  });
 })();
 </script>
 </body>

@@ -1,0 +1,45 @@
+{
+ "machine": "jerrybob",
+ "dossier": "jerrybob",
+ "teinte": 101,
+ "pc": "bca0d387dc",
+ "total": 1948,
+ "jours": [
+  {
+   "jour": "2026-10-05",
+   "poemes": 1,
+   "octets": 2334
+  },
+  {
+   "jour": "2026-10-06",
+   "poemes": 188,
+   "octets": 381856
+  },
+  {
+   "jour": "2026-10-15",
+   "poemes": 73,
+   "octets": 141101
+  },
+  {
+   "jour": "2026-10-16",
+   "poemes": 71,
+   "octets": 134924
+  },
+  {
+   "jour": "2026-10-17",
+   "poemes": 562,
+   "octets": 1119362
+  },
+  {
+   "jour": "2026-10-18",
+   "poemes": 563,
+   "octets": 1116252
+  },
+  {
+   "jour": "2026-10-19",
+   "poemes": 490,
+   "octets": 1052556
+  }
+ ],
+ "maj": "2026-10-19T14:12:15"
+}
