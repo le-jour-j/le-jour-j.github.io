@@ -1,4 +1,4 @@
-import { COUPURES, teinte, couleurTon, avecAlpha } from './coupures'
+import { COUPURES, TONS, teinte, couleurTon, avecAlpha, rgbHls, hlsRgb, rgbHex } from './coupures'
 
 // L'habillage du billet, porté de habiller() dans machine_a_bifton.py (mode habillé) :
 // fond éclairci, cadre, guillochis à gauche, montant, émetteur, mention, numéro,
@@ -425,13 +425,37 @@ export function dessinerHabillage(ctx, { coupure, graine, numero, pxParMm }) {
 // ── le dessin à main levée, comme dessiner() de la machine : une liste de traits en mm
 // {o: crayon|trait|rect|ellipse|texte, p: [[x, y]…], c, e (mm), a, f, t, s (points), g}
 export function dessinerTraits(ctx, traits, { coupure, pxParMm }) {
-  const { l, h } = COUPURES[coupure], k = pxParMm
+  const { l, h } = COUPURES[coupure]
+  tracerTraits(ctx, traits, l, h, pxParMm, c => couleurTon(c, coupure))
+}
+
+// La même chose sur une toile libre (atelier Paint, 2026-10-19) : pas de coupure, le format
+// est donné en mm. Un mot de ton s'y calcule d'après la couleur du fond.
+export function dessinerTraitsToile(ctx, traits, { l, h, pxParMm, fond = '#ffffff' }) {
+  tracerTraits(ctx, traits, l, h, pxParMm, c => tonRelatif(c, fond))
+}
+
+const hexRgb = hex => {
+  const n = parseInt(String(hex).slice(1, 7), 16)
+  return Number.isNaN(n) ? [255, 255, 255] : [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+
+// « #rrggbb », ou un mot de TONS calculé d'après une couleur quelconque (#rrggbb)
+export function tonRelatif(mot, base) {
+  if (!mot) return '#1a1a1a'
+  if (!mot.startsWith('ton')) return mot
+  const f = TONS[mot]
+  if (!f) return '#1a1a1a'
+  return rgbHex(hlsRgb(f(...rgbHls(hexRgb(base)))))
+}
+
+function tracerTraits(ctx, traits, l, h, k, resoudre) {
   ctx.save()
   versRepereMm(ctx, k, h)
   ctx.beginPath(); ctx.rect(0, 0, l, h); ctx.clip()
   ctx.lineCap = 'round'; ctx.lineJoin = 'round'
   for (const t of traits) {
-    const col = couleurTon(t.c || '#1a1a1a', coupure), a = t.a ?? 1, e = Number(t.e ?? 0.5), p = t.p || []
+    const col = resoudre(t.c || '#1a1a1a'), a = t.a ?? 1, e = Number(t.e ?? 0.5), p = t.p || []
     if (!p.length) continue
     ctx.globalAlpha = a
     ctx.strokeStyle = ctx.fillStyle = col

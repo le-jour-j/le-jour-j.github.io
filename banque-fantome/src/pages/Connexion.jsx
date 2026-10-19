@@ -11,7 +11,7 @@ function fakeEmail(pseudo) {
   return `${pseudo.toLowerCase().replace(/[^a-z0-9]/g, '_')}@banquefantome.local`
 }
 
-// ?retour=/bourse?onglet=atelier : où revenir une fois connecté (chemin interne seulement)
+// ?retour=/creer?atelier=billet : où revenir une fois connecté (chemin interne seulement)
 function cheminRetour(v) {
   return v && v.startsWith('/') && !v.startsWith('//') && !v.includes('\\') ? v : null
 }

@@ -9,18 +9,20 @@ import Deposer from './Deposer'
 import Notif from '../components/Notif'
 import ImageLightbox from '../components/ImageLightbox'
 import { getPublicImageUrl, getObjetImageUrls } from '../utils/images'
+import { COLONNES_OEUVRE, nomGenre } from '../lib/oeuvres'
 import { estVente, echeance, tempsRestant, messageErreur } from '../utils/encheres'
 import { emailValide, messageLettre, fonctionLettre } from '../lib/lettre'
 import { useNouveautes, RUBRIQUE_DE_L_ONGLET } from '../components/Nouveautes'
 
-// Espace du banquier : fil d'actu, billets émis, market, comptes et chiffres.
+// Espace du banquier : fil d'actu, billets émis, ventes (supermarket, market, bourse), œuvres, comptes et chiffres.
 // La page n'est qu'un tableau de bord : les droits sont vérifiés côté base
 // (bf_est_banquier, annuler_billet, admin_retirer_objet, lecture des transactions).
 
 const ONGLETS = [
   { id: 'actu', label: "Fil d'actu" },
   { id: 'billets', label: 'Billets émis' },
-  { id: 'market', label: 'Market' },
+  { id: 'market', label: 'Ventes' },
+  { id: 'oeuvres', label: 'Œuvres' },
   { id: 'comptes', label: 'Comptes et chiffres' },
   { id: 'lettre', label: 'Lettre' },
 ]
@@ -44,7 +46,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (!estBanquier) return
-    recharger().then(d => d && setDepuis({ comptes: d.comptes.depuis, billets: d.billets.depuis, market: d.market.depuis, abonnes: d.abonnes.depuis }))
+    recharger().then(d => d && setDepuis({ comptes: d.comptes.depuis, billets: d.billets.depuis, market: d.market.depuis, oeuvres: d.oeuvres?.depuis, abonnes: d.abonnes.depuis }))
   }, [estBanquier, recharger])
 
   // Ouvrir un onglet, c'est avoir vu ses nouveautés
@@ -55,7 +57,7 @@ export default function Admin() {
     try { sessionStorage.setItem('bf-admin-onglet', id) } catch { /* navigation privée */ }
   }
 
-  const aVoir = { comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
+  const aVoir = { comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), oeuvres: compte('oeuvres'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
 
   // On attend aussi le profil : sans lui, le banquier voyait « Accès refusé » au rechargement
   if (loading || (user && !profile)) return <div className="loader">Chargement<span className="blink">_</span></div>
@@ -88,6 +90,7 @@ export default function Admin() {
         {onglet === 'actu' && <OngletActu onNotif={setNotif} />}
         {onglet === 'billets' && <OngletBillets onNotif={setNotif} depuis={depuis?.billets} />}
         {onglet === 'market' && <OngletMarket onNotif={setNotif} depuis={depuis?.market} />}
+        {onglet === 'oeuvres' && <OngletOeuvres onNotif={setNotif} depuis={depuis?.oeuvres} />}
         {onglet === 'comptes' && <OngletComptes depuis={depuis?.comptes} />}
         {onglet === 'lettre' && <OngletLettre onNotif={setNotif} depuis={depuis?.abonnes} />}
       </div>
@@ -98,12 +101,13 @@ export default function Admin() {
 
 // ─── Nouveautés : ce qui s'est passé depuis la dernière visite de chaque onglet ───
 function BlocNouveautes({ data, lettrePrete, onOuvrir }) {
-  const { comptes, billets, market, abonnes, lettre } = data
+  const { comptes, billets, market, oeuvres, abonnes, lettre } = data
   const lignes = []
   if (lettrePrete) lignes.push({ onglet: 'lettre', fort: true, texte: `La lettre est prête : ${lettre.en_attente} actus attendent d'être envoyées` })
   if (comptes.n) lignes.push({ onglet: 'comptes', texte: pluriel(comptes.n, 'nouveau compte', 'nouveaux comptes') })
   if (billets.n) lignes.push({ onglet: 'billets', texte: pluriel(billets.n, 'billet encaissé', 'billets encaissés') })
-  if (market.n) lignes.push({ onglet: 'market', texte: pluriel(market.n, 'dépôt au market', 'dépôts au market') })
+  if (market.n) lignes.push({ onglet: 'market', texte: pluriel(market.n, 'nouvelle vente', 'nouvelles ventes') })
+  if (oeuvres?.n) lignes.push({ onglet: 'oeuvres', texte: pluriel(oeuvres.n, 'œuvre déposée', 'œuvres déposées') })
   const lettreMouvements = [
     abonnes.n > 0 && pluriel(abonnes.n, 'inscription', 'inscriptions'),
     abonnes.desinscrits > 0 && pluriel(abonnes.desinscrits, 'désinscription', 'désinscriptions'),
@@ -222,7 +226,7 @@ function OngletMarket({ onNotif, depuis }) {
   const { user } = useAuth()
   const [objets, setObjets] = useState(null)
   const [filtre, setFiltre] = useState('disponible')
-  const [rayon, setRayon] = useState('market')   // market (ventes de la banque et anciens dépôts) | bourse (billets dessinés)
+  const [rayon, setRayon] = useState('supermarket') // supermarket (objets physiques) | market (œuvres) | bourse (billets dessinés)
   const [depot, setDepot] = useState(false)      // formulaire de mise en vente ouvert
   const [aRetirer, setARetirer] = useState(null)
   const [selected, setSelected] = useState(null)
@@ -232,7 +236,7 @@ function OngletMarket({ onNotif, depuis }) {
   useEffect(() => {
     let q = supabase.from('objets').select('*').order('created_at', { ascending: false }).limit(300)
     if (filtre !== 'tous') q = q.eq('statut', filtre)
-    q = rayon === 'bourse' ? q.not('dessin_id', 'is', null) : q.is('dessin_id', null)
+    q = rayon === 'bourse' ? q.not('dessin_id', 'is', null) : rayon === 'market' ? q.not('oeuvre_id', 'is', null) : q.is('dessin_id', null).is('oeuvre_id', null)
     q.then(({ data }) => setObjets(data || []))
   }, [filtre, rayon, recharge])
 
@@ -241,7 +245,7 @@ function OngletMarket({ onNotif, depuis }) {
     const { data, error } = await supabase.rpc('admin_retirer_objet', { p_objet: o.id })
     setBusy(false)
     if (error) { onNotif({ msg: messageErreur(error), type: 'err' }); return }
-    onNotif({ msg: data?.rembourse ? `Retiré. ${data.rembourse} billets rendus à ${o.encherisseur_pseudo}.` : 'Retiré du market.', type: 'ok' })
+    onNotif({ msg: data?.rembourse ? `Retiré. ${data.rembourse} billets rendus à ${o.encherisseur_pseudo}.` : 'Retiré de la vente.', type: 'ok' })
     setARetirer(null)
     setRecharge(n => n + 1)
   }
@@ -250,17 +254,17 @@ function OngletMarket({ onNotif, depuis }) {
     <div className="admin-panneau">
       <div className="admin-barre">
         <div className="filter-row">
-          {[['market', 'Market'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
+          {[['supermarket', 'Supermarket'], ['market', 'Market (œuvres)'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
             <button key={v} type="button" className={`chip ${rayon === v ? 'active' : ''}`} onClick={() => setRayon(v)}>{l}</button>
           ))}
         </div>
-        {rayon === 'market' && (
+        {rayon === 'supermarket' && (
           <button type="button" className={`btn btn-sm ${depot ? 'btn-outline' : 'btn-jaune'}`} onClick={() => setDepot(d => !d)}>
-            {depot ? '✕ Fermer le formulaire' : '+ Mettre un objet en vente'}
+            {depot ? '✕ Fermer le formulaire' : '+ Mettre un article en vente'}
           </button>
         )}
       </div>
-      {depot && rayon === 'market' && (
+      {depot && rayon === 'supermarket' && (
         <div className="admin-depot">
           <Deposer integre onDepose={() => { setDepot(false); setFiltre('disponible'); setRecharge(n => n + 1) }} />
         </div>
@@ -271,7 +275,7 @@ function OngletMarket({ onNotif, depuis }) {
             <button key={v} type="button" className={`chip ${filtre === v ? 'active' : ''}`} onClick={() => setFiltre(v)}>{l}</button>
           ))}
         </div>
-        <span className="caption-gris">Retirer une vente de la bourse rend ses billets au meilleur enchérisseur ; au market, rien n'a été débité.</span>
+        <span className="caption-gris">Retirer une vente de la bourse ou du market rend ses billets au meilleur enchérisseur ; au supermarket, rien n'a été débité.</span>
       </div>
       {objets === null ? <div className="loader">Chargement<span className="blink">_</span></div>
         : objets.length === 0 ? <p className="vide">Aucun dépôt.</p>
@@ -304,13 +308,73 @@ function OngletMarket({ onNotif, depuis }) {
                           <button type="button" className="btn btn-rouge btn-xs" disabled={busy} onClick={() => retirer(o)}>Confirmer le retrait</button>
                           <button type="button" className="btn btn-outline btn-xs" onClick={() => setARetirer(null)}>Non</button>
                         </>
-                      : <button type="button" className="btn btn-outline btn-xs" onClick={() => setARetirer(o.id)}>Retirer du market</button>)}
+                      : <button type="button" className="btn btn-outline btn-xs" onClick={() => setARetirer(o.id)}>Retirer de la vente</button>)}
                   </div>
                 </div>
               )
             })}
           </div>}
       {selected && <ObjetModal objet={selected} onClose={() => { setSelected(null); setRecharge(n => n + 1) }} />}
+    </div>
+  )
+}
+
+// ─── Œuvres : ce qui sort des ateliers (2026-10-19). La banque peut en retirer une. ───
+function OngletOeuvres({ onNotif, depuis }) {
+  const [oeuvres, setOeuvres] = useState(null)
+  const [aAnnuler, setAAnnuler] = useState(null) // { id, motif }
+  const [busy, setBusy] = useState(false)
+  const [agrandi, setAgrandi] = useState(null)
+  const [recharge, setRecharge] = useState(0)
+
+  useEffect(() => {
+    supabase.from('oeuvres').select(COLONNES_OEUVRE).order('created_at', { ascending: false }).limit(200)
+      .then(({ data }) => setOeuvres(data || []))
+  }, [recharge])
+
+  async function annuler() {
+    setBusy(true)
+    const { error } = await supabase.rpc('annuler_oeuvre', { p_oeuvre: aAnnuler.id, p_motif: aAnnuler.motif || null })
+    setBusy(false)
+    if (error) { onNotif({ msg: messageErreur(error), type: 'err' }); return }
+    onNotif({ msg: 'Œuvre retirée des vitrines (et de la vente, enchère remboursée).', type: 'ok' })
+    setAAnnuler(null)
+    setRecharge(n => n + 1)
+  }
+
+  return (
+    <div className="admin-panneau">
+      <div className="admin-barre"><span className="caption-gris">Retirer une œuvre la sort du market et des vitrines publiques ; son auteur et son propriétaire la voient encore, marquée retirée.</span></div>
+      {oeuvres === null ? <div className="loader">Chargement<span className="blink">_</span></div>
+        : oeuvres.length === 0 ? <p className="vide">Aucune œuvre pour le moment.</p>
+        : <div className="admin-liste">
+            {oeuvres.map(w => {
+              const nouveau = estNouveau(w.created_at, depuis)
+              const img = getPublicImageUrl(w.apercu_path)
+              return (
+                <div key={w.id} className={`admin-ligne ${w.statut === 'annule' ? 'barre' : ''} ${nouveau ? 'nouvelle' : ''}`}>
+                  <button type="button" className="admin-vignette" onClick={() => setAgrandi(img)} aria-label="Voir l’œuvre en grand">
+                    <img src={img} alt="" loading="lazy" />
+                  </button>
+                  <div className="admin-infos">
+                    <div className="admin-titre">{w.titre}{nouveau && <Nouveau />}</div>
+                    <div className="caption-gris">{nomGenre(w.genre)} · par <strong>{w.auteur_pseudo || '?'}</strong> · {dateHeure(w.created_at)} · chez {w.proprietaire_pseudo || '?'} · <span className="admin-statut">{w.statut}</span></div>
+                  </div>
+                  <div className="admin-actions">
+                    {w.statut !== 'annule' && (aAnnuler?.id === w.id
+                      ? <>
+                          <input className="admin-motif" placeholder="Motif (facultatif)" value={aAnnuler.motif} onChange={e => setAAnnuler({ ...aAnnuler, motif: e.target.value })} />
+                          <button type="button" className="btn btn-rouge btn-xs" disabled={busy} onClick={annuler}>Confirmer</button>
+                          <button type="button" className="btn btn-outline btn-xs" onClick={() => setAAnnuler(null)}>Non</button>
+                        </>
+                      : <button type="button" className="btn btn-outline btn-xs" onClick={() => setAAnnuler({ id: w.id, motif: '' })}>Retirer l’œuvre</button>)}
+                    {w.statut === 'annule' && <span className="stamp stamp-rouge">retirée</span>}
+                  </div>
+                </div>
+              )
+            })}
+          </div>}
+      {agrandi && <ImageLightbox images={[agrandi]} onClose={() => setAgrandi(null)} />}
     </div>
   )
 }

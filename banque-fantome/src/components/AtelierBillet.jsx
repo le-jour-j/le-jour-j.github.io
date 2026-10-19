@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { COUPURES, VALEURS_COUPURES, TONS, couleurTon } from '../lib/billet/coupures'
-import { dessinerHabillage, dessinerTraits, chargerPolices, nouvelleGraine, numeroDepuisGraine } from '../lib/billet/habillage'
+import { dessinerHabillage, dessinerTraits, dessinerTraitsToile, tonRelatif, chargerPolices, nouvelleGraine, numeroDepuisGraine } from '../lib/billet/habillage'
 import { verifierTexte } from '../lib/billet/motsRefuses'
 import './AtelierBillet.css'
 
@@ -32,6 +32,7 @@ const PALETTE = ['#1a1a1a', '#ffffff', '#e63946', '#ff8a00', '#ffd400', '#33b24a
 const TAILLES = [0.3, 0.8, 1.8, 4]       // épaisseurs en un geste : fin, moyen, gros, énorme (mm)
 const GOMMES = [1.5, 3.5, 7]             // rayon de la gomme (mm)
 const EFFETS = [['', 'normal'], ['arc', 'arc-en-ciel'], ['tons', 'tons du billet']]
+const EFFETS_LIBRES = [['', 'normal'], ['arc', 'arc-en-ciel'], ['nuances', 'nuances']]
 const SYMETRIES = [['', 'aucune'], ['lr', '↔ miroir'], ['hb', '↕ miroir'], ['4', 'quatre coins'], ['k6', 'kaléidoscope']]
 
 const r1 = x => Math.round(x * 10) / 10
@@ -41,9 +42,13 @@ const compterPoints = d => d.reduce((n, t) => n + (t.p?.length || 0), 0)
 const ARC = ['#ff2fb3', '#ff8a00', '#ffe600', '#33e07a', '#00c8ff', '#7a3cff']
 const TONS_CYCLE = ['ton-vif', 'ton-voisin', 'ton-oppose', 'ton-voisin2', 'ton-fonce', 'ton-clair']
 
-function appliquerEffet(entrees, effet) {
+// Sur toile libre, « nuances » remplace les tons du billet : le même cycle, calculé
+// d'après la couleur choisie (2026-10-19)
+const nuancesDe = couleur => TONS_CYCLE.map(mot => tonRelatif(mot, couleur))
+
+function appliquerEffet(entrees, effet, couleur) {
   if (!effet) return entrees
-  const pal = effet === 'arc' ? ARC : TONS_CYCLE, out = []
+  const pal = effet === 'arc' ? ARC : effet === 'nuances' ? nuancesDe(couleur) : TONS_CYCLE, out = []
   let k = Math.floor(Math.random() * pal.length)
   for (const e of entrees) {
     if (e.o === 'crayon' && e.p.length > 7) {
@@ -55,14 +60,14 @@ function appliquerEffet(entrees, effet) {
 
 // Les miroirs prennent tout le billet ; le kaléidoscope tourne au milieu de la moitié droite,
 // celle qui est libre : centré sur le billet, il recouvrait l'habillage (2026-10-19).
-function centreSymetrie(symetrie, coupure) {
-  const { l, h } = COUPURES[coupure]
-  return symetrie === 'k6' ? [l * 0.75, h / 2] : [l / 2, h / 2]
+// Sur une toile libre, rien à épargner : il tourne au milieu de la toile.
+function centreSymetrie(symetrie, { l, h }, libre) {
+  return symetrie === 'k6' && !libre ? [l * 0.75, h / 2] : [l / 2, h / 2]
 }
 
-function symetriser(entrees, symetrie, coupure) {
+function symetriser(entrees, symetrie, dims, libre) {
   if (!symetrie) return entrees
-  const [cx, cy] = centreSymetrie(symetrie, coupure), out = [...entrees]
+  const [cx, cy] = centreSymetrie(symetrie, dims, libre), out = [...entrees]
   const map = (e, f) => ({ ...e, p: e.p.map(([x, y]) => f(x, y).map(r1)) })
   for (const e of entrees) {
     if (e.o === 'texte') continue
@@ -199,17 +204,31 @@ function historique(etat, action) {
   }
 }
 
-function lireBrouillon() {
+function lireBrouillon(support) {
   try {
-    const b = JSON.parse(localStorage.getItem(CLE_BROUILLON) || 'null')
-    if (b && COUPURES[b.coupure] && Array.isArray(b.dessin)) return b
+    const b = JSON.parse(localStorage.getItem(support ? support.cleBrouillon : CLE_BROUILLON) || 'null')
+    if (b && Array.isArray(b.dessin) && (support ? support.formats.some(f => f.id === b.format) : COUPURES[b.coupure])) return b
   } catch { /* stockage indisponible : on part d'un billet blanc */ }
   return null
 }
 
+// Les traits posés, sur le billet ou sur la toile libre
+function peindre(ctx, traits, k, s) {
+  if (s.libre) dessinerTraitsToile(ctx, traits, { l: s.dims.l, h: s.dims.h, pxParMm: k, fond: s.fond })
+  else dessinerTraits(ctx, traits, { coupure: s.coupure, pxParMm: k })
+}
+
+// Fonds de la toile libre, et le contraste qui va avec (2026-10-19)
+const FONDS_LIBRES = [['#ffffff', 'blanc'], ['#f3ead3', 'papier crème'], ['#1a1a1a', 'noir']]
+const estSombre = hex => {
+  const n = parseInt(String(hex).slice(1, 7), 16)
+  if (Number.isNaN(n)) return false
+  return (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255 < 0.45
+}
+
 // Une toile à la taille affichée, en pixels réels de l'écran
-function preparer(canvas, largeur, coupure) {
-  const { l, h } = COUPURES[coupure], dpr = window.devicePixelRatio || 1
+function preparer(canvas, largeur, { l, h }) {
+  const dpr = window.devicePixelRatio || 1
   const W = Math.max(1, Math.round(largeur * dpr)), H = Math.max(1, Math.round(W * h / l))
   if (canvas.width !== W) canvas.width = W
   if (canvas.height !== H) canvas.height = H
@@ -219,13 +238,22 @@ function preparer(canvas, largeur, coupure) {
   return { ctx, k: W / l, W, H }
 }
 
-export default function AtelierBillet({ onValider, enCours = false, libelleValider = '→ Émettre ce billet' }) {
-  const [brouillon] = useState(lireBrouillon)
+// Sans `support` : le billet, exactement comme avant (la bourse s'en sert, des brouillons existent).
+// Avec `support` (2026-10-19) : une toile libre, sans coupure, sans habillage, sans numéro.
+//   support = { formats: [{ id, nom, l, h }], cleBrouillon, fond }   (l, h en mm virtuels)
+// et onValider reçoit alors { toile, format: { id, l, h }, fond, dessin, nbTraits },
+// toile étant un canvas rendu à 8 px/mm, fond compris. AtelierPaint en fait une œuvre.
+export default function AtelierBillet({ onValider, enCours = false, libelleValider = '→ Émettre ce billet', support = null }) {
+  const libre = !!support
+  const formats = support?.formats ?? []
+  const [brouillon] = useState(() => lireBrouillon(support))
   const [coupure, setCoupure] = useState(brouillon?.coupure ?? 20)
   const [graine, setGraine] = useState(() => brouillon?.graine ?? nouvelleGraine())
+  const [formatId, setFormatId] = useState(() => brouillon?.format ?? formats[0]?.id)
+  const [fond, setFond] = useState(() => brouillon?.fond ?? support?.fond ?? '#ffffff')
   const [etat, dispatch] = useReducer(historique, null, () => ({ dessin: brouillon?.dessin ?? [], avant: [], apres: [] }))
   const [outil, setOutil] = useState('crayon')
-  const [couleur, setCouleur] = useState('ton-fonce')
+  const [couleur, setCouleur] = useState(() => !libre ? 'ton-fonce' : estSombre(brouillon?.fond ?? support?.fond ?? '#ffffff') ? '#ffffff' : '#1a1a1a')
   const [epaisseur, setEpaisseur] = useState(0.6)
   const [opacite, setOpacite] = useState(1)
   const [rempli, setRempli] = useState(false)
@@ -265,11 +293,14 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   const pointeurRef = useRef(null)   // un seul doigt dessine : le deuxième (pincement, paume) est ignoré
   const { dessin } = etat
   const numero = numeroDepuisGraine(graine)
-  const { l, h } = COUPURES[coupure]
+  const format = libre ? (formats.find(f => f.id === formatId) || formats[0]) : null
+  const dims = libre ? { l: format.l, h: format.h } : COUPURES[coupure]
+  const { l, h } = dims
+  const nomSupport = libre ? 'la toile' : 'le billet'
 
   // Les gestionnaires de pointeur lisent toujours les réglages du dernier rendu
   const r = useRef({})
-  r.current = { coupure, dessin, outil, couleur, epaisseur, opacite, rempli, effet, symetrie, tampon, tailleTampon, texte, corps, largeur, rayonGomme, gommeEntier }
+  r.current = { coupure, dims, libre, fond, dessin, outil, couleur, epaisseur, opacite, rempli, effet, symetrie, tampon, tailleTampon, texte, corps, largeur, rayonGomme, gommeEntier }
 
   useEffect(() => {
     let vivant = true
@@ -285,29 +316,31 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
     return () => ro.disconnect()
   }, [])
 
-  // l'habillage, sous le dessin
+  // l'habillage (ou le fond uni de la toile libre), sous le dessin
   useEffect(() => {
     if (!largeur || !fondRef.current) return
-    const { ctx, k } = preparer(fondRef.current, largeur, coupure)
-    dessinerHabillage(ctx, { coupure, graine, numero, pxParMm: k })
-  }, [coupure, graine, numero, largeur, polices])
+    const { ctx, k, W, H } = preparer(fondRef.current, largeur, { l, h })
+    if (libre) { ctx.fillStyle = fond; ctx.fillRect(0, 0, W, H) }
+    else dessinerHabillage(ctx, { coupure, graine, numero, pxParMm: k })
+  }, [libre, fond, l, h, coupure, graine, numero, largeur, polices])
 
   // le dessin posé
   useEffect(() => {
     if (!largeur || !dessinRef.current) return
-    const { ctx, k } = preparer(dessinRef.current, largeur, coupure)
-    dessinerTraits(ctx, dessin, { coupure, pxParMm: k })
-  }, [dessin, coupure, largeur, polices])
+    const { ctx, k } = preparer(dessinRef.current, largeur, { l, h })
+    peindre(ctx, dessin, k, r.current)
+  }, [dessin, coupure, l, h, fond, largeur, polices])
 
-  useEffect(() => { dessinerVif(null) }, [symetrie, outil, coupure, largeur, epaisseur, tailleTampon, tampon, rayonGomme])
+  useEffect(() => { dessinerVif(null) }, [symetrie, outil, coupure, l, h, largeur, epaisseur, tailleTampon, tampon, rayonGomme])
 
   // le brouillon survit à une fermeture d'onglet
+  const cleBrouillon = libre ? support.cleBrouillon : CLE_BROUILLON
   useEffect(() => {
     try {
-      if (dessin.length) localStorage.setItem(CLE_BROUILLON, JSON.stringify({ coupure, graine, dessin }))
-      else localStorage.removeItem(CLE_BROUILLON)
+      if (dessin.length) localStorage.setItem(cleBrouillon, JSON.stringify(libre ? { format: formatId, fond, dessin } : { coupure, graine, dessin }))
+      else localStorage.removeItem(cleBrouillon)
     } catch { /* stockage plein ou bloqué : tant pis pour le brouillon */ }
-  }, [dessin, coupure, graine])
+  }, [dessin, coupure, graine, libre, formatId, fond, cleBrouillon])
 
   useEffect(() => {
     function touche(e) {
@@ -327,11 +360,11 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   function dessinerVif(enCours, curseur = null) {
     const cv = vifRef.current, s = r.current
     if (!cv || !s.largeur) return
-    const { ctx, k, W, H } = preparer(cv, s.largeur, s.coupure)
-    const { h: hMm } = COUPURES[s.coupure]
+    const { ctx, k, W, H } = preparer(cv, s.largeur, s.dims)
+    const hMm = s.dims.h
     if (s.symetrie && s.outil !== 'gomme') {
       const angles = s.symetrie === 'lr' ? [90] : s.symetrie === 'hb' ? [0] : s.symetrie === '4' ? [0, 90] : [0, 60, 120]
-      const [cx, cy] = centreSymetrie(s.symetrie, s.coupure), X = cx * k, Y = (hMm - cy) * k
+      const [cx, cy] = centreSymetrie(s.symetrie, s.dims, s.libre), X = cx * k, Y = (hMm - cy) * k
       ctx.save()
       ctx.setLineDash([5, 5]); ctx.strokeStyle = 'rgba(201,74,74,.6)'; ctx.lineWidth = 1
       ctx.beginPath()
@@ -345,7 +378,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
     if (curseur && !enCours) {
       if (s.outil === 'tampon') {
         ctx.save(); ctx.globalAlpha = 0.45
-        dessinerTraits(ctx, symetriser(formeTampon(curseur, s), s.symetrie, s.coupure), { coupure: s.coupure, pxParMm: k })
+        peindre(ctx, symetriser(formeTampon(curseur, s), s.symetrie, s.dims, s.libre), k, s)
         ctx.restore()
       } else if (s.outil !== 'texte') {
         const rayon = s.outil === 'gomme' ? s.rayonGomme : s.outil === 'spray' ? Math.max(1.5, s.epaisseur * 3.5) : Math.max(s.epaisseur / 2, 0.4)
@@ -359,8 +392,8 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
     if (!enCours) return
     const traits = enCours.o === 'spray'
       ? enCours.points.map(q => ({ o: 'crayon', p: [q], c: enCours.c, e: enCours.e, a: enCours.a }))
-      : symetriser([enCours], s.symetrie, s.coupure)
-    dessinerTraits(ctx, traits, { coupure: s.coupure, pxParMm: k })
+      : symetriser([enCours], s.symetrie, s.dims, s.libre)
+    peindre(ctx, traits, k, s)
   }
 
   function avertir(msg) { setMessage({ type: 'err', msg }) }
@@ -368,9 +401,10 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   // Tout ce qu'on pose passe par ici : effet de couleur, puis symétrie
   function poser(entrees) {
     const s = r.current
-    const ajout = symetriser(appliquerEffet(entrees, s.effet), s.symetrie, s.coupure)
+    const ajout = symetriser(appliquerEffet(entrees, s.effet, s.couleur), s.symetrie, s.dims, s.libre)
     if (compterPoints(s.dessin) + compterPoints(ajout) > MAX_POINTS) {
-      avertir('Le billet est plein : 60 000 points au plus. Gommez un peu, ou déposez-le.')
+      avertir(s.libre ? 'La toile est pleine : 60 000 points au plus. Gommez un peu, ou déposez-la.'
+        : 'Le billet est plein : 60 000 points au plus. Gommez un peu, ou déposez-le.')
       return
     }
     setMessage(null)
@@ -378,7 +412,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   }
 
   function versMm(e) {
-    const rect = vifRef.current.getBoundingClientRect(), { l, h } = COUPURES[r.current.coupure]
+    const rect = vifRef.current.getBoundingClientRect(), { l, h } = r.current.dims
     return { bx: (e.clientX - rect.left) / rect.width * l, by: h - (e.clientY - rect.top) / rect.height * h }
   }
 
@@ -438,7 +472,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
       dessinerVif(traitRef.current)
     } else if (s.outil === 'texte') {
       const t = s.texte.trim()
-      if (!t) { avertir('Écrivez d’abord le texte, puis touchez le billet à l’endroit voulu.'); return }
+      if (!t) { avertir(`Écrivez d’abord le texte, puis touchez ${s.libre ? 'la toile' : 'le billet'} à l’endroit voulu.`); return }
       const refus = verifierTexte(t)
       if (refus) { avertir(refus); return }
       poser([{ o: 'texte', p: [[r1(m.bx), r1(m.by)]], t, s: Number(s.corps) || 9, c: s.couleur, a: s.opacite, g: true }])
@@ -503,12 +537,34 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   async function valider() {
     if (!onValider) return
     const d = dessin
-    if (d.length < MIN_TRAITS) { avertir('Dessinez un peu plus : la banque n’émet pas de billet blanc.'); return }
+    if (d.length < MIN_TRAITS) {
+      avertir(libre ? 'Dessinez un peu plus : cinq traits au moins avant de déposer.' : 'Dessinez un peu plus : la banque n’émet pas de billet blanc.')
+      return
+    }
     for (const t of d) {
       const refus = t.o === 'texte' && verifierTexte(t.t)
       if (refus) { avertir(refus); return }
     }
     setEnvoi(true); setMessage(null)
+    if (libre) {
+      // la toile libre : le fond uni, puis les traits, à 8 px/mm comme le billet
+      try {
+        await chargerPolices()
+        const toile = document.createElement('canvas')
+        toile.width = Math.round(l * PX_PAR_MM_IMAGE); toile.height = Math.round(h * PX_PAR_MM_IMAGE)
+        const ctx = toile.getContext('2d')
+        ctx.fillStyle = fond; ctx.fillRect(0, 0, toile.width, toile.height)
+        dessinerTraitsToile(ctx, d, { l, h, pxParMm: PX_PAR_MM_IMAGE, fond })
+        await onValider({ toile, format: { id: format.id, l, h }, fond, dessin: d, nbTraits: d.length })
+        try { localStorage.removeItem(cleBrouillon) } catch { /* rien à effacer */ }
+        dispatch({ type: 'vider' })
+      } catch (err) {
+        avertir(err?.message || 'L’œuvre n’a pas pu partir. Votre dessin est gardé.')
+      } finally {
+        setEnvoi(false)
+      }
+      return
+    }
     try {
       await chargerPolices()
       const cv = document.createElement('canvas')
@@ -534,26 +590,57 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
   const tonsPastilles = Object.keys(TONS)
   const couleurLibre = !tonsPastilles.includes(couleur) && !PALETTE.includes(couleur)
   const avecTrait = !['gomme', 'texte'].includes(outil)
+  const fondsLibres = FONDS_LIBRES.map(([c]) => c)
+  const fondPerso = libre && !fondsLibres.includes(fond)
+
+  // Un fond sombre sous un trait noir, ou l'inverse : on retourne l'encre pour qu'on la voie
+  function choisirFond(c) {
+    setFond(c)
+    if (estSombre(c) && couleur === '#1a1a1a') setCouleur('#ffffff')
+    else if (!estSombre(c) && couleur === '#ffffff') setCouleur('#1a1a1a')
+  }
 
   return (
     <div className={`atelier${plein ? ' plein' : ''}`}>
       <div className="atelier-entete">
-        <div className="atelier-coupures" role="group" aria-label="Coupure">
-          {VALEURS_COUPURES.map(v => (
-            <button key={v} type="button" className={`chip${v === coupure ? ' active' : ''}`} onClick={() => setCoupure(v)}>{v} €</button>
-          ))}
-        </div>
+        {libre ? (
+          <div className="atelier-coupures" role="group" aria-label="Format de la toile">
+            {formats.map(f => (
+              <button key={f.id} type="button" className={`chip${f.id === format.id ? ' active' : ''}`} aria-pressed={f.id === format.id}
+                title={`${f.l} × ${f.h}`} onClick={() => setFormatId(f.id)}>{f.nom}</button>
+            ))}
+          </div>
+        ) : (
+          <div className="atelier-coupures" role="group" aria-label="Coupure">
+            {VALEURS_COUPURES.map(v => (
+              <button key={v} type="button" className={`chip${v === coupure ? ' active' : ''}`} onClick={() => setCoupure(v)}>{v} €</button>
+            ))}
+          </div>
+        )}
         <div className="atelier-entete-actions">
-          <button type="button" className="btn btn-outline btn-sm" onClick={() => setGraine(nouvelleGraine())}>↻ Autre habillage</button>
+          {libre ? (
+            <div className="atelier-fonds" role="group" aria-label="Fond de la toile">
+              <span className="atelier-etiquette">fond</span>
+              {FONDS_LIBRES.map(([c, nom]) => (
+                <button key={c} type="button" className={`atelier-pastille${fond === c ? ' actif' : ''}`} style={{ background: c }}
+                  title={nom} aria-label={`fond ${nom}`} aria-pressed={fond === c} onClick={() => choisirFond(c)} />
+              ))}
+              <label className={`atelier-pastille atelier-pipette${fondPerso ? ' actif' : ''}`} title="fond de n'importe quelle couleur">
+                <input type="color" value={fondPerso ? fond : '#5f8fc0'} onChange={e => choisirFond(e.target.value)} aria-label="Fond de couleur libre" />
+              </label>
+            </div>
+          ) : (
+            <button type="button" className="btn btn-outline btn-sm" onClick={() => setGraine(nouvelleGraine())}>↻ Autre habillage</button>
+          )}
           <button type="button" className={`btn btn-sm ${plein ? 'btn-noir' : 'btn-jaune'}`} onClick={() => setPlein(v => !v)}>{plein ? '✕ Fermer' : '⤢ Plein écran'}</button>
         </div>
       </div>
-      {plein && <p className="caption-gris atelier-astuce">Sur téléphone, tournez-le à l’horizontale : le billet est plus grand.</p>}
+      {plein && (!libre || l > h) && <p className="caption-gris atelier-astuce">Sur téléphone, tournez-le à l’horizontale : {libre ? 'la toile est plus grande' : 'le billet est plus grand'}.</p>}
 
-      <div ref={sceneRef} className="atelier-scene" style={{ aspectRatio: `${l} / ${h}`, '--ratio': l / h }} data-outil={outil}>
+      <div ref={sceneRef} className={`atelier-scene${libre ? ' libre' : ''}`} style={{ aspectRatio: `${l} / ${h}`, '--ratio': l / h }} data-outil={outil}>
         <canvas ref={fondRef} aria-hidden="true" />
         <canvas ref={dessinRef} aria-hidden="true" />
-        <canvas ref={vifRef} className="atelier-vif" role="img" aria-label={`Billet de ${coupure} à dessiner`}
+        <canvas ref={vifRef} className="atelier-vif" role="img" aria-label={libre ? `Toile ${format.nom} à dessiner` : `Billet de ${coupure} à dessiner`}
           onPointerDown={appui} onPointerMove={glisse} onPointerUp={lacher} onPointerCancel={lacher}
           onPointerLeave={() => { if (pointeurRef.current === null) dessinerVif(null) }} />
       </div>
@@ -579,16 +666,18 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
 
       {outil !== 'gomme' && (
         <div className="atelier-pinceau">
-          <div className="atelier-ligne">
-            <span className="atelier-etiquette">billet</span>
-            <div className="atelier-tons" role="group" aria-label="Couleurs du billet">
-              {tonsPastilles.map(mot => (
-                <button key={mot} type="button" className={`atelier-pastille${couleur === mot ? ' actif' : ''}`}
-                  style={{ background: couleurTon(mot, coupure) }} title={`${mot} : suit la couleur du billet`}
-                  aria-label={mot} onClick={() => setCouleur(mot)} />
-              ))}
+          {!libre && (
+            <div className="atelier-ligne">
+              <span className="atelier-etiquette">billet</span>
+              <div className="atelier-tons" role="group" aria-label="Couleurs du billet">
+                {tonsPastilles.map(mot => (
+                  <button key={mot} type="button" className={`atelier-pastille${couleur === mot ? ' actif' : ''}`}
+                    style={{ background: couleurTon(mot, coupure) }} title={`${mot} : suit la couleur du billet`}
+                    aria-label={mot} onClick={() => setCouleur(mot)} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <div className="atelier-ligne">
             <span className="atelier-etiquette">couleurs</span>
             <div className="atelier-tons" role="group" aria-label="Couleurs">
@@ -626,7 +715,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
               <div className="atelier-ligne">
                 <span className="atelier-etiquette">effet</span>
                 <div className="atelier-puces" role="group" aria-label="Effet">
-                  {EFFETS.map(([v, nom]) => <button key={v} type="button" className={`chip${effet === v ? ' active' : ''}`} aria-pressed={effet === v} onClick={() => setEffet(v)}>{nom}</button>)}
+                  {(libre ? EFFETS_LIBRES : EFFETS).map(([v, nom]) => <button key={v} type="button" className={`chip${effet === v ? ' active' : ''}`} aria-pressed={effet === v} onClick={() => setEffet(v)}>{nom}</button>)}
                 </div>
               </div>
               <div className="atelier-ligne">
@@ -652,7 +741,7 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
           {outil === 'texte' && (
             <>
               <label className="atelier-reglage atelier-texte">texte
-                <input type="text" value={texte} maxLength={80} placeholder="puis touchez le billet" onChange={e => setTexte(e.target.value)} />
+                <input type="text" value={texte} maxLength={80} placeholder={`puis touchez ${nomSupport}`} onChange={e => setTexte(e.target.value)} />
               </label>
               <label className="atelier-reglage">corps
                 <input type="number" min="3" max="90" value={corps} onChange={e => setCorps(e.target.value)} />
@@ -677,17 +766,17 @@ export default function AtelierBillet({ onValider, enCours = false, libelleValid
             <button type="button" className={`chip${!gommeEntier ? ' active' : ''}`} onClick={() => setGommeEntier(false)}>par morceaux</button>
             <button type="button" className={`chip${gommeEntier ? ' active' : ''}`} onClick={() => setGommeEntier(true)}>trait entier</button>
           </div>
-          <p className="caption-gris atelier-aide">Glissez sur le dessin pour l’effacer. L’habillage du billet ne s’efface pas.</p>
+          <p className="caption-gris atelier-aide">Glissez sur le dessin pour l’effacer. {libre ? 'Le fond ne s’efface pas.' : 'L’habillage du billet ne s’efface pas.'}</p>
         </div>
       )}
 
       {message && <p className={message.type === 'err' ? 'msg-err' : 'msg-ok'} role="status">{message.msg}</p>}
 
       <div className="atelier-pied">
-        <span className="caption-gris">n° BF-{coupure}-{numero} · {dessin.length} trait{dessin.length > 1 ? 's' : ''}</span>
+        <span className="caption-gris">{libre ? `${format.nom} · ${l} × ${h}` : `n° BF-${coupure}-${numero}`} · {dessin.length} trait{dessin.length > 1 ? 's' : ''}</span>
         {onValider && (
           <button type="button" className="btn btn-jaune" disabled={enCours || envoi} onClick={valider}>
-            {envoi ? 'Impression…' : libelleValider}
+            {envoi ? (libre ? 'Dépôt en cours…' : 'Impression…') : libelleValider}
           </button>
         )}
       </div>

@@ -7,7 +7,8 @@ import ClickEffects from './components/ClickEffects'
 import InstallPWA from './components/InstallPWA'
 import Rattrapage from './components/Rattrapage'
 import Home from './pages/Home'
-import Inventaire from './pages/Inventaire'
+import Market from './pages/Market'
+import Supermarket from './pages/Supermarket'
 import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
@@ -18,10 +19,12 @@ import Info from './pages/Info'
 import { applySeo } from './lib/seo'
 
 // Les pages lourdes se chargent à la demande : S'enrichir (le catalogue des 834 planches),
-// l'admin, et la bourse avec son atelier. Le reste du site ne les télécharge plus.
+// l'admin, la bourse, les ateliers de Créer et la collection. Le reste du site ne les télécharge pas.
 const Senrichir = lazy(() => import('./pages/Senrichir'))
 const Admin = lazy(() => import('./pages/Admin'))
 const Bourse = lazy(() => import('./pages/Bourse'))
+const Creer = lazy(() => import('./pages/Creer'))
+const Collection = lazy(() => import('./pages/Collection'))
 
 // Une adresse inconnue : le serveur répond 404, l'appli le dit aussi (l'écran restait vide)
 function Introuvable() {
@@ -58,13 +61,16 @@ export default function App() {
         <Suspense fallback={<div className="loader">Chargement<span className="blink">_</span></div>}>
         <Routes>
           <Route path="/"           element={<Home />} />
-          <Route path="/market"     element={<Inventaire />} />
-          <Route path="/inventaire" element={<Navigate to="/market" replace />} />
+          <Route path="/creer"      element={<Creer />} />
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/market"     element={<Market />} />
+          <Route path="/supermarket" element={<Supermarket />} />
+          <Route path="/inventaire" element={<Navigate to="/supermarket" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
           <Route path="/bourse"     element={<Bourse />} />
           {/* Participer (dépôt au market + guichet photo) a laissé place à la bourse, 2026-10-18 */}
-          <Route path="/participer" element={<Navigate to="/bourse?onglet=atelier" replace />} />
+          <Route path="/participer" element={<Navigate to="/creer?atelier=billet" replace />} />
           <Route path="/deposer"    element={<Deposer />} />
           <Route path="/connexion"  element={<Connexion />} />
           <Route path="/compte"     element={<Compte />} />

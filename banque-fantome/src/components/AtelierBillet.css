@@ -86,3 +86,15 @@ body.atelier-plein-ouvert .page { animation: none; transform: none; }
   .atelier.plein .atelier-entete { flex-wrap: nowrap; overflow-x: auto; }
   .atelier.plein .atelier-coupures { flex-wrap: nowrap; }
 }
+
+/* ── Toile libre (atelier Paint, 2026-10-19) : un portrait A4 à pleine largeur dépassait l'écran */
+.atelier-scene.libre { width: min(100%, calc(72dvh * var(--ratio))); margin: 0 auto; }
+.atelier-fonds { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; }
+.atelier-fonds .atelier-etiquette { min-width: 0; margin-right: .15rem; }
+@media (max-width: 760px) {
+  .atelier-fonds .atelier-etiquette { min-width: 0; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .atelier.plein .atelier-fonds { flex-wrap: nowrap; }
+}
+.atelier-paint { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }

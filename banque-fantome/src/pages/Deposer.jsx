@@ -12,12 +12,13 @@ const FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 const CATEGORIES = ['objet', 'œuvre', 'service']
 
-// Mettre un objet en vente au market : ouvert à tous les comptes (de nouveau le 2026-10-19,
-// après un jour réservé à la banque). Les enchères s'y font en billets papier.
-// `integre` : rendu dans l'onglet Market de l'Admin (sans en-tête ni marges de page) ;
-// `onDepose` : appelé après la mise en vente, à la place du retour au market.
+// Mettre un article en vente au supermarket : réservé à la banque depuis le 2026-10-19 (le
+// market est devenu numérique : les joueurs y vendent ce qu'ils font dans Créer). Les
+// enchères s'y font en billets papier, la remise en main propre.
+// `integre` : rendu dans l'onglet Supermarket de l'Admin (sans en-tête ni marges de page) ;
+// `onDepose` : appelé après la mise en vente, à la place du retour au supermarket.
 export default function Deposer({ integre = false, onDepose }) {
-  const { user, profile, loading: authLoading } = useAuth()
+  const { user, profile, estBanquier, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ titre: '', description: '', histoire: '', lieu: '', categorie: 'objet', rarete: 'commun', mise_depart: 10, prix_achat: '', duree_jours: 3 })
   const [files, setFiles] = useState([])
@@ -113,7 +114,7 @@ export default function Deposer({ integre = false, onDepose }) {
       setFini(true)
       setNotif({ msg: `Mis en vente pour ${form.duree_jours} jour${form.duree_jours > 1 ? 's' : ''}.`, type: 'ok' })
       if (onDepose) setTimeout(onDepose, 1200)
-      else setTimeout(() => navigate('/market'), 1500)
+      else setTimeout(() => navigate('/supermarket'), 1500)
     } catch (e) {
       setNotif({ msg: messageErreur(e) || 'Erreur lors du dépôt', type: 'err' })
     } finally { setLoading(false) }
@@ -125,8 +126,26 @@ export default function Deposer({ integre = false, onDepose }) {
     <div className="acces-refuse">
       <div>
         <div className="titre">Accès refusé</div>
-        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour mettre quelque chose en vente au market.</p>
-        <Link to="/connexion?retour=%2Fdeposer" className="btn btn-noir">Se connecter →</Link>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Ouvrez un compte pour créer et vendre vos œuvres.</p>
+        <Link to="/connexion?retour=%2Fcreer" className="btn btn-noir">Se connecter →</Link>
+      </div>
+    </div>
+  )
+
+  // Le profil arrive juste après la session : on l'attend avant de trancher
+  if (!profile) return <div className="loader">Chargement<span className="blink">_</span></div>
+  if (!estBanquier) return (
+    <div className="acces-refuse">
+      <div>
+        <div className="titre">Le supermarket est à la banque</div>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>
+          Les objets physiques sont vendus par la banque. Vos créations, elles, se font dans les ateliers
+          et se vendent au market, en argent du site.
+        </p>
+        <div className="dessin-actions" style={{ justifyContent: 'center' }}>
+          <Link to="/creer" className="btn btn-jaune">✦ Créer une œuvre</Link>
+          <Link to="/market" className="btn btn-outline">Le market →</Link>
+        </div>
       </div>
     </div>
   )
@@ -229,7 +248,7 @@ export default function Deposer({ integre = false, onDepose }) {
   return (
     <div className="page-pad">
       <div className="container">
-        <div className="section-head"><h2>Mettre en vente au market</h2><span className="count">* champs obligatoires</span></div>
+        <div className="section-head"><h2>Mettre un article au supermarket</h2><span className="count">* champs obligatoires</span></div>
         {formulaire}
       </div>
       {notification}

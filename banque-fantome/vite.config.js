@@ -52,8 +52,9 @@ export default defineConfig({
           { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
         shortcuts: [
+          { name: 'Créer', url: '/banque-fantome/creer', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
           { name: 'Market', url: '/banque-fantome/market', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
-          { name: 'Dessiner un billet', url: '/banque-fantome/bourse?onglet=atelier', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
+          { name: 'Ma collection', url: '/banque-fantome/collection', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
           { name: "S'enrichir", url: '/banque-fantome/senrichir', icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] },
         ],
       },

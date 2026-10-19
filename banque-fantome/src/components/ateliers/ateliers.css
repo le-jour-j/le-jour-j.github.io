@@ -1,0 +1,11 @@
+/* ── Pièces communes des ateliers de création (2026-10-19) ── */
+.atelier-encart { border: 2px solid var(--noir); background: var(--jaune-fond); }
+.atelier-encart-tete { width: 100%; display: flex; align-items: center; gap: .5rem; padding: .6rem .8rem; background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--noir); text-align: left; }
+.atelier-encart-signe { color: var(--rouge-txt); }
+.atelier-encart-fleche { margin-left: auto; font-size: 1rem; }
+.atelier-encart-corps { padding: 0 .9rem .9rem; font-size: .92rem; line-height: 1.6; color: var(--gris-fonce); }
+.atelier-encart-corps p { margin: 0 0 .5rem; }
+.atelier-encart-corps p:last-child { margin-bottom: 0; }
+
+.atelier-pied { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; padding-top: .4rem; }
+.atelier-pied-gauche { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }

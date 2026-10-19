@@ -123,7 +123,7 @@ secrets : `BANQUE_FANTOME_SUPABASE_{URL,ANON_KEY}`,
 
 *Réécrit le 2026-10-19 après l'audit : l'ancienne version ne citait que 2 fichiers SQL.*
 
-Onze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
+Douze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
 base Banque Fantôme, dans cet ordre :
 
 1. `supabase_setup.sql` : socle (`profiles`, `objets`, RLS, bucket `objets`).
@@ -137,6 +137,9 @@ base Banque Fantôme, dans cet ordre :
 8. `supabase_garde_fous.sql` (2026-10-19) : hash du code de récupération illisible
    (droits par colonne sur `profiles`), pseudos uniques et imposés, `annuler_adjudication_papier`,
    limites du bucket, plafonds de l'atelier verrouillés, tâche cron `bf-resoudre-ventes`.
+9. `supabase_market_numerique.sql` (2026-10-19) : table `oeuvres`, `objets.oeuvre_id`, colonne
+   générée `objets.numerique` (bourse ou market : on paie en argent du site), bucket privé
+   `oeuvres-hd`, supermarket réservé à la banque. Les fonctions d'argent y sont reprises.
 
 Chaque fichier est rejouable, **mais pas dans le désordre** : `bf_garde_objets`,
 `placer_enchere`, `acheter_immediat`, `bf_finaliser_vente`, `remettre_en_vente`... sont
@@ -146,16 +149,21 @@ au market et rouvrirait `emettre_billet`. Pour retoucher une fonction, partir de
 version la plus récente. La table `messages` et les tables `jp_*` (lettre du site
 principal) existent en base mais dans aucun fichier.
 
-Deux circuits depuis le 18-19/10/2026 :
+Trois circuits depuis le 19/10/2026 (tout se crée dans `/creer`, tout ce qu'on possède est
+dans `/collection`) :
 
 - **La bourse** (`/bourse`) : l'argent naît dans l'atelier. `deposer_dessin` (table
   `dessins`), puis `encaisser_dessin` (la banque garde le billet, compte crédité, 3 par
   jour, une ligne `billets_emis`) ou `mettre_dessin_en_vente` (une ligne `objets` avec
   `dessin_id`). Ces ventes se paient avec le solde, commission au trésor.
-- **Le market** (`/market`, `/deposer`) : objets physiques déposés par tous (`objets`
-  sans `dessin_id`, `vendeur_banque` vrai si c'est le banquier). Enchères en promesses de
-  billets papier : rien n'est débité, la clôture met en contact, paiement en main propre.
-  Le vendeur ou le banquier peut défaire une adjudication (`annuler_adjudication_papier`).
+- **Le market** (`/market`) : les œuvres des ateliers de `/creer` (Paint, Poésie, Image,
+  Collage, dans `src/components/ateliers/`, contrat commun dans `commun.jsx`). `deposer_oeuvre`
+  (aperçu public `objets/oeuvres/<uid>/`, HD privée `oeuvres-hd/<uid>/`, lue par le seul
+  propriétaire), `mettre_oeuvre_en_vente`, `annuler_oeuvre` (banquier). Argent du site, 5 %.
+- **Le supermarket** (`/supermarket`, `/deposer` réservé au banquier) : objets physiques
+  (`objets` sans dessin ni œuvre), enchères en promesses de billets papier, remise en main
+  propre. Les ventes physiques des joueurs d'avant expirent sans relance. Le vendeur ou le
+  banquier peut défaire une adjudication (`annuler_adjudication_papier`).
 
 **Piège des droits** : `profiles` n'est lisible que par colonnes (`id, pseudo, solde,
 role, created_at`). Un `select('*')` sur `profiles` ou un `upsert` qui met à jour

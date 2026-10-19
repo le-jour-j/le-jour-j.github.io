@@ -1,0 +1,98 @@
+/* ── Atelier Image : déposer une image et la retoucher (2026-10-19) ── */
+.retouche { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.retouche.survol { outline: 3px dashed var(--noir); outline-offset: 6px; }
+
+/* le dépôt, avant toute image */
+.retouche-depot { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .7rem; padding: 2rem 1rem; border: 2px dashed var(--noir); background: var(--gris-clair); }
+.retouche.survol .retouche-depot { background: var(--jaune-fond); }
+.retouche-depot-titre { font-family: var(--bebas); font-size: 2rem; letter-spacing: .04em; line-height: 1; margin: 0; }
+.retouche-depot .texte-aide { margin: 0; }
+.retouche-depot-boutons { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
+.retouche-depot .caption-gris { margin: 0; max-width: 46ch; }
+.retouche-rappel { font-style: italic; }
+/* l'appareil photo n'a de sens qu'au doigt (téléphone, tablette) */
+.retouche-photo { display: none; }
+@media (pointer: coarse) { .retouche-photo { display: inline-flex; } }
+
+/* en-tête : nom du fichier et actions */
+.retouche-entete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+.retouche-nom { font-family: var(--mono); min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.retouche-entete-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+.retouche-avant { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* la scène : l'aperçu centré, jamais plus haut que l'écran */
+.retouche-scene { position: relative; display: flex; align-items: center; justify-content: center; min-height: 180px; padding: .6rem; border: 2px solid var(--noir); box-shadow: 6px 6px 0 var(--noir);
+  background-color: var(--gris-clair);
+  background-image: linear-gradient(45deg, var(--gris-bord) 25%, transparent 25%, transparent 75%, var(--gris-bord) 75%), linear-gradient(45deg, var(--gris-bord) 25%, transparent 25%, transparent 75%, var(--gris-bord) 75%);
+  background-size: 16px 16px; background-position: 0 0, 8px 8px; }
+.retouche-toile { position: relative; display: inline-block; line-height: 0; max-width: 100%; }
+.retouche-toile canvas { display: block; max-width: 100%; max-height: min(62vh, 640px); max-height: min(62dvh, 640px); width: auto; height: auto; box-shadow: 0 0 0 1px rgba(26, 26, 26, .25); }
+.retouche-etiquette-avant { position: absolute; top: .8rem; left: .8rem; padding: .15rem .5rem; background: var(--noir); color: var(--jaune); font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; pointer-events: none; }
+
+/* le recadrage : le dehors s'assombrit (voile rogné à l'image), le cadre porte la grille des
+   tiers et ses poignées débordent de l'image sans être rognées */
+.retouche-zone { position: absolute; inset: 0; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; }
+.retouche-voile { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.retouche-ombre { position: absolute; box-shadow: 0 0 0 9999px rgba(26, 26, 26, .55); }
+.retouche-cadre { position: absolute; cursor: move; outline: 2px solid #fff; box-shadow: 0 0 0 1px var(--noir);
+  background-image: linear-gradient(to right, transparent calc(33.33% - .5px), rgba(255, 255, 255, .6) calc(33.33% - .5px), rgba(255, 255, 255, .6) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255, 255, 255, .6) calc(66.66% - .5px), rgba(255, 255, 255, .6) calc(66.66% + .5px), transparent calc(66.66% + .5px)),
+    linear-gradient(to bottom, transparent calc(33.33% - .5px), rgba(255, 255, 255, .6) calc(33.33% - .5px), rgba(255, 255, 255, .6) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255, 255, 255, .6) calc(66.66% - .5px), rgba(255, 255, 255, .6) calc(66.66% + .5px), transparent calc(66.66% + .5px)); }
+/* poignée : 36 px sous le doigt, un carré de 14 px à l'œil */
+.retouche-poignee { position: absolute; width: 36px; height: 36px; transform: translate(-50%, -50%); z-index: 1; }
+.retouche-poignee::after { content: ''; position: absolute; left: 11px; top: 11px; width: 14px; height: 14px; background: var(--jaune); border: 2px solid var(--noir); pointer-events: none; }
+.retouche-poignee-nw { left: 0; top: 0; cursor: nwse-resize; }
+.retouche-poignee-ne { left: 100%; top: 0; cursor: nesw-resize; }
+.retouche-poignee-sw { left: 0; top: 100%; cursor: nesw-resize; }
+.retouche-poignee-se { left: 100%; top: 100%; cursor: nwse-resize; }
+
+/* les onglets, sous le pouce */
+.retouche-onglets { display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid var(--noir); }
+.retouche-onglet { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: .65rem .3rem; border: 0; border-left: 2px solid var(--noir); background: var(--blanc); color: var(--noir); cursor: pointer; transition: background var(--vite); }
+.retouche-onglet:first-child { border-left: 0; }
+.retouche-onglet:hover { background: var(--jaune-fond); }
+.retouche-onglet.actif { background: var(--noir); color: var(--jaune); }
+
+.retouche-panneau { display: flex; flex-direction: column; gap: .7rem; padding: .8rem; border: 2px solid var(--gris-bord); background: var(--gris-clair); }
+.retouche-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; }
+.retouche-etiquette { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gris-fonce); min-width: 6.5rem; }
+.retouche-puces { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+.retouche-puces .chip { padding: .35rem .65rem; }
+.retouche-puces .chip:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.retouche-aide { margin: 0; }
+
+/* les curseurs */
+.retouche-curseurs { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .5rem 1.4rem; }
+.retouche-curseur { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+.retouche-curseur-tete { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gris-fonce); }
+.retouche-valeur { font-family: var(--mono); font-size: .72rem; min-width: 3.2rem; padding: .1rem .35rem; border: 2px solid var(--noir); background: var(--jaune); color: var(--noir); cursor: pointer; }
+.retouche-valeur:disabled { background: var(--blanc); border-color: var(--gris-bord); color: var(--gris); cursor: default; }
+.retouche-curseur input[type="range"] { width: 100%; height: 28px; margin: 0; accent-color: var(--noir); }
+.retouche-bornes { display: flex; justify-content: space-between; font-size: .68rem; color: var(--gris); margin-top: -.2rem; }
+
+/* les filtres en vignettes */
+.retouche-filtres { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: .45rem; }
+.retouche-filtre { display: flex; flex-direction: column; gap: .25rem; padding: .25rem; border: 2px solid var(--noir); background: var(--blanc); cursor: pointer; font-family: var(--sans); color: var(--noir); transition: transform var(--vite), box-shadow var(--vite); }
+.retouche-filtre:hover { transform: translateY(-1px); }
+.retouche-filtre.actif { background: var(--jaune); box-shadow: 3px 3px 0 var(--noir); transform: translate(-1px, -1px); }
+.retouche-filtre-image { display: block; aspect-ratio: 1; background: var(--gris-bord); overflow: hidden; }
+.retouche-filtre-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.retouche-filtre-nom { font-size: .64rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; line-height: 1.2; text-align: center; }
+
+/* bichromie : deux encres */
+.retouche-encre { position: relative; display: inline-flex; align-items: center; gap: .35rem; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.retouche-encre input[type="color"] { width: 34px; height: 34px; padding: 0; border: 2px solid var(--noir); background: none; cursor: pointer; }
+.retouche-duo { width: 30px; height: 30px; border: 2px solid var(--noir); padding: 0; cursor: pointer; }
+.retouche-duo:hover { transform: translateY(-1px); }
+
+/* téléphone : gouttière de 16 px tenue par la page, tout tient en largeur */
+@media (max-width: 760px) {
+  .retouche-scene { padding: .4rem; box-shadow: 4px 4px 0 var(--noir); }
+  .retouche-toile canvas { max-height: min(58vh, 560px); max-height: min(58dvh, 560px); }
+  .retouche-etiquette { min-width: 100%; }
+  .retouche-panneau { padding: .6rem; }
+  .retouche-curseurs { grid-template-columns: 1fr; }
+  .retouche-filtres { grid-template-columns: repeat(4, 1fr); gap: .35rem; }
+  .retouche-entete-actions { width: 100%; }
+  .retouche-entete-actions .btn { flex: 1 1 auto; padding-left: .5rem; padding-right: .5rem; }
+  .retouche .atelier-pied .btn-jaune { width: 100%; }
+}

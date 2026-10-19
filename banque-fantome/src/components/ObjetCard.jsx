@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { libelleRarete } from '../utils/rarete'
+import { nomGenre } from '../lib/oeuvres'
 import { getObjetImageUrls } from '../utils/images'
 import { estVente, estEnCours, echeance, tempsRestant, urgent } from '../utils/encheres'
 
@@ -9,6 +10,7 @@ export default function ObjetCard({ objet, onClick }) {
   const imgUrl = imgUrls[0] || null
   const vente = estVente(objet)
   const billet = !!objet.dessin_id // billet de la bourse : image au format billet, sans rareté
+  const oeuvre = !!objet.oeuvre_id // œuvre du market : image entière, sans rareté (2026-10-19)
   const enCours = estEnCours(objet)
   const statut = objet.statut || 'disponible'
   const numero = String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')
@@ -40,7 +42,7 @@ export default function ObjetCard({ objet, onClick }) {
 
   return (
     <article
-      className={`objet-card ${vente ? 'vente' : ''} ${billet ? 'objet-billet' : ''} ${statut === 'échangé' || statut === 'expiré' || statut === 'retiré' ? 'terminee' : ''}`}
+      className={`objet-card ${vente ? 'vente' : ''} ${billet ? 'objet-billet' : ''} ${oeuvre ? 'objet-oeuvre' : ''} ${statut === 'échangé' || statut === 'expiré' || statut === 'retiré' ? 'terminee' : ''}`}
       role="button"
       tabIndex={0}
       aria-label={`Voir ${objet.titre}`}
@@ -59,8 +61,8 @@ export default function ObjetCard({ objet, onClick }) {
       </div>
       <div className="card-body">
         <div className="card-tags">
-          {objet.categorie && <span className="tag">{objet.categorie}</span>}
-          {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
+          {oeuvre && objet.oeuvre?.genre ? <span className="tag">{nomGenre(objet.oeuvre.genre)}</span> : objet.categorie && <span className="tag">{objet.categorie}</span>}
+          {!billet && !oeuvre && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
         </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 90)}{objet.description?.length > 90 ? '…' : ''}</div>

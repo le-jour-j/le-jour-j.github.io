@@ -28,6 +28,8 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
   const statut = objet.statut || 'disponible'
   const vente = estVente(objet)
   const billet = !!objet.dessin_id
+  const oeuvre = !!objet.oeuvre_id
+  const physique = !billet && !oeuvre
   const banque = !!objet.vendeur_banque
   const stampStatut = statut === 'réservé' ? 'stamp-rouge' : statut === 'échangé' ? 'stamp-noir' : statut === 'expiré' || statut === 'retiré' ? 'stamp-rouge' : 'stamp-vert'
   const libelleStatut = vente ? (statut === 'disponible' ? 'en vente' : statut === 'échangé' ? 'adjugé' : statut) : statut
@@ -42,15 +44,15 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
               #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
-            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : banque ? '◈ Vente de la banque' : '◈ Market'}</span>}
+            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : oeuvre ? '◈ Market' : banque ? '◈ Supermarket de la banque' : '◈ Supermarket'}</span>}
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
-            {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
+            {physique && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
           </div>
           <h3 id="objet-titre" className="modal-titre">{objet.titre}</h3>
           <div className="meta-label" style={{ marginBottom: '1rem' }}>
-            {banque ? 'Mis en vente par la banque' : billet ? `Mis en vente par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
+            {banque ? 'Mis en vente par la banque' : !physique ? `Mis en vente par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
           </div>
           {vente && <EnchereBloc objet={objet} onChange={majObjet} onNotif={setNotif} onContacter={() => setShowMsg(true)} />}
           {!!imgUrls.length &&
@@ -71,7 +73,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             </div>
           }
           <p className="modal-texte">{objet.description}</p>
-          {vente && !billet && <p className="texte-aide">Les enchères se font en billets papier, sans toucher à votre compte : le gagnant paie {banque ? 'la banque' : 'le vendeur'} en main propre, au moment de la remise.</p>}
+          {vente && physique && <p className="texte-aide">Les enchères se font en billets papier, sans toucher à votre compte : le gagnant paie {banque ? 'la banque' : 'le vendeur'} en main propre, au moment de la remise.</p>}
           {objet.histoire &&
             <div className="modal-histoire">
               <div className="meta-label" style={{ marginBottom: '.4rem' }}>Histoire</div>

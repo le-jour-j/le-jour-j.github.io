@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
 import { DUREES, INCREMENT_MIN, estEnCours, echeance, enchereMinimale, tempsRestant, urgent, commission, messageErreur } from '../utils/encheres'
@@ -22,10 +22,13 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   const enCours = estEnCours(objet)
   const isOwn = user && objet.user_id === user.id
   const billet = !!objet.dessin_id           // vente de la bourse : un billet dessiné dans l'atelier
+  const oeuvre = !!objet.oeuvre_id           // vente du market : une œuvre des ateliers (2026-10-19)
   const banque = !!objet.vendeur_banque      // vente de la banque (affichage, contact)
   // Le market (2026-10-19) : on enchérit en promesses de billets papier, rien n'est débité,
   // le gagnant paie en main propre. Seule la bourse se paie avec l'argent du site.
-  const papier = !billet
+  // Bourse et market se paient en argent du site ; le supermarket, en billets papier.
+  const papier = !billet && !oeuvre
+  const chose = billet ? 'Le billet' : 'L’œuvre'
   const vendeur = banque ? 'la banque' : objet.pseudo || 'le vendeur'
   const meneur = user && objet.encherisseur_id === user.id
   const minimum = enchereMinimale(objet)
@@ -96,11 +99,12 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
           </div>
           {vendu && <div className="enchere-meneur">à <strong>{objet.vendu_a_pseudo || '?'}</strong>{objet.vendu_at && ` · ${new Date(objet.vendu_at).toLocaleDateString('fr-FR')}`}</div>}
         </div>
-        {vendu && user && billet && (isOwn || objet.vendu_a === user.id) && (
+        {vendu && user && !papier && (isOwn || objet.vendu_a === user.id) && (
           <p className="texte-aide" style={{ marginTop: '.8rem' }}>
             {isOwn
-              ? `Vendu : vous touchez ${objet.prix_final - commission(objet.prix_final)} billets (commission ${commission(objet.prix_final)}). Le billet est passé dans la collection de ${objet.vendu_a_pseudo || "l'acheteur"}.`
-              : 'Le billet est dans votre collection. Vous pouvez le garder ou le remettre en vente depuis la bourse.'}
+              ? `Vendu : vous touchez ${objet.prix_final - commission(objet.prix_final)} billets (commission ${commission(objet.prix_final)}). ${chose} est passé${oeuvre ? 'e' : ''} dans la collection de ${objet.vendu_a_pseudo || "l'acheteur"}.`
+              : `${chose} est dans votre collection${oeuvre ? ' : téléchargez-la en grand, gardez-la ou revendez-la' : ' : vous pouvez le garder, l’encaisser ou le revendre'}. `}
+            {!isOwn && <Link to={`/collection?type=${oeuvre ? 'oeuvres' : 'billets'}`} className="lien-texte">Ma collection →</Link>}
           </p>
         )}
         {vendu && user && papier && (isOwn || objet.vendu_a === user.id) && (
@@ -123,8 +127,8 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
                 Défaire la vente (personne n'est venu)
               </button>
         )}
-        {isOwn && billet && objet.statut === 'retiré' && (
-          <p className="texte-aide" style={{ marginTop: '.8rem' }}>Le billet est revenu dans votre collection : la bourse permet de le remettre en vente.</p>
+        {isOwn && !papier && (objet.statut === 'retiré' || objet.statut === 'expiré') && (
+          <p className="texte-aide" style={{ marginTop: '.8rem' }}>{chose} est revenu{oeuvre ? 'e' : ''} dans votre <Link to={`/collection?type=${oeuvre ? 'oeuvres' : 'billets'}`} className="lien-texte">collection</Link> : vous pouvez l{oeuvre ? 'a' : 'e'} remettre en vente depuis là.</p>
         )}
         {isOwn && papier && (objet.statut === 'expiré' || objet.statut === 'retiré') && (
           remise
@@ -163,7 +167,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
 
       {isOwn ? (
         <div className="enchere-actions">
-          <span className="texte-aide">{billet ? "C'est votre billet." : banque ? 'Vente de la banque.' : "C'est votre dépôt."}</span>
+          <span className="texte-aide">{billet ? "C'est votre billet." : oeuvre ? "C'est votre œuvre." : banque ? 'Vente de la banque.' : "C'est votre dépôt."}</span>
           {objet.nb_encheres === 0 && <button type="button" className="btn btn-outline btn-sm" disabled={busy} onClick={retirer}>Retirer la vente</button>}
         </div>
       ) : !user ? (
@@ -203,7 +207,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
             {papier
               ? <>minimum {minimum} billets papier · rien n'est débité de votre compte</>
               : <>minimum {minimum} · votre solde {solde} billets{meneur ? ' (+ votre mise en cours)' : ''}</>}
-            {!papier && Number(montant) > disponible && <span className="msg-err" style={{ margin: '0 0 0 .6rem', display: 'inline' }}>solde insuffisant : <button type="button" className="lien-texte" onClick={() => navigate('/bourse?onglet=atelier')}>dessiner des billets</button></span>}
+            {!papier && Number(montant) > disponible && <span className="msg-err" style={{ margin: '0 0 0 .6rem', display: 'inline' }}>solde insuffisant : <button type="button" className="lien-texte" onClick={() => navigate('/creer?atelier=billet')}>dessiner des billets</button></span>}
           </div>
         </>
       )}

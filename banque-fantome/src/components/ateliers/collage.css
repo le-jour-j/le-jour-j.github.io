@@ -1,0 +1,90 @@
+/* ── Atelier Collage (2026-10-19) : une page, des images, des mots, des formes ── */
+.collage { display: flex; flex-direction: column; gap: .8rem; min-width: 0; overflow-x: clip; }
+.collage-entete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; }
+.collage-formats { display: flex; flex-wrap: wrap; gap: .35rem; }
+.collage-formats .chip { padding: .35rem .7rem; }
+
+.collage-alerte { margin: 0; padding: .55rem .75rem; border: 2px solid var(--rouge); background: var(--gris-clair); color: var(--rouge-txt); font-size: .85rem; font-weight: 700; max-width: none; }
+
+/* la page : la toile dessine tout, la zone par-dessus reçoit les doigts et porte le cadre de sélection */
+.collage-scene { position: relative; width: min(100%, calc(72vh * var(--ratio))); margin: 0 auto; border: 2px solid var(--noir); box-shadow: 6px 6px 0 var(--noir); background: var(--blanc); }
+.collage-scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.collage-zone { position: absolute; inset: 0; touch-action: none; -webkit-user-select: none; user-select: none; cursor: default; -webkit-touch-callout: none; }
+.collage-zone.decoupe { cursor: crosshair; }
+.collage-vide { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 80%; margin: 0; text-align: center; font-family: var(--mono); font-size: .78rem; color: var(--gris-fonce); pointer-events: none; }
+
+.collage-cadre { position: absolute; pointer-events: none; outline: 2px dashed var(--noir); box-shadow: 0 0 0 2px rgba(255, 253, 247, .85); }
+.collage-cadre.decoupe { outline-color: var(--rouge); }
+.collage-poignee { position: absolute; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--noir); border-radius: 50%; background: var(--jaune); color: var(--noir); font-size: 15px; line-height: 1; pointer-events: auto; touch-action: none; box-shadow: 2px 2px 0 var(--noir); }
+.collage-poignee::after { content: ''; position: absolute; inset: -9px; border-radius: 50%; }   /* une cible plus large pour le pouce */
+.collage-poignee-rotation { left: 50%; top: -46px; transform: translateX(-50%); cursor: grab; }
+.collage-poignee-rotation::before { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 14px; background: var(--noir); transform: translateX(-50%); }
+.collage-poignee-echelle { right: -16px; bottom: -16px; cursor: nwse-resize; }
+.collage-trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.collage-trace polyline { fill: rgba(201, 74, 74, .12); stroke: var(--rouge); stroke-width: 2; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+
+/* la barre d'action : toujours sous la page, tout reste visible (les boutons passent à la ligne) */
+.collage-barre { display: flex; flex-wrap: wrap; gap: .3rem; align-items: stretch; }
+.collage-outil { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: .45rem .65rem; border: 2px solid var(--noir); background: var(--blanc); color: var(--noir); cursor: pointer; transition: background var(--vite), transform var(--vite); }
+.collage-outil > span { font-size: 1rem; line-height: 1; }
+.collage-outil:hover:not(:disabled) { background: var(--jaune-fond); transform: translateY(-1px); }
+.collage-outil.actif, .collage-outil.actif:hover:not(:disabled) { background: var(--noir); color: var(--jaune); }
+.collage-outil:disabled { opacity: .4; cursor: not-allowed; }
+.collage-outil-rouge { border-color: var(--rouge); color: var(--rouge-txt); }
+.collage-outil-alerte { background: var(--jaune); }
+.collage-sep { width: 2px; background: var(--gris-bord); margin: 0 .15rem; }
+.collage-astuce { align-self: center; }
+.collage-choisi { margin: -.3rem 0 0; }
+
+/* les onglets : ce qu'on ajoute */
+.collage-onglets { display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid var(--noir); }
+.collage-onglet { font-family: var(--sans); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .6rem .2rem; border: 0; border-right: 2px solid var(--noir); background: var(--blanc); color: var(--noir); cursor: pointer; }
+.collage-onglet:last-child { border-right: 0; }
+.collage-onglet:hover { background: var(--jaune-fond); }
+.collage-onglet.actif { background: var(--noir); color: var(--jaune); }
+
+.collage-panneau { display: flex; flex-direction: column; gap: .65rem; padding: .8rem; border: 2px solid var(--gris-bord); background: var(--gris-clair); }
+.collage-panneau:empty { display: none; }
+.collage-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; }
+.collage-etiquette { margin: 0; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gris-fonce); min-width: 4.6rem; }
+.collage-puces { display: flex; flex-wrap: wrap; gap: .3rem; }
+.collage-puces .chip { padding: .32rem .6rem; }
+.collage-police { text-transform: none; letter-spacing: .02em; font-size: .9rem; }
+.collage-aide { margin: 0; }
+.collage-saisie { flex: 1 1 12rem; min-width: 0; font-family: var(--sans); font-size: 1rem; padding: .45rem .6rem; border: 2px solid var(--gris-bord); background: var(--blanc); color: var(--noir); border-radius: 0; }
+.collage-saisie:focus { border-color: var(--noir); outline: none; }
+
+/* la réserve : des vignettes de planches */
+.collage-reserve { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: .4rem; }
+.collage-vignette { padding: 0; border: 2px solid var(--noir); background: var(--blanc); cursor: pointer; aspect-ratio: 367 / 520; overflow: hidden; transition: transform var(--vite), box-shadow var(--vite); }
+.collage-vignette img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.collage-vignette:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--noir); }
+
+/* les couleurs et les papiers */
+.collage-pastilles { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+.collage-pastille { width: 30px; height: 30px; border: 2px solid var(--noir); padding: 0; cursor: pointer; position: relative; transition: transform var(--vite); }
+.collage-pastille:hover { transform: translateY(-1px); }
+.collage-pastille.actif { box-shadow: 3px 3px 0 var(--noir); transform: translate(-1px, -1px); outline: 2px solid var(--jaune); outline-offset: -6px; }
+.collage-pipette { display: inline-block; overflow: hidden; background: conic-gradient(#ff2fb3, #ffe600, #33e07a, #00c8ff, #7a3cff, #ff2fb3); }
+.collage-pipette input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+.collage-papier { border-style: dashed; }
+.collage-papier-creme { background: #f3ead3 radial-gradient(rgba(120, 90, 40, .25) 1px, transparent 1.2px) 0 0 / 6px 6px; }
+.collage-papier-kraft { background: #c9a273 repeating-linear-gradient(8deg, rgba(90, 60, 25, .18) 0 1px, transparent 1px 4px); }
+.collage-papier-journal { background: #ebe6d8 repeating-linear-gradient(180deg, rgba(60, 60, 60, .4) 0 2px, transparent 2px 5px); }
+.collage-papier-ligne { background: #fbfaf3 repeating-linear-gradient(180deg, transparent 0 7px, #a9c9e8 7px 8px); }
+.collage-papier-quadrille { background: #fbfaf3; background-image: linear-gradient(#bdd5ec 1px, transparent 1px), linear-gradient(90deg, #bdd5ec 1px, transparent 1px); background-size: 6px 6px; }
+
+/* plein écran : la page d'abord, les outils dessous */
+body.collage-plein-ouvert .page { animation: none; transform: none; }
+.collage.plein { position: fixed; inset: 0; z-index: 1100; background: var(--blanc); padding: .6rem max(.6rem, env(safe-area-inset-right)) .6rem max(.6rem, env(safe-area-inset-left)); overflow-y: auto; gap: .5rem; }
+.collage.plein > * { flex-shrink: 0; }
+.collage.plein .collage-scene { width: min(100%, calc((100dvh - 9rem) * var(--ratio))); box-shadow: 4px 4px 0 var(--noir); }
+.collage.plein > :not(.collage-scene) { width: min(100%, 1100px); margin-left: auto; margin-right: auto; }
+
+@media (max-width: 760px) {
+  .collage-scene { box-shadow: 4px 4px 0 var(--noir); }
+  .collage-outil { padding: .4rem .5rem; font-size: .64rem; gap: .25rem; }
+  .collage-etiquette { min-width: 100%; }
+  .collage-panneau { padding: .6rem; }
+  .collage .atelier-pied .btn-jaune { width: 100%; }
+}

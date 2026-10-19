@@ -90,7 +90,7 @@ export default function Senrichir() {
         <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
           Ici, vous fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.
           {' '}{total} planches A4, de 5 à 500 €, chacune à taille réelle avec ses traits de coupe : les billets dessinés
-          dans l'<Link to="/bourse?onglet=atelier" className="lien-texte">atelier de la bourse</Link> et ceux de l'atelier papier, mêlés.
+          dans l'<Link to="/creer?atelier=billet" className="lien-texte">atelier à billets</Link> et ceux de l'atelier papier, mêlés.
           Cliquez sur une planche pour voir le billet en grand.
         </p>
 
@@ -140,7 +140,7 @@ export default function Senrichir() {
 
         <div className="bande-guichet">
           <p><strong>Les planches se jouent sur papier.</strong> Pour avoir de l'argent sur votre compte, dessinez un billet dans l'atelier de la bourse : encaissé, il crédite votre compte de sa valeur.</p>
-          <Link to="/bourse?onglet=atelier" className="btn btn-jaune btn-sm">→ Ouvrir l'atelier</Link>
+          <Link to="/creer" className="btn btn-jaune btn-sm">→ Ouvrir les ateliers</Link>
         </div>
 
         <MurBillets limit={12} onNotif={setNotif} />
