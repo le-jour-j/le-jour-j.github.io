@@ -201,7 +201,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
           </div>
           <div className="enchere-aide">
             {papier
-              ? <>minimum {minimum} · une promesse en billets papier : rien n'est débité de votre compte, vous paierez {vendeur} en main propre.</>
+              ? <>minimum {minimum} billets papier · rien n'est débité de votre compte</>
               : <>minimum {minimum} · votre solde {solde} billets{meneur ? ' (+ votre mise en cours)' : ''}</>}
             {!papier && Number(montant) > disponible && <span className="msg-err" style={{ margin: '0 0 0 .6rem', display: 'inline' }}>solde insuffisant : <button type="button" className="lien-texte" onClick={() => navigate('/bourse?onglet=atelier')}>dessiner des billets</button></span>}
           </div>

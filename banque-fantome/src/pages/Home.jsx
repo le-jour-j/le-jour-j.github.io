@@ -54,9 +54,12 @@ export default function Home() {
   }
 
   useEffect(() => {
-    supabase.from('objets').select('*', { count: 'exact' }).neq('statut', 'retiré')
+    supabase.from('objets').select('*').neq('statut', 'retiré')
       .order('created_at', { ascending: false }).limit(3)
-      .then(({ data, count }) => { setRecent(data || []); setTotal(count || 0) })
+      .then(({ data }) => setRecent(data || []))
+    // le compteur ne compte que le market : les billets ont le leur (le coffre)
+    supabase.from('objets').select('id', { count: 'exact', head: true }).is('dessin_id', null).eq('statut', 'disponible')
+      .then(({ count }) => setTotal(count || 0))
     supabase.rpc('stats_banque').then(({ data }) => setStats(data || null))
   }, [])
 
@@ -93,19 +96,19 @@ export default function Home() {
         <div className="container">
           <div className="stats-inner">
             <div className="stat-item">
-              <div className="stat-label">Objets en circulation</div>
+              <div className="stat-label">Objets au market</div>
               <div className="stat-value"><Compteur valeur={total} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Billets encaissés</div>
+              <div className="stat-label">Billets au coffre</div>
               <div className="stat-value"><Compteur valeur={stats?.billets_emis} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Montant encaissé</div>
+              <div className="stat-label">Valeur du coffre</div>
               <div className="stat-value"><Compteur valeur={stats?.montant_emis} /> <small>billets</small></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Trésor de la banque</div>
+              <div className="stat-label">Commissions de la banque</div>
               <div className="stat-value"><Compteur valeur={stats?.tresor} /></div>
             </div>
             <div className="stat-item">
@@ -113,8 +116,8 @@ export default function Home() {
               <div className="stat-value"><Compteur valeur={stats?.ventes_en_cours} /></div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Statut</div>
-              <div className="stat-value"><span className="blink">●</span> OUVERT</div>
+              <div className="stat-label">Banque en ligne</div>
+              <div className="stat-value"><span className="blink">●</span> OUVERTE</div>
             </div>
           </div>
         </div>

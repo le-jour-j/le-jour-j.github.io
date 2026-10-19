@@ -124,7 +124,7 @@ function BlocNouveautes({ data, lettrePrete, onOuvrir }) {
           </ul>}
       {!lettrePrete && (
         <p className="caption-gris">
-          Lettre : {lettre.en_attente} actu{lettre.en_attente > 1 ? 's' : ''} en attente, elle sera prête à {lettre.seuil}.
+          Lettre : {lettre.en_attente} actu{lettre.en_attente > 1 ? 's' : ''} en attente, vous serez prévenu à {lettre.seuil}.
         </p>
       )}
     </div>
@@ -340,10 +340,10 @@ function OngletComptes({ depuis }) {
   const pseudos = useMemo(() => new Map((comptes || []).map(c => [c.id, c.pseudo])), [comptes])
 
   const CHIFFRES = [
-    ['Trésor de la banque', stats?.tresor],
+    ['Commissions de la banque', stats?.tresor],
     ['Billets en circulation', stats?.en_circulation],
-    ['Billets encaissés', stats?.billets_emis],
-    ['Montant encaissé', stats?.montant_emis != null ? `${stats.montant_emis} billets` : null],
+    ['Billets au coffre', stats?.billets_emis],
+    ['Valeur du coffre', stats?.montant_emis != null ? `${stats.montant_emis} billets` : null],
     ['Ventes en cours', stats?.ventes_en_cours],
     ['Ventes conclues', stats?.ventes_conclues],
     ['Volume échangé', stats?.volume_echange],

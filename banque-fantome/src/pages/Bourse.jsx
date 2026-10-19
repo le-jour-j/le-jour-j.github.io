@@ -92,7 +92,7 @@ export default function Bourse() {
 }
 
 // ─── Les ventes ───
-const FILTRES = [['disponible', 'en vente'], ['échangé', 'adjugés']]
+const FILTRES = [['disponible', 'en cours'], ['échangé', 'adjugés']]
 const TRIS = [['recent', 'Plus récent'], ['fin', 'Se termine bientôt'], ['prix', 'Prix croissant']]
 
 function OngletVente({ onOuvrir, fraicheur }) {
@@ -253,12 +253,15 @@ function OngletCollection({ quota, onNotif, onChange, onVoirVente }) {
             <p style={{ margin: '0 auto' }}>Les billets que vous dessinez ou achetez arrivent ici.</p>
             <Link to="/bourse?onglet=atelier" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Dessiner un billet</Link>
           </div>
-        : <div className="dessins-liste">
+        : <>
+          <div className="section-head"><h2>Dans ma collection</h2><span className="count">{miens.length} billet{miens.length > 1 ? 's' : ''}</span></div>
+          <div className="dessins-liste">
             {miens.map(d => <CarteDessin key={d.id} dessin={d} moi={user.id} quota={quota} onNotif={onNotif} onChange={changer} onVoirVente={onVoirVente} />)}
-          </div>}
+          </div>
+        </>}
       {encaisses.length > 0 && (
         <section style={{ marginTop: '2.5rem' }}>
-          <div className="section-head"><h2>Encaissés</h2><span className="count">Gardés par la banque</span></div>
+          <div className="section-head"><h2>Encaissés</h2><span className="count">Au <Link to="/bourse?onglet=coffre">coffre de la banque</Link></span></div>
           <div className="dessins-liste">
             {encaisses.map(d => <CarteDessin key={d.id} dessin={d} moi={user.id} />)}
           </div>

@@ -178,12 +178,12 @@ export default function Deposer({ integre = false, onDepose }) {
               <div className="meta-label" style={{ marginBottom: '.6rem' }}>◈ La vente</div>
               <div className="grid-2" style={{ gap: '1rem' }}>
                 <div className="field">
-                  <label>Mise de départ *</label>
+                  <label>Mise de départ, en billets papier *</label>
                   <input type="number" min="1" step="5" value={form.mise_depart} onChange={e => set('mise_depart', e.target.value)} />
                   {errors.mise_depart && <span className="error-msg">{errors.mise_depart}</span>}
                 </div>
                 <div className="field">
-                  <label>Achat immédiat</label>
+                  <label>Achat immédiat, en billets papier</label>
                   <input type="number" min="1" step="5" value={form.prix_achat} onChange={e => set('prix_achat', e.target.value)} placeholder="facultatif" />
                   {errors.prix_achat && <span className="error-msg">{errors.prix_achat}</span>}
                 </div>
