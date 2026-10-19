@@ -52,3 +52,37 @@
   .atelier-reglage input[type="range"] { width: 90px; }
   .atelier-pied .btn { width: 100%; }
 }
+
+/* ── Réglages en un geste (2026-10-19) : couleurs franches, tailles, effets et symétries en puces */
+.atelier-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; }
+.atelier-etiquette { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gris-fonce); min-width: 4.6rem; }
+.atelier-puces { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+.atelier-puces .chip { padding: .3rem .6rem; }
+.atelier-taille { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--noir); background: var(--blanc); cursor: pointer; padding: 0; }
+.atelier-taille span { display: block; background: var(--noir); border-radius: 50%; max-width: 26px; max-height: 26px; }
+.atelier-taille.actif { background: var(--jaune); box-shadow: 2px 2px 0 var(--noir); }
+.atelier-curseur { width: 90px; accent-color: var(--noir); }
+.atelier-pinceau { flex-direction: column; align-items: flex-start; }
+.atelier-pinceau > .atelier-reglage, .atelier-pinceau > .chip { margin-left: 5.05rem; }
+@media (max-width: 760px) {
+  .atelier-etiquette { min-width: 100%; }
+  .atelier-pinceau > .atelier-reglage, .atelier-pinceau > .chip { margin-left: 0; }
+  .atelier-pastille { width: 30px; height: 30px; }
+}
+
+/* ── Plein écran (2026-10-19) : sur téléphone, le billet faisait 3 cm de haut */
+.atelier-entete-actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+.atelier-astuce { margin: 0; }
+body.atelier-plein-ouvert .page { animation: none; transform: none; }
+.atelier.plein > * { flex-shrink: 0; }
+.atelier.plein { position: fixed; inset: 0; z-index: 1100; background: var(--blanc); padding: .6rem max(.6rem, env(safe-area-inset-right)) .6rem max(.6rem, env(safe-area-inset-left)); overflow-y: auto; gap: .5rem; }
+.atelier.plein .atelier-scene { width: min(100%, calc((100dvh - 8.5rem) * var(--ratio))); margin: 0 auto; box-shadow: 4px 4px 0 var(--noir); }
+.atelier.plein .atelier-outils, .atelier.plein .atelier-pinceau, .atelier.plein .atelier-pied { width: min(100%, 1100px); margin: 0 auto; }
+@media (orientation: portrait) { .atelier.plein .atelier-astuce { display: block; } }
+@media (orientation: landscape) { .atelier.plein .atelier-astuce { display: none; } }
+@media (orientation: landscape) and (max-height: 520px) {
+  /* téléphone couché : le billet d'abord, les coupures sur une ligne qui défile */
+  .atelier.plein .atelier-scene { width: min(100%, calc((100dvh - 5.5rem) * var(--ratio))); }
+  .atelier.plein .atelier-entete { flex-wrap: nowrap; overflow-x: auto; }
+  .atelier.plein .atelier-coupures { flex-wrap: nowrap; }
+}

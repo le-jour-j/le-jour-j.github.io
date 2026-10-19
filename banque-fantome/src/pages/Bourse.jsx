@@ -17,7 +17,7 @@ import { messageErreur } from '../utils/encheres'
 // ?onglet=atelier ou ?onglet=collection ; sans paramètre, les ventes en cours.
 const ONGLETS = [
   { id: 'vente', label: 'En vente' },
-  { id: 'atelier', label: "L'atelier : dessiner un billet" },
+  { id: 'atelier', label: 'Dessiner un billet' },
   { id: 'collection', label: 'Ma collection' },
 ]
 
