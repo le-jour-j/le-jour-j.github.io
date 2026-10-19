@@ -26,7 +26,7 @@ export const PAGES = [
     path: "/",
     title: "Banque Fantôme : dessinez votre monnaie, faites-la circuler",
     description:
-      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, créez des œuvres dans ses ateliers et échangez-les : billets à la bourse, œuvres au market, objets de la banque au supermarket. La valeur ne préexiste pas : elle se dessine.",
+      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, créez des œuvres dans ses ateliers et échangez-les : billets à la bourse, œuvres et objets de la banque au market. La valeur ne préexiste pas : elle se dessine.",
     priority: "0.9",
     contenu: `
       <h1>Banque Fantôme</h1>
@@ -36,7 +36,7 @@ export const PAGES = [
       <h2>Créer</h2>
       <p>Dans les ateliers, dessinez sur un billet de la banque : encaissé, il crédite votre compte de sa valeur. Ou faites une œuvre : peinture, poème, photo retouchée, collage.</p>
       <h2>Échanger</h2>
-      <p>Avec l'argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au supermarket, la banque vend des objets en billets papier, réglés en main propre.</p>`,
+      <p>Avec l'argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au même market, le supermarket de la banque vend des objets en billets papier, réglés en main propre.</p>`,
   },
   {
     path: "/creer",
@@ -54,25 +54,16 @@ export const PAGES = [
   },
   {
     path: "/market",
-    title: "Market : les œuvres des ateliers, aux enchères | Banque Fantôme",
+    title: "Market : les œuvres des ateliers et le supermarket de la banque | Banque Fantôme",
     description:
-      "Le market de la Banque Fantôme : peintures, poèmes, images et collages faits dans les ateliers du site, uniques, vendus aux enchères en argent du site.",
+      "Le market de la Banque Fantôme : peintures, poèmes, images et collages faits dans les ateliers du site, vendus aux enchères en argent du site, et le supermarket de la banque, ses objets en billets papier.",
     priority: "0.8",
     contenu: `
       <h1>Market</h1>
       <p>Les œuvres faites dans les ateliers de la banque : peintures, poèmes, images retouchées, collages. Chacune est unique.</p>
-      <p>On les achète aux enchères avec l'argent du site, celui qu'on gagne en dessinant des billets. Achetée, l'œuvre rejoint la collection de l'acheteur, qui la télécharge en haute définition, la garde ou la revend.</p>`,
-  },
-  {
-    path: "/supermarket",
-    title: "Supermarket : les objets de la banque, en billets papier | Banque Fantôme",
-    description:
-      "Le supermarket de la Banque Fantôme : objets, œuvres physiques et services vendus par la banque, aux enchères en billets papier, à venir chercher en main propre.",
-    priority: "0.7",
-    contenu: `
-      <h1>Supermarket</h1>
-      <p>Les objets, œuvres physiques et services que la banque met en vente, à venir chercher en main propre.</p>
-      <p>On y enchérit en billets papier : rien n'est débité sur le site, on contacte la banque pour se voir et on paie à la remise.</p>`,
+      <p>On les achète aux enchères avec l'argent du site, celui qu'on gagne en dessinant des billets. Achetée, l'œuvre rejoint la collection de l'acheteur, qui la télécharge en haute définition, la garde ou la revend.</p>
+      <h2>Le supermarket de la banque</h2>
+      <p>Les objets, œuvres physiques et services que la banque met en vente, à venir chercher en main propre. On y enchérit en billets papier : rien n'est débité sur le site, on paie à la remise.</p>`,
   },
   {
     path: "/bourse",
@@ -136,7 +127,9 @@ export const PAGES = [
   // que les anciens liens ne répondent pas 404.
   { path: "/participer", title: "Créer | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
   { path: "/collection", title: "Ma collection | Banque Fantôme", description: "Vos billets et vos œuvres.", noindex: true },
-  { path: "/deposer", title: "Mettre un article au supermarket | Banque Fantôme", description: "Réservé à la banque : mettre un objet en vente au supermarket.", noindex: true },
+  // Le supermarket est devenu un rayon du market (2026-10-19) : l'adresse renvoie au rayon.
+  { path: "/supermarket", title: "Supermarket de la banque | Banque Fantôme", description: "Le supermarket de la banque est un rayon du market.", noindex: true },
+  { path: "/deposer", title: "Mettre un article au supermarket | Banque Fantôme", description: "Réservé à la banque : mettre un objet en vente au rayon supermarket du market.", noindex: true },
   { path: "/connexion", title: "Connexion | Banque Fantôme", description: "Ouvrir un compte ou se connecter à la Banque Fantôme.", noindex: true },
   { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets encaissés et ventes en cours.", noindex: true },
   { path: "/messages", title: "Messages | Banque Fantôme", description: "Messagerie entre comptes.", noindex: true },

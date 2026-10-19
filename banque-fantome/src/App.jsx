@@ -8,7 +8,6 @@ import InstallPWA from './components/InstallPWA'
 import Rattrapage from './components/Rattrapage'
 import Home from './pages/Home'
 import Market from './pages/Market'
-import Supermarket from './pages/Supermarket'
 import Connexion from './pages/Connexion'
 import Compte from './pages/Compte'
 import Messages from './pages/Messages'
@@ -64,8 +63,9 @@ export default function App() {
           <Route path="/creer"      element={<Creer />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/market"     element={<Market />} />
-          <Route path="/supermarket" element={<Supermarket />} />
-          <Route path="/inventaire" element={<Navigate to="/supermarket" replace />} />
+          {/* Le supermarket est un rayon du market depuis le 2026-10-19 */}
+          <Route path="/supermarket" element={<Navigate to="/market?rayon=supermarket" replace />} />
+          <Route path="/inventaire" element={<Navigate to="/market?rayon=supermarket" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
           <Route path="/bourse"     element={<Bourse />} />

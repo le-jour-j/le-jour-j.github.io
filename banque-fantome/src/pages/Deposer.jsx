@@ -16,7 +16,7 @@ const CATEGORIES = ['objet', 'œuvre', 'service']
 // market est devenu numérique : les joueurs y vendent ce qu'ils font dans Créer). Les
 // enchères s'y font en billets papier, la remise en main propre.
 // `integre` : rendu dans l'onglet Supermarket de l'Admin (sans en-tête ni marges de page) ;
-// `onDepose` : appelé après la mise en vente, à la place du retour au supermarket.
+// `onDepose` : appelé après la mise en vente, à la place du retour au rayon supermarket du market.
 export default function Deposer({ integre = false, onDepose }) {
   const { user, profile, estBanquier, loading: authLoading } = useAuth()
   const navigate = useNavigate()
@@ -114,7 +114,7 @@ export default function Deposer({ integre = false, onDepose }) {
       setFini(true)
       setNotif({ msg: `Mis en vente pour ${form.duree_jours} jour${form.duree_jours > 1 ? 's' : ''}.`, type: 'ok' })
       if (onDepose) setTimeout(onDepose, 1200)
-      else setTimeout(() => navigate('/supermarket'), 1500)
+      else setTimeout(() => navigate('/market?rayon=supermarket'), 1500)
     } catch (e) {
       setNotif({ msg: messageErreur(e) || 'Erreur lors du dépôt', type: 'err' })
     } finally { setLoading(false) }

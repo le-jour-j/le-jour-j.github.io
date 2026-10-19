@@ -61,12 +61,11 @@ export default function Navbar() {
             onClick={() => setOpen(v => !v)}
           ><span />{!open && unread + nouveautes > 0 && <i className="nav-burger-point" aria-hidden="true" />}</button>
           <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
-            {/* 2026-10-19 : le logo ramène à l'accueil ; Créer en tête, puis les trois circuits */}
+            {/* 2026-10-19 : le logo ramène à l'accueil ; Créer en tête, puis le market (œuvres et supermarket) et la bourse */}
             <li className="nav-accueil"><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/creer" className="nav-creer">✦ Créer</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
             <li><NavLink to="/bourse">Bourse</NavLink></li>
-            <li><NavLink to="/supermarket">Supermarket</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             <li><NavLink to="/actu">Actu</NavLink></li>
             <li><NavLink to="/info">Info</NavLink></li>

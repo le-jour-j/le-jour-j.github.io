@@ -35,7 +35,7 @@ function Compteur({ valeur }) {
 const PRINCIPE = [
   { n: '1', titre: 'Ouvrir un compte', texte: 'Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.', to: '/connexion', cta: 'Créer un compte' },
   { n: '2', titre: 'Créer', texte: 'Dans les ateliers, dessinez un billet (encaissé, il crédite votre compte) ou faites une œuvre : peinture, poème, photo retouchée, collage.', to: '/creer', cta: 'Ouvrir les ateliers' },
-  { n: '3', titre: 'Échanger', texte: 'Avec l’argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au supermarket, la banque vend des objets en billets papier.', to: '/market', cta: 'Entrer dans le market' },
+  { n: '3', titre: 'Échanger', texte: 'Avec l’argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au même market, la banque tient un supermarket d’objets, en billets papier.', to: '/market', cta: 'Entrer dans le market' },
 ]
 
 export default function Home() {
@@ -81,7 +81,7 @@ export default function Home() {
           <div className="hero-eyebrow">On va faire du pognon</div>
           <h1 className="hero-title">BANQUE<br className="hero-br" /> <span>FANTÔME</span></h1>
           <p className="hero-sub">
-            La Banque Fantôme propose d'ouvrir un compte, de dessiner sa propre monnaie, de créer des œuvres dans ses ateliers et de les échanger : les billets à la bourse, les œuvres au market, les objets de la banque au supermarket. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
+            La Banque Fantôme propose d'ouvrir un compte, de dessiner sa propre monnaie, de créer des œuvres dans ses ateliers et de les échanger : les billets à la bourse, les œuvres et les objets de la banque au market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
           <div className="hero-actions">
             <Link to="/connexion" className="btn btn-jaune">→ Ouvrir un compte</Link>
@@ -167,7 +167,7 @@ export default function Home() {
             <div className="info-drawer">
               <div className="info-drawer-title">Ici, vous créez votre monnaie et vous achetez avec.</div>
               <p>
-                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs dessinent leurs propres billets sur le site : encaissés, ils deviennent de l'argent ; mis en vente, ils s'échangent dans la bourse contre l'argent des autres. Cet argent achète aussi les œuvres que les joueurs font dans les ateliers et vendent au market. Au supermarket, la banque vend des objets en billets papier, réglés en se voyant. Sur chaque vente de la bourse et du market, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
+                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs dessinent leurs propres billets sur le site : encaissés, ils deviennent de l'argent ; mis en vente, ils s'échangent dans la bourse contre l'argent des autres. Cet argent achète aussi les œuvres que les joueurs font dans les ateliers et vendent au market. Au même market, le supermarket de la banque vend des objets en billets papier, réglés en se voyant. Sur chaque vente de la bourse et du market, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
               </p>
             </div>
           )}
@@ -203,7 +203,7 @@ export default function Home() {
           <div className="grid-3">
             {[
               ['01', 'Dessiner un billet', "Ouvrez l'atelier, choisissez une coupure et dessinez sur le billet. Encaissez-le pour créditer votre compte, ou gardez-le pour le vendre."],
-              ['02', 'Enchérir', "Misez vos billets sur les billets et les œuvres des autres, à la bourse et au market. Au supermarket, promettez des billets papier sur un objet de la banque."],
+              ['02', 'Enchérir', "Misez vos billets sur les billets et les œuvres des autres, à la bourse et au market. Au supermarket du market, promettez des billets papier sur un objet de la banque."],
               ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte. Un billet ou une œuvre achetés rejoignent votre collection et se revendent ; un objet du supermarket se paie et se remet en main propre."],
             ].map(([n, titre, desc]) => (
               <div key={n} className="etape">

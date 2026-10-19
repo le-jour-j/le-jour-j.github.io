@@ -160,7 +160,8 @@ dans `/collection`) :
   Collage, dans `src/components/ateliers/`, contrat commun dans `commun.jsx`). `deposer_oeuvre`
   (aperçu public `objets/oeuvres/<uid>/`, HD privée `oeuvres-hd/<uid>/`, lue par le seul
   propriétaire), `mettre_oeuvre_en_vente`, `annuler_oeuvre` (banquier). Argent du site, 5 %.
-- **Le supermarket** (`/supermarket`, `/deposer` réservé au banquier) : objets physiques
+- **Le supermarket** (un rayon de `/market` depuis la fusion du 19/10 au soir :
+  `/market?rayon=supermarket`, `/supermarket` y renvoie ; `/deposer` réservé au banquier) : objets physiques
   (`objets` sans dessin ni œuvre), enchères en promesses de billets papier, remise en main
   propre. Les ventes physiques des joueurs d'avant expirent sans relance. Le vendeur ou le
   banquier peut défaire une adjudication (`annuler_adjudication_papier`).

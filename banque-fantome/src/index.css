@@ -802,6 +802,8 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 /* Intro du market + bouton de dépôt (2026-10-19) */
 .market-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
 .market-intro .texte-aide { margin: 0; flex: 1 1 28rem; }
+.market-intro-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tag.tag-papier { background: transparent; border: 1px dashed currentColor; }
 
 /* ── Créer, Ma collection, Market numérique (2026-10-19) ── */
 .objet-card.objet-oeuvre .img-wrap { background: var(--gris-clair); }

@@ -26,7 +26,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   const banque = !!objet.vendeur_banque      // vente de la banque (affichage, contact)
   // Le market (2026-10-19) : on enchérit en promesses de billets papier, rien n'est débité,
   // le gagnant paie en main propre. Seule la bourse se paie avec l'argent du site.
-  // Bourse et market se paient en argent du site ; le supermarket, en billets papier.
+  // Bourse et œuvres du market se paient en argent du site ; le rayon supermarket, en billets papier.
   const papier = !billet && !oeuvre
   const chose = billet ? 'Le billet' : 'L’œuvre'
   const vendeur = banque ? 'la banque' : objet.pseudo || 'le vendeur'
