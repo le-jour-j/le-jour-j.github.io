@@ -384,9 +384,12 @@ export function dessinerHabillage(ctx, { coupure, graine, numero, pxParMm }) {
   // drapeau, en haut à gauche. Le bleu et jaune de la machine seulement en damier ou en
   // diagonale : en bandes il refait l'Ukraine ou la Barbade. Sinon des nuances d'une seule
   // teinte, qu'aucun pays n'a pour drapeau. Pas de croix : elle devient vite nordique.
+  // Pas de teinte presque blanche dans les bandes (2026-10-19) : foncé / clair / foncé
+  // refaisait le Nigeria sur le 100, le Pérou ou l'Autriche sur le 10, la Pologne en deux bandes.
   const motifDrapeau = rnd.choice(DRAPEAUX)
+  const bandes = [[fonce, teinte(rgb, -0.25), ton], [teinte(rgb, 0.25), ton, teinte(rgb, -0.3)]]
   const camaieux = [[fonce, couleurTon('ton-clair', coupure)], [couleurTon('ton-fonce', coupure), couleurTon('ton-clair', coupure), couleurTon('ton-vif', coupure)]]
-  const cols = rnd.choice(['damier', 'diagonale'].includes(motifDrapeau) ? [['#0b2a7a', '#ffd400'], ...camaieux] : camaieux)
+  const cols = rnd.choice(['damier', 'diagonale'].includes(motifDrapeau) ? [['#0b2a7a', '#ffd400'], ...camaieux] : bandes)
   drapeau(ctx, s, motifDrapeau, cols, l * 0.12, h * 0.8, 13, fonce)
 
   // montant centré en haut, devise à 42 %, et son écho retourné en bas
