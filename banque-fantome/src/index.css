@@ -271,9 +271,10 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .filter-reset { margin-left: auto; }
 @media (max-width: 640px) {
   .market-toolbar { padding: .9rem; margin-left: -1.1rem; margin-right: -1.1rem; border-left: 0; border-right: 0; }
-  .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .3rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .filter-row::-webkit-scrollbar { display: none; }
-  .filter-row .filter-label { min-width: auto; position: sticky; left: 0; background: var(--gris-clair); padding-right: .4rem; }
+  /* Sur téléphone, les puces passent à la ligne : en défilement caché, « Service » ou
+     « Le coffre de la banque » restaient invisibles sans aucun indice (audit du 2026-10-19). */
+  .filter-row { gap: .4rem; }
+  .filter-row .filter-label { min-width: auto; flex-basis: 100%; }
   .filter-reset { margin-left: 0; }
 }
 .market-vide { text-align: center; padding: 4rem 1rem; border: 2px dashed var(--gris-bord); color: var(--gris); }
@@ -304,6 +305,9 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .modal-media-grid.single { grid-template-columns: 1fr; }
 .modal-media-item { border: 2px solid var(--noir); background: var(--gris-clair); aspect-ratio: 4/3; overflow: hidden; cursor: zoom-in; padding: 0; position: relative; transition: transform var(--moyen) var(--ressort), box-shadow var(--moyen); }
 .modal-media-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+/* L'image principale de la fiche entière, sans recadrage : un portrait ne perd plus sa tête,
+   un billet ne perd plus son numéro de série */
+.modal-media-principale img { object-fit: contain; }
 .modal-media-item:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--jaune); }
 .modal-media-item:hover img { transform: scale(1.06); }
 .modal-media-item::after { content: '⤢'; position: absolute; right: .5rem; bottom: .5rem; width: 28px; height: 28px; background: var(--noir); color: var(--jaune); display: flex; align-items: center; justify-content: center; font-size: 1rem; opacity: 0; transition: opacity var(--vite); }
@@ -727,6 +731,8 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .planche-card:hover { transform: translate(-2px, -2px); box-shadow: var(--ombre-tampon); }
 .planche-apercu { display: block; padding: 0; border: 0; border-bottom: 2px solid var(--noir); background: var(--gris-clair); cursor: zoom-in; aspect-ratio: 210 / 297; overflow: hidden; }
 .planche-apercu img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.planche-apercu-billet { background: var(--jaune-fond); padding: .5rem; }
+.planche-apercu-billet img { object-fit: contain; }
 /* Planches de 5, 20 et 50 couchées pour que le dessin soit droit (2026-10-13) : cases carrées
    pour toutes, la planche entière dedans, qu'elle soit debout ou couchée */
 .planches-grid .planche-apercu { aspect-ratio: 1 / 1; padding: .5rem; }

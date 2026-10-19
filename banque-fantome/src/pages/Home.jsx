@@ -217,7 +217,7 @@ export default function Home() {
         <div className="container">
           <div className="section-head">
             <h2>Entrées récentes dans le circuit</h2>
-            <Link to="/bourse" className="count">Voir la bourse →</Link>
+            <span className="count"><Link to="/market">Market</Link> · <Link to="/bourse">Bourse</Link> →</span>
           </div>
           {recent === null
             ? <div className="loader">Chargement<span className="blink">_</span></div>

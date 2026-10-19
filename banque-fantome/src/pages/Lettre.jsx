@@ -30,7 +30,7 @@ export default function Lettre() {
       <div>
         <div className="titre">{titre}</div>
         <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>{texte}</p>
-        <Link to="/" className="btn btn-noir">Visiter la banque →</Link>
+        <Link to="/compte#lettre" className="btn btn-noir">S'inscrire depuis mon compte →</Link>
       </div>
     </div>
   )

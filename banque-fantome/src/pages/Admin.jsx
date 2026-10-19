@@ -656,7 +656,7 @@ function OngletLettre({ onNotif, depuis }) {
       {historique.length > 0 && (
         <>
           <h3 className="admin-soustitre" style={{ marginTop: '1.5rem' }}>Lettres envoyées</h3>
-          <table className="admin-table">
+          <div style={{ overflowX: 'auto' }}><table className="admin-table">
             <thead><tr><th>Quand</th><th>Comment</th><th>Objet</th><th>Envoyées</th><th>Échecs</th></tr></thead>
             <tbody>
               {historique.map(l => (
@@ -669,7 +669,7 @@ function OngletLettre({ onNotif, depuis }) {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </>
       )}
     </div>

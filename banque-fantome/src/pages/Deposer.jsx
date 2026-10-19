@@ -175,7 +175,7 @@ export default function Deposer({ integre = false, onDepose }) {
               </select>
             </div>
             <div className="vente-params">
-              <div className="meta-label" style={{ marginBottom: '.6rem' }}>◈ Hôtel des ventes</div>
+              <div className="meta-label" style={{ marginBottom: '.6rem' }}>◈ La vente</div>
               <div className="grid-2" style={{ gap: '1rem' }}>
                 <div className="field">
                   <label>Mise de départ *</label>

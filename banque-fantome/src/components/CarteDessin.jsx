@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { getPublicImageUrl } from '../utils/images'
 import ImageLightbox from './ImageLightbox'
+import BoutonPlanche from './BoutonPlanche'
 import { DUREES, messageErreur } from '../utils/encheres'
 
 // Un billet dessiné dans l'atelier, tel qu'il apparaît dans « Ma collection » et juste
@@ -90,11 +91,12 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
           </div>
         )}
 
-        {d.statut === 'en_vente' && onVoirVente && (
-          <div className="dessin-actions">
+        <div className="dessin-actions">
+          {d.statut === 'en_vente' && onVoirVente && (
             <button type="button" className="btn btn-outline btn-sm" onClick={() => onVoirVente(d)}>Voir la vente →</button>
-          </div>
-        )}
+          )}
+          {d.statut !== 'annule' && <BoutonPlanche dessin={d} />}
+        </div>
       </div>
     </article>
   )

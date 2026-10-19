@@ -69,7 +69,7 @@ export const PAGES = [
     path: "/senrichir",
     title: "S'enrichir : planches de billets à imprimer | Banque Fantôme",
     description:
-      "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
+      "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, et chaque billet dessiné dans la bourse, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
     priority: "0.7",
     contenu: `
       <h1>S'enrichir</h1>

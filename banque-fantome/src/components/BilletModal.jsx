@@ -1,4 +1,5 @@
 import Portal from './Portal'
+import BoutonPlanche from './BoutonPlanche'
 import { useModal } from '../utils/useModal'
 import { getPublicImageUrl } from '../utils/images'
 
@@ -36,6 +37,7 @@ export default function BilletModal({ billet, onClose, onPrev, onNext, index, to
             {billet.description && <p className="cartel-desc">{billet.description}</p>}
             <div className="cartel-pied">
               {total > 1 && <span className="caption-gris">{index + 1} / {total}</span>}
+              {billet.dessin_id && billet.statut !== 'annule' && <BoutonPlanche dessin={{ id: billet.dessin_id, coupure: billet.valeur }} />}
               {estBanquier && billet.statut === 'valide' && onAnnuler && (
                 <button type="button" className="btn btn-rouge btn-xs" onClick={() => onAnnuler(billet)}>Annuler ce billet</button>
               )}

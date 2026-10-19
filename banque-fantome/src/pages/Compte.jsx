@@ -97,7 +97,7 @@ function LettreCompte({ userId }) {
   )
 }
 
-const TYPES = { emission: 'Émission', annulation: 'Annulation', enchere: 'Enchère', remboursement: 'Remboursement', achat: 'Achat', vente: 'Vente', commission: 'Commission' }
+const TYPES = { emission: 'Encaissement', annulation: 'Annulation', enchere: 'Enchère', remboursement: 'Remboursement', achat: 'Achat', vente: 'Vente', commission: 'Commission' }
 
 export default function Compte() {
   const { user, loading: authLoading, profile, solde, estBanquier, refreshProfile } = useAuth()
@@ -275,7 +275,7 @@ export default function Compte() {
           <>
             <div className="section-head" style={{ marginTop: '3rem' }}>
               <h2>Grand livre</h2>
-              <span className="count">{livre.length} derniers mouvements</span>
+              <span className="count">{livre.length > 1 ? `${livre.length} derniers mouvements` : '1 mouvement'}</span>
             </div>
             <div className="table-wrap">
               <table className="livre">

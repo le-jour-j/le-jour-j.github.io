@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { libelleRarete } from '../utils/rarete'
 import { getObjetImageUrls } from '../utils/images'
 import { estVente, estEnCours, echeance, tempsRestant, urgent } from '../utils/encheres'
 
@@ -59,7 +60,7 @@ export default function ObjetCard({ objet, onClick }) {
       <div className="card-body">
         <div className="card-tags">
           {objet.categorie && <span className="tag">{objet.categorie}</span>}
-          {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>}
+          {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
         </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 90)}{objet.description?.length > 90 ? '…' : ''}</div>

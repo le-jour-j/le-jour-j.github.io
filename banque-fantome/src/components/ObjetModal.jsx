@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import { libelleRarete } from '../utils/rarete'
 import Portal from './Portal'
+import BoutonPlanche from './BoutonPlanche'
 import { useAuth } from './AuthContext'
 import MessageModal from './MessageModal'
 import ImageLightbox from './ImageLightbox'
@@ -44,11 +46,11 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
-            {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{objet.rarete || 'commun'}</span>}
+            {!billet && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
           </div>
           <h3 id="objet-titre" className="modal-titre">{objet.titre}</h3>
           <div className="meta-label" style={{ marginBottom: '1rem' }}>
-            {banque ? 'Mis en vente par la banque' : billet ? `Vendu par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
+            {banque ? 'Mis en vente par la banque' : billet ? `Mis en vente par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
           </div>
           {vente && <EnchereBloc objet={objet} onChange={majObjet} onNotif={setNotif} onContacter={() => setShowMsg(true)} />}
           {!!imgUrls.length &&
@@ -80,6 +82,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             <span className={`stamp ${stampStatut} stamp-anim`}>{libelleStatut}</span>
             {!vente && !!objet.valeur && <span className="meta-label">Valeur estimée : {objet.valeur} billets</span>}
             {objet.lieu && <span className="tag">📍 {objet.lieu}</span>}
+            {billet && <BoutonPlanche dessin={{ id: objet.dessin_id }} />}
             {!isOwn && objet.user_id && !vente &&
               <button className="btn btn-jaune" onClick={() => setShowMsg(true)}>
                 ⇄ Proposer un échange

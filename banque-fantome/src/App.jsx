@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { Link, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { lazy, Suspense, useEffect } from 'react'
 import { AuthProvider } from './components/AuthContext'
 import { NouveautesProvider } from './components/Nouveautes'
@@ -22,6 +22,19 @@ import { applySeo } from './lib/seo'
 const Senrichir = lazy(() => import('./pages/Senrichir'))
 const Admin = lazy(() => import('./pages/Admin'))
 const Bourse = lazy(() => import('./pages/Bourse'))
+
+// Une adresse inconnue : le serveur répond 404, l'appli le dit aussi (l'écran restait vide)
+function Introuvable() {
+  return (
+    <div className="acces-refuse">
+      <div>
+        <div className="titre">Guichet introuvable</div>
+        <p className="texte-aide" style={{ marginBottom: '1.5rem' }}>Cette adresse ne mène nulle part dans la banque.</p>
+        <Link to="/" className="btn btn-noir">Retour à l'accueil →</Link>
+      </div>
+    </div>
+  )
+}
 
 export default function App() {
   const location = useLocation()
@@ -59,6 +72,7 @@ export default function App() {
           <Route path="/admin"      element={<Admin />} />
           <Route path="/lettre"     element={<Lettre />} />
           <Route path="/info"       element={<Info />} />
+          <Route path="*"           element={<Introuvable />} />
         </Routes>
         </Suspense>
         </Rattrapage>
