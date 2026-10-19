@@ -61,7 +61,9 @@ export const PAGES = [
       <h2>Encaisser ou vendre</h2>
       <p>Un billet terminé s'encaisse (la banque le garde et crédite le compte de sa valeur) ou se vend aux enchères aux autres comptes, qui paient avec les billets qu'ils ont encaissés.</p>
       <h2>Collectionner</h2>
-      <p>Un billet acheté rejoint la collection de l'acheteur, qui peut le garder ou le revendre. Chaque vente reste inscrite au registre.</p>`,
+      <p>Un billet acheté rejoint la collection de l'acheteur, qui peut le garder ou le revendre. Chaque vente reste inscrite au registre.</p>
+      <h2>Le coffre de la banque</h2>
+      <p>Les billets encaissés ne circulent plus : la banque les garde dans son coffre, visible de tous.</p>`,
   },
   {
     path: "/senrichir",

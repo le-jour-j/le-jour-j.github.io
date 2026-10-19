@@ -792,6 +792,7 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 @media (max-width: 400px) { .dessins-liste { grid-template-columns: 1fr; } }
 .dessin-carte { border: 2px solid var(--noir); background: var(--blanc); box-shadow: var(--ombre-tampon); display: flex; flex-direction: column; }
 .dessin-carte.encaisse, .dessin-carte.annule { box-shadow: none; opacity: .85; }
+.coffre .dessin-carte.encaisse { box-shadow: var(--ombre-tampon); opacity: 1; }
 .dessin-image { display: block; background: var(--jaune-fond); border-bottom: 2px solid var(--noir); padding: .6rem; }
 .dessin-image img { display: block; width: 100%; height: auto; }
 .dessin-infos { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }

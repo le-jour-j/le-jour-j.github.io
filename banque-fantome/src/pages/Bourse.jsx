@@ -14,11 +14,12 @@ import { messageErreur } from '../utils/encheres'
 // machine-a-bifton. Un billet terminé s'encaisse (la banque le garde, le compte est
 // crédité) ou se vend aux enchères ; acheté, il rejoint la collection de l'acheteur,
 // qui peut le revendre. Les règles font foi côté base : supabase_bourse.sql.
-// ?onglet=atelier ou ?onglet=collection ; sans paramètre, les ventes en cours.
+// ?onglet=atelier, ?onglet=collection ou ?onglet=coffre ; sans paramètre, les ventes en cours.
 const ONGLETS = [
   { id: 'vente', label: 'En vente' },
   { id: 'atelier', label: 'Dessiner un billet' },
   { id: 'collection', label: 'Ma collection' },
+  { id: 'coffre', label: 'Le coffre de la banque' },
 ]
 
 // Encaissements encore permis sur 24 h glissantes (même calcul que encaisser_dessin)
@@ -78,6 +79,7 @@ export default function Bourse() {
         {onglet === 'vente' && <OngletVente onOuvrir={setSelected} />}
         {onglet === 'atelier' && <OngletAtelier quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />}
         {onglet === 'collection' && <OngletCollection quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />}
+        {onglet === 'coffre' && <OngletCoffre />}
       </div>
       {selected && <ObjetModal objet={selected} onClose={() => { setSelected(null); apresAction() }} />}
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
@@ -254,5 +256,39 @@ function OngletCollection({ quota, onNotif, onChange, onVoirVente }) {
         </section>
       )}
     </>
+  )
+}
+
+// ─── Le coffre (2026-10-19, demande de Jiiji) : les billets encaissés, que la banque garde ───
+function OngletCoffre() {
+  const { user } = useAuth()
+  const [billets, setBillets] = useState(null)
+
+  useEffect(() => {
+    let annule = false
+    supabase.from('dessins').select('*').eq('statut', 'encaisse').order('created_at', { ascending: false }).limit(500)
+      .then(({ data }) => { if (!annule) setBillets(data || []) })
+    return () => { annule = true }
+  }, [])
+
+  if (billets === null) return <div className="loader">Chargement<span className="blink">_</span></div>
+  if (billets.length === 0) return (
+    <div className="market-vide">
+      <div className="titre">Le coffre est vide</div>
+      <p style={{ margin: '0 auto' }}>Chaque billet encaissé vient s'y ranger.</p>
+      <Link to="/bourse?onglet=atelier" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Dessiner un billet</Link>
+    </div>
+  )
+  const total = billets.reduce((t, d) => t + d.coupure, 0)
+  return (
+    <section className="coffre">
+      <p className="texte-aide" style={{ marginBottom: '1.2rem' }}>
+        Les billets encaissés ne circulent plus : la banque les garde, en échange de l'argent qu'elle a crédité à leurs auteurs.
+        Le coffre en compte <strong>{billets.length}</strong>, pour une valeur de <strong>{total.toLocaleString('fr-FR')} billets</strong>.
+      </p>
+      <div className="dessins-liste">
+        {billets.map(d => <CarteDessin key={d.id} dessin={d} moi={user?.id} />)}
+      </div>
+    </section>
   )
 }
