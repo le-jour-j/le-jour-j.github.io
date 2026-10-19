@@ -107,8 +107,10 @@ Ce script ne peut pas vivre dans le `404.html` source : celui-ci est resynchroni
 `index.html` à chaque build de `chambre-compensation`. D'où l'injection à l'étape 4,
 sur le fichier de **sortie**, idempotente (marqueur `<!-- bf-redirect -->`).
 
-À savoir : `banque-fantome/public/404.html` est un vestige mort (Pages ne sert que le
-404 racine) et utilise d'ailleurs la clé `redirect`, pas `bf-redirect`.
+Depuis le prérendu, les 13 routes de l'appli ont chacune leur `dist/<route>/index.html` :
+un lien direct connu est servi sans passer par le 404. Le script injecté ne sert plus que
+de filet pour une adresse inconnue sous `/banque-fantome/`. (Les deux `404.html` morts de
+`banque-fantome/` sont partis en quarantaine le 2026-10-19.)
 
 ### Réveil des bases
 
@@ -117,26 +119,54 @@ projet Supabase deux fois par semaine (tier gratuit mis en pause sinon). Quatre
 secrets : `BANQUE_FANTOME_SUPABASE_{URL,ANON_KEY}`,
 `TOUR_DE_PHRANCE_SUPABASE_{URL,ANON_KEY}`.
 
-## Banque Fantôme — modèle de données
+## Banque Fantôme : modèle de données
 
-Deux couches SQL, à jouer dans cet ordre dans le SQL Editor Supabase :
+*Réécrit le 2026-10-19 après l'audit : l'ancienne version ne citait que 2 fichiers SQL.*
 
-- `supabase_setup.sql` — socle : `profiles`, `objets`, RLS, bucket Storage `objets`.
-- `supabase_hotel_des_ventes.sql` — la refonte « hôtel des ventes » : colonnes
-  d'enchère sur `objets`, colonnes `solde`/`role` sur `profiles`, tables `banque`,
-  `billets_emis`, `encheres`, `transactions` (grand livre), et les RPC
-  `emettre_billet`, `placer_enchere`, `acheter_immediat`, `retirer_vente`,
-  `remettre_en_vente`, `resoudre_ventes_expirees`, `stats_banque`, `journal_banque`,
-  `cours_devises`.
+Onze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
+base Banque Fantôme, dans cet ordre :
 
-Le front appelle ces RPC directement (`supabase.rpc('…')`). Les deux markdown
-`CE-QUI-CHANGE-HOTEL-DES-VENTES.md` et `INSTALLATION-LOCALE-*.md` documentent l'état
-de cette migration et les angles morts connus (notamment : si les colonnes neuves
-manquent, `refreshProfile` échoue silencieusement et `profile` reste `null` partout,
-sans avertissement). `supabase/functions/reset-password/index.ts` est une Edge Function.
+1. `supabase_setup.sql` : socle (`profiles`, `objets`, RLS, bucket `objets`).
+2. `supabase_hotel_des_ventes.sql` : colonnes d'enchère sur `objets`, `solde`/`role` sur
+   `profiles`, tables `banque`, `billets_emis`, `encheres`, `transactions` (grand livre).
+3. `supabase_relance_auto.sql` : une vente sans enchère repart au lieu d'expirer.
+4. `supabase_fil_actu.sql` : table et bucket `actus`, `bf_est_banquier()`.
+5. `supabase_admin.sql`, `supabase_lettre.sql`, `supabase_nouveautes.sql`, `supabase_presences.sql`.
+6. `supabase_bourse.sql` (2026-10-18) : table `dessins`, l'atelier et la bourse, guichet photo fermé.
+7. `supabase_market_papier.sql` (2026-10-19) : le market en promesses de billets papier.
+8. `supabase_garde_fous.sql` (2026-10-19) : hash du code de récupération illisible
+   (droits par colonne sur `profiles`), pseudos uniques et imposés, `annuler_adjudication_papier`,
+   limites du bucket, plafonds de l'atelier verrouillés, tâche cron `bf-resoudre-ventes`.
 
-Les objets déposés avant la migration n'ont pas de `mise_depart` : ils restent en troc
-par message, le code doit continuer à gérer ce cas.
+Chaque fichier est rejouable, **mais pas dans le désordre** : `bf_garde_objets`,
+`placer_enchere`, `acheter_immediat`, `bf_finaliser_vente`, `remettre_en_vente`... sont
+redéfinies d'un fichier à l'autre, et c'est la dernière version jouée qui fait foi.
+Rejouer `supabase_hotel_des_ventes.sql` seul remettrait des enchères qui débitent le solde
+au market et rouvrirait `emettre_billet`. Pour retoucher une fonction, partir de sa
+version la plus récente. La table `messages` et les tables `jp_*` (lettre du site
+principal) existent en base mais dans aucun fichier.
+
+Deux circuits depuis le 18-19/10/2026 :
+
+- **La bourse** (`/bourse`) : l'argent naît dans l'atelier. `deposer_dessin` (table
+  `dessins`), puis `encaisser_dessin` (la banque garde le billet, compte crédité, 3 par
+  jour, une ligne `billets_emis`) ou `mettre_dessin_en_vente` (une ligne `objets` avec
+  `dessin_id`). Ces ventes se paient avec le solde, commission au trésor.
+- **Le market** (`/market`, `/deposer`) : objets physiques déposés par tous (`objets`
+  sans `dessin_id`, `vendeur_banque` vrai si c'est le banquier). Enchères en promesses de
+  billets papier : rien n'est débité, la clôture met en contact, paiement en main propre.
+  Le vendeur ou le banquier peut défaire une adjudication (`annuler_adjudication_papier`).
+
+**Piège des droits** : `profiles` n'est lisible que par colonnes (`id, pseudo, solde,
+role, created_at`). Un `select('*')` sur `profiles` ou un `upsert` qui met à jour
+`recovery_code_hash` est refusé ; l'inscription fait un upsert `ignoreDuplicates`.
+
+Edge Functions (`supabase/functions/`) : `reset-password`, `lettre`, `presences`.
+`LETTRE-MODE-D-EMPLOI.md` documente la lettre. Les bancs d'essai PGlite des fichiers
+SQL ne sont pas versionnés : les refaire avant toute retouche d'argent.
+
+Les objets déposés avant la migration de septembre n'ont pas de `mise_depart` : ils
+restent en troc par message (`estVente()`), le code doit continuer à gérer ce cas.
 
 ## Tour de Phrance — points sensibles
 
@@ -205,9 +235,9 @@ prérendus.** Ce sont des dépôts faits par les comptes, ils changent à chaque
 vente, et ils n'ont rien à faire dans l'historique git. Les pages portent donc
 le texte de présentation, pas l'inventaire du moment.
 
-`/deposer`, `/connexion`, `/compte` et `/messages` sont prérendus quand même —
-pour qu'aucune URL de l'appli ne réponde 404 — mais marqués `noindex` et tenus
-hors du sitemap.
+`/participer`, `/deposer`, `/connexion`, `/compte`, `/messages`, `/admin` et `/lettre`
+sont prérendus quand même, pour qu'aucune URL de l'appli ne réponde 404, mais marqués
+`noindex` et tenus hors du sitemap.
 
 ### Le lien mort
 

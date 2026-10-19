@@ -98,7 +98,7 @@ notification dans mon interface à moi en tant qu'admin ». Il envoie la lettre 
 - **Un compteur rouge sur « Admin »** dans le menu du haut (et un point rouge sur le
   bouton menu du téléphone) dit combien il y a de choses à voir.
 - **En haut de l'admin, le bloc « Nouveautés »** les détaille : lettre prête, nouveaux
-  comptes, billets déposés au guichet, dépôts au market, inscriptions et désinscriptions
+  comptes, billets encaissés (dessins de l'atelier), dépôts au market, inscriptions et désinscriptions
   à la lettre. Un clic ouvre le bon onglet.
 - **Ouvrir un onglet, c'est l'avoir vu** : son compteur tombe, et les lignes nouvelles y
   restent surlignées en jaune avec un tampon « nouveau » le temps de la visite.

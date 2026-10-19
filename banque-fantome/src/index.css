@@ -516,20 +516,6 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .vente-params .field { margin-bottom: .9rem; }
 .vente-params p { margin-bottom: .4rem; }
 
-.guichet { border: 2px solid var(--noir); background: var(--blanc); box-shadow: 8px 8px 0 var(--jaune); padding: 1.6rem; margin-bottom: 3rem; }
-.guichet-tete { display: flex; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; align-items: flex-start; margin-bottom: 1.2rem; }
-.guichet-solde { text-align: right; }
-.guichet-form { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.2fr); gap: 1.5rem; align-items: start; }
-@media (max-width: 720px) { .guichet-form { grid-template-columns: 1fr; } .guichet { padding: 1.1rem; box-shadow: 5px 5px 0 var(--jaune); } }
-.upload-zone.has-preview { padding: .5rem; }
-.guichet-preview { display: block; width: 100%; max-height: 260px; object-fit: contain; }
-.mes-billets { margin-top: 1.4rem; padding-top: 1rem; border-top: 2px solid var(--gris-bord); }
-.billets-strip { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .3rem; }
-.billet-mini { position: relative; flex: 0 0 96px; height: 60px; border: 2px solid var(--noir); background: var(--gris-clair); overflow: hidden; }
-.billet-mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.billet-mini span { position: absolute; right: 0; bottom: 0; background: var(--noir); color: var(--jaune); font-family: var(--mono); font-size: .62rem; font-weight: 700; padding: 1px 5px; }
-.billet-mini.annule { opacity: .45; }
-.billet-mini.annule::after { content: 'ANNULÉ'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: .6rem; font-weight: 700; color: var(--rouge-txt); background: rgba(255,253,247,.6); transform: rotate(-10deg); }
 .billets-mur { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
 .billet-mur-item { border: 2px solid var(--noir); background: var(--blanc); transition: transform var(--moyen) var(--ressort), box-shadow var(--moyen); }
 .billet-mur-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--jaune); }
@@ -575,7 +561,6 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .journal-quand { white-space: nowrap; font-family: var(--mono); font-size: .7rem; }
 .cours td strong { font-family: var(--bebas); font-size: 1.15rem; letter-spacing: .03em; }
 .part-barre { display: inline-block; min-width: 64px; padding: 1px 6px; background: linear-gradient(90deg, var(--jaune) var(--part), transparent var(--part)); border: 1px solid var(--gris-bord); }
-.guichet-cartel .field { margin-bottom: .9rem; }
 .billet-mur-item figcaption { padding: .55rem .75rem .7rem; }
 .cartel-mini-titre { font-family: var(--bebas); font-size: 1.25rem; letter-spacing: .03em; line-height: 1.1; }
 .cartel-mini-ligne { font-size: .8rem; color: var(--gris); margin-top: .15rem; font-style: italic; }
