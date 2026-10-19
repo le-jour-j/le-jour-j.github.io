@@ -88,7 +88,23 @@ export default function Senrichir() {
         </div>
 
         <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
-          Ici, vous fabriquez votre monnaie : téléchargez une planche, imprimez-la, découpez vos billets et jouez avec, en vrai papier.
+          Ici, vous fabriquez votre monnaie, de deux façons : imprimer une planche déjà faite, ou créer votre billet avec l’outil de la banque.
+        </p>
+        <div className="creer-choix senrichir-choix">
+          <button type="button" className="creer-carte" onClick={() => document.getElementById('planches')?.scrollIntoView({ behavior: 'smooth' })}>
+            <span className="creer-icone" aria-hidden="true">⎙</span>
+            <span className="creer-nom">Imprimer une planche</span>
+            <span className="creer-phrase">Téléchargez une planche A4, imprimez-la, découpez vos billets et jouez avec, en vrai papier.</span>
+            <span className="creer-sortie">→ des billets papier</span>
+          </button>
+          <Link to="/creer?atelier=billet" className="creer-carte creer-carte-billet">
+            <span className="creer-icone" aria-hidden="true">◈</span>
+            <span className="creer-nom">Créer votre billet</span>
+            <span className="creer-phrase">Dessinez sur un billet de la banque : encaissé, il crédite votre compte ; vendu, il circule à la bourse. Et il rejoint les planches.</span>
+            <span className="creer-sortie">→ de l’argent sur votre compte</span>
+          </Link>
+        </div>
+        <p className="texte-aide" id="planches" style={{ margin: '2rem 0 1.4rem', scrollMarginTop: '6rem' }}>
           {' '}{total} planches A4, de 5 à 500 €, chacune à taille réelle avec ses traits de coupe : les billets dessinés
           dans l'<Link to="/creer?atelier=billet" className="lien-texte">atelier à billets</Link> et ceux de l'atelier papier, mêlés.
           Cliquez sur une planche pour voir le billet en grand.

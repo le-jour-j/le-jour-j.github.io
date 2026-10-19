@@ -11,8 +11,11 @@ import { verifierTexte } from '../lib/billet/motsRefuses'
 import { messageErreur } from '../utils/encheres'
 import { getPublicImageUrl } from '../utils/images'
 
-// Créer (2026-10-19, demande de Jiiji) : tous les ateliers de la banque au même endroit.
-// Le billet fait de l'argent (encaissé ou vendu à la bourse) ; les autres ateliers font des
+// Créer (2026-10-19, demande de Jiiji) : l'outil de la banque, sans entrée de menu à lui.
+// « pour s'enrichir soit tu imprimes une planche déjà faite soit tu crées ton billet avec l'outil,
+// pareil pour créer, en fait c'est un outil pour alimenter le market » : on arrive au billet
+// depuis S'enrichir, aux œuvres depuis le Market. Le billet fait de l'argent (encaissé ou vendu
+// à la bourse) ; les autres ateliers font des
 // œuvres, uniques, qui se vendent à l'E-market en argent du site. Tout arrive dans la collection.
 // ?atelier=billet|paint|poesie|image|collage ; sans paramètre, la vitrine des ateliers.
 
@@ -22,10 +25,9 @@ const ATELIERS = {
   image:   lazy(() => import('../components/ateliers/AtelierImage')),
   collage: lazy(() => import('../components/ateliers/AtelierCollage')),
 }
-const CHOIX = [
-  { id: 'billet', nom: 'Billet', icone: '◈', phrase: 'Dessiner un billet : l’encaisser ou le vendre à la bourse', sortie: 'de l’argent' },
-  ...Object.entries(GENRES).map(([id, g]) => ({ id, nom: g.nom, icone: g.icone, phrase: g.phrase, sortie: 'une œuvre pour l’E-market' })),
-]
+const BILLET = { id: 'billet', nom: 'Billet', icone: '◈', phrase: 'Dessiner un billet : l’encaisser ou le vendre à la bourse', sortie: 'de l’argent' }
+const OEUVRES = Object.entries(GENRES).map(([id, g]) => ({ id, nom: g.nom, icone: g.icone, phrase: g.phrase, sortie: 'une œuvre pour l’E-market' }))
+const CHOIX = [BILLET, ...OEUVRES]
 
 export default function Creer() {
   const [params, setParams] = useSearchParams()
@@ -49,20 +51,22 @@ export default function Creer() {
     <div className="page-pad">
       <div className="container">
         <div className="section-head">
-          <h2>Créer</h2>
-          {user ? <Link to="/collection" className="count">Ma collection →</Link> : <span className="count">Les ateliers de la banque</span>}
+          <h2>{atelier === 'billet' ? 'Créer votre billet' : 'Créer pour le market'}</h2>
+          {atelier === 'billet'
+            ? <Link to="/senrichir" className="count">← S’enrichir</Link>
+            : user ? <Link to="/collection" className="count">Ma collection →</Link> : <Link to="/market" className="count">← Le market</Link>}
         </div>
 
         {!atelier ? (
           <>
             <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
-              Choisissez un atelier. Le billet fabrique de l’argent : encaissé, il crédite votre compte. Les autres ateliers
-              fabriquent des œuvres uniques, qui rejoignent votre collection et se vendent à l’<Link to="/market?rayon=emarket" className="lien-texte">E-market</Link>,
-              en argent du site. On peut commencer sans compte : il en faut un pour déposer.
+              Les ateliers qui alimentent le market. Chaque œuvre est unique : elle rejoint votre collection et se vend à l’<Link to="/market?rayon=emarket" className="lien-texte">E-market</Link>,
+              en argent du site. On peut commencer sans compte : il en faut un pour déposer. Pour fabriquer de l’argent,
+              c’est dans <Link to="/senrichir" className="lien-texte">S’enrichir</Link> : créez votre billet.
             </p>
             <div className="creer-choix">
-              {CHOIX.map(c => (
-                <button key={c.id} type="button" className={`creer-carte ${c.id === 'billet' ? 'creer-carte-billet' : ''}`} onClick={() => choisir(c.id)}>
+              {OEUVRES.map(c => (
+                <button key={c.id} type="button" className="creer-carte" onClick={() => choisir(c.id)}>
                   <span className="creer-icone" aria-hidden="true">{c.icone}</span>
                   <span className="creer-nom">{c.nom}</span>
                   <span className="creer-phrase">{c.phrase}</span>
@@ -74,8 +78,10 @@ export default function Creer() {
         ) : (
           <>
             <div className="filter-row participer-onglets" role="tablist" aria-label="Ateliers">
-              <button type="button" className="chip" onClick={() => choisir(null)}>← Tous les ateliers</button>
-              {CHOIX.map(c => (
+              {atelier === 'billet'
+                ? <Link to="/senrichir" className="chip">← S’enrichir</Link>
+                : <button type="button" className="chip" onClick={() => choisir(null)}>← Tous les ateliers</button>}
+              {(atelier === 'billet' ? [BILLET] : OEUVRES).map(c => (
                 <button key={c.id} type="button" role="tab" aria-selected={atelier === c.id} className={`chip ${atelier === c.id ? 'active' : ''}`} onClick={() => choisir(c.id)}>
                   {c.icone} {c.nom}
                 </button>

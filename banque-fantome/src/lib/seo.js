@@ -40,7 +40,7 @@ export const PAGES = [
   },
   {
     path: "/creer",
-    title: "Créer : les ateliers de la banque | Banque Fantôme",
+    title: "Créer pour le market : les ateliers de la banque | Banque Fantôme",
     description:
       "Les ateliers de la Banque Fantôme : dessiner un billet, peindre, écrire un poème, retoucher sa photo, faire un collage. Chaque œuvre rejoint votre collection et se vend au market.",
     priority: "0.8",

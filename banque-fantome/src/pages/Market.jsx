@@ -100,9 +100,17 @@ export default function Market() {
             chez la banque, en billets papier ou avec l’argent de son compte.
           </p>
           <div className="market-intro-actions">
-            <Link to="/creer" className="btn btn-jaune btn-sm">+ Créer une œuvre</Link>
+            <Link to="/creer" className="btn btn-jaune btn-sm">✦ Créer une œuvre</Link>
             <Link to="/deposer" className="btn btn-outline btn-sm">{estBanquier ? '+ La banque vend' : '+ Annonce au bon coin'}</Link>
           </div>
+        </div>
+
+        {/* Créer est l'outil qui alimente le market (Jiiji, 2026-10-19) : ses ateliers, à un clic */}
+        <div className="filter-row market-creer" aria-label="Créer pour le market">
+          <span className="filter-label">✦ Créer</span>
+          {Object.entries(GENRES).map(([g, d]) => (
+            <Link key={g} to={`/creer?atelier=${g}`} className="chip">{d.icone} {d.nom}</Link>
+          ))}
         </div>
 
         <div className="market-toolbar">

@@ -10,6 +10,10 @@ export default function Navbar() {
   const { total: nouveautes } = useNouveautes()
   const navigate  = useNavigate()
   const location  = useLocation()
+  // /creer est l'outil de deux entrées : le billet pour S'enrichir, les œuvres pour le Market
+  const surCreer = location.pathname === '/creer'
+  const atelierBillet = surCreer && new URLSearchParams(location.search).get('atelier') === 'billet'
+  const atelierOeuvre = surCreer && !atelierBillet
   const [unread, setUnread] = useState(0)
   const [open, setOpen]     = useState(false) // menu mobile
   const journal = useJournal(8)             // ticker vivant : les dernières opérations de la banque
@@ -62,7 +66,9 @@ export default function Navbar() {
           ><span />{!open && unread + nouveautes > 0 && <i className="nav-burger-point" aria-hidden="true" />}</button>
           <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
             {/* 2026-10-19, ordre voulu par Jiiji : l'admin en premier (pour la banque seule), l'actu tout
-                à gauche, puis créer, les marchés, la bourse, s'enrichir ; Info juste avant le compte */}
+                à gauche, puis S'enrichir et le Market ; Info juste avant le compte. Créer n'a plus d'entrée :
+                c'est l'outil de S'enrichir (créer son billet) et du Market (créer une œuvre), et l'onglet
+                allumé suit l'atelier ouvert. */}
             {user && estBanquier && (
               <li>
                 <NavLink to="/admin">
@@ -73,10 +79,9 @@ export default function Navbar() {
             )}
             <li className="nav-accueil"><NavLink to="/" end>Accueil</NavLink></li>
             <li><NavLink to="/actu">Actu</NavLink></li>
-            <li><NavLink to="/creer" className="nav-creer">✦ Créer</NavLink></li>
-            <li><NavLink to="/market">Market</NavLink></li>
+            <li><NavLink to="/senrichir" className={({ isActive }) => isActive || atelierBillet ? 'active' : ''}>S'enrichir</NavLink></li>
+            <li><NavLink to="/market" className={({ isActive }) => isActive || atelierOeuvre ? 'active' : ''}>Market</NavLink></li>
             <li><NavLink to="/bourse">Bourse</NavLink></li>
-            <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
             {user && <>
               <li><NavLink to="/collection">Collection</NavLink></li>
               <li>

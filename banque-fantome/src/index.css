@@ -837,3 +837,9 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .admin-fiche .admin-soustitre { margin-top: 1.4rem; }
 .admin-coche { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; accent-color: var(--noir); }
 .admin-vignette .no-img { display: grid; place-items: center; width: 100%; height: 100%; font-weight: 700; }
+
+/* S'enrichir : imprimer une planche ou créer son billet ; le market : ses ateliers à un clic (2026-10-19) */
+.senrichir-choix { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+a.creer-carte { text-decoration: none; color: inherit; }
+.market-creer { margin-bottom: 1.2rem; }
+.market-creer a.chip { text-decoration: none; }
