@@ -212,7 +212,7 @@ export default function Compte() {
                   <button key={o.id} type="button" className={`ligne-enchere ${meneur ? 'meneur' : 'surencheri'}`} onClick={() => setSelected(o)}>
                     <span className={`stamp ${meneur ? 'stamp-jaune' : 'stamp-rouge'}`}>{meneur ? 'meneur' : 'surenchéri'}</span>
                     <strong className="ligne-titre">{o.titre}</strong>
-                    <span className="ligne-prix">{o.enchere_courante} {o.dessin_id ? 'billets' : 'billets papier'}{!meneur && ` · par ${o.encherisseur_pseudo}`}</span>
+                    <span className="ligne-prix">{o.enchere_courante} {o.numerique ? 'billets' : 'billets papier'}{!meneur && ` · par ${o.encherisseur_pseudo}`}</span>
                     <span className="caption-gris">⏱ {tempsRestant(echeance(o))}</span>
                   </button>
                 )
@@ -235,7 +235,7 @@ export default function Compte() {
         {/* ── Mes dépôts ── */}
         <div className="section-head" style={{ marginTop: (encheres.length || achats.length) ? '3rem' : 0 }}>
           <h2>Mes ventes</h2>
-          <span className="count"><Link to="/creer">+ Créer</Link> · <Link to="/collection">Ma collection →</Link></span>
+          <span className="count"><Link to="/creer">+ Créer</Link> · <Link to="/deposer">+ Annonce au bon coin</Link> · <Link to="/collection">Ma collection →</Link></span>
         </div>
 
         {objets.length === 0
@@ -243,6 +243,7 @@ export default function Compte() {
               <div className="titre">Aucune vente en cours</div>
               <div style={{ display: 'flex', gap: '.6rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link to="/creer" className="btn btn-noir">✦ Créer une œuvre →</Link>
+                <Link to="/deposer" className="btn btn-outline">+ Annonce au bon coin</Link>
                 <Link to="/collection" className="btn btn-outline">Ma collection →</Link>
               </div>
             </div>
@@ -259,7 +260,7 @@ export default function Compte() {
                           <button key={s} className={`chip ${o.statut === s ? 'active' : ''}`} aria-pressed={o.statut === s} onClick={() => changeStatut(o.id, s)}>{s}</button>
                         ))
                     }
-                    {!o.dessin_id && !(estVente(o) && (o.prix_final || (o.statut === 'disponible' && o.nb_encheres > 0))) && (
+                    {!o.dessin_id && !o.oeuvre_id && !(estVente(o) && (o.prix_final || (o.statut === 'disponible' && o.nb_encheres > 0))) && (
                       <button className="btn btn-rouge btn-xs" disabled={deleting === o.id}
                         onClick={() => { if (confirm('Supprimer définitivement cet objet et ses photos ?')) deleteObjet(o.id) }}
                       >{deleting === o.id ? '…' : 'supprimer'}</button>

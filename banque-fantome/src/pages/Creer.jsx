@@ -13,7 +13,7 @@ import { getPublicImageUrl } from '../utils/images'
 
 // Créer (2026-10-19, demande de Jiiji) : tous les ateliers de la banque au même endroit.
 // Le billet fait de l'argent (encaissé ou vendu à la bourse) ; les autres ateliers font des
-// œuvres, uniques, qui se vendent au market en argent du site. Tout arrive dans la collection.
+// œuvres, uniques, qui se vendent à l'E-market en argent du site. Tout arrive dans la collection.
 // ?atelier=billet|paint|poesie|image|collage ; sans paramètre, la vitrine des ateliers.
 
 const ATELIERS = {
@@ -24,7 +24,7 @@ const ATELIERS = {
 }
 const CHOIX = [
   { id: 'billet', nom: 'Billet', icone: '◈', phrase: 'Dessiner un billet : l’encaisser ou le vendre à la bourse', sortie: 'de l’argent' },
-  ...Object.entries(GENRES).map(([id, g]) => ({ id, nom: g.nom, icone: g.icone, phrase: g.phrase, sortie: 'une œuvre pour le market' })),
+  ...Object.entries(GENRES).map(([id, g]) => ({ id, nom: g.nom, icone: g.icone, phrase: g.phrase, sortie: 'une œuvre pour l’E-market' })),
 ]
 
 export default function Creer() {
@@ -57,7 +57,7 @@ export default function Creer() {
           <>
             <p className="texte-aide" style={{ marginBottom: '1.4rem' }}>
               Choisissez un atelier. Le billet fabrique de l’argent : encaissé, il crédite votre compte. Les autres ateliers
-              fabriquent des œuvres uniques, qui rejoignent votre collection et se vendent au <Link to="/market" className="lien-texte">market</Link>,
+              fabriquent des œuvres uniques, qui rejoignent votre collection et se vendent à l’<Link to="/market?rayon=emarket" className="lien-texte">E-market</Link>,
               en argent du site. On peut commencer sans compte : il en faut un pour déposer.
             </p>
             <div className="creer-choix">
@@ -156,12 +156,12 @@ function DepotOeuvre({ genre, onNotif, onVoirVente }) {
 
   if (nouvelle) return (
     <div className="atelier-choix">
-      <p className="texte-aide"><strong>Votre œuvre est déposée dans votre collection.</strong> Vous pouvez la vendre au market dès maintenant, ou la garder.</p>
+      <p className="texte-aide"><strong>Votre œuvre est déposée dans votre collection.</strong> Vous pouvez la vendre à l’E-market dès maintenant, ou la garder.</p>
       <CarteOeuvre oeuvre={nouvelle} moi={user?.id} onNotif={onNotif} onVoirVente={onVoirVente} onChange={() => recharger()} />
       <div className="dessin-actions" style={{ marginTop: '1.2rem' }}>
         <button type="button" className="btn btn-outline" onClick={() => setNouvelle(null)}>✎ Créer une autre œuvre</button>
         <Link to="/collection" className="btn btn-outline">Ma collection →</Link>
-        <Link to="/market" className="btn btn-outline">Le market →</Link>
+        <Link to="/market?rayon=emarket" className="btn btn-outline">L’E-market →</Link>
       </div>
     </div>
   )

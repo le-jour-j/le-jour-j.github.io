@@ -123,7 +123,7 @@ secrets : `BANQUE_FANTOME_SUPABASE_{URL,ANON_KEY}`,
 
 *Réécrit le 2026-10-19 après l'audit : l'ancienne version ne citait que 2 fichiers SQL.*
 
-Treize fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
+Quatorze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
 base Banque Fantôme, dans cet ordre :
 
 1. `supabase_setup.sql` : socle (`profiles`, `objets`, RLS, bucket `objets`).
@@ -144,6 +144,11 @@ base Banque Fantôme, dans cet ordre :
    coin, 10 annonces par jour), relance des annonces sans enchère, `objets.regle_compte_at` et
    `payer_avec_compte` (un objet de la banque se règle aussi avec le solde),
    `annuler_adjudication_papier` refusée sur une vente en argent du site.
+11. `supabase_moderation.sql` (2026-10-19 au soir) : `dessins.imprime_at` (la file « À imprimer » de
+   l'admin, une planche A4 par billet dessiné, `admin_marquer_imprimes`), `en_pause` sur `objets`,
+   `oeuvres` et `dessins` (lecture masquée au public, enchères, mise en vente et encaissement
+   bloqués par trigger, clôture suspendue), `admin_moderer` (le crayon : pause, reprise, édition),
+   `admin_fiche_compte` (tout un compte sauf ses messages), `admin_nouveautes` + `a_imprimer`.
 
 Chaque fichier est rejouable, **mais pas dans le désordre** : `bf_garde_objets`,
 `placer_enchere`, `acheter_immediat`, `bf_finaliser_vente`, `remettre_en_vente`... sont

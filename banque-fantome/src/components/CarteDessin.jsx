@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { getPublicImageUrl } from '../utils/images'
 import ImageLightbox from './ImageLightbox'
 import BoutonPlanche from './BoutonPlanche'
+import Crayon from './Crayon'
 import { DUREES, messageErreur } from '../utils/encheres'
 
 // Un billet dessiné dans l'atelier, tel qu'il apparaît dans « Ma collection » et juste
@@ -35,7 +36,7 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
   const encaisser = () => rpc('encaisser_dessin', { p_dessin: d.id }, data => `Encaissé : +${d.coupure} billets. Votre solde : ${data?.solde}.`)
   const vendre = () => rpc('mettre_dessin_en_vente', {
     p_dessin: d.id, p_mise: Number(vente.mise), p_prix_achat: vente.prix ? Number(vente.prix) : null, p_duree: Number(vente.duree),
-  }, 'Votre billet est en vente dans la bourse.')
+  }, 'Votre billet est en vente à la bourse.')
 
   const etat = {
     collection: aMoi ? 'dans votre collection' : 'en collection',
@@ -58,6 +59,9 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
           {d.nb_ventes > 0 && ` · ${d.nb_ventes} vente${d.nb_ventes > 1 ? 's' : ''}`}
         </div>
         <span className={`stamp ${d.statut === 'annule' ? 'stamp-rouge' : d.statut === 'en_vente' ? 'stamp-vert' : d.statut === 'encaisse' ? 'stamp-noir' : 'stamp-jaune'}`}>{etat}</span>
+        {d.en_pause && <span className="stamp stamp-rouge" style={{ marginLeft: '.4rem' }}>en pause</span>}
+        <Crayon type="dessin" onNotif={onNotif} onChange={() => onChange?.()}
+          cible={{ id: d.id, titre: d.titre || `Billet de ${d.coupure}`, en_pause: d.en_pause, auteur: { id: d.auteur_id, pseudo: d.auteur_pseudo } }} />
 
         {aMoi && d.statut === 'collection' && !vente && (
           <div className="dessin-actions">
@@ -71,7 +75,7 @@ export default function CarteDessin({ dessin: d, moi, quota, onChange, onNotif, 
           </div>
         )}
         {encaissable && plusDeQuota && (
-          <p className="caption-gris">La banque encaisse {quota.plafond} billets par jour et par compte : revenez demain, ou vendez-le dans la bourse.</p>
+          <p className="caption-gris">La banque encaisse {quota.plafond} billets par jour et par compte : revenez demain, ou vendez-le à la bourse.</p>
         )}
         {aMoi && d.statut === 'collection' && !encaissable && d.nb_ventes > 0 && (
           <p className="caption-gris">Un billet qui a circulé ne s'encaisse plus : il se garde ou se revend.</p>

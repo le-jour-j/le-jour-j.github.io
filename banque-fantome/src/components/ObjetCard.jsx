@@ -3,9 +3,12 @@ import { libelleRarete } from '../utils/rarete'
 import { nomGenre } from '../lib/oeuvres'
 import { getObjetImageUrls } from '../utils/images'
 import { estVente, estEnCours, echeance, tempsRestant, urgent } from '../utils/encheres'
+import Crayon from './Crayon'
 
-export default function ObjetCard({ objet, onClick }) {
+export default function ObjetCard({ objet: objetRecu, onClick }) {
   const [imgErr, setImgErr] = useState(false)
+  const [retouche, setRetouche] = useState({}) // ce que le crayon de la banque vient de changer
+  const objet = { ...objetRecu, ...retouche }
   const imgUrls = getObjetImageUrls(objet)
   const imgUrl = imgUrls[0] || null
   const vente = estVente(objet)
@@ -58,6 +61,8 @@ export default function ObjetCard({ objet, onClick }) {
         }
         {imgUrls.length > 1 && <span className="img-count-badge">+{imgUrls.length - 1}</span>}
         {vente && enCours && objet.prix_achat && <span className="card-achat">Achat imm. {objet.prix_achat}</span>}
+        <Crayon type="objet" className="crayon-coin" onChange={p => setRetouche(r => ({ ...r, ...p }))}
+          cible={{ id: objet.id, titre: objet.titre, description: objet.description, en_pause: objet.en_pause, auteur: { id: objet.user_id, pseudo: objet.pseudo } }} />
       </div>
       <div className="card-body">
         <div className="card-tags">
@@ -65,6 +70,7 @@ export default function ObjetCard({ objet, onClick }) {
           {!billet && !oeuvre && <span className={`rarete-badge rarete-${objet.rarete || 'commun'}`}>{libelleRarete(objet.rarete)}</span>}
           {/* Au market, les trois rayons se mêlent : on voit d'un coup d'œil d'où vient l'objet, et qu'il se paie en papier */}
           {!billet && !oeuvre && vente && <span className="tag tag-papier" title="en billets papier">{objet.vendeur_banque ? 'la banque vend' : 'bon coin'}</span>}
+          {objet.en_pause && <span className="tag tag-pause">en pause</span>}
         </div>
         <div className="card-title">{objet.titre}</div>
         <div className="card-desc">{objet.description?.slice(0, 90)}{objet.description?.length > 90 ? '…' : ''}</div>
@@ -73,7 +79,7 @@ export default function ObjetCard({ objet, onClick }) {
           {pied}
         </div>
       </div>
-      <span className="card-cta" aria-hidden="true">{vente && enCours ? 'Enchérir →' : 'Ouvrir la fiche →'}</span>
+      <span className="card-cta" aria-hidden="true">{vente && enCours ? (oeuvre || billet ? 'Enchérir →' : 'Promettre →') : 'Ouvrir la fiche →'}</span>
     </article>
   )
 }

@@ -1,4 +1,4 @@
-// Hôtel des ventes — helpers côté client (les règles font foi côté base, voir supabase_hotel_des_ventes.sql)
+// Hôtel des ventes : helpers côté client (les règles font foi côté base, voir supabase_hotel_des_ventes.sql)
 
 export const DUREES = [
   { jours: 1, label: '1 jour' },

@@ -4,9 +4,10 @@ import { getPublicImageUrl } from '../utils/images'
 import { DUREES, messageErreur } from '../utils/encheres'
 import { GENRES, lienHD } from '../lib/oeuvres'
 import ImageLightbox from './ImageLightbox'
+import Crayon from './Crayon'
 
 // Une œuvre des ateliers, telle qu'elle apparaît dans « Ma collection » et juste après son
-// dépôt (2026-10-19). Gestes du propriétaire : la mettre en vente au market, la télécharger
+// dépôt (2026-10-19). Gestes du propriétaire : la mettre en vente à l'E-market, la télécharger
 // en haute définition (pour l'imprimer ou la garder). Voir supabase_market_numerique.sql.
 export default function CarteOeuvre({ oeuvre: w, moi, onChange, onNotif, onVoirVente }) {
   const [busy, setBusy] = useState(false)
@@ -25,7 +26,7 @@ export default function CarteOeuvre({ oeuvre: w, moi, onChange, onNotif, onVoirV
     })
     setBusy(false)
     if (error) { onNotif?.({ msg: messageErreur(error), type: 'err' }); return }
-    onNotif?.({ msg: 'Votre œuvre est en vente au market.', type: 'ok' })
+    onNotif?.({ msg: 'Votre œuvre est en vente à l’E-market.', type: 'ok' })
     setVente(null)
     onChange?.()
   }
@@ -37,7 +38,7 @@ export default function CarteOeuvre({ oeuvre: w, moi, onChange, onNotif, onVoirV
     finally { setBusy(false) }
   }
 
-  const etat = { collection: aMoi ? 'dans votre collection' : 'en collection', en_vente: 'en vente au market', annule: 'retirée par la banque' }[w.statut] || w.statut
+  const etat = { collection: aMoi ? 'dans votre collection' : 'en collection', en_vente: 'en vente à l’E-market', annule: 'retirée par la banque' }[w.statut] || w.statut
 
   return (
     <article className={`dessin-carte oeuvre-carte ${w.statut}`}>
@@ -53,10 +54,13 @@ export default function CarteOeuvre({ oeuvre: w, moi, onChange, onNotif, onVoirV
           {w.nb_ventes > 0 && ` · ${w.nb_ventes} vente${w.nb_ventes > 1 ? 's' : ''}`}
         </div>
         <span className={`stamp ${w.statut === 'annule' ? 'stamp-rouge' : w.statut === 'en_vente' ? 'stamp-vert' : 'stamp-jaune'}`}>{etat}</span>
+        {w.en_pause && <span className="stamp stamp-rouge" style={{ marginLeft: '.4rem' }}>en pause</span>}
+        <Crayon type="oeuvre" onNotif={onNotif} onChange={() => onChange?.()}
+          cible={{ id: w.id, titre: w.titre, description: w.description, en_pause: w.en_pause, auteur: { id: w.auteur_id, pseudo: w.auteur_pseudo } }} />
 
         {aMoi && w.statut === 'collection' && !vente && (
           <div className="dessin-actions">
-            <button type="button" className="btn btn-noir btn-sm" disabled={busy} onClick={() => setVente({ mise: 10, prix: '', duree: 3 })}>⚑ Vendre au market</button>
+            <button type="button" className="btn btn-noir btn-sm" disabled={busy} onClick={() => setVente({ mise: 10, prix: '', duree: 3 })}>⚑ Vendre à l’E-market</button>
             <button type="button" className="btn btn-outline btn-sm" disabled={busy} onClick={telecharger} title="L’image en haute définition, pour l’imprimer ou la garder">↓ Haute définition</button>
           </div>
         )}

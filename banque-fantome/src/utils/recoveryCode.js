@@ -1,5 +1,5 @@
 // Code de récupération affiché une seule fois à la création du compte
-// (et régénéré après chaque utilisation) — seul moyen de reset un mot de
+// (et régénéré après chaque utilisation) : seul moyen de reset un mot de
 // passe oublié, puisque les comptes utilisent des faux emails.
 
 const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // sans 0/O/1/I ambigus

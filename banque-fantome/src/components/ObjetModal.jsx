@@ -4,6 +4,7 @@ import Portal from './Portal'
 import BoutonPlanche from './BoutonPlanche'
 import { useAuth } from './AuthContext'
 import MessageModal from './MessageModal'
+import Crayon from './Crayon'
 import ImageLightbox from './ImageLightbox'
 import { getObjetImageUrls } from '../utils/images'
 import { useModal } from '../utils/useModal'
@@ -45,6 +46,9 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
             {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : oeuvre ? '◈ E-market' : banque ? '◈ La banque vend' : '◇ Le bon coin'}</span>}
+            {objet.en_pause && <span className="stamp stamp-rouge">en pause</span>}
+            <Crayon type="objet" onNotif={setNotif} onChange={p => majObjet({ ...objet, ...p })}
+              cible={{ id: objet.id, titre: objet.titre, description: objet.description, en_pause: objet.en_pause, auteur: { id: objet.user_id, pseudo: objet.pseudo } }} />
           </div>
           <div className="card-tags" style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.8rem' }}>
             {objet.categorie && <span className="tag">{objet.categorie}</span>}
@@ -52,7 +56,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
           </div>
           <h3 id="objet-titre" className="modal-titre">{objet.titre}</h3>
           <div className="meta-label" style={{ marginBottom: '1rem' }}>
-            {banque ? 'Mis en vente par la banque' : !physique ? `Mis en vente par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
+            {banque ? 'Mis en vente par la banque' : vente || !physique ? `Mis en vente par ${objet.pseudo || 'Anonyme'}` : `Déposé par ${objet.pseudo || 'Anonyme'}`} · {new Date(objet.created_at).toLocaleDateString('fr-FR')}
           </div>
           {vente && <EnchereBloc objet={objet} onChange={majObjet} onNotif={setNotif} onContacter={() => setShowMsg(true)} />}
           {!!imgUrls.length &&

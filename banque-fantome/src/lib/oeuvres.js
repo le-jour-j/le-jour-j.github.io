@@ -14,7 +14,7 @@ export const GENRES = {
 export const nomGenre = g => GENRES[g]?.nom || g
 
 // Tout sauf la source (traits, texte, réglages), qui peut peser lourd
-export const COLONNES_OEUVRE = 'id, numero, genre, auteur_id, auteur_pseudo, proprietaire_id, proprietaire_pseudo, titre, description, apercu_path, hd_path, largeur, hauteur, nb_ventes, statut, created_at'
+export const COLONNES_OEUVRE = 'id, numero, genre, auteur_id, auteur_pseudo, proprietaire_id, proprietaire_pseudo, titre, description, apercu_path, hd_path, largeur, hauteur, nb_ventes, statut, en_pause, created_at'
 
 const COTE_APERCU = 1000 // px : assez pour regarder, pas pour imprimer en grand
 

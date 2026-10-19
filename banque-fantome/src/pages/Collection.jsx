@@ -10,7 +10,7 @@ import { COLONNES_DESSIN, useQuota } from './Bourse'
 import { COLONNES_OEUVRE } from '../lib/oeuvres'
 
 // Ma collection (2026-10-19) : tout ce qu'on possède, au même endroit. Les billets (dessinés
-// ou achetés) s'encaissent ou se vendent à la bourse ; les œuvres se vendent au market.
+// ou achetés) s'encaissent ou se vendent à la bourse ; les œuvres se vendent à l'E-market.
 // ?type=billets|oeuvres ; sans paramètre, tout.
 const TYPES = [['tout', 'Tout'], ['billets', '◈ Billets'], ['oeuvres', '✦ Œuvres']]
 
@@ -79,6 +79,9 @@ export default function Collection() {
           </div>
           <Link to="/creer" className="btn btn-jaune btn-sm">+ Créer</Link>
         </div>
+        <p className="caption-gris" style={{ margin: '-.6rem 0 1.4rem' }}>
+          Ici, ce qui est numérique : vos billets et vos œuvres. Les objets réels achetés au market sont dans <Link to="/compte" className="lien-texte">Mon compte</Link>.
+        </p>
 
         {data === null ? <div className="loader">Chargement<span className="blink">_</span></div>
           : vide ? (
@@ -100,7 +103,7 @@ export default function Collection() {
               )}
               {oeuvres.length > 0 && (
                 <section style={{ marginBottom: '2.5rem' }}>
-                  <div className="section-head"><h2>Œuvres</h2><span className="count">se vendent au <Link to="/market">market</Link></span></div>
+                  <div className="section-head"><h2>Œuvres</h2><span className="count">se vendent à l’<Link to="/market?rayon=emarket">E-market</Link></span></div>
                   <div className="dessins-liste">
                     {oeuvres.map(w => <CarteOeuvre key={w.id} oeuvre={w} moi={user.id} onNotif={setNotif} onChange={changer} onVoirVente={voirVente} />)}
                   </div>

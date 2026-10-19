@@ -139,7 +139,7 @@ export default function Senrichir() {
         </section>
 
         <div className="bande-guichet">
-          <p><strong>Les planches se jouent sur papier.</strong> Pour avoir de l'argent sur votre compte, dessinez un billet dans l'atelier de la bourse : encaissé, il crédite votre compte de sa valeur.</p>
+          <p><strong>Les planches se jouent sur papier.</strong> Pour avoir de l'argent sur votre compte, dessinez un billet dans l'<Link to="/creer?atelier=billet" className="lien-texte">atelier</Link> : encaissé, il crédite votre compte de sa valeur.</p>
           <Link to="/creer" className="btn btn-jaune btn-sm">→ Ouvrir les ateliers</Link>
         </div>
 

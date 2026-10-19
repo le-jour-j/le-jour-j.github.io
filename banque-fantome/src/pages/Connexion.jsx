@@ -131,7 +131,7 @@ export default function Connexion() {
           <p className="texte-aide" style={{ marginBottom: '1.6rem' }}>
             {mode === 'login' && (retour?.startsWith('/bourse')
               ? 'Connectez-vous pour déposer votre billet : votre dessin vous attend dans l’atelier.'
-              : 'Identifiez-vous pour déposer des objets et gérer vos échanges.')}
+              : 'Identifiez-vous pour créer, vendre et enchérir.')}
             {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo : vous devenez opérateur de la Banque.'}
             {mode === 'reset' && 'Entrez votre pseudo, votre code de récupération, puis votre nouveau mot de passe.'}
           </p>

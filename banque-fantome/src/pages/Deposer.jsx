@@ -140,7 +140,7 @@ export default function Deposer({ integre = false, onDepose }) {
           <div>
             <p className="texte-aide" style={{ marginBottom: '2rem' }}>
               {estBanquier
-                ? "La banque vend : un objet, une œuvre ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le gagnant vient le chercher à la banque et paie en main propre."
+                ? "La banque vend : un objet, une œuvre ou un service, mis aux enchères. On enchérit en billets papier ; le gagnant vient chercher l'objet à la banque et paie en main propre, ou règle avec l'argent de son compte."
                 : <>Le bon coin : un objet, une œuvre physique ou un service, mis aux enchères. On enchérit en billets papier : rien n'est débité sur le site, le plus offrant l'emporte à la clôture ; vous vous arrangez avec lui par messages pour la remise et le paiement. Une création numérique ? Elle se fait dans <Link to="/creer" className="lien-texte">Créer</Link>.</>}
             </p>
             <div className="field">
@@ -170,12 +170,12 @@ export default function Deposer({ integre = false, onDepose }) {
             <div className="field">
               <label>Catégorie *</label>
               <select value={form.categorie} onChange={e => set('categorie', e.target.value)}>
-                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                {CATEGORIES.map(c => <option key={c} value={c}>{c === 'œuvre' ? 'œuvre physique' : c}</option>)}
               </select>
               {errors.categorie && <span className="error-msg">{errors.categorie}</span>}
             </div>
             <div className="field">
-              <label>Rareté</label>
+              <label>{estBanquier ? 'Rareté' : 'Rareté (selon vous)'}</label>
               <select value={form.rarete} onChange={e => set('rarete', e.target.value)}>
                 {RARETES.map(r => <option key={r} value={r}>{r}</option>)}
               </select>

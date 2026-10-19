@@ -1,4 +1,4 @@
-// Rareté façon hôtel des ventes — du plus commun au plus exceptionnel.
+// Rareté façon hôtel des ventes : du plus commun au plus exceptionnel.
 export const RARETES = ['commun', 'rare', 'precieux', 'exceptionnel']
 
 // Libellés affichés (la base garde les valeurs sans accent)

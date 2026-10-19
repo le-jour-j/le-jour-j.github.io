@@ -182,7 +182,7 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
 
       {isOwn ? (
         <div className="enchere-actions">
-          <span className="texte-aide">{billet ? "C'est votre billet." : oeuvre ? "C'est votre œuvre." : banque ? 'Vente de la banque.' : "C'est votre dépôt."}</span>
+          <span className="texte-aide">{billet ? "C'est votre billet." : oeuvre ? "C'est votre œuvre." : banque ? 'Vente de la banque.' : "C'est votre annonce."}</span>
           {objet.nb_encheres === 0 && <button type="button" className="btn btn-outline btn-sm" disabled={busy} onClick={retirer}>Retirer la vente</button>}
         </div>
       ) : !user ? (

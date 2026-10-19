@@ -96,7 +96,7 @@ export default function Home() {
         <div className="container">
           <div className="stats-inner">
             <div className="stat-item">
-              <div className="stat-label">Objets au market</div>
+              <div className="stat-label">En vente au market</div>
               <div className="stat-value"><Compteur valeur={total} /></div>
             </div>
             <div className="stat-item">
@@ -204,7 +204,7 @@ export default function Home() {
             {[
               ['01', 'Dessiner un billet', "Ouvrez l'atelier, choisissez une coupure et dessinez sur le billet. Encaissez-le pour créditer votre compte, ou gardez-le pour le vendre."],
               ['02', 'Enchérir', "Misez vos billets sur les billets et les œuvres des autres, à la bourse et au market. Au bon coin et chez la banque, promettez des billets papier sur un objet réel."],
-              ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte. Un billet ou une œuvre achetés rejoignent votre collection et se revendent ; un objet du supermarket se paie et se remet en main propre."],
+              ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte. Un billet ou une œuvre achetés rejoignent votre collection et se revendent ; un objet du bon coin ou de la banque se paie et se remet en main propre."],
             ].map(([n, titre, desc]) => (
               <div key={n} className="etape">
                 <div className="etape-num">{n}</div>
@@ -236,7 +236,7 @@ export default function Home() {
           <div>
             <div className="eyebrow">FAUX ARGENT</div>
             <p>
-              Dessinez vos billets sur le site ou imprimez-les sur papier : les premiers achètent billets et œuvres à la bourse et au market, les seconds les objets du supermarket, de la main à la main. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
+              Dessinez vos billets sur le site ou imprimez-les sur papier : les premiers achètent billets et œuvres à la bourse et au market, les seconds les objets réels du bon coin et de la banque, de la main à la main. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
             </p>
           </div>
           <div className="bande-actions">

@@ -49,7 +49,9 @@ function latin1(s) {
 }
 const echapper = s => s.replace(/[\\()]/g, m => '\\' + m).replace(/[‘’]/g, "'")
 
-function ecrirePdf({ W, H, jpeg, largeurPx, hauteurPx, contenu }) {
+// pages : [{ W, H, jpeg, largeurPx, hauteurPx, contenu }], une image par page.
+// Objets : 1 catalogue, 2 arbre des pages, 3 police, puis 3 par page (page, contenu, image).
+function ecrirePdf(pages) {
   const morceaux = []; const positions = []; let taille = 0
   const pousser = b => { const u = typeof b === 'string' ? latin1(b) : b; morceaux.push(u); taille += u.length }
   const objet = (n, corps, flux) => {
@@ -58,22 +60,25 @@ function ecrirePdf({ W, H, jpeg, largeurPx, hauteurPx, contenu }) {
     if (flux) { pousser('stream\n'); pousser(flux); pousser('\nendstream\n') }
     pousser('endobj\n')
   }
-  const flux = latin1(contenu)
+  const num = i => 4 + 3 * i
   pousser('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n')
   objet(1, '<< /Type /Catalog /Pages 2 0 R >>')
-  objet(2, '<< /Type /Pages /Kids [3 0 R] /Count 1 >>')
-  objet(3, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(W * MM).toFixed(2)} ${(H * MM).toFixed(2)}] /Resources << /XObject << /Im0 5 0 R >> /Font << /F1 6 0 R >> >> /Contents 4 0 R >>`)
-  objet(4, `<< /Length ${flux.length} >>`, flux)
-  objet(5, `<< /Type /XObject /Subtype /Image /Width ${largeurPx} /Height ${hauteurPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>`, jpeg)
-  objet(6, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>')
-  const xref = taille
-  pousser(`xref\n0 7\n0000000000 65535 f \n${positions.slice(1).map(p => String(p).padStart(10, '0') + ' 00000 n \n').join('')}`)
-  pousser(`trailer\n<< /Size 7 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`)
+  objet(2, `<< /Type /Pages /Kids [${pages.map((_, i) => `${num(i)} 0 R`).join(' ')}] /Count ${pages.length} >>`)
+  objet(3, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>')
+  pages.forEach(({ W, H, jpeg, largeurPx, hauteurPx, contenu }, i) => {
+    const n = num(i), flux = latin1(contenu)
+    objet(n, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(W * MM).toFixed(2)} ${(H * MM).toFixed(2)}] /Resources << /XObject << /Im0 ${n + 2} 0 R >> /Font << /F1 3 0 R >> >> /Contents ${n + 1} 0 R >>`)
+    objet(n + 1, `<< /Length ${flux.length} >>`, flux)
+    objet(n + 2, `<< /Type /XObject /Subtype /Image /Width ${largeurPx} /Height ${hauteurPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>`, jpeg)
+  })
+  const xref = taille, total = num(pages.length)
+  pousser(`xref\n0 ${total}\n0000000000 65535 f \n${positions.slice(1).map(p => String(p).padStart(10, '0') + ' 00000 n \n').join('')}`)
+  pousser(`trailer\n<< /Size ${total} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`)
   return new Blob(morceaux, { type: 'application/pdf' })
 }
 
-// dessin : une ligne de la table dessins, AVEC sa trace
-export async function planchePdf(dessin) {
+// La page d'un billet : dessin, une ligne de la table dessins, AVEC sa trace
+async function pagePlanche(dessin) {
   const trace = { coupure: dessin.coupure, graine: dessin.graine, ...(dessin.trace || {}) }
   const { l, h } = COUPURES[trace.coupure]
   const g = disposition(trace.coupure)
@@ -97,7 +102,28 @@ export async function planchePdf(dessin) {
   const cartel = echapper(`Banque Fantôme · billet n° ${dessin.code || dessin.numero}${dessin.titre ? `, « ${dessin.titre} »` : ''}, dessiné par ${dessin.auteur_pseudo || 'un compte disparu'} · jeansonpechin.com/banque-fantome`)
   c += `BT /F1 6.5 Tf 0.4 g ${p(MARGE)} ${p(Math.min(3.5, y0 - REPERE - 2.5))} Td (${cartel}) Tj ET\n`
 
-  return ecrirePdf({ W: g.W, H: g.H, jpeg, largeurPx: cv.width, hauteurPx: cv.height, contenu: c })
+  return { W: g.W, H: g.H, jpeg, largeurPx: cv.width, hauteurPx: cv.height, contenu: c }
+}
+
+export async function planchePdf(dessin) {
+  return ecrirePdf([await pagePlanche(dessin)])
+}
+
+// Plusieurs billets, une planche par page : la file « À imprimer » de la banque (2026-10-19,
+// « faut que moi la banque je reçoive les nouveaux billets en planche pour les imprimer en vrai »).
+// Les pages se font une à une : à 300 dpi, chaque billet occupe quelques Mo en mémoire.
+export async function planchesPdf(dessins) {
+  const pages = []
+  for (const d of dessins) pages.push(await pagePlanche(d))
+  return ecrirePdf(pages)
+}
+
+export function telechargerBlob(blob, nom) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url; a.download = nom
+  document.body.appendChild(a); a.click(); a.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 60000)
 }
 
 // Aperçu de la planche en image (vignette et agrandissement de S'enrichir) : la même feuille
@@ -143,10 +169,5 @@ export async function telechargerPlanche(supabase, dessin) {
     if (error || !data) throw new Error('Billet introuvable.')
     d = data
   }
-  const blob = await planchePdf(d)
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url; a.download = nomPlanche(d)
-  document.body.appendChild(a); a.click(); a.remove()
-  setTimeout(() => URL.revokeObjectURL(url), 60000)
+  telechargerBlob(await planchePdf(d), nomPlanche(d))
 }

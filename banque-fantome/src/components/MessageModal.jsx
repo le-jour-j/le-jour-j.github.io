@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext'
 import { useModal } from '../utils/useModal'
 
 export default function MessageModal({ objet, onClose, destinataire }) {
-  // destinataire facultatif { id, pseudo } — par défaut le déposant de l'objet
+  // destinataire facultatif { id, pseudo } : par défaut le déposant de l'objet
   const dest = destinataire || { id: objet.user_id, pseudo: objet.pseudo }
   const { user, profile } = useAuth()
   const navigate  = useNavigate()

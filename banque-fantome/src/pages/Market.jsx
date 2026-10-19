@@ -13,11 +13,12 @@ import { GENRES } from '../lib/oeuvres'
 //   • la banque vend : le supermarket, en billets papier, à venir chercher à la banque.
 // Les billets dessinés restent à la bourse. ?rayon=emarket|boncoin|banque ; sans paramètre, tout.
 
-const RAYONS = [['tout', 'tout'], ['emarket', '✦ E-market'], ['boncoin', '◇ Le bon coin'], ['banque', '◈ La banque vend']]
+const RAYONS = [['tout', 'tous les rayons'], ['emarket', '✦ E-market'], ['boncoin', '◇ Le bon coin'], ['banque', '◈ La banque vend']]
 // Les adresses d'avant la séparation en trois rayons
 const ANCIENS_RAYONS = { oeuvres: 'emarket', supermarket: 'banque' }
 const STATUTS = [['disponible', 'en vente'], ['échangé', 'adjugés']]
 const CATEGORIES = ['toutes', 'objet', 'œuvre', 'service']
+const LIBELLE_CATEGORIE = { œuvre: 'œuvre physique' } // à ne pas confondre avec les œuvres de l'E-market
 const TRIS = [['recent', 'Plus récent'], ['fin', 'Se termine bientôt'], ['prix_asc', 'Prix croissant'], ['prix_desc', 'Prix décroissant']]
 const prix = o => o.statut === 'échangé' ? o.prix_final ?? 0 : o.enchere_courante ?? o.mise_depart ?? o.valeur ?? 0
 
@@ -94,8 +95,9 @@ export default function Market() {
             Trois rayons. <strong>L’E-market</strong> : les œuvres faites dans les <Link to="/creer" className="lien-texte">ateliers</Link>, uniques,
             achetées avec l’argent du site (celui qu’on gagne en dessinant des <Link to="/creer?atelier=billet" className="lien-texte">billets</Link>) ;
             elles rejoignent votre collection. <strong>Le bon coin</strong> : les objets réels des joueurs ; vendeur et acheteur
-            s’arrangent entre eux pour la remise. <strong>La banque vend</strong> : ses objets, à venir chercher à la banque. Au bon coin
-            et chez la banque, on paie en <strong>billets papier</strong>, rien n’est débité sur le site (des billets ? imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>).
+            s’arrangent entre eux pour la remise. <strong>La banque vend</strong> : ses objets, à venir chercher à la banque. Au bon coin,
+            on paie en <strong>billets papier</strong>, de la main à la main (des billets ? imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>) ;
+            chez la banque, en billets papier ou avec l’argent de son compte.
           </p>
           <div className="market-intro-actions">
             <Link to="/creer" className="btn btn-jaune btn-sm">+ Créer une œuvre</Link>
@@ -133,7 +135,7 @@ export default function Market() {
             <div className="filter-row" role="group" aria-label="Catégorie">
               <span className="filter-label">Catégorie</span>
               {CATEGORIES.map(c => (
-                <button key={c} type="button" className={`chip ${categorie === c ? 'active' : ''}`} aria-pressed={categorie === c} onClick={() => setCategorie(c)}>{c}</button>
+                <button key={c} type="button" className={`chip ${categorie === c ? 'active' : ''}`} aria-pressed={categorie === c} onClick={() => setCategorie(c)}>{LIBELLE_CATEGORIE[c] || c}</button>
               ))}
             </div>
           )}

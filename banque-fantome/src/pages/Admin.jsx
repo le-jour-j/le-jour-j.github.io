@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../components/AuthContext'
 import FilActu from '../components/FilActu'
@@ -13,13 +13,19 @@ import { COLONNES_OEUVRE, nomGenre } from '../lib/oeuvres'
 import { estVente, echeance, tempsRestant, messageErreur } from '../utils/encheres'
 import { emailValide, messageLettre, fonctionLettre } from '../lib/lettre'
 import { useNouveautes, RUBRIQUE_DE_L_ONGLET } from '../components/Nouveautes'
+import Crayon from '../components/Crayon'
+import MessageModal from '../components/MessageModal'
+import BoutonPlanche from '../components/BoutonPlanche'
+import { planchesPdf, telechargerBlob } from '../lib/billet/planche'
 
-// Espace du banquier : fil d'actu, billets émis, ventes (supermarket, market, bourse), œuvres, comptes et chiffres.
+// Espace du banquier : fil d'actu, billets à imprimer, billets émis, ventes (bon coin, la banque vend, E-market,
+// bourse), œuvres, comptes (avec la fiche complète de chacun) et chiffres.
 // La page n'est qu'un tableau de bord : les droits sont vérifiés côté base
 // (bf_est_banquier, annuler_billet, admin_retirer_objet, lecture des transactions).
 
 const ONGLETS = [
   { id: 'actu', label: "Fil d'actu" },
+  { id: 'imprimer', label: 'À imprimer' },
   { id: 'billets', label: 'Billets émis' },
   { id: 'market', label: 'Ventes' },
   { id: 'oeuvres', label: 'Œuvres' },
@@ -37,9 +43,14 @@ const Nouveau = () => <span className="stamp stamp-jaune admin-nouveau">nouveau<
 export default function Admin() {
   const { user, loading, profile, estBanquier } = useAuth()
   const { data: nouveautes, compte, lettrePrete, recharger, marquerVu } = useNouveautes()
+  // ?compte=<id> (le crayon mène à la fiche d'un compte) ouvre l'onglet des comptes sur cette fiche
+  const [params, setParams] = useSearchParams()
+  const compteDemande = params.get('compte')
   const [onglet, setOnglet] = useState(() => {
+    if (compteDemande) return 'comptes'
     try { return sessionStorage.getItem('bf-admin-onglet') || 'actu' } catch { return 'actu' }
   })
+  useEffect(() => { if (compteDemande) setOnglet('comptes') }, [compteDemande])
   const [notif, setNotif] = useState(null)
   // Ce qui était nouveau en arrivant : reste souligné dans les listes le temps de la visite
   const [depuis, setDepuis] = useState(null)
@@ -57,7 +68,7 @@ export default function Admin() {
     try { sessionStorage.setItem('bf-admin-onglet', id) } catch { /* navigation privée */ }
   }
 
-  const aVoir = { comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), oeuvres: compte('oeuvres'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
+  const aVoir = { imprimer: compte('a_imprimer'), comptes: compte('comptes'), billets: compte('billets'), market: compte('market'), oeuvres: compte('oeuvres'), lettre: compte('abonnes') + (lettrePrete ? 1 : 0) }
 
   // On attend aussi le profil : sans lui, le banquier voyait « Accès refusé » au rechargement
   if (loading || (user && !profile)) return <div className="loader">Chargement<span className="blink">_</span></div>
@@ -88,10 +99,12 @@ export default function Admin() {
           ))}
         </div>
         {onglet === 'actu' && <OngletActu onNotif={setNotif} />}
+        {onglet === 'imprimer' && <OngletImprimer onNotif={setNotif} onImprime={recharger} />}
         {onglet === 'billets' && <OngletBillets onNotif={setNotif} depuis={depuis?.billets} />}
         {onglet === 'market' && <OngletMarket onNotif={setNotif} depuis={depuis?.market} />}
         {onglet === 'oeuvres' && <OngletOeuvres onNotif={setNotif} depuis={depuis?.oeuvres} />}
-        {onglet === 'comptes' && <OngletComptes depuis={depuis?.comptes} />}
+        {onglet === 'comptes' && <OngletComptes depuis={depuis?.comptes} onNotif={setNotif} fiche={compteDemande}
+          onFiche={id => setParams(id ? { compte: id } : {}, { replace: !id })} />}
         {onglet === 'lettre' && <OngletLettre onNotif={setNotif} depuis={depuis?.abonnes} />}
       </div>
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
@@ -103,6 +116,7 @@ export default function Admin() {
 function BlocNouveautes({ data, lettrePrete, onOuvrir }) {
   const { comptes, billets, market, oeuvres, abonnes, lettre } = data
   const lignes = []
+  if (data.a_imprimer?.n) lignes.push({ onglet: 'imprimer', fort: true, texte: pluriel(data.a_imprimer.n, 'billet attend l’imprimante', 'billets attendent l’imprimante') })
   if (lettrePrete) lignes.push({ onglet: 'lettre', fort: true, texte: `La lettre est prête : ${lettre.en_attente} actus attendent d'être envoyées` })
   if (comptes.n) lignes.push({ onglet: 'comptes', texte: pluriel(comptes.n, 'nouveau compte', 'nouveaux comptes') })
   if (billets.n) lignes.push({ onglet: 'billets', texte: pluriel(billets.n, 'billet encaissé', 'billets encaissés') })
@@ -380,7 +394,7 @@ function OngletOeuvres({ onNotif, depuis }) {
 }
 
 // ─── Comptes et chiffres ───
-function OngletComptes({ depuis }) {
+function OngletComptes({ depuis, fiche, onFiche, onNotif }) {
   const { user } = useAuth()
   const [stats, setStats] = useState(null)
   const [comptes, setComptes] = useState(null)
@@ -415,6 +429,8 @@ function OngletComptes({ depuis }) {
 
   return (
     <div className="admin-panneau">
+      {fiche && <FicheCompte id={fiche} onClose={() => onFiche(null)} onNotif={onNotif} />}
+      <p className="caption-gris" style={{ marginBottom: '1rem' }}>Cliquez sur un pseudo : tout ce qui touche au compte (billets, œuvres, ventes, enchères, argent), avec le crayon sur chaque publication.</p>
       <div className="admin-chiffres">
         {CHIFFRES.map(([l, v]) => (
           <div key={l} className="admin-chiffre">
@@ -435,7 +451,7 @@ function OngletComptes({ depuis }) {
                     const nouveau = c.id !== user?.id && estNouveau(c.created_at, depuis)
                     return (
                     <tr key={c.id} className={nouveau ? 'nouvelle' : ''}>
-                      <td>{c.pseudo}{c.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}{nouveau && <Nouveau />}</td>
+                      <td><button type="button" className="lien-texte" onClick={() => onFiche(c.id)} title="Tout ce qui touche à ce compte">{c.pseudo}</button>{c.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}{nouveau && <Nouveau />}</td>
                       <td className="num">{c.solde}</td>
                       <td className="num">{depots.get(c.id)?.n || 0} · {depots.get(c.id)?.total || 0} billets</td>
                       <td>{dateCourte(c.created_at)}</td>
@@ -736,6 +752,246 @@ function OngletLettre({ onNotif, depuis }) {
           </table></div>
         </>
       )}
+    </div>
+  )
+}
+
+// ─── À imprimer (2026-10-19, demande de Jiiji : « faut que moi la banque je reçoive les
+// nouveaux billets en planche pour les imprimer en vrai, c'est le principe ») ───
+// Tout billet dessiné sur le site attend ici jusqu'à ce que la banque l'ait imprimé.
+// Un seul PDF, une planche A4 par billet (lib/billet/planche.js), puis « imprimés ».
+const COLONNES_FILE = 'id, numero, code, coupure, titre, image_path, auteur_id, auteur_pseudo, statut, en_pause, created_at, imprime_at'
+const ETAT_BILLET = { collection: 'chez son auteur', en_vente: 'en vente à la bourse', encaisse: 'encaissé (au coffre)', annule: 'annulé' }
+
+function OngletImprimer({ onNotif, onImprime }) {
+  const [file, setFile] = useState(null)
+  const [faits, setFaits] = useState(null)
+  const [choisis, setChoisis] = useState(new Set())
+  const [etat, setEtat] = useState(null) // 'pdf' | 'marque' pendant le travail
+  const [agrandi, setAgrandi] = useState(null)
+  const [recharge, setRecharge] = useState(0)
+
+  useEffect(() => {
+    supabase.from('dessins').select(COLONNES_FILE).is('imprime_at', null).neq('statut', 'annule')
+      .order('created_at', { ascending: true }).limit(200)
+      .then(({ data }) => { setFile(data || []); setChoisis(new Set((data || []).map(d => d.id))) })
+    supabase.from('dessins').select(COLONNES_FILE).not('imprime_at', 'is', null)
+      .order('imprime_at', { ascending: false }).limit(30)
+      .then(({ data }) => setFaits(data || []))
+  }, [recharge])
+
+  const basculer = id => setChoisis(s => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n })
+
+  async function pdf() {
+    if (!choisis.size) return
+    setEtat('pdf')
+    try {
+      // la trace (le dessin lui-même) n'est lue qu'ici : elle refait chaque billet à 300 dpi
+      const { data, error } = await supabase.from('dessins').select('*').in('id', [...choisis]).order('created_at')
+      if (error) throw error
+      telechargerBlob(await planchesPdf(data), `planches-a-imprimer-${new Date().toISOString().slice(0, 10)}-${data.length}-billets.pdf`)
+    } catch (e) {
+      onNotif({ msg: e?.message ? messageErreur(e) : 'Le PDF n’a pas pu être fait.', type: 'err' })
+    }
+    setEtat(null)
+  }
+
+  async function marquer(ids, imprime = true) {
+    setEtat('marque')
+    const { error } = await supabase.rpc('admin_marquer_imprimes', { p_ids: ids, p_imprime: imprime })
+    setEtat(null)
+    if (error) { onNotif({ msg: messageErreur(error), type: 'err' }); return }
+    onNotif({ msg: imprime ? `${pluriel(ids.length, 'billet marqué imprimé', 'billets marqués imprimés')}.` : 'Remis dans la file.', type: 'ok' })
+    setRecharge(n => n + 1)
+    onImprime?.()
+  }
+
+  const ligne = (d, dansFile) => {
+    const img = getPublicImageUrl(d.image_path)
+    return (
+      <div key={d.id} className={`admin-ligne ${d.statut === 'annule' ? 'barre' : ''}`}>
+        {dansFile && <input type="checkbox" className="admin-coche" checked={choisis.has(d.id)} onChange={() => basculer(d.id)} aria-label={`Imprimer ${d.code || d.numero}`} />}
+        <button type="button" className="admin-vignette" onClick={() => setAgrandi(img)} aria-label="Voir le billet en grand">
+          <img src={img} alt="" loading="lazy" />
+        </button>
+        <div className="admin-infos">
+          <div className="admin-titre">{d.titre || `Billet de ${d.coupure}`} <span className="caption-gris">· {d.coupure} · n° {d.code || d.numero}</span></div>
+          <div className="caption-gris">
+            par <strong>{d.auteur_pseudo || '?'}</strong> · dessiné le {dateHeure(d.created_at)} · {ETAT_BILLET[d.statut] || d.statut}
+            {d.imprime_at && <> · imprimé le {dateCourte(d.imprime_at)}</>}
+          </div>
+        </div>
+        <div className="admin-actions">
+          <BoutonPlanche dessin={d} className="btn btn-outline btn-xs" libelle="↓ Sa planche" />
+          {!dansFile && <button type="button" className="btn btn-outline btn-xs" disabled={!!etat} onClick={() => marquer([d.id], false)}>↺ Remettre dans la file</button>}
+          <Crayon type="dessin" onNotif={onNotif} onChange={() => setRecharge(n => n + 1)}
+            cible={{ id: d.id, titre: d.titre || `Billet de ${d.coupure}`, en_pause: d.en_pause, auteur: { id: d.auteur_id, pseudo: d.auteur_pseudo } }} />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="admin-panneau">
+      <p className="texte-aide" style={{ marginBottom: '1rem' }}>
+        Chaque billet dessiné sur le site s’imprime en vrai. Le PDF met une planche A4 par billet, à taille réelle,
+        traits de coupe compris : imprimez à <strong>100 % (taille réelle)</strong>, sans « ajuster à la page ».
+        Une fois imprimés, marquez-les : ils sortent de la file.
+      </p>
+      {file === null ? <div className="loader">Chargement<span className="blink">_</span></div>
+        : file.length === 0 ? <p className="vide">Rien à imprimer : tous les billets dessinés sont passés sous la presse.</p>
+        : <>
+            <div className="admin-barre">
+              <button type="button" className="btn btn-jaune btn-sm" disabled={!!etat || !choisis.size} onClick={pdf}>
+                {etat === 'pdf' ? 'Fabrication du PDF…' : `↓ Planches PDF (${choisis.size})`}
+              </button>
+              <button type="button" className="btn btn-noir btn-sm" disabled={!!etat || !choisis.size} onClick={() => marquer([...choisis])}>
+                ✓ Marquer imprimés ({choisis.size})
+              </button>
+              <button type="button" className="btn btn-outline btn-xs" onClick={() => setChoisis(choisis.size === file.length ? new Set() : new Set(file.map(d => d.id)))}>
+                {choisis.size === file.length ? 'Tout décocher' : 'Tout cocher'}
+              </button>
+              <span className="caption-gris">{pluriel(file.length, 'billet attend', 'billets attendent')}, du plus ancien au plus récent.</span>
+            </div>
+            <div className="admin-liste">{file.map(d => ligne(d, true))}</div>
+          </>}
+      {!!faits?.length && <>
+        <h3 className="admin-soustitre" style={{ marginTop: '2rem' }}>Déjà imprimés (les 30 derniers)</h3>
+        <div className="admin-liste">{faits.map(d => ligne(d, false))}</div>
+      </>}
+      {agrandi && <ImageLightbox images={[agrandi]} onClose={() => setAgrandi(null)} />}
+    </div>
+  )
+}
+
+// ─── La fiche d'un compte (2026-10-19, « dans l'admin j'ai accès à tout dans la partie users ») ───
+// admin_fiche_compte (supabase_moderation.sql) : billets, œuvres, ventes, enchères, argent.
+// Pas les messages privés. Le crayon sur chaque publication.
+const rayonDe = o => o.dessin_id ? 'bourse' : o.oeuvre_id ? 'E-market' : o.vendeur_banque ? 'la banque vend' : 'bon coin'
+
+function FicheCompte({ id, onClose, onNotif }) {
+  const [f, setF] = useState(null)
+  const [recharge, setRecharge] = useState(0)
+  const [ecrire, setEcrire] = useState(false)
+  const [vente, setVente] = useState(null)
+  const relire = () => setRecharge(n => n + 1)
+
+  useEffect(() => {
+    let annule = false
+    supabase.rpc('admin_fiche_compte', { p_user: id }).then(({ data, error }) => {
+      if (annule) return
+      if (error) { onNotif({ msg: messageErreur(error), type: 'err' }); onClose(); return }
+      setF(data)
+    })
+    return () => { annule = true }
+  }, [id, recharge]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!f) return <div className="admin-fiche"><div className="loader">Chargement de la fiche<span className="blink">_</span></div></div>
+  if (!f.profil) return <div className="admin-fiche"><p className="vide">Compte introuvable.</p><button type="button" className="btn btn-outline btn-sm" onClick={onClose}>✕ Fermer</button></div>
+  const p = f.profil
+  const auteur = { id: p.id, pseudo: p.pseudo }
+
+  return (
+    <div className="admin-fiche">
+      <div className="admin-fiche-tete">
+        <div>
+          <div className="meta-label">Fiche du compte</div>
+          <h3 className="modal-titre" style={{ margin: 0 }}>{p.pseudo}{p.role === 'banquier' && <span className="stamp stamp-jaune admin-role">banquier</span>}</h3>
+          <div className="caption-gris">solde <strong>{p.solde}</strong> billets · inscrit le {dateCourte(p.created_at)}</div>
+        </div>
+        <div className="crayon-actions">
+          <button type="button" className="btn btn-outline btn-sm" onClick={() => setEcrire(true)}>✉ Écrire à {p.pseudo}</button>
+          <button type="button" className="btn btn-outline btn-sm" onClick={onClose}>✕ Fermer la fiche</button>
+        </div>
+      </div>
+
+      <h4 className="admin-soustitre">Billets ({f.billets.length})</h4>
+      {f.billets.length === 0 ? <p className="caption-gris">Aucun.</p> : <div className="admin-liste">
+        {f.billets.map(d => (
+          <div key={d.id} className={`admin-ligne ${d.statut === 'annule' ? 'barre' : ''}`}>
+            <span className="admin-vignette"><img src={getPublicImageUrl(d.image_path)} alt="" loading="lazy" /></span>
+            <div className="admin-infos">
+              <div className="admin-titre">{d.titre || `Billet de ${d.coupure}`} <span className="caption-gris">· {d.coupure} · n° {d.code || d.numero}</span></div>
+              <div className="caption-gris">
+                {d.auteur_id === p.id ? 'dessiné' : `dessiné par ${d.auteur_pseudo || '?'}`}{d.proprietaire_id === p.id ? ', à lui' : d.proprietaire_id ? `, chez ${d.proprietaire_pseudo}` : ', au coffre'}
+                {' · '}{ETAT_BILLET[d.statut] || d.statut}{d.imprime_at ? ' · imprimé' : ' · à imprimer'} · {dateCourte(d.created_at)}
+              </div>
+            </div>
+            <div className="admin-actions">
+              <Crayon type="dessin" onNotif={onNotif} onChange={relire}
+                cible={{ id: d.id, titre: d.titre || `Billet de ${d.coupure}`, en_pause: d.en_pause, auteur: { id: d.auteur_id, pseudo: d.auteur_pseudo } }} />
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      <h4 className="admin-soustitre">Œuvres ({f.oeuvres.length})</h4>
+      {f.oeuvres.length === 0 ? <p className="caption-gris">Aucune.</p> : <div className="admin-liste">
+        {f.oeuvres.map(w => (
+          <div key={w.id} className={`admin-ligne ${w.statut === 'annule' ? 'barre' : ''}`}>
+            <span className="admin-vignette"><img src={getPublicImageUrl(w.apercu_path)} alt="" loading="lazy" /></span>
+            <div className="admin-infos">
+              <div className="admin-titre">{w.titre}</div>
+              <div className="caption-gris">
+                {nomGenre(w.genre)} · n° {w.numero} · {w.auteur_id === p.id ? 'faite' : `faite par ${w.auteur_pseudo || '?'}`}{w.proprietaire_id === p.id ? ', à lui' : `, chez ${w.proprietaire_pseudo || '?'}`} · {w.statut}{w.nb_ventes ? ` · ${pluriel(w.nb_ventes, 'vente', 'ventes')}` : ''}
+              </div>
+            </div>
+            <div className="admin-actions">
+              <Crayon type="oeuvre" onNotif={onNotif} onChange={relire}
+                cible={{ id: w.id, titre: w.titre, description: w.description, en_pause: w.en_pause, auteur: { id: w.auteur_id, pseudo: w.auteur_pseudo } }} />
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      <h4 className="admin-soustitre">Ventes et achats ({f.ventes.length})</h4>
+      {f.ventes.length === 0 ? <p className="caption-gris">Aucun.</p> : <div className="admin-liste">
+        {f.ventes.map(o => (
+          <div key={o.id} className={`admin-ligne ${o.statut === 'retiré' ? 'barre' : ''}`}>
+            <button type="button" className="admin-vignette" onClick={() => setVente(o)} aria-label="Ouvrir la fiche de la vente">
+              {getObjetImageUrls(o)[0] ? <img src={getObjetImageUrls(o)[0]} alt="" loading="lazy" /> : <span className="no-img">BF</span>}
+            </button>
+            <div className="admin-infos">
+              <div className="admin-titre">{o.titre}</div>
+              <div className="caption-gris">
+                {rayonDe(o)} · {o.user_id === p.id ? 'mis en vente' : `acheté à ${o.pseudo || '?'}`} · {o.statut}
+                {o.prix_final != null ? ` · ${o.prix_final} billets${o.user_id === p.id && o.vendu_a_pseudo ? ` à ${o.vendu_a_pseudo}` : ''}` : o.enchere_courante != null ? ` · enchère ${o.enchere_courante}` : o.mise_depart != null ? ` · mise ${o.mise_depart}` : ''}
+                {' · '}{dateCourte(o.created_at)}
+              </div>
+            </div>
+            <div className="admin-actions">
+              <Crayon type="objet" onNotif={onNotif} onChange={relire}
+                cible={{ id: o.id, titre: o.titre, description: o.description, en_pause: o.en_pause, auteur: { id: o.user_id, pseudo: o.pseudo } }} />
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      <div className="admin-deux">
+        <div>
+          <h4 className="admin-soustitre">Enchères ({f.encheres.length})</h4>
+          {f.encheres.length === 0 ? <p className="caption-gris">Aucune.</p>
+            : <table className="admin-table">
+                <thead><tr><th>Quand</th><th>Vente</th><th>Montant</th><th>État</th></tr></thead>
+                <tbody>{f.encheres.map(e => (
+                  <tr key={e.id}><td>{dateHeure(e.created_at)}</td><td>{e.titre || '?'}</td><td className="num">{e.montant}</td><td>{e.statut}</td></tr>
+                ))}</tbody>
+              </table>}
+        </div>
+        <div>
+          <h4 className="admin-soustitre">Argent ({f.transactions.length})</h4>
+          {f.transactions.length === 0 ? <p className="caption-gris">Aucun mouvement.</p>
+            : <table className="admin-table">
+                <thead><tr><th>Quand</th><th>Montant</th><th>Libellé</th></tr></thead>
+                <tbody>{f.transactions.map(t => (
+                  <tr key={t.id}><td>{dateHeure(t.created_at)}</td><td className={`num ${t.montant < 0 ? 'neg' : 'pos'}`}>{t.montant > 0 ? '+' : ''}{t.montant}</td><td>{t.libelle || t.type}</td></tr>
+                ))}</tbody>
+              </table>}
+        </div>
+      </div>
+
+      {ecrire && <MessageModal objet={{ id: null, titre: 'Message de la banque' }} destinataire={auteur} onClose={() => setEcrire(false)} />}
+      {vente && <ObjetModal objet={vente} onClose={() => { setVente(null); relire() }} />}
     </div>
   )
 }

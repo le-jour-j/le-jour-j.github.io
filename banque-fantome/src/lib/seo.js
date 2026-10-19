@@ -66,7 +66,7 @@ export const PAGES = [
       <h2>Le bon coin</h2>
       <p>Les objets réels des joueurs, aux enchères en billets papier : vendeur et acheteur s'arrangent entre eux pour la remise.</p>
       <h2>La banque vend</h2>
-      <p>Les objets, œuvres physiques et services que la banque met en vente, à venir chercher à la banque. On y enchérit en billets papier : rien n'est débité sur le site, on paie à la remise.</p>`,
+      <p>Les objets, œuvres physiques et services que la banque met en vente, à venir chercher à la banque. On y enchérit en billets papier ; le gagnant paie à la remise, ou avec l'argent de son compte.</p>`,
   },
   {
     path: "/bourse",
@@ -88,7 +88,7 @@ export const PAGES = [
     path: "/senrichir",
     title: "S'enrichir : planches de billets à imprimer | Banque Fantôme",
     description:
-      "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, et chaque billet dessiné dans la bourse, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
+      "834 planches A4 de billets dessinés en atelier, de 5 à 500 €, et chaque billet dessiné dans l'atelier, à taille réelle : à télécharger, imprimer et découper pour jouer sur papier.",
     priority: "0.7",
     contenu: `
       <h1>S'enrichir</h1>

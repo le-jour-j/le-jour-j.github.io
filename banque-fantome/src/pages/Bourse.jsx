@@ -23,7 +23,7 @@ const ONGLETS = [
 const ANCIENS = { atelier: '/creer?atelier=billet', collection: '/collection?type=billets' }
 
 // Tout sauf la trace du dessin (25 à 50 Ko par billet, jusqu'à 2 Mo) : la carte n'affiche que l'image
-export const COLONNES_DESSIN = 'id, numero, auteur_id, auteur_pseudo, proprietaire_id, proprietaire_pseudo, coupure, graine, code, titre, devise, image_path, nb_traits, nb_ventes, statut, billet_id, created_at'
+export const COLONNES_DESSIN = 'id, numero, auteur_id, auteur_pseudo, proprietaire_id, proprietaire_pseudo, coupure, graine, code, titre, devise, image_path, nb_traits, nb_ventes, statut, en_pause, billet_id, created_at'
 
 // Encaissements encore permis sur 24 h glissantes (même calcul que encaisser_dessin)
 export function useQuota(user) {

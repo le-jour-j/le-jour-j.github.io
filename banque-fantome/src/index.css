@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
-   BANQUE FANTÔME — Identité visuelle v3
-   Corporate jaune/noir — détournement bancaire
+   BANQUE FANTÔME : Identité visuelle v3
+   Corporate jaune/noir : détournement bancaire
    v3 : lisibilité (contrastes, tailles, mobile)
         + effets interactifs au clic (tampon, encre, ondes)
    ═══════════════════════════════════════════ */
@@ -821,3 +821,19 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .creer-phrase { font-size: .92rem; line-height: 1.45; color: var(--gris-fonce); }
 .creer-sortie { margin-top: auto; padding-top: .3rem; font-family: var(--mono); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--noir); }
 @media (max-width: 400px) { .creer-choix { grid-template-columns: 1fr; } }
+
+/* ── Le crayon de la banque (2026-10-19) : modérer une publication ── */
+.crayon { display: inline-flex; align-items: center; gap: .35rem; margin-left: .4rem; padding: 2px 8px; font: 700 .85rem/1.4 var(--mono); background: var(--jaune); color: var(--noir); border: 2px solid var(--noir); cursor: pointer; vertical-align: middle; }
+.crayon:hover, .crayon:focus-visible { background: var(--noir); color: var(--jaune); }
+.crayon.en-pause { background: #d33; color: #fff; }
+.crayon-pause { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; }
+.crayon-coin { position: absolute; left: .45rem; bottom: .45rem; margin: 0; z-index: 2; }
+.crayon-fenetre { max-width: 34rem; }
+.crayon-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tag.tag-pause { background: #d33; color: #fff; border-color: #d33; }
+.objet-card .img-wrap { position: relative; }
+.admin-fiche { border: 2px solid var(--noir); background: #fff; padding: 1rem 1.1rem 1.4rem; margin-bottom: 1.8rem; }
+.admin-fiche-tete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.admin-fiche .admin-soustitre { margin-top: 1.4rem; }
+.admin-coche { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; accent-color: var(--noir); }
+.admin-vignette .no-img { display: grid; place-items: center; width: 100%; height: 100%; font-weight: 700; }

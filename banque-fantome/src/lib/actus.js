@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 
-// Fil d'actu — helpers (les règles d'accès font foi côté base, voir supabase_fil_actu.sql)
+// Fil d'actu : helpers (les règles d'accès font foi côté base, voir supabase_fil_actu.sql)
 
 export const ACTUS_BUCKET = 'actus'
 const BASE = import.meta.env.BASE_URL

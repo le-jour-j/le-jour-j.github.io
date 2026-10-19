@@ -43,7 +43,8 @@ export function NouveautesProvider({ children }) {
 
   const compte = r => (data?.[r]?.n || 0) + (data?.[r]?.desinscrits || 0)
   const lettrePrete = !!data && data.lettre.en_attente >= data.lettre.seuil
-  const total = data ? compte('comptes') + compte('billets') + compte('market') + compte('oeuvres') + compte('abonnes') + (lettrePrete ? 1 : 0) : 0
+  // Les billets à imprimer ne se « voient » pas : ils comptent tant qu'ils ne sont pas imprimés
+  const total = data ? compte('comptes') + compte('billets') + compte('market') + compte('oeuvres') + compte('a_imprimer') + compte('abonnes') + (lettrePrete ? 1 : 0) : 0
 
   return (
     <NouveautesCtx.Provider value={{ data, total, compte, lettrePrete, recharger, marquerVu }}>

@@ -61,15 +61,23 @@ export default function Navbar() {
             onClick={() => setOpen(v => !v)}
           ><span />{!open && unread + nouveautes > 0 && <i className="nav-burger-point" aria-hidden="true" />}</button>
           <ul id="nav-menu" className={`nav-links ${open ? 'open' : ''}`}>
-            {/* 2026-10-19 : le logo ramène à l'accueil ; Créer en tête, puis le market (E-market, bon coin, la banque vend) et la bourse */}
+            {/* 2026-10-19, ordre voulu par Jiiji : l'admin en premier (pour la banque seule), l'actu tout
+                à gauche, puis créer, les marchés, la bourse, s'enrichir ; Info juste avant le compte */}
+            {user && estBanquier && (
+              <li>
+                <NavLink to="/admin">
+                  Admin
+                  {nouveautes > 0 && <span className="nav-badge" aria-label={`${nouveautes} nouveauté${nouveautes > 1 ? 's' : ''}`}>{nouveautes}</span>}
+                </NavLink>
+              </li>
+            )}
             <li className="nav-accueil"><NavLink to="/" end>Accueil</NavLink></li>
+            <li><NavLink to="/actu">Actu</NavLink></li>
             <li><NavLink to="/creer" className="nav-creer">✦ Créer</NavLink></li>
             <li><NavLink to="/market">Market</NavLink></li>
             <li><NavLink to="/bourse">Bourse</NavLink></li>
             <li><NavLink to="/senrichir">S'enrichir</NavLink></li>
-            <li><NavLink to="/actu">Actu</NavLink></li>
-            <li><NavLink to="/info">Info</NavLink></li>
-            {user ? <>
+            {user && <>
               <li><NavLink to="/collection">Collection</NavLink></li>
               <li>
                 <NavLink to="/messages">
@@ -77,14 +85,9 @@ export default function Navbar() {
                   {unread > 0 && <span className="nav-badge" aria-label={`${unread} non lu`}>{unread}</span>}
                 </NavLink>
               </li>
-              {estBanquier && (
-                <li>
-                  <NavLink to="/admin">
-                    Admin
-                    {nouveautes > 0 && <span className="nav-badge" aria-label={`${nouveautes} nouveauté${nouveautes > 1 ? 's' : ''}`}>{nouveautes}</span>}
-                  </NavLink>
-                </li>
-              )}
+            </>}
+            <li><NavLink to="/info">Info</NavLink></li>
+            {user ? <>
               <li><NavLink to="/compte">Mon compte{profile && <span className="nav-solde" title="Votre solde de billets">◈ {profile.solde}</span>}</NavLink></li>
               <li><button className="btn btn-jaune btn-sm" onClick={logout}>Quitter</button></li>
             </> : (
