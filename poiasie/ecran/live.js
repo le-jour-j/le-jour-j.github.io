@@ -335,17 +335,35 @@ const DISPOSITION = [
   ["○", "éclater autour de la main", "éclater fort, loin", "tout éclate"],
   ["□", "graver autour (encore : dégraver)", "ses mots restent, l'image laisse son empreinte", "tout graver (encore : tout libérer)"],
   ["△", "le mot le plus proche chante", "une phrase : les mots proches chantent l'un après l'autre", "le chœur : tous les mots"],
-  ["L2", "souffler les mots (le son s'assombrit)", "souffler fort", "tout l'écran s'envole"],
+  ["L2", "écarter les mots, comme R2 les attire (le son s'assombrit)", "écarter fort", "tout s'écarte vers le bord"],
   ["R2", "attirer les mots (le son s'éclaire)", "attirer fort", "tout tourne autour de la main"],
   ["croix ↑ ↓", "taille de ses mots", "", ""],
   ["croix ← →", "plus grave / plus aigu", "", ""],
   ["L3 (pousser)", "la main part seule et écrit (encore : elle s'arrête)", "", ""],
   ["R3 (pousser)", "l'image se redresse sous la main", "", ""],
-  ["pavé tactile", "poète suivant (en fondu, la manette vibre)", "", ""],
+  ["L3 + R3 ensemble", "la main revient au centre, ses gestes à zéro", "", ""],
+  ["pavé tactile", "poète suivant (le cercle prend sa couleur, la manette vibre)", "", ""],
   ["Share", "poète précédent", "", ""],
-  ["Options", "la main revient au centre, ses gestes à zéro", "", ""],
-  ["PS", "pilote automatique (pour tout l'écran)", "", ""],
+  ["Options (tenu)", "ce tableau et le poète de la manette ; avec le pavé ou Share, les poètes défilent", "", ""],
+  ["PS", "le menu (départ frais, mode, preset, scène, couleurs, pilote, son) ; PS ou ○ le ferme", "", ""],
 ];
+// la facon de chaque poete, en une ligne (l'onglet Manette, l'aide d'Options tenu)
+const FACONS = {
+  lyrique: "écrit en phrases qui ondulent ; piano électrique qui monte ; son éclat s'envole en pétales",
+  minimaliste: "un mot à la fois, grand, qui reste ; une boîte à musique ; son éclat fend un seul mot",
+  surrealiste: "pose ses mots loin de la main, au bout d'un fil ; clochettes en grands sauts ; les lettres s'en vont ailleurs",
+  sonore: "chaque mot laisse son écho ; notes pincées qui se répètent ; les lettres rebondissent",
+  brut: "tamponne en capitales sur une grille ; marimba grave et sec ; les lettres tombent droit",
+  debit: "écrit vite et longtemps, petit et serré ; une course de notes ; la foule s'éparpille",
+  exorciste: "frappe de travers ; tambours graves ; son éclat fait tourner l'image",
+  malaxeur: "chaque vers revient avec un mot changé ; kalimba qui tourne ; les lettres tournent autour de la main",
+  caissier: "des montants entre les mots, le ticket ; une caisse accordée (un tic, puis la tonique) ; les lettres tombent comme des pièces",
+  nomenclateur: "Chaque Mot Comme Un Nom, qui part en cortège ; steel drum ; des confettis",
+  modeEmploi: "des étapes numérotées, en lignes ; vibraphone qui monte marche par marche ; les mots tombent en dominos",
+  voisine: "à plat, en petites lignes droites ; un Rhodes doux ; son éclat ne fait que glisser",
+  chosiste: "les mots font le tour d'un objet ; cloche tubulaire ; l'objet se casse en deux",
+  inventoriste: "en colonne, qui déborde ; un célesta qui compte ; la colonne s'effondre",
+};
 
 /* ---------------------------------------------------- un joueur */
 
@@ -381,8 +399,15 @@ class Joueur {
     this.ancienne = this.couleur(); this.fondu = 0;
     this.perso = p; this.file = []; this.plume = this.objet = this.col = null; this.spirale = 0;
     this.active = performance.now();
-    main.anneau(this.x, this.y, 0.45, this.couleur());
+    // le petit eclat (Jiiji, 2026-10-19 : « le changement doit se voir sans texte ») : le cercle de la
+    // main gonfle et s'emplit de la nouvelle couleur (eclatPerso, dessine dans main.dessiner), deux
+    // anneaux en partent ; la manette vibre doucement, deux fois
+    this.eclatPerso = 1;
+    const c = this.couleur();
+    main.anneau(this.x, this.y, 0.45, c);
+    main.anneaux.push({ x: this.x, y: this.y, age: -0.14, force: 0.28, couleur: c });
     this.vibrer(0.3, 160);
+    setTimeout(() => { if (!this.part) this.vibrer(0.18, 90); }, 230);
     if (sonPret()) { const n = son.gamme().length; son.voix(p.son.t, son.ctx.currentTime + 0.02, son.frequence(Math.round(n * (1.2 + (p.son.reg || 0)))), 1, 0.7, this.pan(), "", { poete: p.nom }); }
   }
   persoVoisin(sens) {
@@ -769,19 +794,28 @@ class Joueur {
 
   /* -- les boutons */
   appui(b) {
-    const B = BOUTONS;
+    const B = BOUTONS, tenu = i => !!(this.lu && this.lu.b[i] && this.lu.b[i].pressed);
     this.debut[b] = performance.now();
     switch (b) {
-      case B.pave: return this.persoVoisin(1);
-      case B.share: return this.persoVoisin(-1);
-      case B.ps: return basculerPilote();
-      case B.options: return this.remettre();
+      // le pave et Share changent de poete ; Options tenu, le tableau montre aussitot le nouveau
+      case B.pave: this.persoVoisin(1); if (this.aideTenue && typeof aideManette !== "undefined") aideManette.montrer(this); return;
+      case B.share: this.persoVoisin(-1); if (this.aideTenue && typeof aideManette !== "undefined") aideManette.montrer(this); return;
+      // PS : le menu de la manette (menu-manette.js) ; le pilote automatique y est passe (Jiiji, 2026-10-19 :
+      // « ca va etre presente sans clavier »)
+      case B.ps: if (typeof menuManette !== "undefined") menuManette.ouvrir(this); else basculerPilote(); return;
+      // Options tenu : le tableau des touches, tant qu'on le tient (relache plus bas)
+      case B.options: this.aideTenue = true; if (typeof aideManette !== "undefined") aideManette.montrer(this); return;
+      // L3 et R3 ensemble : la main revient au centre (l'ancien Options). Le premier des deux a deja fait
+      // son geste (la main seule, le redressement) : remettre() les defait aussi
       case B.L3:
+        if (tenu(B.R3)) return this.remettreEnsemble();
         this.marche = !this.marche;
         if (this.marche && Math.hypot(this.vx, this.vy) < 60) { const a = hasard(0, 6.28); this.vx = Math.cos(a) * 160; this.vy = Math.sin(a) * 160; }
         main.anneau(this.x, this.y, 0.35, this.couleur()); this.vibrer(0.2);
         return;
-      case B.R3: this.redresse = true; main.anneau(this.x, this.y, 0.3, this.couleur()); this.vibrer(0.2); return;
+      case B.R3:
+        if (tenu(B.L3)) return this.remettreEnsemble();
+        this.redresse = true; main.anneau(this.x, this.y, 0.3, this.couleur()); this.vibrer(0.2); return;
       case B.croix:
         this.croixCouche = this.couche;
         if (this.couche === 0) this.ecrireUn(); else this.ecrireGrand(this.couche === 2);
@@ -798,7 +832,19 @@ class Joueur {
       }
     }
   }
-  // Options : la main revient au milieu, ses gestes a zero, ses mots s'effacent doucement
+  // un bouton lache : Options lache, le tableau s'efface
+  relache(b) {
+    if (b === BOUTONS.options) { this.aideTenue = false; if (typeof aideManette !== "undefined") aideManette.lacher(this); }
+  }
+  // L3 + R3 : une seule fois, meme si les deux arrivent dans la meme image
+  remettreEnsemble() {
+    const now = performance.now();
+    if (now - (this.remisA || 0) < 400) return;
+    this.remisA = now;
+    this.remettre();
+  }
+  // L3 + R3 (avant le 2026-10-19 : Options) : la main revient au milieu, ses gestes a zero, ses mots
+  // s'effacent doucement
   remettre() {
     this.x = W / 2; this.y = H / 2; this.vx = this.vy = 0;
     this.loupe = this.tourbillon = this.ventX = this.ventY = this.spin = this.choc = 0; this.rayon = 1;
@@ -815,13 +861,28 @@ class Joueur {
   lire(lu, dt) {
     const B = BOUTONS, now = performance.now();
     if (!this.avant.length) this.avant = lu.b.map(b => b.pressed);  // un bouton tenu en arrivant ne compte pas
+    this.lu = lu;
+    // le menu de la manette (menu-manette.js) : seule celle qui l'a ouvert le pilote, ses boutons vont
+    // au menu ; les autres manettes continuent de jouer
+    const menu = typeof menuManette !== "undefined" ? menuManette : null;
     let servi = false;
     lu.b.forEach((b, i) => {
-      if (b.pressed && !this.avant[i]) { this.appui(i); servi = true; manette.dernierBouton = i; manette.dernierJoueur = this.rang; }
+      if (b.pressed && !this.avant[i]) {
+        if (menu && menu.tenuPar(this)) menu.appui(this, i); else this.appui(i);
+        servi = true; manette.dernierBouton = i; manette.dernierJoueur = this.rang;
+      } else if (!b.pressed && this.avant[i]) this.relache(i);
       if (b.pressed) manette.dernierUsage = now;
       this.avant[i] = b.pressed;
     });
     if (servi) { montrerAide(true); majManetteUI(); this.active = now; }
+    if (menu && menu.tenuPar(this)) {
+      // la main attend sur place, sans souffle ni ecriture, le temps du menu
+      this.vx = this.vy = 0; this.souffle = this.aimant = 0; this.couche = this.forceCouche = 0;
+      this.ecrit = false; this.traceCoupee = true; this.croixCouche = -1;
+      if (lu.a.some(v => Math.abs(v || 0) > 0.15)) manette.dernierUsage = now;
+      menu.lire(this, lu, dt);
+      return;
+    }
     // la couche : L1 ou R1 tenu (le dernier enfonce si les deux le sont)
     const l1 = lu.b[B.L1].pressed, r1 = lu.b[B.R1].pressed;
     this.couche = l1 && r1 ? ((this.debut[B.R1] || 0) > (this.debut[B.L1] || 0) ? 2 : 1) : l1 ? 1 : r1 ? 2 : 0;
@@ -931,6 +992,7 @@ const manette = {
       const j = joueurs[i];
       j.presence = j.part ? Math.max(0, j.presence - dt / 1.2) : Math.min(1, j.presence + dt / 0.6);
       j.fondu = Math.min(1, j.fondu + dt / 0.8);
+      if (j.eclatPerso) j.eclatPerso = Math.max(0, j.eclatPerso - dt / 0.7);
       j.choc = Math.max(0, j.choc - dt * 1.8);
       j.spin *= Math.exp(-dt * 1.3); if (Math.abs(j.spin) < 0.003) j.spin = 0;
       if (j.part && j.presence <= 0) joueurs.splice(i, 1);
@@ -964,6 +1026,9 @@ const manette = {
   },
   partir(j) {
     j.part = true; j.souffle = j.aimant = 0; j.marche = false;
+    // elle tenait le menu ou le tableau des touches : ils se ferment
+    if (typeof menuManette !== "undefined" && menuManette.tenuPar(j)) menuManette.fermer();
+    if (j.aideTenue && typeof aideManette !== "undefined") { j.aideTenue = false; aideManette.lacher(j); }
     this.souvenirs.set(j.cle, j.perso);
     majManetteUI();
   },
@@ -1084,8 +1149,12 @@ const main = {
         for (const j of forces) {
           const dx = m.x - j.x, dy = m.y - j.y, d = Math.hypot(dx, dy) + 1, c = j.forceCouche;
           if (j.souffle > 0.02) {
-            const f = c === 2 ? j.souffle * 420 : c === 1 ? j.souffle * 320000 * 4.8 / (d * d + 58000) : j.souffle * 320000 / (d * d + 12000);
-            m.vx += dx / d * f * dt * (c === 2 ? 3 : 60); m.vy += dy / d * f * dt * (c === 2 ? 3 : 60); m.va += (Math.random() - 0.5) * j.souffle * dt * 4;
+            // 2026-10-19, Jiiji : « L2, je trouve ça mieux qu'il éloigne comme l'autre attire ». Le miroir
+            // exact de R2 : une poussee reguliere loin de la main, de la meme force, qui tourne dans
+            // l'autre sens ; partout (R1) : tout s'ecarte vers un grand anneau au bord de l'ecran
+            const f = j.souffle * Math.min(1100, Math.max(0, 900 - d) * 1.4 + 120) * (c === 1 ? 2 : 1), tour = j.souffle * (c === 2 ? 900 : 160);
+            const pousse = c === 2 ? Math.max(0, Math.min(W, H) * 0.45 - d) / d + 0.15 : 1;
+            m.vx += (dx / d * f * pousse + dy / d * tour) * dt; m.vy += (dy / d * f * pousse - dx / d * tour) * dt;
           }
           if (j.aimant > 0.02) {
             const f = j.aimant * Math.min(1100, d * 1.4) * (c === 1 ? 2 : 1), tour = j.aimant * (c === 2 ? 900 : 160);
@@ -1212,7 +1281,13 @@ const main = {
     if (S.mainCurseur) for (const j of joueurs) {
       const repos = (performance.now() - j.active) / 1000, a = clamp(1 - (repos - 3) / 1.5, 0, 1) * 0.65 * j.presence;
       if (a <= 0.01) continue;
-      const r = this.taille() * 0.55 * j.tailleSel, coul = j.couleur();
+      const r0 = this.taille() * 0.55 * j.tailleSel, coul = j.couleur();
+      // le poete vient de changer : le cercle gonfle puis revient, empli de sa nouvelle couleur
+      const ec = j.eclatPerso ? sortie3(j.eclatPerso) : 0, r = r0 * (1 + 0.55 * ec);
+      if (ec > 0.01) {
+        ctx.globalAlpha = Math.min(1, a / 0.65) * 0.35 * ec; ctx.fillStyle = coul;
+        ctx.beginPath(); ctx.arc(j.x, j.y, r, 0, Math.PI * 2); ctx.fill();
+      }
       const passes = j.fondu < 1 && j.ancienne ? [[j.ancienne, 1 - j.fondu], [coul, j.fondu]] : [[coul, 1]];
       for (const [cl, k] of passes) {
         ctx.globalAlpha = a * k; ctx.strokeStyle = cl; ctx.fillStyle = cl; ctx.lineWidth = 1.5;
@@ -1327,22 +1402,7 @@ function docManette() {
     else h += "<tr><td " + td + "><b>" + echapper(k) + "</b></td><td " + td + ">" + echapper(a) + "</td><td " + td + ">" + echapper(b) + "</td><td " + td + ">" + echapper(c) + "</td></tr>";
   }
   h += "</table>";
-  const facons = {
-    lyrique: "écrit en phrases qui ondulent ; piano électrique qui monte ; son éclat s'envole en pétales",
-    minimaliste: "un mot à la fois, grand, qui reste ; une boîte à musique ; son éclat fend un seul mot",
-    surrealiste: "pose ses mots loin de la main, au bout d'un fil ; clochettes en grands sauts ; les lettres s'en vont ailleurs",
-    sonore: "chaque mot laisse son écho ; notes pincées qui se répètent ; les lettres rebondissent",
-    brut: "tamponne en capitales sur une grille ; marimba grave et sec ; les lettres tombent droit",
-    debit: "écrit vite et longtemps, petit et serré ; une course de notes ; la foule s'éparpille",
-    exorciste: "frappe de travers ; tambours graves ; son éclat fait tourner l'image",
-    malaxeur: "chaque vers revient avec un mot changé ; kalimba qui tourne ; les lettres tournent autour de la main",
-    caissier: "des montants entre les mots, le ticket ; une caisse accordée (un tic, puis la tonique) ; les lettres tombent comme des pièces",
-    nomenclateur: "Chaque Mot Comme Un Nom, qui part en cortège ; steel drum ; des confettis",
-    modeEmploi: "des étapes numérotées, en lignes ; vibraphone qui monte marche par marche ; les mots tombent en dominos",
-    voisine: "à plat, en petites lignes droites ; un Rhodes doux ; son éclat ne fait que glisser",
-    chosiste: "les mots font le tour d'un objet ; cloche tubulaire ; l'objet se casse en deux",
-    inventoriste: "en colonne, qui déborde ; un célesta qui compte ; la colonne s'effondre",
-  };
+  const facons = FACONS;
   h += '<p style="margin:8px 0 3px;font:11px Tahoma,Arial,sans-serif">Les poètes : chacun joue les mêmes gestes à sa façon. On les reconnaît à leur façon, à leur couleur et à leur son ; rien ne s\'écrit sur l\'image.</p>';
   h += '<table style="border-collapse:collapse;font:11px/1.35 Tahoma,Arial,sans-serif;white-space:normal;width:100%">';
   for (const p of PERSOS) h += "<tr><td " + td + '><span style="display:inline-block;width:10px;height:10px;margin-right:5px;background:' + hsl(teinteDe(p.nom) || 0, 82, 55) + '"></span><b>'

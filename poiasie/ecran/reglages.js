@@ -239,7 +239,7 @@ const SCHEMA = [
       { cle: "fonduDuree", nom: "Fondu entre deux scènes (secondes)", type: "curseur", min: 0.3, max: 10, pas: 0.1 },
       { cle: "poemeMax", nom: "Un poème dure au plus (vraies secondes, quelle que soit la vitesse ; 600 : sans limite)", type: "curseur", min: 15, max: 600, pas: 5 },
     ]},
-    { titre: "Pilote automatique (touche ² ou F2, PS sur la manette)", items: [
+    { titre: "Pilote automatique (touche ² ou F2, ou PS sur la manette : le menu)", items: [
       { cle: "pilote", nom: "Le pilote suit la musique, morceau après morceau", type: "case" },
       { cle: "piloteAudace", nom: "Audace", type: "curseur", min: 0, max: 1, pas: 0.05 },
       { cle: "piloteRythme", nom: "Ses réglages glissent tous les", type: "choix", options: [["32", "32 temps (8 mesures)"], ["64", "64 temps (16 mesures)"], ["128", "128 temps (32 mesures)"]] },

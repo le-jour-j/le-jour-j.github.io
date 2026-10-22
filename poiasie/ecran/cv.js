@@ -259,6 +259,12 @@ const CV_FONDU = 8;
 const CV_PAS_EN_TETE = new Set(["lent2", "lent3", "avancee", "arche", "marche", "envLente", "energie", "motPoete", "voixSilence"]);
 const CV_TETE_VISIBLE = new Set(["halo", "coupHalo", "coupFlash", "exposition", "saturation", "decalage", "coupOndes", "coupFonte", "bichromie",
   "contraste", "gonfle", "coupChoc", "coupDecal", "chroma", "teinteGpu"]);
+// La regle de cumul de la lumiere (2026-10-19, Jiiji : « quand l'ecran est trop blanc, qu'on voit que
+// dalle ») : ce qui eclaire l'image (halo, coup de lumiere, eclair, lumiere et clarte vers le haut)
+// ne vient qu'une fois par patch, et jamais sur une palette claire, ou le halo efface les lettres
+// des 0,3 (mesure, lumiere.js). Un patch de deux lumieres sur le halo du pilote faisait le blanc.
+const CV_LUMIERES = new Set(["halo", "coupHalo", "coupFlash", "exposition", "clarte"]);
+const cvEclaire = (dst, q) => CV_LUMIERES.has(dst) && Number(q) > 0;
 
 // Les patchs inventes par l'IA (2026-10-19, Jiiji : que les modeles locaux inventent aussi des
 // patchs). Un script demande des patchs au modele et les ecrit dans ecran\banque-ia.json ; l'ecran
@@ -798,9 +804,13 @@ const cv = {
   // tele eteinte, jamais deux fois la meme) et n'est tenue ni par un LFO ni par la main
   instancier(p, opt) {
     const D = this.destinations(), pris = this.tenues(opt), vus = new Set();
-    const permis = ([s, d]) => {
+    let lumieres = 0;
+    const permis = ([s, d, q]) => {
       const x = D[d];
       if (!x || vus.has(d) || !CV_SOURCES.some(y => y[0] === s) || CV_JAMAIS.has(d)) return false;
+      // la regle de cumul de la lumiere (CV_LUMIERES), pour les patchs ecrits et ceux de l'IA aussi
+      const eclaire = cvEclaire(d, q);
+      if (eclaire && (lumieres >= 1 || palette().clair)) return false;
       if (!S.vieilleTele && typeof VIEILLE_TELE !== "undefined" && VIEILLE_TELE.has(d)) return false;
       if (x.type !== "gonfle" && x.type !== "coup" && pris.has(d)) return false;
       // un patch ecrit : ses cables dont la source est morte dans ce mode (apres la releve des
@@ -813,6 +823,7 @@ const cv = {
       // ce que la scene du moment ne lit pas : sans effet, le cable n'est pas branche
       if (!this.agit(d)) return false;
       vus.add(d);
+      if (eclaire) lumieres++;
       return true;
     };
     const cables = p.cables.filter(permis).map(([src, dst, q, l]) => {
@@ -1062,6 +1073,8 @@ const cv = {
       const cable = this.doser(src, dst, genre, audace, humeur, !cables.length);
       prises.add(dst);
       if (!cable) continue;
+      // la regle de cumul de la lumiere (CV_LUMIERES)
+      if (cvEclaire(cable.dst, cable.q) && (palette().clair || cables.some(c => cvEclaire(c.dst, c.q)))) continue;
       cables.push(cable);
       if (!utilisees.includes(src)) utilisees.push(src);
     }

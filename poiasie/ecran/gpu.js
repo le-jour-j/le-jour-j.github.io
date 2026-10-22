@@ -177,6 +177,7 @@ const ECRAN_GL = `#version 300 es
 precision highp float;
 in vec2 uv; out vec4 o;
 uniform sampler2D img; uniform vec2 res; uniform float t, courbure, balayage, grain, vignette;
+uniform float gardeCourbe, gardeBaisse;
 float hasard(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 void main() {
   vec2 k = uv;
@@ -187,6 +188,12 @@ void main() {
     if (k.x < 0.0 || k.x > 1.0 || k.y < 0.0 || k.y > 1.0) { o = vec4(0.0, 0.0, 0.0, 1.0); return; }
   }
   vec3 col = texture(img, k).rgb;
+  // le limiteur de lumiere (lumiere.js) : une puissance sur la luminance creuse les hautes lumieres
+  // d'une image blanche qui dure (0 et 0 : rien, c'est le cas presque toujours)
+  if (gardeCourbe > 0.001 || gardeBaisse > 0.001) {
+    float y = max(dot(col, vec3(0.299, 0.587, 0.114)), 1e-4);
+    col *= pow(min(y, 1.0), 1.0 + gardeCourbe) * (1.0 - gardeBaisse) / y;
+  }
   if (balayage > 0.0) {
     float s = 0.5 + 0.5 * sin(k.y * res.y * 3.14159);
     col *= 1.0 - balayage * 0.45 * (1.0 - s);
@@ -367,7 +374,9 @@ const gpu = {
     // les gestes de la manette (mode Jouer) frappent l'image ; les gachettes la font onduler ou briller
     const im = main.impact, jeu = main.enJeu();
     v.rvb += im.rvb; v.flash += im.flash; v.fonte += im.fonte; v.decal += im.decal * Math.PI;
-    v.ondes += im.ondes + (jeu ? main.souffle * 0.8 : 0);
+    // L2 ne secoue plus l'image (Jiiji, 2026-10-19 : « le flash, là, c'est nul ») : il ne fait
+    // qu'ecarter les mots, comme R2 les attire
+    v.ondes += im.ondes;
     v.halo += im.halo + (jeu ? main.aimant * 1.4 : 0);
     v.mainImpact = main.impactActif();
     // Jiiji (2026-10-19) : « j'aime pas les effets vieille tele ». Sans la case, ni le pilote, ni
@@ -437,7 +446,7 @@ const gpu = {
       for (const c of this.images) { gl.bindFramebuffer(gl.FRAMEBUFFER, c.fb); gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT); }
       this.effacer = false;
     }
-    this.passe(this.progs.image, cour, { tex: this.scene, halo: this.halos[0].tex, prec: prec.tex }, {
+    const textures = { tex: this.scene, halo: this.halos[0].tex, prec: prec.tex }, u = {
       res: [this.w, this.h], t: temps, force: v.halo > 0.01 ? v.halo : 0, rvb: v.rvb, ondes: v.ondes, mosaique: v.mosaique,
       kaleido: v.kaleido, kAngle: this.kAngle, larsen: v.larsen, lZoom: v.lZoom, lRot: v.lRot, vhs: v.vhs, teinte: this.rot % 6.2831853 * (S.teinteGpu > 0 ? 1 : 0), flash: v.flash,
       kZoom: v.kZoom, kSpirale: v.kSpirale, lTeinte: v.lTeinte, miroir: v.miroir, choc: v.choc, chocR: v.chocR, neg: v.neg, bichro: v.bichro, pompe: v.pompe,
@@ -445,9 +454,15 @@ const gpu = {
       strobe: v.strobe, gradForce: v.gradForce, kFondu: v.kFondu, g0: this.gCour[0], g1: this.gCour[1], g2: this.gCour[2], g3: this.gCour[3],
       mainX: v.mainX, mainY: v.mainY, mainRs: v.mainRs, mainLs: v.mainLs, mainTs: v.mainTs,
       c0: this.bichro().c0, c1: this.bichro().c1,
-    });
+    };
+    // le limiteur de lumiere (lumiere.js, 2026-10-19) : ses retouches d'avant l'ecretage (une copie
+    // des valeurs, jamais S), sa courbe a la sortie, et sa mesure deux fois par seconde
+    const garde = typeof lumiere !== "undefined" ? lumiere : null;
+    this.passe(this.progs.image, cour, textures, garde ? garde.regler(u) : u);
     this.courante = 1 - this.courante;
-    this.passe(this.progs.ecran, null, { img: cour.tex }, { res: [this.w, this.h], t: temps, courbure: v.courbure, balayage: v.balayage, grain: v.grain, vignette: v.vignette });
+    this.passe(this.progs.ecran, null, { img: cour.tex }, { res: [this.w, this.h], t: temps, courbure: v.courbure, balayage: v.balayage, grain: v.grain, vignette: v.vignette,
+      gardeCourbe: garde ? garde.courbe : 0, gardeBaisse: garde ? garde.baisse : 0 });
+    if (garde) garde.mesurerCarte(this, cour, textures, u);
     return true;
   },
 };

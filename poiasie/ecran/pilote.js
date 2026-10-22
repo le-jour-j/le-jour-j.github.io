@@ -125,7 +125,7 @@ const PILOTE_PRESET_CHOIX = new Set(["scene", "palette", "fond", "modeCouleur", 
 const PILOTE_PRESET_EXCLUS = new Set(["vitesse", "tenue", "strobe", "strobeFreq", "qualite", "poemeMax", "fonduDuree", "volume", "espacement"]);
 
 // on ajoute ses reglages au groupe du pilote, dans le premier onglet
-ajouterReglages("Écran de veille", "Pilote automatique (touche ² ou F2, PS sur la manette)", [
+ajouterReglages("Écran de veille", "Pilote automatique (touche ² ou F2, ou PS sur la manette : le menu)", [
   { cle: "piloteTemperament", nom: "Tempérament", type: "choix", options: [["contemplatif", "Contemplatif (il change peu, lentement)"],
     ["narratif", "Narratif (il raconte le set : sections, refrains, actes)"], ["nerveux", "Nerveux (plus de changements, toujours à la fin du poème)"]] },
   { cle: "piloteMain", nom: "Ce que tu touches, il le laisse (secondes)", type: "curseur", min: 5, max: 300, pas: 5 },
@@ -960,6 +960,10 @@ const pilote = {
         // chaque note qui sonne (l'ecran s'ecoute) fait onduler l'image un instant
         ondes: this.frisson * (mode === "poesie" ? 0.12 : 0.25) * F,
       };
+      // Sur une palette claire (papier, encre), le halo eclaire le fond tout entier : des 0,3 les
+      // lettres ne se detachent plus, a 0,45 l'image est blanche (mesure du 2026-10-19, lumiere.js).
+      // Jiiji : « blanc blanc pendant 3 minutes c'est une galere ». Le pilote s'y arrete a 0,15
+      if (palette().clair) cible.halo = Math.min(cible.halo, 0.15);
       for (const c in cible) if (this.libre(c)) poser(c, lerp(lire(c), cible[c], c === "ondes" ? 1 - Math.exp(-dt * 4) : k2));
     }
     // le son recoit ses reglages qui glissent (mode auto), une fois par seconde, en douceur

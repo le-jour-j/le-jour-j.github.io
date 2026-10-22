@@ -39,7 +39,7 @@ const RANGEMENT = [
     { id: "couleurs", nom: "Couleurs", categories: ["Couleurs"], groupes: [{ de: "Couleurs / *" }] },
     { id: "effets", nom: "Effets", categories: ["Effets"], groupes: [
       { de: "Effets / Lumière" }, { de: "Effets / Déformations" }, { de: "Effets / Couleurs de l'image" }, { de: "Effets / Larsen" },
-      { de: "Effets / Vieux écrans", plus: ["crt"] }] },
+      { de: "Effets / Vieux écrans", plus: ["crt"] }, { de: "Effets / Le limiteur de lumière" }] },
     { id: "combo", nom: "Combo", categories: ["Combo"], groupes: [{ de: "Combo / *" }] },
   ]},
   { id: "mots", nom: "Mots", lettre: "M", sous: [
@@ -62,7 +62,7 @@ const RANGEMENT = [
     { id: "sonmene", nom: "Le son mène", categories: ["Le son mène"], groupes: [{ de: "Le son mène / *" }] },
     { id: "lfo", nom: "LFO", categories: ["LFO"], groupes: [{ de: "LFO / *" }] },
     { id: "cables", nom: "Câbles", categories: ["Câbles"], groupes: [{ de: "Câbles / *" }] },
-    { id: "pilote", nom: "Pilote", categories: ["Écran de veille"], groupes: [{ de: "Écran de veille / Pilote", titre: "Pilote automatique (² ou F2, PS sur la manette)" }] },
+    { id: "pilote", nom: "Pilote", categories: ["Écran de veille"], groupes: [{ de: "Écran de veille / Pilote", titre: "Pilote automatique (² ou F2, ou PS sur la manette : le menu)" }] },
   ]},
   { id: "systeme", nom: "Système", lettre: "Y", sous: [
     { id: "presets", nom: "Presets et hasard", adopte: ["Mes presets", "Le hasard"], groupes: [{ titre: "Les presets du mode : réglages", cles: ["presetFondu", "presetScene", "presetVitesse"] }] },
@@ -96,7 +96,7 @@ const ESSENTIEL = new Set([
   "scene", "vitesse", "tenue", "poemeMax", "fonduDuree",
   "palette", "modeCouleur", "teinteMots", "vivacite", "fond", "trainees", "fondPulse",
   "halo", "kaleido", "kaleidoTourne", "larsen", "rvb", "ondes", "choc", "pompe", "bichromie", "miroir",
-  "degrade", "saturation", "contraste", "exposition", "vieilleTele", "vhs", "grain",
+  "degrade", "saturation", "contraste", "exposition", "vieilleTele", "vhs", "grain", "lumiereGarde",
   "calque", "calqueOpacite", "calqueMelange", "calquePlace",
   "police", "taille", "espacement", "tremblement", "ondulation", "respiration", "lueur", "glitch",
   "t3Rotation", "t3Perspective", "t3Musique", "t3Guide", "paysVitesse", "paysDensite", "paysLoin",
