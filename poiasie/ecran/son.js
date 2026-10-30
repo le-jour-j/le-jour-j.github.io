@@ -228,7 +228,8 @@ const son = {
     rhodes: 1.09, glock: 2.04, fente: 0.82, woodblock: 2.5, tubulaire: 1.04, sub: 1.3, bassesynth: 1.52 },
   // essai : un OfflineAudioContext, pour mesurer sans haut-parleur (rien n'est alors programme)
   demarrer(essai) {
-    if ((this.ctx || !(S.son || S.sonVoix)) && !essai) return;
+    const entreesVoulues = typeof entrees !== "undefined" && entrees.voulu();
+    if ((this.ctx || !(S.son || S.sonVoix || entreesVoulues)) && !essai) return;
     try {
       // « interactive » : la latence la plus courte que le navigateur propose (la voix en a besoin)
       const c = this.ctx = essai || new (window.AudioContext || window.webkitAudioContext)({ latencyHint: "interactive" });
@@ -527,13 +528,17 @@ const son = {
   gamme() { return GAMMES[this.gi][2]; },
   nomGamme() { return NOTES_NOMS[this.tonique] + " · " + GAMMES[this.gi][1].toLowerCase(); },
   octave() { return (Number(S.sonOctave) || 0) + Math.round(clamp(this.cv.sonOctave || 0, -1, 1) * 2); },
+  // le do d'en bas : 130,81 Hz pour un la a 440. diapason : le rapport au la 440 (2026-10-23, la flute
+  // de Jiiji : instrument.js le regle sur ce qu'il entend, ou sur 442, 415...)
+  diapason: 1,
+  do3() { return 130.81 * this.diapason; },
   // la hauteur d'un degre (il peut deborder sur les octaves voisines). Ni au-dessus de 3,6 kHz (les
   // aigus sifflent, la FM se replie) ni sous 36 Hz : on replie a l'octave, la note reste dans la gamme
   frequence(d) {
     d = Math.round(d) || 0;
     const g = this.gamme(), n = g.length, oct = Math.floor(d / n);
     const demi = g[d - oct * n] + 12 * oct + this.tonique + 12 * this.octave();
-    return this.replier(130.81 * Math.pow(2, demi / 12), 36, 3600);
+    return this.replier(this.do3() * Math.pow(2, demi / 12), 36, 3600);
   },
   replier(f, bas, haut) {
     while (f > haut) f /= 2;
@@ -542,7 +547,7 @@ const son = {
   },
   // le degre de la gamme le plus proche d'une frequence, et la note de la gamme la plus proche
   degreDe(f) {
-    const g = this.gamme(), n = g.length, base = 130.81 * Math.pow(2, (this.tonique + 12 * this.octave()) / 12);
+    const g = this.gamme(), n = g.length, base = this.do3() * Math.pow(2, (this.tonique + 12 * this.octave()) / 12);
     const s = 12 * Math.log2(Math.max(1, f) / base), oct = Math.floor(s / 12);
     let best = 0, e = 99;
     for (let o = oct - 1; o <= oct + 1; o++) for (let i = 0; i < n; i++) {
@@ -590,7 +595,7 @@ const son = {
     const g = this.gamme(), t = this.maintenant(), lent = net ? 0.01 : 2.5;
     let quinte = g[0];
     for (const x of g) if (Math.abs(x - 7) < Math.abs(quinte - 7)) quinte = x;
-    const f0 = this.replier(130.81 * Math.pow(2, (this.tonique + 12 * this.octave()) / 12) / 2, 36, 400);
+    const f0 = this.replier(this.do3() * Math.pow(2, (this.tonique + 12 * this.octave()) / 12) / 2, 36, 400);
     const fs = [f0, f0 * Math.pow(2, quinte / 12), f0 * 2];
     fs.forEach((f, i) => { this.bo[i].frequency.setTargetAtTime(f, t, lent); this.noter(f, "bourdon"); });
     this.boSouffle.frequency.setTargetAtTime(f0 * 8, t, lent); this.noter(f0 * 8, "bourdon");
@@ -825,8 +830,10 @@ const son = {
   // le larsen : un pic etroit et pur (presque toute l'energie, bien au-dessus de ses voisins) qui reste
   // sur la meme frequence 0,4 s. Une voix qui parle bouge sans cesse de hauteur : elle ne le declenche
   // pas. La garde baisse alors la voix et coupe le retour de l'echo, tient 2,5 s, puis rend doucement.
-  gardeLarsen(t) {
-    const X = this.vx, sp = X.spectre, dt = clamp(t - (X.tLarsen || t), 0, 0.5);
+  // V : une autre chaine qui a les memes organes (oreille, spectre, garde, retour ; les voies des entrees,
+  // entrees.js, 2026-10-23) ; sans V, la voix
+  gardeLarsen(t, V) {
+    const X = V || this.vx, voix = X === this.vx, sp = X.spectre, dt = clamp(t - (X.tLarsen || t), 0, 0.5);
     X.tLarsen = t;
     X.oreille.getFloatFrequencyData(sp);
     const hz = this.ctx.sampleRate / X.oreille.fftSize, a = Math.round(150 / hz), b = Math.min(sp.length - 6, Math.round(9000 / hz));
@@ -845,17 +852,20 @@ const son = {
     // apres un larsen, la voix revient moins fort (un larsen qui revient, c'est la salle) ; le plafond
     // remonte doucement quand tout est calme (2 % par seconde)
     if (!X.larsen) X.plafond = Math.min(1, X.plafond + dt * 0.02);
-    if (X.tenu > 0.4 && !X.larsen) {
+    // une voie d'entree peut demander plus de patience (une flute tient une note presque pure) ou se passer
+    // de la garde (au casque)
+    if (X.sansGarde) X.tenu = 0;
+    if (X.tenu > (X.patience || 0.4) && !X.larsen) {
       X.larsen = true; X.larsens++; X.finLarsen = t + 2.5; X.plafond = Math.max(0.2, X.plafond * 0.7);
       X.garde.gain.setTargetAtTime(0.08, t, 0.02);
       X.retour.gain.setTargetAtTime(0, t, 0.02);
-      this.voixLarsen = true;
+      if (voix) this.voixLarsen = true; else if (X.reappliquer) X.reappliquer(t);
       majSonUI();
     } else if (X.larsen && t > X.finLarsen) {
       if (X.tenu > 0.2) { X.finLarsen = t + 1; return; }  // il est encore la : on attend
-      X.larsen = false; this.voixLarsen = false;
+      X.larsen = false;
       X.garde.gain.setTargetAtTime(X.plafond, t, 1.2);
-      this.appliquerVoix(t, 1);
+      if (voix) { this.voixLarsen = false; this.appliquerVoix(t, 1); } else if (X.reappliquer) X.reappliquer(t);
       majSonUI();
     }
   },
@@ -936,7 +946,10 @@ const son = {
       else { this.auDessus = v > 0.03 ? this.auDessus + dt : 0; muet = this.auDessus > 0.6; }
     }
     if (muet !== this.muet) { this.muet = muet; this.auDessus = this.enDessous = 0; }
-    this.taire.gain.setTargetAtTime(this.muet ? 0 : 1, t, 0.8);
+    // l'instrument qui joue (instrument.js) : le son lui laisse la place, plus vite qu'a la musique
+    const place = typeof instrument !== "undefined" ? instrument.gainSon() : 1;
+    this.taire.gain.setTargetAtTime(this.muet ? 0 : place, t, place < 1 || this.placeAvant < 1 ? 0.25 : 0.8);
+    this.placeAvant = place;
   },
   // sur la musique, les pas se recalent doucement sur le kick (avant : bon tempo, mais a cote du
   // temps) ; la grille des gestes part du dernier kick

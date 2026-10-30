@@ -94,6 +94,8 @@ function construireAncienPanneau() {
     if (o.special === "manette") construireManette(page);
     if (o.special === "son") construireSon(page);
     if (o.special === "modes") construireModes(page);
+    // un onglet ajoute qui pose son propre cadre en tete (entrees.js)
+    if (typeof o.construire === "function") o.construire(page);
     for (const g of o.groupes) {
       const fs = document.createElement("fieldset");
       const lg = document.createElement("legend"); lg.textContent = g.titre; fs.appendChild(lg);

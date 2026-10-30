@@ -64,7 +64,8 @@ const musique = {
         for (const v of flux.getVideoTracks()) v.applyConstraints({ frameRate: 1, width: 64, height: 48 }).catch(() => {});
         this.sansSoi = !!(audio.restrictOwnAudio);
       } else if (src === "micro" || src === "melange") {
-        flux = await navigator.mediaDevices.getUserMedia({ audio: Object.assign({ deviceId: S.musiqueEntree ? { exact: S.musiqueEntree } : undefined }, sansTraitement) });
+        // deux canaux si la carte les a (les entrees 1 et 2 de la Focusrite, separees par entrees.js)
+        flux = await navigator.mediaDevices.getUserMedia({ audio: Object.assign({ deviceId: S.musiqueEntree ? { exact: S.musiqueEntree } : undefined, channelCount: { ideal: 2 } }, sansTraitement) });
       }
       this.avecEcran = avecEcran;
       this.ctxPartage = avecEcran;

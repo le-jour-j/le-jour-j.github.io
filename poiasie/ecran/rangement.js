@@ -265,6 +265,7 @@ const rangement = {
     if (s.special === "musique") construireMusique(el);
     if (s.special === "manette") construireManette(el);
     if (s.special === "son" && typeof construireSon === "function") construireSon(el);
+    if (typeof s.construire === "function") s.construire(el);
     for (const gr of s.groupes || []) {
       if (gr.de) {
         const [onglet, debut] = gr.de.split(" / ");
