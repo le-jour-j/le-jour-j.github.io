@@ -2,24 +2,62 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
 // Journal public de la banque (journal_banque) : ce qui vient de se passer.
-// Rechargé toutes les 60 s, au retour sur l'onglet, et dès qu'un billet / une enchère / un objet bouge.
+// Un seul chargement et un seul abonnement Realtime partagés par tous les composants
+// (bandeau de la barre de navigation + section de l'accueil), au lieu d'un par composant.
+// Plus de minuteur de 60 s (alerte Supabase « Disk IO Budget », 2026-10-22, appliqué le 2026-10-31) :
+// rechargé au retour sur l'onglet et dès qu'un billet / une enchère / un objet bouge.
+const MAX = 20 // on en charge 20 une fois, chaque composant en prend ce qu'il veut
+let donnees = []
+let abonnes = 0
+let channel = null
+let attente = null
+const ecouteurs = new Set()
+
+function charger() {
+  supabase.rpc('journal_banque', { p_limit: MAX }).then(({ data }) => {
+    donnees = data || []
+    ecouteurs.forEach(f => f(donnees))
+  })
+}
+
+// Regroupe les rafales d'événements Realtime en un seul rechargement (1,5 s)
+function chargerBientot() {
+  clearTimeout(attente)
+  attente = setTimeout(charger, 1500)
+}
+
+function surFocus() {
+  if (document.visibilityState === 'visible') charger()
+}
+
+function demarrer() {
+  charger()
+  document.addEventListener('visibilitychange', surFocus)
+  channel = supabase.channel('journal')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'billets_emis' }, chargerBientot)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'encheres' }, chargerBientot)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'objets' }, chargerBientot)
+    .subscribe()
+}
+
+function arreter() {
+  clearTimeout(attente)
+  document.removeEventListener('visibilitychange', surFocus)
+  if (channel) { supabase.removeChannel(channel); channel = null }
+}
+
 export function useJournal(limit = 20) {
-  const [entrees, setEntrees] = useState([])
+  const [entrees, setEntrees] = useState(donnees)
   useEffect(() => {
-    let vivant = true
-    const charger = () => supabase.rpc('journal_banque', { p_limit: limit }).then(({ data }) => { if (vivant) setEntrees(data || []) })
-    charger()
-    const t = setInterval(charger, 60000)
-    const onFocus = () => document.visibilityState === 'visible' && charger()
-    document.addEventListener('visibilitychange', onFocus)
-    const channel = supabase.channel(`journal-${limit}-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'billets_emis' }, charger)
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'encheres' }, charger)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'objets' }, charger)
-      .subscribe()
-    return () => { vivant = false; clearInterval(t); document.removeEventListener('visibilitychange', onFocus); supabase.removeChannel(channel) }
-  }, [limit])
-  return entrees
+    ecouteurs.add(setEntrees)
+    if (abonnes++ === 0) demarrer()
+    else setEntrees(donnees)
+    return () => {
+      ecouteurs.delete(setEntrees)
+      if (--abonnes === 0) arreter()
+    }
+  }, [])
+  return entrees.slice(0, limit)
 }
 
 export function phrase(e) {

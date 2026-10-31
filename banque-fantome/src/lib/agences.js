@@ -17,11 +17,21 @@ export const AGENCES = {
     nom: 'Médiathèque Centre ville',
     court: 'à la médiathèque',
     statut: 'Agence à venir',
+    ouverture: '2026-11-03T13:00:00+01:00', // phase 2 (2026-10-31) : devient « Agence actuelle » toute seule
     adresse: '3 cour des Lettres, 60000 Beauvais',
     horaires: [['Lundi', 'fermé'], ['Mardi', '13 h à 18 h 30'], ['Mercredi', '9 h 30 à 18 h 30'], ['Jeudi et vendredi', '13 h à 18 h 30'], ['Samedi', '9 h 30 à 18 h']],
     source: 'https://mediatheques.beauvaisis.fr/',
     note: 'Réseau des médiathèques du Beauvaisis.',
   },
+}
+
+// Phase 2 de la banque (2026-10-31) : les agences ouvrent au public le mardi 3 novembre 2026,
+// jusqu'à la restitution du 18 février 2027.
+export const PHASE_2 = 'La banque tient ses agences du mardi 3 novembre 2026 (12 h au Quadrilatère, 13 h à la médiathèque) jusqu\'à la restitution du 18 février 2027.'
+
+// « Agence à venir » jusqu'à son ouverture, « Agence actuelle » ensuite
+export function statut(a) {
+  return a.ouverture && Date.now() < Date.parse(a.ouverture) ? a.statut : 'Agence actuelle'
 }
 
 const FUSEAU = 'Europe/Paris'

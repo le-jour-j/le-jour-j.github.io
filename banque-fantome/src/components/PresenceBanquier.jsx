@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere } from '../lib/agences'
 
-// Où est le banquier ? Lu dans son agenda (table `presences`), rafraîchi chaque minute.
+// Où est le banquier ? Lu dans son agenda (table `presences`, recopiée toutes les 15 min par la
+// fonction Edge). L'état « au guichet / pas au guichet » se recalcule chaque minute sans rien
+// demander à la base ; la table n'est relue que toutes les 15 min et au retour sur l'onglet
+// (alerte Supabase « Disk IO Budget », 2026-10-31).
 // `compact` : une ligne pour l'accueil ; sinon l'état du moment et les prochains créneaux.
 // « jeudi 15 octobre » → « Jeudi 15 octobre » (le mois garde sa minuscule)
 const majuscule = s => s.charAt(0).toUpperCase() + s.slice(1)
@@ -15,8 +18,11 @@ export default function PresenceBanquier({ compact = false }) {
     let actif = true
     const charger = () => chargerPresences().then(d => actif && setPresences(d)).catch(() => actif && setPresences([]))
     charger()
-    const t = setInterval(() => { setMaintenant(Date.now()); charger() }, 60000)
-    return () => { actif = false; clearInterval(t) }
+    const horloge = setInterval(() => setMaintenant(Date.now()), 60000)
+    const releve = setInterval(charger, 15 * 60000)
+    const onVisible = () => { if (document.visibilityState === 'visible') { setMaintenant(Date.now()); charger() } }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => { actif = false; clearInterval(horloge); clearInterval(releve); document.removeEventListener('visibilitychange', onVisible) }
   }, [])
 
   if (presences === null) return compact ? null : <div className="loader">Chargement<span className="blink">_</span></div>

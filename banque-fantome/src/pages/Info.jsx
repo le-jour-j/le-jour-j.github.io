@@ -1,5 +1,5 @@
 import PresenceBanquier from '../components/PresenceBanquier'
-import { AGENCES } from '../lib/agences'
+import { AGENCES, PHASE_2, statut } from '../lib/agences'
 
 // Infos pratiques (2026-10-13) : où est le banquier, et les agences de la banque.
 export default function Info() {
@@ -22,12 +22,12 @@ export default function Info() {
         <section style={{ marginBottom: '3rem' }}>
           <h3 className="info-titre">Les agences</h3>
           <p className="texte-aide" style={{ marginBottom: '1rem' }}>
-            La banque est installée dans des lieux publics. Ils ont leurs propres horaires : le banquier n'y est pas en permanence, ses créneaux sont indiqués ci-dessus.
+            {PHASE_2} Ces lieux publics ont leurs propres horaires : le banquier n'y est pas en permanence, ses créneaux sont indiqués ci-dessus.
           </p>
           <div className="agences">
             {Object.entries(AGENCES).map(([id, a]) => (
               <article key={id} className="agence">
-                <span className={`stamp ${a.statut === 'Agence actuelle' ? 'stamp-jaune' : ''}`}>{a.statut}</span>
+                <span className={`stamp ${statut(a) === 'Agence actuelle' ? 'stamp-jaune' : ''}`}>{statut(a)}</span>
                 <h4 className="agence-nom">{a.nom}</h4>
                 <p className="agence-adresse">{a.adresse}</p>
                 <dl className="agence-horaires">

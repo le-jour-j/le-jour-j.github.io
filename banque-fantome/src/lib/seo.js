@@ -114,15 +114,16 @@ export const PAGES = [
     path: "/info",
     title: "Infos pratiques : agences et permanences du banquier | Banque Fantôme",
     description:
-      "Où trouver la Banque Fantôme à Beauvais : l'agence du Quadrilatère, l'agence à venir de la médiathèque Centre ville, leurs horaires et les permanences du banquier.",
+      "Où trouver la Banque Fantôme à Beauvais : les agences du Quadrilatère et de la médiathèque Centre ville, leurs horaires et les permanences du banquier.",
     priority: "0.6",
     contenu: `
       <h1>Infos pratiques</h1>
       <h2>Le banquier est-il au guichet ?</h2>
       <p>Les permanences du banquier, tirées de son agenda et mises à jour toutes les quinze minutes.</p>
       <h2>Les agences</h2>
-      <p>Agence actuelle : Le Quadrilatère, 22 rue Saint-Pierre, 60000 Beauvais. Mardi au vendredi de 12 h à 18 h, samedi et dimanche de 10 h à 18 h, fermé le lundi.</p>
-      <p>Agence à venir : Médiathèque Centre ville, 3 cour des Lettres, 60000 Beauvais. Mardi, jeudi et vendredi de 13 h à 18 h 30, mercredi de 9 h 30 à 18 h 30, samedi de 9 h 30 à 18 h, fermé le lundi.</p>`,
+      <p>La banque tient ses agences du mardi 3 novembre 2026 (12 h au Quadrilatère, 13 h à la médiathèque) jusqu'à la restitution du 18 février 2027.</p>
+      <p>Le Quadrilatère, 22 rue Saint-Pierre, 60000 Beauvais. Mardi au vendredi de 12 h à 18 h, samedi et dimanche de 10 h à 18 h, fermé le lundi.</p>
+      <p>Médiathèque Centre ville, 3 cour des Lettres, 60000 Beauvais. Mardi, jeudi et vendredi de 13 h à 18 h 30, mercredi de 9 h 30 à 18 h 30, samedi de 9 h 30 à 18 h, fermé le lundi.</p>`,
   },
 
   // Pages de compte : servies normalement, tenues hors de l'index. /participer
