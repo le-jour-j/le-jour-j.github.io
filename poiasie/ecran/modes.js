@@ -129,7 +129,7 @@ const CLE_MODES = "poiasie-modes-v1", CLE_PRESETS = "poiasie-presets-v1";
 // ce qui recharge tout
 const PRESET_JAMAIS = new Set(["apports", "allure", "flashKick", "imageFond", "volume", "qualite", "source", "ordre", "nouveauxDabord", "musique", "musiqueSource", "musiqueEntree", "mode",
   "manetteMode", "annoncesEcran", "vibration", "son", "votes", "cartel", "direct", "bourse", "annotations", "filsRimes", "chutes",
-  "pilote", "piloteAudace", "piloteRythme", "piloteCouleurs", "piloteCombos", "piloteEffets", "poemeMax", "tenue", "fonduDuree",
+  "pilote", "piloteAudace", "piloteRythme", "piloteCouleurs", "piloteCombos", "piloteEffets", "piloteChargeMs", "poemeMax", "tenue", "fonduDuree",
   "taille", "espacement", "ecriture", "voies", "maelstrom", "billets", "rouleaux", "mainSensibilite", "mainCurseur", "sonSuit",
   "musiqueDrop", "strobeFreq", "presetFondu", "presetScene", "presetVitesse", "hasardDose", "hasardVerrous", "presetCourant",
   "voixSeuil"].concat([...MODE_CLES]));

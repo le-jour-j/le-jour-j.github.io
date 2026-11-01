@@ -36,6 +36,9 @@ const DEFAUTS = {
   rosaceTourne: 1, rosaceCopies: 12, battementStyle: "hasard", battementTemps: "2", ondeHauteur: 1, ondeReflet: true,
   // le pilote automatique (il suit la musique, morceau apres morceau) et le kaleidoscope stable
   fonduDuree: 3, pilote: false, piloteAudace: 0.5, piloteRythme: "64", piloteCouleurs: true, piloteCombos: true, piloteEffets: true, kaleidoStable: false,
+  // 2026-11-01 (correctif de MALICE) : seuil (ms par image) au-dela duquel le pilote retire un combo trop lourd ;
+  // 0 : il ne les retire jamais (mode PC pourri de l'accueil). Pas dans le panneau, se regle par l'adresse
+  piloteChargeMs: 26,
   // le kick sur les mots (le side chain) et la reaction de l'ecoute, 2026-10-17
   kickMots: 0.6, kickSens: "gonfle", kickRelache: 0.22, kickSeuil: 0.5, musiqueReaction: 1,
   poemeMax: 90,

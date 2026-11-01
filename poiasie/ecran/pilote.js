@@ -985,8 +985,11 @@ const pilote = {
   // un combo pose par le pilote qui fait tomber la carte sous ~38 images par seconde pendant 5 s : il
   // le retire (en fondu) et ne le reposera plus sur cette scene
   surveillerCharge(dt) {
-    if (document.hidden || S.calque === "aucun" || !this.calqueDuPilote) { this.lourdDepuis = 0; return; }
-    this.lourdDepuis = this.image > 0.026 ? this.lourdDepuis + dt : 0;
+    // 2026-11-01 (correctif de MALICE, Jiiji : « y a jamais de combo ») : sur un PC lent tout combo passait au-dessus
+    // de 26 ms et finissait banni ; le seuil se regle (piloteChargeMs), 0 coupe la surveillance (mode PC pourri)
+    const seuil = +S.piloteChargeMs;
+    if (!(seuil > 0) || document.hidden || S.calque === "aucun" || !this.calqueDuPilote) { this.lourdDepuis = 0; return; }
+    this.lourdDepuis = this.image > seuil / 1000 ? this.lourdDepuis + dt : 0;
     if (this.lourdDepuis > 5) {
       this.lourdDepuis = 0;
       this.lourds.add(sceneCle + "|" + (calque.cle || S.calque));
