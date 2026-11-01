@@ -281,6 +281,8 @@ L'appli est servie depuis un sous-dossier, jamais un sous-domaine.
 ## Vercel
 
 Il n'y a plus de `vercel.json` ni de `api/` dans ce dépôt (commits `ed7f7f3`, `eae94c7`).
-Le projet Vercel lié est un vestige cassé destiné à être supprimé ; GitHub Pages sert
-tout. Le relais serverless `api/bordereau.js` de Ghost Mining vit dans
+Le projet Vercel `le-jour-j-github-io`, vestige cassé lié à ce dépôt, a été supprimé le
+1/11/2026 : il gardait 334 déploiements (un par push, donc un par heure avec poiasie) et
+remplissait 75 % des 10 Go du compte gratuit. Ne pas relier ce dépôt à Vercel. GitHub Pages
+sert tout. Le relais serverless `api/bordereau.js` de Ghost Mining vit dans
 `chambre-compensation`, pas ici.
