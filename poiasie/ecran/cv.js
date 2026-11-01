@@ -116,7 +116,7 @@ const CV_GESTES = [
   ["coupChoc", "Coup : une onde de choc part du centre", "choc", 1.6],
 ];
 // jamais : le stroboscope, le negatif (ca clignote), le volume, la finesse, la source
-const CV_JAMAIS = new Set(["strobe", "strobeFreq", "negatif", "volume", "qualite", "source"]);
+const CV_JAMAIS = new Set(["allure", "strobe", "strobeFreq", "negatif", "volume", "qualite", "source"]);
 
 // Les patchs du mode auto : [source, destination, quantite, lissage]. humeur : "calme" (intro,
 // cassure, fin, peu d'energie), "plein" (montee, drop, plateau), "tout". si : une condition (le patch

@@ -87,7 +87,7 @@ function image(maintenant) {
   musique.maj(reel);
   pilote.maj(reel);
   lfo.maj();
-  let dt = reel * S.vitesse * live.vitesse * (S.musique && musique.actif ? 1 + musique.niveau * S.musiqueElan : 1);
+  let dt = reel * S.vitesse * (S.allure || 1) * live.vitesse * (S.musique && musique.actif ? 1 + musique.niveau * S.musiqueElan : 1);
   temps += dt;
   ctx.textAlign = "center"; ctx.textBaseline = "middle";
   peindreFond(dt);
@@ -113,7 +113,7 @@ function image(maintenant) {
   dessinerBulles();
   if (!gpu.dessiner(reel)) {
     // sans carte graphique, le flash des temps forts se peint sur la toile
-    const f = (S.musique && musique.actif ? musique.coup * S.musiqueFlash : 0) + live.mod.flash;
+    const f = (S.musique && musique.actif && S.flashKick ? musique.coup * S.musiqueFlash : 0) + live.mod.flash;
     if (f > 0.02) {
       ctx.save(); ctx.globalCompositeOperation = palette().clair ? "source-over" : "lighter";
       ctx.globalAlpha = clamp(f * 0.18, 0, 0.5); ctx.fillStyle = palette().clair ? "#ffffff" : palette().accent;

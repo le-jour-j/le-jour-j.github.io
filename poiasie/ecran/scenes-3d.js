@@ -216,7 +216,7 @@ function couperLignes(texte, largeur) {
 
 // vraies secondes : la vitesse generale ralentit les gestes, pas la lecture
 function reel3D(dt) {
-  const v = S.vitesse * live.vitesse * (S.musique && musique.actif ? 1 + musique.niveau * S.musiqueElan : 1);
+  const v = S.vitesse * (S.allure || 1) * live.vitesse * (S.musique && musique.actif ? 1 + musique.niveau * S.musiqueElan : 1);
   return v > 1e-4 ? dt / v : 0;
 }
 // Le pas de lecture : les vraies secondes de chaque vers. Le poeme tient dans « Un poeme dure au

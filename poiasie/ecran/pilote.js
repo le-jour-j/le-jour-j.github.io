@@ -94,7 +94,9 @@ const PILOTE_ACTES = [
 // (pas de drop, pas de flash, des scenes lisibles, peu de combos) ; en jeu il accompagne la manette.
 const PILOTE_MODES = {
   poesie: { audace: 0.5, effets: 0.4, combos: 0.3, masques: 0.3, drops: false, flash: false, lisible: 1, kaleido: 0.3, lfoNb: 1, silence: 25 },
-  vjing: { audace: 1, effets: 1, combos: 1, masques: 1, drops: true, flash: true, lisible: 0, kaleido: 1, lfoNb: 4, silence: 1.2 },
+  // vjing calme le 2026-11-01 (Jiiji : « moi j'aime subtil leger », illisible avant) ; l'ancien : audace 1, effets 1,
+  // combos 1, masques 1, flash true, lisible 0, kaleido 1, lfoNb 4
+  vjing: { audace: 0.7, effets: 0.5, combos: 0.6, masques: 0.5, drops: true, flash: false, lisible: 0.6, kaleido: 0.5, lfoNb: 2, silence: 1.2 },
   jeu: { audace: 0.7, effets: 0.6, combos: 0.6, masques: 0.6, drops: true, flash: false, lisible: 0.3, kaleido: 0, lfoNb: 2, silence: 1.2 },
   // Le mode full auto (Jiiji : « on regarde et on kiffe, il se genere tout seul, les mots font les
   // sons, les sons font des mots, tout est lie ») : le pilote est maitre de tout, meme sans musique
@@ -1013,7 +1015,7 @@ const pilote = {
   // fondu) ; la scene pleine attend la fin du poeme
   drop() {
     const E = this.envies(), M = PILOTE_MODES[this.mode()];
-    if (M.flash && S.musique && musique.actif) flash();
+    if (M.flash && S.flashKick && S.musique && musique.actif) flash();
     this.boost = 1;
     this.dernierDrop = this.horloge;
     if (this.section !== "drop") { const a = this.section; this.section = "drop"; this.sectionDepuis = 0; this.tension = 0; this.noter("section", a + " → drop"); }

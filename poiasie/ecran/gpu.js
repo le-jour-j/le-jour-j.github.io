@@ -320,7 +320,7 @@ const gpu = {
       larsen: clamp(S.larsen + L.larsen, 0, 0.98),
       lZoom: S.larsenZoom + L.zoom + (m ? m.basses * pousse * 0.015 : 0),
       vhs: clamp(S.vhs + L.vhs, 0, 1), courbure: S.courbure, balayage: S.balayage, grain: S.grain, vignette: S.vignetteGpu,
-      flash: (m ? m.coup * S.musiqueFlash : 0) + L.flash,
+      flash: (m && S.flashKick ? m.coup * S.musiqueFlash : 0) + L.flash,  // flashKick faux : Jiiji deteste le flash sur le kick (2026-11-01)
       kZoom: S.kaleidoStable ? 1 : 1 + (m ? m.basses * pousse * 0.12 : 0) + L.flash * 0.05, kSpirale: S.kaleidoSpirale,
       miroir: { gd: 1, hb: 2, quatre: 3 }[S.miroir] || 0,
       neg: S.negatif > 0 ? clamp(S.negatif * Math.max(m && m.coup > 0.55 ? 1 : 0, L.flash > 0.6 ? 1 : 0), 0, 1) : 0,
@@ -382,6 +382,7 @@ const gpu = {
     // Jiiji (2026-10-19) : « j'aime pas les effets vieille tele ». Sans la case, ni le pilote, ni
     // les cables, ni les LFO, ni les presets ne les allument
     if (!S.vieilleTele) v.vhs = v.courbure = v.balayage = v.grain = v.vignette = 0;
+    if (!S.imageFond) v.fonte = 0;  // les bandes verticales qui glissent : Jiiji les deteste (2026-11-01), rien ne les allume sans la case
     return v;
   },
   utile(v) {

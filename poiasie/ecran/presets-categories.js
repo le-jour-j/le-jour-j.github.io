@@ -34,7 +34,7 @@ const PC_VERROUS_SUR_PRESETS = false;
 
 // ce qu'aucun preset de categorie ne touche : les reglages de Jiiji (lisibilite, son, source,
 // manette), ceux qui reglent l'ecran plutot que l'image, et ce qui recharge tout
-const PC_JAMAIS = new Set(["volume", "qualite", "source", "ordre", "nouveauxDabord", "musique", "musiqueSource", "musiqueEntree", "musiqueSensibilite",
+const PC_JAMAIS = new Set(["allure", "flashKick", "imageFond", "volume", "qualite", "source", "ordre", "nouveauxDabord", "musique", "musiqueSource", "musiqueEntree", "musiqueSensibilite",
   "musiqueDrop", "mode", "manetteMode", "annoncesEcran", "vibration", "son", "votes", "cartel", "direct", "bourse", "annotations",
   "filsRimes", "chutes", "annoncerForme", "pilote", "poemeMax", "tenue", "taille", "espacement", "ecriture", "voies", "maelstrom", "billets", "rouleaux",
   "mainSensibilite", "mainCurseur", "mainNotes", "strobeFreq", "vieilleTele", "crt", "lettresGl", "presetFondu", "presetScene", "presetVitesse",

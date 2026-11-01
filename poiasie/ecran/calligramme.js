@@ -564,7 +564,7 @@ class SceneCalligramme {
     this.depart = tirer(["pluie", "vent", "eclat"]);
     // la cadence : le poeme s'ecrit dans la moitie de sa tenue, et tient dans poemeMax (Jiiji le
     // regle a 20 s : le poeme etait coupe avant d'etre ecrit)
-    const n = Math.max(1, this.nPoeme), vit = Math.max(0.02, S.vitesse * ((typeof live !== "undefined" && live.vitesse) || 1));
+    const n = Math.max(1, this.nPoeme), vit = Math.max(0.02, S.vitesse * (S.allure || 1) * ((typeof live !== "undefined" && live.vitesse) || 1));
     let cadence = clamp(n / Math.max(4, tenue() * 0.45), 18, 140);
     if (S.poemeMax < 600) cadence = Math.max(cadence, n / Math.max(2, S.poemeMax * 0.42 * vit));
     this.cadence = cadence;

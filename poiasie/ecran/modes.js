@@ -127,7 +127,7 @@ const CLE_MODES = "poiasie-modes-v1", CLE_PRESETS = "poiasie-presets-v1";
 
 // ce qu'un preset ne touche jamais : les reglages de Jiiji (lisibilite, son, source), ceux du mode,
 // ce qui recharge tout
-const PRESET_JAMAIS = new Set(["volume", "qualite", "source", "ordre", "nouveauxDabord", "musique", "musiqueSource", "musiqueEntree", "mode",
+const PRESET_JAMAIS = new Set(["allure", "flashKick", "imageFond", "volume", "qualite", "source", "ordre", "nouveauxDabord", "musique", "musiqueSource", "musiqueEntree", "mode",
   "manetteMode", "annoncesEcran", "vibration", "son", "votes", "cartel", "direct", "bourse", "annotations", "filsRimes", "chutes",
   "pilote", "piloteAudace", "piloteRythme", "piloteCouleurs", "piloteCombos", "piloteEffets", "poemeMax", "tenue", "fonduDuree",
   "taille", "espacement", "ecriture", "voies", "maelstrom", "billets", "rouleaux", "mainSensibilite", "mainCurseur", "sonSuit",
@@ -425,7 +425,7 @@ function resoudrePresets() {
 
 // jamais : ce qui clignote, le volume, la finesse, la source, le mode, ce qui recharge tout, et ce qui
 // regle l'ecran plutot que l'image
-const HASARD_JAMAIS = new Set(["strobe", "strobeFreq", "negatif", "volume", "qualite", "source", "ordre", "nouveauxDabord", "mode", "musique",
+const HASARD_JAMAIS = new Set(["allure", "flashKick", "imageFond", "strobe", "strobeFreq", "negatif", "volume", "qualite", "source", "ordre", "nouveauxDabord", "mode", "musique",
   "musiqueSource", "musiqueEntree", "manetteMode", "annoncesEcran", "vibration", "son", "votes", "cartel", "direct", "bourse", "annotations",
   "filsRimes", "chutes", "pilote", "maelstrom", "billets", "rouleaux", "taille", "espacement", "ecriture", "voies", "musiqueDrop", "sonSuit",
   "mainCurseur", "mainSensibilite", "mainNotes", "crt", "presetFondu", "presetScene", "presetVitesse", "hasardDose", "hasardVerrous",

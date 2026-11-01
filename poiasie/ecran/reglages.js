@@ -2,7 +2,7 @@
 /* ================================================================ réglages */
 
 const DEFAUTS = {
-  scene: "auto", vitesse: 1, tenue: 24, qualite: 1.5,
+  scene: "auto", vitesse: 1, allure: 0.5, tenue: 24, qualite: 1.5,
   source: "tout", ordre: "recent", nouveauxDabord: true,
   entree: "spirale", sortie: "vortex", ecriture: 9,
   annotations: true, cartel: true, direct: true, bourse: true,
@@ -21,7 +21,7 @@ const DEFAUTS = {
   larsen: 0, larsenZoom: 1.015, larsenRotation: 0, vhs: 0, courbure: 0, balayage: 0, grain: 0, vignetteGpu: 0, vieilleTele: false, teinteGpu: 0,
   // la musique
   musique: false, musiqueSource: "micro", musiqueEntree: "", musiqueSensibilite: 1, musiquePulse: 1, musiqueElan: 0.4,
-  musiqueFlash: 0.5, musiqueEffets: 1, musiqueDrop: false,
+  musiqueFlash: 0.5, flashKick: false, musiqueEffets: 1, musiqueDrop: false,
   // les nouvelles scenes et le live
   billets: 18, rouleaux: 5, calligramme: "hasard", annoncesEcran: false, vibration: true,
   // le combo (une seconde scene en calque) et les effets ajoutes le 2026-10-17
@@ -31,7 +31,7 @@ const DEFAUTS = {
   modeCouleur: "poetes", teinteMots: 200, vivacite: 1, clarte: 0, fondPulse: 0, ombre: 0, graisse: 0,
   persoFond: "#04050a", persoFond2: "#1b1440", persoTexte: "#f2ece0", persoAccent: "#ff3c7d", persoNote: "#7d8aa5",
   degrade: "aucun", degradeForce: 0.85, saturation: 1, contraste: 1, exposition: 1, decalage: 0, chroma: 0,
-  solarisation: 0, posterisation: 0, blocs: 0, fonte: 0, strobe: 0, strobeFreq: 4,
+  solarisation: 0, posterisation: 0, blocs: 0, fonte: 0, imageFond: false, strobe: 0, strobeFreq: 4,
   puitsVitesse: 1, puitsTorsion: 1, puitsParois: 1, cretesLignes: 17, cretesHauteur: 1, averseDensite: 1, averseVitesse: 1,
   rosaceTourne: 1, rosaceCopies: 12, battementStyle: "hasard", battementTemps: "2", ondeHauteur: 1, ondeReflet: true,
   // le pilote automatique (il suit la musique, morceau apres morceau) et le kaleidoscope stable
@@ -235,6 +235,7 @@ const SCHEMA = [
     { titre: "Écran de veille", items: [
       { cle: "scene", nom: "Scène", type: "choix", options: SCENES_NOMS },
       { cle: "vitesse", nom: "Vitesse générale", type: "curseur", min: 0.02, max: 3, pas: 0.01 },
+      { cle: "allure", nom: "Allure de tout (ralentit tous les modes et presets ; 1 = comme avant)", type: "curseur", min: 0.1, max: 1.5, pas: 0.05 },
       { cle: "tenue", nom: "Tenue d'un poème (secondes)", type: "curseur", min: 5, max: 300, pas: 1 },
       { cle: "fonduDuree", nom: "Fondu entre deux scènes (secondes)", type: "curseur", min: 0.3, max: 10, pas: 0.1 },
       { cle: "poemeMax", nom: "Un poème dure au plus (vraies secondes, quelle que soit la vitesse ; 600 : sans limite)", type: "curseur", min: 15, max: 600, pas: 5 },
@@ -397,6 +398,7 @@ const SCHEMA = [
       { cle: "mosaique", nom: "Mosaïque", type: "curseur", min: 0, max: 1, pas: 0.01 },
       { cle: "rvb", nom: "Décalage rouge vert bleu", type: "curseur", min: 0, max: 3, pas: 0.05 },
       { cle: "blocs", nom: "Glitch en blocs (touche Z)", type: "curseur", min: 0, max: 1, pas: 0.05 },
+      { cle: "imageFond", nom: "L'image qui fond en bandes (sans la case, rien ne l'allume)", type: "case" },
       { cle: "fonte", nom: "L'image fond et coule", type: "curseur", min: 0, max: 1, pas: 0.05 },
     ]},
     { titre: "Couleurs de l'image (carte graphique)", items: [
@@ -446,6 +448,7 @@ const SCHEMA = [
     ]},
     { titre: "Ce que la musique fait", items: [
       { cle: "musiqueElan", nom: "La musique accélère tout", type: "curseur", min: 0, max: 2, pas: 0.05 },
+      { cle: "flashKick", nom: "Le flash sur le kick (sans la case, rien ne l'allume)", type: "case" },
       { cle: "musiqueFlash", nom: "Flash sur les temps forts", type: "curseur", min: 0, max: 1.5, pas: 0.05 },
       { cle: "musiqueEffets", nom: "Elle pousse les effets", type: "curseur", min: 0, max: 3, pas: 0.05 },
       { cle: "musiqueDrop", nom: "Un drop change de poème et de scène", type: "case" },
@@ -565,7 +568,7 @@ const SCHEMA = [
 // de sa valeur, d'une amplitude donnee (1 : la moitie de la course du curseur de chaque cote),
 // en un temps donne. Le reglage garde sa valeur : c'est elle qu'on enregistre, et le curseur la
 // deplace pendant que l'onde continue.
-const LFO_EXCLUS = new Set(["qualite", "maelstrom", "volume", "poemeMax", "tenue", "fonduDuree", "billets", "rouleaux"]);
+const LFO_EXCLUS = new Set(["allure", "qualite", "maelstrom", "volume", "poemeMax", "tenue", "fonduDuree", "billets", "rouleaux"]);
 const RECONSTRUIRE_LFO = new Set(["taille", "ecriture", "voies", "espacement"]);  // comme RECONSTRUIRE, plus bas
 const LFO_MARCHES = new Set(["lueur", "aberration", "ombre", "graisse"]);
 // ces reglages entrent dans la cle des vignettes de mots : ils avancent par marches de 1/40 de leur
