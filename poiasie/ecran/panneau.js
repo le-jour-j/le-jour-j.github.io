@@ -372,7 +372,8 @@ function majInfosDonnees() {
   const el = document.getElementById("g-donnees");
   if (!el) return;
   const frag = D.flux.reduce((a, p) => a + p.strophes.length, 0);
-  el.textContent = "recueil.json : " + D.recueil.length + " poème(s) en formes · poemes.json : " + frag + " fragments du poème infini · essais à blanc : " + D.essai.length + " · " + D.compte.size + " mots différents cotés à la Bourse.";
+  el.textContent = "recueil.json : " + D.recueil.length + " poème(s) en formes · poemes.json : " + frag + " fragments du poème infini · essais à blanc : " + D.essai.length + " · " + D.compte.size + " mots différents cotés à la Bourse."
+    + (D.apports.length ? " Des autres PC : " + Object.entries(D.apportsPostes).map(([k, n]) => k + " " + n).join(", ") + "." : "");
 }
 
 function construireApropos(page) {

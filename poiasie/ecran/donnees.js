@@ -1,7 +1,7 @@
 "use strict";
 /* ================================================================ donnees */
 
-const D = { recueil: [], flux: [], essai: [], compte: new Map(), corpus: [], cote: [], interdits: [], signature: "", charge: false, erreur: "" };
+const D = { recueil: [], flux: [], essai: [], apports: [], lecture: [], apportsPostes: {}, compte: new Map(), corpus: [], cote: [], interdits: [], signature: "", charge: false, erreur: "" };
 const nouveaux = [];
 
 function racine(m) {
@@ -154,7 +154,7 @@ function recompter() {
 }
 // un poeme deja converti garde son objet : le recueil relu ne refait que les neufs (et le
 // comptage reconnait les memes poemes par leur objet)
-const dejaVus = { recueil: new Map(), essai: new Map() };
+const dejaVus = { recueil: new Map(), essai: new Map(), apports: new Map() };
 function convertir(brut, origine) {
   const vus = dejaVus[origine], neuf = new Map(), out = [];
   for (const p of brut) {
@@ -210,16 +210,53 @@ async function chargerVraiment() {
     bandeau.texte = null;
   }
   D.charge = true;
+  fusionner();
+  chargerApports();
   majInfosDonnees();
+}
+
+// Les poemes des autres PC (2026-11-01, Jiiji : le PC de l'expo doit se servir de ce que genere le
+// fixe). Le serveur lit le dossier commun (apports.py, lecture seule) et n'en garde que les plus
+// recents ; on lui redemande au plus une fois par minute, avec la signature : il ne renvoie tout que
+// si quelque chose a change. Ils ne comptent pas a la Bourse de l'ecran (elle reste celle de ce PC).
+const apportsLu = { sig: "", a: 0, enCours: false };
+async function chargerApports() {
+  if (S.apports === false) { if (D.apports.length) { D.apports = []; apportsLu.sig = ""; fusionner(); } return; }
+  if (location.protocol === "file:" || apportsLu.enCours || Date.now() - apportsLu.a < 60000) return;
+  apportsLu.enCours = true; apportsLu.a = Date.now();
+  try {
+    const rep = await lireJSON("/hors-ligne/apports?sig=" + encodeURIComponent(apportsLu.sig));
+    if (!rep || rep.inchange) return;
+    apportsLu.sig = rep.signature || "";
+    // le poste d'origine se lit discretement dans le cartel, a la place du nom de la machine
+    const brut = (rep.poemes || []).map(p => Object.assign({}, p, { machine: p.poste || p.machine }));
+    D.apports = convertir(brut, "apports");
+    D.apportsPostes = rep.postes || {};
+    fusionner();
+    majInfosDonnees();
+  } catch (e) { /* pas d'apports : l'ecran fait comme avant */ }
+  finally { apportsLu.enCours = false; }
+}
+// le recueil de ce PC et les apports, sans doublon (par id), dans l'ordre du temps
+function fusionner() {
+  if (!D.apports.length) { D.lecture = D.recueil; return; }
+  const ids = new Set(D.recueil.map(p => p.id));
+  const a = D.apports.filter(p => !ids.has(p.id)), r = D.recueil, out = [];
+  let i = 0, j = 0;
+  while (i < r.length || j < a.length) {
+    if (j >= a.length || (i < r.length && String(r[i].date || "") <= String(a[j].date || ""))) out.push(r[i++]);
+    else out.push(a[j++]);
+  }
+  D.lecture = out;
 }
 
 // Dans l'ordre du temps : le poeme infini d'abord, puis le recueil. "Du plus recent" lit
 // cette liste a l'envers.
 function poemesDeLaSource() {
-  if (S.source === "recueil") return D.recueil;
+  if (S.source === "recueil") return D.lecture.length ? D.lecture : D.recueil;
   if (S.source === "flux") return D.flux;
   if (S.source === "essai") return D.essai;
-  return D.flux.concat(D.recueil);
+  return D.flux.concat(D.lecture.length ? D.lecture : D.recueil);
 }
 
 const POEME_VIDE = {
@@ -245,7 +282,8 @@ function prochainPoeme(sens) {
   if (!liste.length) return D.erreur ? Object.assign({}, POEME_VIDE, { titre: "la page est ouverte sans serveur", strophes: [{ poete: "", vers: [{ texte: D.erreur }] }] }) : POEME_VIDE;
   if (S.ordre === "hasard" && sens !== -1) {
     // au hasard, mais le recueil (les poemes en formes) sort trois fois sur quatre
-    const p = S.source === "tout" && D.recueil.length && Math.random() < 0.75 ? tirer(D.recueil) : tirer(liste);
+    const lect = D.lecture.length ? D.lecture : D.recueil;
+    const p = S.source === "tout" && lect.length && Math.random() < 0.75 ? tirer(lect) : tirer(liste);
     retenir(p);
     return p;
   }

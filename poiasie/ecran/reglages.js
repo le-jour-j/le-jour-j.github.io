@@ -3,7 +3,7 @@
 
 const DEFAUTS = {
   scene: "auto", vitesse: 1, allure: 0.5, tenue: 24, qualite: 1.5,
-  source: "tout", ordre: "recent", nouveauxDabord: true,
+  source: "tout", ordre: "recent", nouveauxDabord: true, apports: true,
   entree: "spirale", sortie: "vortex", ecriture: 9,
   annotations: true, cartel: true, direct: true, bourse: true,
   filsRimes: true, chutes: true, votes: true, son: false, volume: 0.35, sonRimes: true,
@@ -481,6 +481,7 @@ const SCHEMA = [
       { cle: "source", nom: "Source", type: "choix", options: [["tout", "Le recueil et le poème infini"], ["recueil", "Le recueil (poèmes en formes)"], ["flux", "Le poème infini (avant les formes)"], ["essai", "Les essais à blanc"]] },
       { cle: "ordre", nom: "Ordre", type: "choix", options: [["recent", "Du plus récent au plus ancien"], ["hasard", "Au hasard"]] },
       { cle: "nouveauxDabord", nom: "Un poème qui vient de naître passe en premier", type: "case" },
+      { cle: "apports", nom: "Lire aussi les poèmes des autres PC (dossier commun)", type: "case" },
     ]},
     { titre: "Ce que l'écran montre", items: [
       { cle: "annotations", nom: "Rimes, syllabes et poètes dans la marge", type: "case" },
