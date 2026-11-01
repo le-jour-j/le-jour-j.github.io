@@ -1,11 +1,17 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
+import { estEnVeille, surVeille } from '../lib/veille'
 
 // Les nouveautés du banquier (supabase_nouveautes.sql) : comptes créés, billets
 // déposés, dépôts au market, inscriptions à la lettre, et la lettre prête quand
-// assez d'actus attendent. Rechargées toutes les 2 minutes et au retour sur
-// l'onglet du navigateur. Les autres comptes n'appellent rien.
+// assez d'actus attendent. Les autres comptes n'appellent rien.
+// Rechargées toutes les 2 minutes quand le banquier est là. Depuis le 2026-11-01 (alerte Supabase
+// « Disk IO Budget » : un onglet d'admin resté ouvert faisait 580 appels par jour), la relève suit
+// la veille de la page (lib/veille.js) : toutes les 15 minutes si la page est visible mais que
+// personne n'y touche, plus rien si l'onglet est caché, et un rechargement au réveil.
+const RELEVE_ACTIF = 2 * 60 * 1000
+const RELEVE_VEILLE = 15 * 60 * 1000
 
 const NouveautesCtx = createContext(null)
 
@@ -27,10 +33,14 @@ export function NouveautesProvider({ children }) {
   useEffect(() => {
     recharger()
     if (!estBanquier) return
-    const t = setInterval(recharger, 120000)
-    const onVisible = () => { if (document.visibilityState === 'visible') recharger() }
-    document.addEventListener('visibilitychange', onVisible)
-    return () => { clearInterval(t); document.removeEventListener('visibilitychange', onVisible) }
+    let t = null
+    const programmer = veille => {
+      clearInterval(t)
+      t = setInterval(() => { if (document.visibilityState === 'visible') recharger() }, veille ? RELEVE_VEILLE : RELEVE_ACTIF)
+    }
+    programmer(estEnVeille())
+    const desabonner = surVeille(veille => { programmer(veille); if (!veille) recharger() })
+    return () => { clearInterval(t); desabonner() }
   }, [estBanquier, recharger])
 
   const marquerVu = useCallback(async rubrique => {

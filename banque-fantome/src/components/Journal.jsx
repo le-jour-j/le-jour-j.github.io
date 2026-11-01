@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { estEnVeille, surVeille } from '../lib/veille'
 
 // Journal public de la banque (journal_banque) : ce qui vient de se passer.
 // Un seul chargement et un seul abonnement Realtime partagés par tous les composants
 // (bandeau de la barre de navigation + section de l'accueil), au lieu d'un par composant.
 // Plus de minuteur de 60 s (alerte Supabase « Disk IO Budget », 2026-10-22, appliqué le 2026-10-31) :
-// rechargé au retour sur l'onglet et dès qu'un billet / une enchère / un objet bouge.
+// rechargé dès qu'un billet / une enchère / un objet bouge.
+// Depuis le 2026-11-01 (alerte du 29/10), l'abonnement suit la veille de la page (lib/veille.js) :
+// fermé quand la page dort, rouvert avec un rechargement au réveil. Une page visible mais sans
+// personne (les écrans d'exposition) se recharge seulement toutes les 5 minutes.
 const MAX = 20 // on en charge 20 une fois, chaque composant en prend ce qu'il veut
+const RELEVE_EN_VEILLE = 5 * 60 * 1000
 let donnees = []
 let abonnes = 0
 let channel = null
 let attente = null
+let releve = null
+let desabonnerVeille = null
 const ecouteurs = new Set()
 
 function charger() {
@@ -26,24 +33,45 @@ function chargerBientot() {
   attente = setTimeout(charger, 1500)
 }
 
-function surFocus() {
-  if (document.visibilityState === 'visible') charger()
-}
-
-function demarrer() {
-  charger()
-  document.addEventListener('visibilitychange', surFocus)
-  channel = supabase.channel('journal')
+function ouvrirCanal() {
+  if (channel) return
+  channel = supabase.channel(`journal-${Math.random().toString(36).slice(2)}`)
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'billets_emis' }, chargerBientot)
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'encheres' }, chargerBientot)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'objets' }, chargerBientot)
     .subscribe()
 }
 
+function fermerCanal() {
+  if (channel) { supabase.removeChannel(channel); channel = null }
+}
+
+function appliquerVeille(veille) {
+  clearInterval(releve)
+  releve = null
+  if (veille) {
+    fermerCanal()
+    releve = setInterval(() => { if (document.visibilityState === 'visible') charger() }, RELEVE_EN_VEILLE)
+  } else {
+    ouvrirCanal()
+    charger()
+  }
+}
+
+function demarrer() {
+  charger()
+  if (estEnVeille()) appliquerVeille(true)
+  else ouvrirCanal()
+  desabonnerVeille = surVeille(appliquerVeille)
+}
+
 function arreter() {
   clearTimeout(attente)
-  document.removeEventListener('visibilitychange', surFocus)
-  if (channel) { supabase.removeChannel(channel); channel = null }
+  clearInterval(releve)
+  releve = null
+  desabonnerVeille?.()
+  desabonnerVeille = null
+  fermerCanal()
 }
 
 export function useJournal(limit = 20) {

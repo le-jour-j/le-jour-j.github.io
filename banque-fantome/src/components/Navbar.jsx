@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { useCanal } from '../lib/veille'
 import { useAuth } from './AuthContext'
 import { useJournal, phrase } from './Journal'
 import { useNouveautes } from './Nouveautes'
@@ -18,21 +19,21 @@ export default function Navbar() {
   const [open, setOpen]     = useState(false) // menu mobile
   const journal = useJournal(8)             // ticker vivant : les dernières opérations de la banque
 
-  // Non lus : recomptés à chaque message reçu ou marqué lu (temps réel), et quand la
-  // page Messages signale une lecture (événement bf-messages-lus).
+  // Non lus : recomptés à chaque message reçu ou marqué lu (temps réel, tant que la page ne
+  // dort pas : lib/veille.js), au réveil, et quand la page Messages signale une lecture
+  // (événement bf-messages-lus).
   const uid = user?.id
+  const recompter = () => uid && supabase.from('messages').select('id', { count: 'exact', head: true })
+    .eq('destinataire_id', uid).eq('lu', false)
+    .then(({ count }) => setUnread(count || 0))
   useEffect(() => {
     if (!uid) { setUnread(0); return }
-    const recompter = () => supabase.from('messages').select('id', { count: 'exact', head: true })
-      .eq('destinataire_id', uid).eq('lu', false)
-      .then(({ count }) => setUnread(count || 0))
     recompter()
-    const channel = supabase.channel(`non-lus-${uid}-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages', filter: `destinataire_id=eq.${uid}` }, recompter)
-      .subscribe()
     window.addEventListener('bf-messages-lus', recompter)
-    return () => { supabase.removeChannel(channel); window.removeEventListener('bf-messages-lus', recompter) }
+    return () => window.removeEventListener('bf-messages-lus', recompter)
   }, [uid])
+  useCanal('non-lus', [{ event: '*', schema: 'public', table: 'messages', filter: `destinataire_id=eq.${uid}` }],
+    () => recompter(), { actif: !!uid })
 
   // Ferme le menu mobile à chaque navigation, et sur Échap
   useEffect(() => { setOpen(false) }, [location.pathname])
@@ -81,7 +82,6 @@ export default function Navbar() {
             <li><NavLink to="/actu">Actu</NavLink></li>
             <li><NavLink to="/senrichir" className={({ isActive }) => isActive || atelierBillet ? 'active' : ''}>S'enrichir</NavLink></li>
             <li><NavLink to="/market" className={({ isActive }) => isActive || atelierOeuvre ? 'active' : ''}>Market</NavLink></li>
-            <li><NavLink to="/bourse">Bourse</NavLink></li>
             {user && <>
               <li><NavLink to="/collection">Collection</NavLink></li>
               <li>

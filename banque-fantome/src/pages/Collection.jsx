@@ -6,11 +6,11 @@ import CarteDessin from '../components/CarteDessin'
 import CarteOeuvre from '../components/CarteOeuvre'
 import ObjetModal from '../components/ObjetModal'
 import Notif from '../components/Notif'
-import { COLONNES_DESSIN, useQuota } from './Bourse'
+import { COLONNES_DESSIN, useQuota } from '../lib/dessins'
 import { COLONNES_OEUVRE } from '../lib/oeuvres'
 
 // Ma collection (2026-10-19) : tout ce qu'on possède, au même endroit. Les billets (dessinés
-// ou achetés) s'encaissent ou se vendent à la bourse ; les œuvres se vendent à l'E-market.
+// ou achetés) s'encaissent ou se vendent au market (rayon Billets) ; les œuvres, à l'E-market.
 // ?type=billets|oeuvres ; sans paramètre, tout.
 const TYPES = [['tout', 'Tout'], ['billets', '◈ Billets'], ['oeuvres', '✦ Œuvres']]
 
@@ -94,7 +94,7 @@ export default function Collection() {
             <>
               {billets.length > 0 && (
                 <section style={{ marginBottom: '2.5rem' }}>
-                  <div className="section-head"><h2>Billets</h2><span className="count">s’encaissent ou se vendent à la <Link to="/bourse">bourse</Link></span></div>
+                  <div className="section-head"><h2>Billets</h2><span className="count">s’encaissent, ou se vendent au <Link to="/market?rayon=billets">market</Link></span></div>
                   {quota && <p className="caption-gris" style={{ marginBottom: '1rem' }}>Encaissements possibles aujourd’hui : {quota.restant} sur {quota.plafond}.</p>}
                   <div className="dessins-liste">
                     {billets.map(d => <CarteDessin key={d.id} dessin={d} moi={user.id} quota={quota} onNotif={setNotif} onChange={changer} onVoirVente={voirVente} />)}
@@ -114,7 +114,7 @@ export default function Collection() {
 
         {data && type !== 'oeuvres' && data.encaisses.length > 0 && (
           <section style={{ marginBottom: '2.5rem' }}>
-            <div className="section-head"><h2>Encaissés</h2><span className="count">Au <Link to="/bourse?onglet=coffre">coffre de la banque</Link></span></div>
+            <div className="section-head"><h2>Encaissés</h2><span className="count">Au <Link to="/senrichir#coffre">coffre de la banque</Link></span></div>
             <div className="dessins-liste">{data.encaisses.map(d => <CarteDessin key={d.id} dessin={d} moi={user.id} />)}</div>
           </section>
         )}

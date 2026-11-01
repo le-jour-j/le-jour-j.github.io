@@ -11,11 +11,12 @@ import { GENRES } from '../lib/oeuvres'
 //   • l'E-market : les œuvres des ateliers de /creer, uniques, en argent du site ;
 //   • le bon coin : les objets réels des joueurs, en billets papier, remise arrangée entre eux ;
 //   • la banque vend : le supermarket, en billets papier, à venir chercher à la banque.
-// Les billets dessinés restent à la bourse. ?rayon=emarket|boncoin|banque ; sans paramètre, tout.
+// Depuis le 2026-11-01, un quatrième : les billets dessinés dans l'atelier, en argent du site
+// (c'était la page Bourse). ?rayon=billets|emarket|boncoin|banque ; sans paramètre, tout.
 
-const RAYONS = [['tout', 'tous les rayons'], ['emarket', '✦ E-market'], ['boncoin', '◇ Le bon coin'], ['banque', '◈ La banque vend']]
-// Les adresses d'avant la séparation en trois rayons
-const ANCIENS_RAYONS = { oeuvres: 'emarket', supermarket: 'banque' }
+const RAYONS = [['tout', 'tous les rayons'], ['billets', '◈ Billets'], ['emarket', '✦ E-market'], ['boncoin', '◇ Le bon coin'], ['banque', '◈ La banque vend']]
+// Les adresses d'avant la séparation en rayons
+const ANCIENS_RAYONS = { oeuvres: 'emarket', supermarket: 'banque', bourse: 'billets' }
 const STATUTS = [['disponible', 'en vente'], ['échangé', 'adjugés']]
 const CATEGORIES = ['toutes', 'objet', 'œuvre', 'service']
 const LIBELLE_CATEGORIE = { œuvre: 'œuvre physique' } // à ne pas confondre avec les œuvres de l'E-market
@@ -49,15 +50,17 @@ export default function Market() {
 
   useEffect(() => {
     let annule = false
-    // Tout sauf les billets (la bourse). À l'E-market, oeuvre!inner : le filtre par atelier
-    // porte sur l'œuvre liée à la vente.
+    // À l'E-market, oeuvre!inner : le filtre par atelier porte sur l'œuvre liée à la vente.
+    // Les billets se reconnaissent à leur dessin_id, les œuvres à leur oeuvre_id, le reste est réel.
     const jointure = rayon === 'emarket' ? 'oeuvre:oeuvres!inner(genre, auteur_pseudo, numero)' : 'oeuvre:oeuvres(genre, auteur_pseudo, numero)'
-    let q = supabase.from('objets').select(`*, ${jointure}`).is('dessin_id', null).eq('statut', statut).limit(150)
-    if (rayon === 'emarket') {
+    let q = supabase.from('objets').select(`*, ${jointure}`).eq('statut', statut).limit(150)
+    if (rayon === 'billets') {
+      q = q.not('dessin_id', 'is', null)
+    } else if (rayon === 'emarket') {
       q = q.not('oeuvre_id', 'is', null)
       if (genre !== 'tous') q = q.eq('oeuvre.genre', genre)
     } else if (rayon === 'boncoin' || rayon === 'banque') {
-      q = q.is('oeuvre_id', null)
+      q = q.is('oeuvre_id', null).is('dessin_id', null)
       q = rayon === 'banque' ? q.eq('vendeur_banque', true) : q.or('vendeur_banque.is.null,vendeur_banque.eq.false')
       if (categorie !== 'toutes') q = q.eq('categorie', categorie)
     }
@@ -78,6 +81,7 @@ export default function Market() {
   const n = ventes?.length ?? 0
   const vide = {
     tout: ['Rien en vente', 'La première œuvre mise en vente fixera le goût de la maison.'],
+    billets: ['Aucun billet en vente', 'Le premier billet mis en vente fixera le cours.'],
     emarket: ['Aucune œuvre en vente', 'La première œuvre mise en vente fixera le goût de la maison.'],
     boncoin: ['Aucune annonce', 'Un objet qui dort chez vous ? Mettez-le en vente, il trouvera preneur.'],
     banque: ['Rayon vide', 'La banque n’a rien en rayon pour le moment.'],
@@ -92,15 +96,18 @@ export default function Market() {
         </div>
         <div className="market-intro">
           <p className="texte-aide">
-            Trois rayons. <strong>L’E-market</strong> : les œuvres faites dans les <Link to="/creer" className="lien-texte">ateliers</Link>, uniques,
-            achetées avec l’argent du site (celui qu’on gagne en dessinant des <Link to="/creer?atelier=billet" className="lien-texte">billets</Link>) ;
-            elles rejoignent votre collection. <strong>Le bon coin</strong> : les objets réels des joueurs ; vendeur et acheteur
+            Quatre rayons. <strong>Les billets</strong> : ceux que les joueurs dessinent dans l’<Link to="/creer?atelier=billet" className="lien-texte">atelier à billets</Link> et revendent
+            au lieu de les encaisser. <strong>L’E-market</strong> : les œuvres faites dans les <Link to="/creer" className="lien-texte">ateliers</Link>, uniques.
+            Billets et œuvres s’achètent avec l’argent du site (celui qu’on gagne en encaissant ses billets) et rejoignent votre collection,
+            qui les garde ou les revend. <strong>Le bon coin</strong> : les objets réels des joueurs ; vendeur et acheteur
             s’arrangent entre eux pour la remise. <strong>La banque vend</strong> : ses objets, à venir chercher à la banque. Au bon coin,
             on paie en <strong>billets papier</strong>, de la main à la main (des billets ? imprimez <Link to="/senrichir" className="lien-texte">les planches</Link>) ;
             chez la banque, en billets papier ou avec l’argent de son compte.
           </p>
           <div className="market-intro-actions">
-            <Link to="/creer" className="btn btn-jaune btn-sm">✦ Créer une œuvre</Link>
+            {rayon === 'billets'
+              ? <Link to="/creer?atelier=billet" className="btn btn-jaune btn-sm">◈ Dessiner un billet</Link>
+              : <Link to="/creer" className="btn btn-jaune btn-sm">✦ Créer une œuvre</Link>}
             <Link to="/deposer" className="btn btn-outline btn-sm">{estBanquier ? '+ La banque vend' : '+ Annonce au bon coin'}</Link>
           </div>
         </div>
@@ -108,6 +115,7 @@ export default function Market() {
         {/* Créer est l'outil qui alimente le market (Jiiji, 2026-10-19) : ses ateliers, à un clic */}
         <div className="filter-row market-creer" aria-label="Créer pour le market">
           <span className="filter-label">✦ Créer</span>
+          <Link to="/creer?atelier=billet" className="chip">◈ Billet</Link>
           {Object.entries(GENRES).map(([g, d]) => (
             <Link key={g} to={`/creer?atelier=${g}`} className="chip">{d.icone} {d.nom}</Link>
           ))}
@@ -168,6 +176,7 @@ export default function Market() {
               ? <div className="market-vide">
                   <div className="titre">{filtres ? 'Rien ne correspond' : statut === 'disponible' ? vide[0] : 'Rien d’adjugé pour le moment'}</div>
                   <p style={{ margin: '0 auto' }}>{filtres ? 'Essayez d’élargir vos filtres.' : vide[1]}</p>
+                  {rayon === 'billets' && <Link to="/creer?atelier=billet" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Dessiner un billet</Link>}
                   {(rayon === 'tout' || rayon === 'emarket') && <Link to="/creer" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Créer une œuvre</Link>}
                   {rayon === 'boncoin' && <Link to="/deposer" className="btn btn-jaune" style={{ marginTop: '1.2rem' }}>→ Déposer une annonce</Link>}
                 </div>

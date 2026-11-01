@@ -191,7 +191,8 @@ do $$ begin
   perform cron.unschedule('bf-resoudre-ventes');
 exception when others then null; end $$;
 do $$ begin
-  perform cron.schedule('bf-resoudre-ventes', '*/10 * * * *', 'select resoudre_ventes_expirees()');
+  -- toutes les heures depuis le 2026-11-01 (supabase_disque.sql) ; c'était toutes les 10 minutes
+  perform cron.schedule('bf-resoudre-ventes', '0 * * * *', 'select resoudre_ventes_expirees()');
 exception when undefined_function or invalid_schema_name then null; end $$;
 
 -- Le badge des messages non lus (Navbar.jsx) écoute messages en temps réel.

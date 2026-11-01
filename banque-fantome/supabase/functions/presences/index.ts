@@ -156,14 +156,27 @@ Deno.serve(async (req) => {
       }
     }
 
-    // On remplace toute la fenêtre : un créneau effacé dans l'agenda disparaît du site
-    const { error: e1 } = await admin.from('presences').delete().gte('fin', new Date(de).toISOString())
-    if (e1) throw e1
-    if (lignes.size) {
-      const { error: e2 } = await admin.from('presences').upsert([...lignes.values()].map(l => ({ ...l, maj_at: new Date().toISOString() })))
+    // On ne touche à la table que si l'agenda a changé (2026-11-01, alerte Supabase « Disk IO
+    // Budget ») : avant, toute la fenêtre était effacée puis réécrite toutes les 15 minutes, soit
+    // une trentaine de lignes écrites 96 fois par jour pour un agenda qui bouge rarement.
+    // Un créneau effacé dans l'agenda disparaît toujours du site ; un créneau nouveau ou déplacé
+    // est écrit ; le reste ne bouge pas.
+    const { data: actuelles, error: e0 } = await admin.from('presences').select('uid, agence, debut, fin').gte('fin', new Date(de).toISOString())
+    if (e0) throw e0
+    const pareil = (a: { agence: string, debut: string, fin: string }, b: { agence: string, debut: string, fin: string }) =>
+      a.agence === b.agence && Date.parse(a.debut) === Date.parse(b.debut) && Date.parse(a.fin) === Date.parse(b.fin)
+    const avant = new Map((actuelles || []).map(r => [r.uid, r]))
+    const aRetirer = [...avant.keys()].filter(uid => !lignes.has(uid))
+    const aEcrire = [...lignes.values()].filter(l => !avant.has(l.uid) || !pareil(avant.get(l.uid)!, l))
+    if (aRetirer.length) {
+      const { error: e1 } = await admin.from('presences').delete().in('uid', aRetirer)
+      if (e1) throw e1
+    }
+    if (aEcrire.length) {
+      const { error: e2 } = await admin.from('presences').upsert(aEcrire.map(l => ({ ...l, maj_at: new Date().toISOString() })))
       if (e2) throw e2
     }
-    return Response.json({ ok: true, evenements: evts.length, presences: lignes.size })
+    return Response.json({ ok: true, evenements: evts.length, presences: lignes.size, retirees: aRetirer.length, ecrites: aEcrire.length })
   } catch (e) {
     console.error('presences', e)
     return Response.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 })

@@ -45,7 +45,7 @@ export default function ObjetModal({ objet: objetInitial, onClose, onUpdate }) {
               #{String(objet.numero || objet.id?.slice(-4) || '???').padStart(4, '0')}
             </span>
             {!vente && !!objet.valeur && <span className="stamp stamp-noir">{objet.valeur} billets</span>}
-            {vente && <span className="stamp stamp-noir">{billet ? '◈ Bourse aux billets' : oeuvre ? '◈ E-market' : banque ? '◈ La banque vend' : '◇ Le bon coin'}</span>}
+            {vente && <span className="stamp stamp-noir">{billet ? '◈ Billets' : oeuvre ? '◈ E-market' : banque ? '◈ La banque vend' : '◇ Le bon coin'}</span>}
             {objet.en_pause && <span className="stamp stamp-rouge">en pause</span>}
             <Crayon type="objet" onNotif={setNotif} onChange={p => majObjet({ ...objet, ...p })}
               cible={{ id: objet.id, titre: objet.titre, description: objet.description, en_pause: objet.en_pause, auteur: { id: objet.user_id, pseudo: objet.pseudo } }} />

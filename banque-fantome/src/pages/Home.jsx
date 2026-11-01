@@ -35,7 +35,7 @@ function Compteur({ valeur }) {
 const PRINCIPE = [
   { n: '1', titre: 'Ouvrir un compte', texte: 'Chacun peut entrer dans la banque avec un pseudo et devenir opérateur temporaire du dispositif.', to: '/connexion', cta: 'Créer un compte' },
   { n: '2', titre: 'Créer', texte: 'Dans les ateliers, dessinez un billet (encaissé, il crédite votre compte) ou faites une œuvre : peinture, poème, photo retouchée, collage.', to: '/creer', cta: 'Ouvrir les ateliers' },
-  { n: '3', titre: 'Échanger', texte: 'Avec l’argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au market encore : le bon coin des joueurs et ce que vend la banque, en billets papier.', to: '/market', cta: 'Entrer dans le market' },
+  { n: '3', titre: 'Échanger', texte: 'Avec l’argent du site, achetez au market les billets et les œuvres des autres. Au market encore : le bon coin des joueurs et ce que vend la banque, en billets papier.', to: '/market', cta: 'Entrer dans le market' },
 ]
 
 export default function Home() {
@@ -57,8 +57,8 @@ export default function Home() {
     supabase.from('objets').select('*').neq('statut', 'retiré')
       .order('created_at', { ascending: false }).limit(3)
       .then(({ data }) => setRecent(data || []))
-    // le compteur ne compte que le market : les billets ont le leur (le coffre)
-    supabase.from('objets').select('id', { count: 'exact', head: true }).is('dessin_id', null).eq('statut', 'disponible')
+    // tout ce qui est en vente au market, billets compris depuis qu'ils y ont leur rayon (2026-11-01)
+    supabase.from('objets').select('id', { count: 'exact', head: true }).eq('statut', 'disponible')
       .then(({ count }) => setTotal(count || 0))
     supabase.rpc('stats_banque').then(({ data }) => setStats(data || null))
   }, [])
@@ -81,7 +81,7 @@ export default function Home() {
           <div className="hero-eyebrow">On va faire du pognon</div>
           <h1 className="hero-title">BANQUE<br className="hero-br" /> <span>FANTÔME</span></h1>
           <p className="hero-sub">
-            La Banque Fantôme propose d'ouvrir un compte, de dessiner sa propre monnaie, de créer des œuvres dans ses ateliers et de les échanger : les billets à la bourse ; les œuvres, les objets des joueurs et ceux de la banque au market. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
+            La Banque Fantôme propose d'ouvrir un compte, de dessiner sa propre monnaie, de créer des œuvres dans ses ateliers et de les échanger au market, avec les objets des joueurs et ceux de la banque. Ici, la valeur ne préexiste pas : elle se dessine, se met en jeu et circule.
           </p>
           <div className="hero-actions">
             <Link to="/connexion" className="btn btn-jaune">→ Ouvrir un compte</Link>
@@ -167,7 +167,7 @@ export default function Home() {
             <div className="info-drawer">
               <div className="info-drawer-title">Ici, vous créez votre monnaie et vous achetez avec.</div>
               <p>
-                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs dessinent leurs propres billets sur le site : encaissés, ils deviennent de l'argent ; mis en vente, ils s'échangent dans la bourse contre l'argent des autres. Cet argent achète aussi les œuvres que les joueurs font dans les ateliers et vendent au market. Au market encore, les joueurs revendent leurs objets réels au bon coin et la banque vend les siens, en billets papier, réglés en se voyant. Sur chaque vente de la bourse et du market, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
+                La Banque Fantôme fonctionne comme un jeu d'enrichissement fictif. Les joueurs dessinent leurs propres billets sur le site : encaissés, ils deviennent de l'argent ; mis en vente, ils s'échangent au market contre l'argent des autres. Cet argent achète aussi les œuvres que les joueurs font dans les ateliers et vendent au market. Au market encore, les joueurs revendent leurs objets réels au bon coin et la banque vend les siens, en billets papier, réglés en se voyant. Sur chaque vente de billet ou d'œuvre, la banque prélève {stats?.commission_pct ?? 5} % : elle s'enrichit à mesure que les choses circulent, changent de main et gagnent une histoire.
               </p>
             </div>
           )}
@@ -203,7 +203,7 @@ export default function Home() {
           <div className="grid-3">
             {[
               ['01', 'Dessiner un billet', "Ouvrez l'atelier, choisissez une coupure et dessinez sur le billet. Encaissez-le pour créditer votre compte, ou gardez-le pour le vendre."],
-              ['02', 'Enchérir', "Misez vos billets sur les billets et les œuvres des autres, à la bourse et au market. Au bon coin et chez la banque, promettez des billets papier sur un objet réel."],
+              ['02', 'Enchérir', "Misez vos billets sur les billets et les œuvres des autres, au market. Au bon coin et chez la banque, promettez des billets papier sur un objet réel."],
               ['03', 'Faire circuler', "À la clôture, le plus offrant l'emporte. Un billet ou une œuvre achetés rejoignent votre collection et se revendent ; un objet du bon coin ou de la banque se paie et se remet en main propre."],
             ].map(([n, titre, desc]) => (
               <div key={n} className="etape">
@@ -220,7 +220,7 @@ export default function Home() {
         <div className="container">
           <div className="section-head">
             <h2>Entrées récentes dans le circuit</h2>
-            <span className="count"><Link to="/market">Market</Link> · <Link to="/bourse">Bourse</Link> →</span>
+            <Link to="/market" className="count">Tout le market →</Link>
           </div>
           {recent === null
             ? <div className="loader">Chargement<span className="blink">_</span></div>
@@ -236,12 +236,12 @@ export default function Home() {
           <div>
             <div className="eyebrow">FAUX ARGENT</div>
             <p>
-              Dessinez vos billets sur le site ou imprimez-les sur papier : les premiers achètent billets et œuvres à la bourse et au market, les seconds les objets réels du bon coin et de la banque, de la main à la main. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
+              Dessinez vos billets sur le site ou imprimez-les sur papier : les premiers achètent billets et œuvres au market, les seconds les objets réels du bon coin et de la banque, de la main à la main. La banque s'enrichit quand les joueurs produisent leur monnaie et la remettent en circulation.
             </p>
           </div>
           <div className="bande-actions">
             <Link to="/creer?atelier=billet" className="btn btn-noir">Dessiner un billet</Link>
-            <Link to="/bourse" className="btn btn-outline">La bourse aux billets</Link>
+            <Link to="/market?rayon=billets" className="btn btn-outline">Les billets en vente</Link>
           </div>
         </div>
       </section>

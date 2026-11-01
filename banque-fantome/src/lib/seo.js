@@ -26,7 +26,7 @@ export const PAGES = [
     path: "/",
     title: "Banque Fantôme : dessinez votre monnaie, faites-la circuler",
     description:
-      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, créez des œuvres dans ses ateliers et échangez-les : billets à la bourse ; œuvres, objets des joueurs et de la banque au market. La valeur ne préexiste pas : elle se dessine.",
+      "Institution de circulation : ouvrez un compte, dessinez vos propres billets sur le site, créez des œuvres dans ses ateliers et échangez-les au market, avec les objets des joueurs et de la banque. La valeur ne préexiste pas : elle se dessine.",
     priority: "0.9",
     contenu: `
       <h1>Banque Fantôme</h1>
@@ -36,7 +36,7 @@ export const PAGES = [
       <h2>Créer</h2>
       <p>Dans les ateliers, dessinez sur un billet de la banque : encaissé, il crédite votre compte de sa valeur. Ou faites une œuvre : peinture, poème, photo retouchée, collage.</p>
       <h2>Échanger</h2>
-      <p>Avec l'argent du site, achetez les billets des autres à la bourse et les œuvres au market. Au market encore, le bon coin des joueurs et ce que vend la banque, en billets papier, réglés en main propre.</p>`,
+      <p>Avec l'argent du site, achetez au market les billets et les œuvres des autres. Au market encore, le bon coin des joueurs et ce que vend la banque, en billets papier, réglés en main propre.</p>`,
   },
   {
     path: "/creer",
@@ -48,18 +48,20 @@ export const PAGES = [
       <h1>Créer</h1>
       <p>Les ateliers de la banque, ouverts à tous, dans le navigateur.</p>
       <h2>Le billet</h2>
-      <p>Dessinez sur un billet habillé par la banque : encaissé, il crédite votre compte ; vendu, il circule à la bourse.</p>
+      <p>Dessinez sur un billet habillé par la banque : encaissé, il crédite votre compte ; vendu, il circule au market.</p>
       <h2>Les œuvres</h2>
       <p>Paint, poésie, image retouchée, collage : chaque œuvre est unique, rejoint votre collection et se vend au market, en argent du site. Chaque atelier présente une pratique d'artiste.</p>`,
   },
   {
     path: "/market",
-    title: "Market : E-market, bon coin et ce que vend la banque | Banque Fantôme",
+    title: "Market : billets, E-market, bon coin et ce que vend la banque | Banque Fantôme",
     description:
-      "Le market de la Banque Fantôme : les œuvres des ateliers du site en argent du site (E-market), les objets réels des joueurs (le bon coin) et ceux de la banque, en billets papier.",
+      "Le market de la Banque Fantôme : les billets dessinés par les joueurs et les œuvres des ateliers, en argent du site ; les objets réels des joueurs (le bon coin) et ceux de la banque, en billets papier.",
     priority: "0.8",
     contenu: `
       <h1>Market</h1>
+      <h2>Les billets</h2>
+      <p>Les billets dessinés dans l'atelier de la banque, que leurs auteurs vendent aux enchères au lieu de les encaisser. On les paie avec l'argent du site ; un billet acheté rejoint la collection de l'acheteur, qui le garde ou le revend.</p>
       <h2>L'E-market</h2>
       <p>Les œuvres faites dans les ateliers de la banque : peintures, poèmes, images retouchées, collages. Chacune est unique.</p>
       <p>On les achète aux enchères avec l'argent du site, celui qu'on gagne en dessinant des billets. Achetée, l'œuvre rejoint la collection de l'acheteur, qui la télécharge en haute définition, la garde ou la revend.</p>
@@ -67,22 +69,6 @@ export const PAGES = [
       <p>Les objets réels des joueurs, aux enchères en billets papier : vendeur et acheteur s'arrangent entre eux pour la remise.</p>
       <h2>La banque vend</h2>
       <p>Les objets, œuvres physiques et services que la banque met en vente, à venir chercher à la banque. On y enchérit en billets papier ; le gagnant paie à la remise, ou avec l'argent de son compte.</p>`,
-  },
-  {
-    path: "/bourse",
-    title: "Bourse aux billets : dessiner, encaisser, échanger | Banque Fantôme",
-    description:
-      "L'atelier et la bourse de la Banque Fantôme : dessinez un billet sur le site, encaissez-le pour créditer votre compte ou vendez-le aux enchères aux autres comptes.",
-    priority: "0.8",
-    contenu: `
-      <h1>Bourse aux billets</h1>
-      <p>Ici, l'argent se dessine. Dans l'atelier, on dessine sur un billet habillé par la banque : cadre, guillochis, montant et numéro de série.</p>
-      <h2>Encaisser ou vendre</h2>
-      <p>Un billet terminé s'encaisse (la banque le garde et crédite le compte de sa valeur) ou se vend aux enchères aux autres comptes, qui paient avec les billets qu'ils ont encaissés.</p>
-      <h2>Collectionner</h2>
-      <p>Un billet acheté rejoint la collection de l'acheteur, qui peut le garder ou le revendre. Chaque vente reste inscrite au registre.</p>
-      <h2>Le coffre de la banque</h2>
-      <p>Les billets encaissés ne circulent plus : la banque les garde dans son coffre, visible de tous.</p>`,
   },
   {
     path: "/senrichir",
@@ -96,7 +82,9 @@ export const PAGES = [
       <h2>Planches à imprimer</h2>
       <p>834 planches A4 de billets dessinés en atelier, de 5 à 500 € : chaque planche reprend un seul dessin, à taille réelle, avec traits de coupe. À télécharger en PDF, imprimer et découper.</p>
       <h2>Cours des devises</h2>
-      <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>`,
+      <p>Le cours des monnaies fabriquées par les comptes de la banque.</p>
+      <h2>Le coffre de la banque</h2>
+      <p>Les billets encaissés ne circulent plus : la banque les garde dans son coffre, visible de tous.</p>`,
   },
 
   {
@@ -127,12 +115,14 @@ export const PAGES = [
   },
 
   // Pages de compte : servies normalement, tenues hors de l'index. /participer
-  // n'est plus qu'un renvoi vers l'atelier de la bourse (2026-10-18), gardé pour
+  // n'est plus qu'un renvoi vers l'atelier à billets (2026-10-18), gardé pour
   // que les anciens liens ne répondent pas 404.
   { path: "/participer", title: "Créer | Banque Fantôme", description: "L'atelier de la Banque Fantôme : dessiner un billet.", noindex: true },
   { path: "/collection", title: "Ma collection | Banque Fantôme", description: "Vos billets et vos œuvres.", noindex: true },
   // Le supermarket est devenu le rayon « La banque vend » du market (2026-10-19) : l'adresse y renvoie.
   { path: "/supermarket", title: "La banque vend | Banque Fantôme", description: "Ce que vend la banque est un rayon du market.", noindex: true },
+  // La bourse est devenue le rayon « Billets » du market (2026-11-01) : l'adresse y renvoie.
+  { path: "/bourse", title: "Billets en vente | Banque Fantôme", description: "Les billets dessinés par les joueurs se vendent au market, rayon Billets.", noindex: true },
   { path: "/deposer", title: "Annonce au bon coin | Banque Fantôme", description: "Mettre un objet réel en vente au bon coin du market, en billets papier.", noindex: true },
   { path: "/connexion", title: "Connexion | Banque Fantôme", description: "Ouvrir un compte ou se connecter à la Banque Fantôme.", noindex: true },
   { path: "/compte", title: "Mon compte | Banque Fantôme", description: "Solde, billets encaissés et ventes en cours.", noindex: true },

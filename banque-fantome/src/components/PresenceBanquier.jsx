@@ -16,11 +16,13 @@ export default function PresenceBanquier({ compact = false }) {
 
   useEffect(() => {
     let actif = true
-    const charger = () => chargerPresences().then(d => actif && setPresences(d)).catch(() => actif && setPresences([]))
+    let lu = 0
+    const charger = () => { lu = Date.now(); return chargerPresences().then(d => actif && setPresences(d)).catch(() => actif && setPresences([])) }
     charger()
     const horloge = setInterval(() => setMaintenant(Date.now()), 60000)
-    const releve = setInterval(charger, 15 * 60000)
-    const onVisible = () => { if (document.visibilityState === 'visible') { setMaintenant(Date.now()); charger() } }
+    // onglet caché : on ne relève rien (2026-11-01) ; au retour, seulement si la dernière lecture a plus de 5 min
+    const releve = setInterval(() => { if (document.visibilityState === 'visible') charger() }, 15 * 60000)
+    const onVisible = () => { if (document.visibilityState === 'visible') { setMaintenant(Date.now()); if (Date.now() - lu > 5 * 60000) charger() } }
     document.addEventListener('visibilitychange', onVisible)
     return () => { actif = false; clearInterval(horloge); clearInterval(releve); document.removeEventListener('visibilitychange', onVisible) }
   }, [])

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { useCanal } from '../lib/veille'
 import { useAuth } from './AuthContext'
 import { DUREES, INCREMENT_MIN, estEnCours, echeance, enchereMinimale, tempsRestant, urgent, commission, messageErreur } from '../utils/encheres'
 
@@ -21,12 +22,11 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
 
   const enCours = estEnCours(objet)
   const isOwn = user && objet.user_id === user.id
-  const billet = !!objet.dessin_id           // vente de la bourse : un billet dessiné dans l'atelier
-  const oeuvre = !!objet.oeuvre_id           // vente du market : une œuvre des ateliers (2026-10-19)
+  const billet = !!objet.dessin_id           // rayon Billets (l'ancienne bourse) : un billet dessiné dans l'atelier
+  const oeuvre = !!objet.oeuvre_id           // E-market : une œuvre des ateliers (2026-10-19)
   const banque = !!objet.vendeur_banque      // vente de la banque (affichage, contact)
-  // Le market (2026-10-19) : on enchérit en promesses de billets papier, rien n'est débité,
-  // le gagnant paie en main propre. Seule la bourse se paie avec l'argent du site.
-  // Bourse et E-market se paient en argent du site ; le bon coin et la banque vend, en billets papier.
+  // Billets et E-market se paient en argent du site ; le bon coin et la banque vend, en promesses
+  // de billets papier : rien n'est débité, le gagnant paie en main propre.
   const papier = !billet && !oeuvre
   const chose = billet ? 'Le billet' : 'L’œuvre'
   const vendeur = banque ? 'la banque' : objet.pseudo || 'le vendeur'
@@ -44,15 +44,14 @@ export default function EnchereBloc({ objet, onChange, onNotif, onContacter }) {
   // Le minimum bouge quand quelqu'un surenchérit
   useEffect(() => { setMontant(m => (m == null || m < minimum ? minimum : m)) }, [minimum])
 
-  // Historique des enchères + mise à jour en direct de l'objet
-  useEffect(() => {
-    chargerEncheres()
-    const channel = supabase.channel(`objet-${objet.id}-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'objets', filter: `id=eq.${objet.id}` },
-        payload => { onChange?.({ ...objet, ...payload.new }); chargerEncheres() })
-      .subscribe()
-    return () => supabase.removeChannel(channel)
-  }, [objet.id])
+  // Historique des enchères + mise à jour en direct de l'objet, tant que la page ne dort pas
+  // (lib/veille.js) ; au réveil, l'objet est relu en entier.
+  useEffect(() => { chargerEncheres() }, [objet.id])
+  useCanal('objet', [{ event: 'UPDATE', schema: 'public', table: 'objets', filter: `id=eq.${objet.id}` }],
+    payload => {
+      if (!payload) { recharger(); return }
+      onChange?.({ ...objet, ...payload.new }); chargerEncheres()
+    })
 
   async function chargerEncheres() {
     const { data } = await supabase.from('encheres').select('pseudo, montant, statut, created_at')

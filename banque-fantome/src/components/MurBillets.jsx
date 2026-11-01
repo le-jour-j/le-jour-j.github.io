@@ -4,6 +4,9 @@ import { useAuth } from './AuthContext'
 import { getPublicImageUrl } from '../utils/images'
 import { messageErreur } from '../utils/encheres'
 import BilletModal from './BilletModal'
+import { useCanal } from '../lib/veille'
+
+const ECOUTES = [{ event: '*', schema: 'public', table: 'billets_emis' }]
 
 // Mur des billets encaissés (public), avec cartel : utilisé sur S'enrichir et sur l'accueil.
 // Sorti de GuichetEmission.jsx le 2026-10-19, quand le guichet photo a quitté le code.
@@ -12,13 +15,9 @@ export default function MurBillets({ limit = 12, titre = 'Derniers billets émis
   const [billets, setBillets] = useState([])
   const [zoom, setZoom] = useState(null)
 
-  useEffect(() => {
-    charger()
-    const channel = supabase.channel(`mur-billets-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'billets_emis' }, () => charger())
-      .subscribe()
-    return () => supabase.removeChannel(channel)
-  }, [limit])
+  useEffect(() => { charger() }, [limit])
+  // Un billet encaissé apparaît tout de suite, tant que la page ne dort pas (lib/veille.js)
+  useCanal('mur-billets', ECOUTES, () => charger())
 
   async function charger() {
     const { data } = await supabase.from('billets_emis').select('*').order('created_at', { ascending: false }).limit(limit)

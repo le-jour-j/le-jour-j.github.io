@@ -123,7 +123,7 @@ secrets : `BANQUE_FANTOME_SUPABASE_{URL,ANON_KEY}`,
 
 *Réécrit le 2026-10-19 après l'audit : l'ancienne version ne citait que 2 fichiers SQL.*
 
-Quatorze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
+Quinze fichiers SQL à la racine de `banque-fantome/`, à jouer dans le SQL Editor de la
 base Banque Fantôme, dans cet ordre :
 
 1. `supabase_setup.sql` : socle (`profiles`, `objets`, RLS, bucket `objets`).
@@ -149,6 +149,9 @@ base Banque Fantôme, dans cet ordre :
    `oeuvres` et `dessins` (lecture masquée au public, enchères, mise en vente et encaissement
    bloqués par trigger, clôture suspendue), `admin_moderer` (le crayon : pause, reprise, édition),
    `admin_fiche_compte` (tout un compte sauf ses messages), `admin_nouveautes` + `a_imprimer`.
+12. `supabase_disque.sql` (2026-11-01, alertes « Disk IO Budget ») : `dessins` et `oeuvres` sortis
+   de la publication Realtime (aucun abonné), `bf-resoudre-ventes` toutes les heures, purge
+   nocturne de `cron.job_run_details` (`bf-menage-cron`). Aucune fonction redéfinie.
 
 Chaque fichier est rejouable, **mais pas dans le désordre** : `bf_garde_objets`,
 `placer_enchere`, `acheter_immediat`, `bf_finaliser_vente`, `remettre_en_vente`... sont
@@ -161,10 +164,12 @@ principal) existent en base mais dans aucun fichier.
 Trois circuits depuis le 19/10/2026 (tout se crée dans `/creer`, tout ce qu'on possède est
 dans `/collection`) :
 
-- **La bourse** (`/bourse`) : l'argent naît dans l'atelier. `deposer_dessin` (table
-  `dessins`), puis `encaisser_dessin` (la banque garde le billet, compte crédité, 3 par
-  jour, une ligne `billets_emis`) ou `mettre_dessin_en_vente` (une ligne `objets` avec
-  `dessin_id`). Ces ventes se paient avec le solde, commission au trésor.
+- **Les billets** (`/market?rayon=billets`, l'ancienne bourse ; `/bourse` y renvoie depuis le
+  1/11/2026, son coffre est la section `#coffre` de `/senrichir`) : l'argent naît dans
+  l'atelier. `deposer_dessin` (table `dessins`), puis `encaisser_dessin` (la banque garde le
+  billet, compte crédité, 3 par jour, une ligne `billets_emis`) ou `mettre_dessin_en_vente`
+  (une ligne `objets` avec `dessin_id`). Ces ventes se paient avec le solde, commission au
+  trésor. Les fonctions SQL gardent le nom « bourse » (`supabase_bourse.sql`).
 - **L'E-market** (`/market?rayon=emarket`) : les œuvres des ateliers de `/creer` (Paint, Poésie, Image,
   Collage, dans `src/components/ateliers/`, contrat commun dans `commun.jsx`). `deposer_oeuvre`
   (aperçu public `objets/oeuvres/<uid>/`, HD privée `oeuvres-hd/<uid>/`, lue par le seul
@@ -175,7 +180,13 @@ dans `/collection`) :
   remise en main propre ; au bon coin les joueurs s'arrangent entre eux, chez la banque le
   gagnant peut aussi `payer_avec_compte`. Le vendeur ou le banquier peut défaire une
   adjudication (`annuler_adjudication_papier`, remboursée si elle était réglée avec le compte).
-  Les trois rayons (E-market, bon coin, la banque vend) partagent la page `/market`.
+  Les quatre rayons (billets, E-market, bon coin, la banque vend) partagent la page `/market`.
+
+**Budget disque (offre gratuite)** : tout abonnement Realtime passe par `useCanal` de
+`src/lib/veille.js` (le journal, par `surVeille`), qui le ferme quand l'onglet est caché
+depuis 1 min ou que personne n'a touché la page depuis 10 min. Ne pas réintroduire de
+`supabase.channel()` direct ni de relève courte qui tourne onglet caché : c'est ce qui
+vidait le budget (relevé du 1/11/2026 dans `supabase_disque.sql`).
 
 **Piège des droits** : `profiles` n'est lisible que par colonnes (`id, pseudo, solde,
 role, created_at`). Un `select('*')` sur `profiles` ou un `upsert` qui met à jour

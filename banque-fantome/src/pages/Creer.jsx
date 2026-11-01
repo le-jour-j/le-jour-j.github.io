@@ -5,7 +5,8 @@ import { useAuth } from '../components/AuthContext'
 import ObjetModal from '../components/ObjetModal'
 import CarteOeuvre from '../components/CarteOeuvre'
 import Notif from '../components/Notif'
-import { OngletAtelier, useQuota } from './Bourse'
+import DepotBillet from '../components/DepotBillet'
+import { useQuota } from '../lib/dessins'
 import { GENRES, COLONNES_OEUVRE, deposerOeuvre } from '../lib/oeuvres'
 import { verifierTexte } from '../lib/billet/motsRefuses'
 import { messageErreur } from '../utils/encheres'
@@ -14,8 +15,8 @@ import { getPublicImageUrl } from '../utils/images'
 // Créer (2026-10-19, demande de Jiiji) : l'outil de la banque, sans entrée de menu à lui.
 // « pour s'enrichir soit tu imprimes une planche déjà faite soit tu crées ton billet avec l'outil,
 // pareil pour créer, en fait c'est un outil pour alimenter le market » : on arrive au billet
-// depuis S'enrichir, aux œuvres depuis le Market. Le billet fait de l'argent (encaissé ou vendu
-// à la bourse) ; les autres ateliers font des
+// depuis S'enrichir, aux œuvres depuis le Market. Le billet fait de l'argent (encaissé, ou vendu
+// au market, rayon « Billets ») ; les autres ateliers font des
 // œuvres, uniques, qui se vendent à l'E-market en argent du site. Tout arrive dans la collection.
 // ?atelier=billet|paint|poesie|image|collage ; sans paramètre, la vitrine des ateliers.
 
@@ -25,7 +26,7 @@ const ATELIERS = {
   image:   lazy(() => import('../components/ateliers/AtelierImage')),
   collage: lazy(() => import('../components/ateliers/AtelierCollage')),
 }
-const BILLET = { id: 'billet', nom: 'Billet', icone: '◈', phrase: 'Dessiner un billet : l’encaisser ou le vendre à la bourse', sortie: 'de l’argent' }
+const BILLET = { id: 'billet', nom: 'Billet', icone: '◈', phrase: 'Dessiner un billet : l’encaisser ou le vendre au market', sortie: 'de l’argent' }
 const OEUVRES = Object.entries(GENRES).map(([id, g]) => ({ id, nom: g.nom, icone: g.icone, phrase: g.phrase, sortie: 'une œuvre pour l’E-market' }))
 const CHOIX = [BILLET, ...OEUVRES]
 
@@ -88,7 +89,7 @@ export default function Creer() {
               ))}
             </div>
             {atelier === 'billet'
-              ? <OngletAtelier quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />
+              ? <DepotBillet quota={quota} onNotif={setNotif} onChange={apresAction} onVoirVente={voirVente} />
               : <DepotOeuvre key={atelier} genre={atelier} onNotif={setNotif} onVoirVente={voirVente} />}
           </>
         )}

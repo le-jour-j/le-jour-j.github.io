@@ -12,7 +12,7 @@ export default function ObjetCard({ objet: objetRecu, onClick }) {
   const imgUrls = getObjetImageUrls(objet)
   const imgUrl = imgUrls[0] || null
   const vente = estVente(objet)
-  const billet = !!objet.dessin_id // billet de la bourse : image au format billet, sans rareté
+  const billet = !!objet.dessin_id // billet dessiné (rayon Billets) : image au format billet, sans rareté
   const oeuvre = !!objet.oeuvre_id // œuvre du market : image entière, sans rareté (2026-10-19)
   const enCours = estEnCours(objet)
   const statut = objet.statut || 'disponible'

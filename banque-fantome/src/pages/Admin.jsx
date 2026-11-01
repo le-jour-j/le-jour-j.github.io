@@ -19,7 +19,7 @@ import BoutonPlanche from '../components/BoutonPlanche'
 import { planchesPdf, telechargerBlob } from '../lib/billet/planche'
 
 // Espace du banquier : fil d'actu, billets à imprimer, billets émis, ventes (bon coin, la banque vend, E-market,
-// bourse), œuvres, comptes (avec la fiche complète de chacun) et chiffres.
+// billets dessinés), œuvres, comptes (avec la fiche complète de chacun) et chiffres.
 // La page n'est qu'un tableau de bord : les droits sont vérifiés côté base
 // (bf_est_banquier, annuler_billet, admin_retirer_objet, lecture des transactions).
 
@@ -240,7 +240,7 @@ function OngletMarket({ onNotif, depuis }) {
   const { user } = useAuth()
   const [objets, setObjets] = useState(null)
   const [filtre, setFiltre] = useState('disponible')
-  const [rayon, setRayon] = useState('supermarket') // supermarket (objets physiques) | market (œuvres) | bourse (billets dessinés)
+  const [rayon, setRayon] = useState('supermarket') // supermarket (objets physiques) | market (œuvres) | billets (billets dessinés)
   const [depot, setDepot] = useState(false)      // formulaire de mise en vente ouvert
   const [aRetirer, setARetirer] = useState(null)
   const [selected, setSelected] = useState(null)
@@ -250,7 +250,7 @@ function OngletMarket({ onNotif, depuis }) {
   useEffect(() => {
     let q = supabase.from('objets').select('*').order('created_at', { ascending: false }).limit(300)
     if (filtre !== 'tous') q = q.eq('statut', filtre)
-    q = rayon === 'bourse' ? q.not('dessin_id', 'is', null) : rayon === 'market' ? q.not('oeuvre_id', 'is', null) : q.is('dessin_id', null).is('oeuvre_id', null)
+    q = rayon === 'billets' ? q.not('dessin_id', 'is', null) : rayon === 'market' ? q.not('oeuvre_id', 'is', null) : q.is('dessin_id', null).is('oeuvre_id', null)
     q.then(({ data }) => setObjets(data || []))
   }, [filtre, rayon, recharge])
 
@@ -268,7 +268,7 @@ function OngletMarket({ onNotif, depuis }) {
     <div className="admin-panneau">
       <div className="admin-barre">
         <div className="filter-row">
-          {[['supermarket', 'Objets réels (bon coin, la banque vend)'], ['market', 'E-market (œuvres)'], ['bourse', 'Bourse aux billets']].map(([v, l]) => (
+          {[['supermarket', 'Objets réels (bon coin, la banque vend)'], ['market', 'E-market (œuvres)'], ['billets', 'Billets dessinés']].map(([v, l]) => (
             <button key={v} type="button" className={`chip ${rayon === v ? 'active' : ''}`} onClick={() => setRayon(v)}>{l}</button>
           ))}
         </div>
@@ -289,7 +289,7 @@ function OngletMarket({ onNotif, depuis }) {
             <button key={v} type="button" className={`chip ${filtre === v ? 'active' : ''}`} onClick={() => setFiltre(v)}>{l}</button>
           ))}
         </div>
-        <span className="caption-gris">Retirer une vente de la bourse ou du market rend ses billets au meilleur enchérisseur ; au bon coin et chez la banque, rien n'a été débité.</span>
+        <span className="caption-gris">Retirer une vente de billet ou de l'E-market rend ses billets au meilleur enchérisseur ; au bon coin et chez la banque, rien n'a été débité.</span>
       </div>
       {objets === null ? <div className="loader">Chargement<span className="blink">_</span></div>
         : objets.length === 0 ? <p className="vide">Aucun dépôt.</p>
@@ -761,7 +761,7 @@ function OngletLettre({ onNotif, depuis }) {
 // Tout billet dessiné sur le site attend ici jusqu'à ce que la banque l'ait imprimé.
 // Un seul PDF, une planche A4 par billet (lib/billet/planche.js), puis « imprimés ».
 const COLONNES_FILE = 'id, numero, code, coupure, titre, image_path, auteur_id, auteur_pseudo, statut, en_pause, created_at, imprime_at'
-const ETAT_BILLET = { collection: 'chez son auteur', en_vente: 'en vente à la bourse', encaisse: 'encaissé (au coffre)', annule: 'annulé' }
+const ETAT_BILLET = { collection: 'chez son auteur', en_vente: 'en vente au market', encaisse: 'encaissé (au coffre)', annule: 'annulé' }
 
 function OngletImprimer({ onNotif, onImprime }) {
   const [file, setFile] = useState(null)
@@ -867,7 +867,7 @@ function OngletImprimer({ onNotif, onImprime }) {
 // ─── La fiche d'un compte (2026-10-19, « dans l'admin j'ai accès à tout dans la partie users ») ───
 // admin_fiche_compte (supabase_moderation.sql) : billets, œuvres, ventes, enchères, argent.
 // Pas les messages privés. Le crayon sur chaque publication.
-const rayonDe = o => o.dessin_id ? 'bourse' : o.oeuvre_id ? 'E-market' : o.vendeur_banque ? 'la banque vend' : 'bon coin'
+const rayonDe = o => o.dessin_id ? 'billets' : o.oeuvre_id ? 'E-market' : o.vendeur_banque ? 'la banque vend' : 'bon coin'
 
 function FicheCompte({ id, onClose, onNotif }) {
   const [f, setF] = useState(null)

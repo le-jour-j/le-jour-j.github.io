@@ -5,6 +5,7 @@ import MurBillets from '../components/MurBillets'
 import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 import BoutonPlanche from '../components/BoutonPlanche'
+import Coffre from '../components/Coffre'
 import { apercuPlanche } from '../lib/billet/planche'
 import { supabase } from '../lib/supabase'
 import { getPublicImageUrl } from '../utils/images'
@@ -100,7 +101,7 @@ export default function Senrichir() {
           <Link to="/creer?atelier=billet" className="creer-carte creer-carte-billet">
             <span className="creer-icone" aria-hidden="true">◈</span>
             <span className="creer-nom">Créer votre billet</span>
-            <span className="creer-phrase">Dessinez sur un billet de la banque : encaissé, il crédite votre compte ; vendu, il circule à la bourse. Et il rejoint les planches.</span>
+            <span className="creer-phrase">Dessinez sur un billet de la banque : encaissé, il crédite votre compte ; vendu, il circule au market. Et il rejoint les planches.</span>
             <span className="creer-sortie">→ de l’argent sur votre compte</span>
           </Link>
         </div>
@@ -112,7 +113,7 @@ export default function Senrichir() {
 
         <section style={{ marginBottom: '2rem' }}>
           <div className="section-head">
-            <h2>Les billets de la bourse</h2>
+            <h2>Les planches</h2>
             <span className="count">{dessins.length > 0 ? `${dessins.length} dessiné${dessins.length > 1 ? 's' : ''} sur le site · ` : ''}{PLANCHES.length} scannés</span>
           </div>
           <div className="filter-row" style={{ marginBottom: '1.4rem' }}>
@@ -160,6 +161,8 @@ export default function Senrichir() {
         </div>
 
         <MurBillets limit={12} onNotif={setNotif} />
+
+        <Coffre />
 
         <section style={{ marginBottom: '3rem' }}>
           <div className="section-head">

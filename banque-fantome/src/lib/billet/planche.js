@@ -5,7 +5,7 @@ import { getPublicImageUrl } from '../../utils/images'
 // Planche A4 d'un billet dessiné dans l'atelier (2026-10-19, demande de Jiiji : « chaque
 // billet dessiné dans la bourse doit se retrouver en PDF A4 dans S'enrichir »).
 // Le billet est refait depuis sa trace (habillage + traits, vectoriels) à 300 dpi, pas
-// depuis l'image de la bourse, puis posé à taille réelle autant de fois que la feuille
+// depuis l'image déposée, puis posé à taille réelle autant de fois que la feuille
 // le permet, comme les planches de machine_a_bifton.py : 6 billets de 5, 4 de 10 à 50,
 // 3 de 100 à 500. Le PDF est écrit à la main (une image JPEG reprise N fois), sans
 // bibliothèque : rien de plus à télécharger pour le reste du site.

@@ -15,13 +15,13 @@ import Actu from './pages/Actu'
 import Deposer from './pages/Deposer'
 import Lettre from './pages/Lettre'
 import Info from './pages/Info'
+import Bourse from './pages/Bourse'
 import { applySeo } from './lib/seo'
 
 // Les pages lourdes se chargent à la demande : S'enrichir (le catalogue des 834 planches),
-// l'admin, la bourse, les ateliers de Créer et la collection. Le reste du site ne les télécharge pas.
+// l'admin, les ateliers de Créer et la collection. Le reste du site ne les télécharge pas.
 const Senrichir = lazy(() => import('./pages/Senrichir'))
 const Admin = lazy(() => import('./pages/Admin'))
-const Bourse = lazy(() => import('./pages/Bourse'))
 const Creer = lazy(() => import('./pages/Creer'))
 const Collection = lazy(() => import('./pages/Collection'))
 
@@ -68,8 +68,9 @@ export default function App() {
           <Route path="/inventaire" element={<Navigate to="/market?rayon=boncoin" replace />} />
           <Route path="/senrichir"  element={<Senrichir />} />
           <Route path="/actu"       element={<Actu />} />
+          {/* La bourse est le rayon « Billets » du market depuis le 2026-11-01, son coffre est dans S'enrichir */}
           <Route path="/bourse"     element={<Bourse />} />
-          {/* Participer (dépôt au market + guichet photo) a laissé place à la bourse, 2026-10-18 */}
+          {/* Participer (dépôt au market + guichet photo) a laissé place à l'atelier à billets, 2026-10-18 */}
           <Route path="/participer" element={<Navigate to="/creer?atelier=billet" replace />} />
           <Route path="/deposer"    element={<Deposer />} />
           <Route path="/connexion"  element={<Connexion />} />

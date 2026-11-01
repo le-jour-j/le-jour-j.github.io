@@ -129,7 +129,7 @@ export default function Connexion() {
             <button type="button" role="tab" aria-selected={mode === 'register'} className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>Nouveau compte</button>
           </div>
           <p className="texte-aide" style={{ marginBottom: '1.6rem' }}>
-            {mode === 'login' && (retour?.startsWith('/bourse')
+            {mode === 'login' && (retour?.startsWith('/creer?atelier=billet')
               ? 'Connectez-vous pour déposer votre billet : votre dessin vous attend dans l’atelier.'
               : 'Identifiez-vous pour créer, vendre et enchérir.')}
             {mode === 'register' && 'Pas de mail requis. Choisissez un pseudo : vous devenez opérateur de la Banque.'}

@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { useCanal } from '../lib/veille'
+
+const ECOUTES = [{ event: '*', schema: 'public', table: 'billets_emis' }]
 
 // Cours des devises : chaque monnaie inventée par les joueurs, sa masse émise, ses émetteurs.
+// Recalculé à chaque billet encaissé, tant que la page ne dort pas (lib/veille.js).
 export default function CoursDevises({ compact = false }) {
   const [devises, setDevises] = useState([])
-  useEffect(() => {
-    const charger = () => supabase.rpc('cours_devises').then(({ data }) => setDevises(data || []))
-    charger()
-    const channel = supabase.channel(`cours-devises-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'billets_emis' }, charger)
-      .subscribe()
-    return () => supabase.removeChannel(channel)
-  }, [])
+  const charger = () => supabase.rpc('cours_devises').then(({ data }) => setDevises(data || []))
+  useEffect(() => { charger() }, [])
+  useCanal('cours-devises', ECOUTES, charger)
   if (!devises.length) return null
   const total = devises.reduce((a, d) => a + Number(d.masse), 0)
   return (
