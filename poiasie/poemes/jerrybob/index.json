@@ -3,7 +3,7 @@
  "dossier": "jerrybob",
  "teinte": 101,
  "pc": "bca0d387dc",
- "total": 4416,
+ "total": 4464,
  "jours": [
   {
    "jour": "2026-10-05",
@@ -72,9 +72,9 @@
   },
   {
    "jour": "2026-11-13",
-   "poemes": 91,
-   "octets": 191300
+   "poemes": 139,
+   "octets": 294718
   }
  ],
- "maj": "2026-11-13T13:37:32"
+ "maj": "2026-11-13T14:37:55"
 }
