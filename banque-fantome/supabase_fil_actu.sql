@@ -211,3 +211,27 @@ from (values
    array['images/actu/2026-11-13-classe-1.jpg', 'images/actu/2026-11-13-classe-2.jpg', 'images/actu/2026-11-13-classe-3.jpg', 'images/actu/2026-11-13-classe-4.jpg', 'images/actu/2026-11-13-classe-5.jpg', 'images/actu/2026-11-13-classe-6.jpg', 'images/actu/2026-11-13-classe-7.jpg', 'images/actu/2026-11-13-classe-8.jpg'])
 ) as v(date_actu, titre, texte, images)
 where not exists (select 1 from actus a where a.titre = v.titre);
+
+-- 11. Actus ajoutées le 2026-11-14 vers 13 h 30, publiées, suite de la section 10 (Jiiji : « Oui, le lot 4 »).
+--     Photos de septembre au 9 novembre, réduites à 1600 px, sans EXIF, regardées une par une :
+--     aucun visage reconnaissable, aucun prénom d'enfant, aucun écran ni numéro lisible.
+insert into actus (date_actu, titre, texte, images, publie, auteur)
+select v.date_actu, v.titre, v.texte, v.images, true, null
+from (values
+  (date '2026-11-09', 'Trousses, feutres et grosses coupures',
+   'Sur les tables, des planches de billets de 5, 10, 20, 100, 200 et 500 sont posées entre les trousses et les pots de feutres. Les mains remplissent les cases blanches : des fleurs, un arc-en-ciel, des petits personnages. À la fin, les planches sont empilées au-dessus des bacs à livres. C''est la remise en caisse.',
+   array['images/actu/2026-11-09-rayons-1.jpg', 'images/actu/2026-11-09-rayons-2.jpg', 'images/actu/2026-11-09-rayons-3.jpg']),
+  (date '2026-11-09', 'Une glace à 500 euros',
+   'Sur un billet de 500, quelqu''un a dessiné un cornet de glace à plusieurs boules, avec une étoile au sommet. Sur un billet de 10, une grande forme sombre au crayon. Sur un autre, le nom d''un jeu vidéo. La banque accepte tous les motifs.',
+   array['images/actu/2026-11-09-glace-1.jpg', 'images/actu/2026-11-09-glace-2.jpg', 'images/actu/2026-11-09-glace-3.jpg']),
+  (date '2026-09-20', 'La banque arrive en caisses',
+   'Des caisses rouges, grises et bleues sont alignées contre un mur blanc, pleines de matériel. Quelques jours plus tard, la salle est en place : tables sur tréteaux, tabourets, meubles jaunes, un écran allumé au fond. Devant la vitre, une table porte des piles jaunes et blanches bien alignées. Il n''y a encore personne au guichet.',
+   array['images/actu/2026-09-20-caisses-1.jpg', 'images/actu/2026-09-20-caisses-2.jpg', 'images/actu/2026-09-20-caisses-3.jpg']),
+  (date '2026-10-04', 'La pochette BF',
+   'Une pochette bleue à soufflets, fermée par un élastique, porte deux lettres en ruban jaune : B et F. On la voit posée sur un carrelage, puis sur une table, à côté de planches de billets de 5. Par terre, des billets de 5, 10, 20, 50, 100 et 200, dessinés et découpés, à côté de quelques enveloppes.',
+   array['images/actu/2026-10-04-pochette-1.jpg', 'images/actu/2026-10-04-pochette-2.jpg', 'images/actu/2026-10-04-pochette-3.jpg']),
+  (date '2026-10-09', 'La mallette sort de la banque',
+   'Une mallette en métal est posée dans un couloir vide. On la retrouve sous une halle aux arches rouges, seule au milieu des pavés, sous des fanions de toutes les couleurs. Puis sur le trottoir, à droite de la porte d''une agence Caisse d''Épargne. Elle n''entre pas.',
+   array['images/actu/2026-10-09-tournee-1.jpg', 'images/actu/2026-10-09-tournee-2.jpg', 'images/actu/2026-10-09-tournee-3.jpg'])
+) as v(date_actu, titre, texte, images)
+where not exists (select 1 from actus a where a.titre = v.titre);
