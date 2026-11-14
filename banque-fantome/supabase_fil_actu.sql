@@ -149,3 +149,65 @@ Parmi elles : des papillons, des extraterrestres en soucoupe, une fusée, un Pac
   array['images/actu/2026-10-13-billets-1.jpg', 'images/actu/2026-10-13-billets-tableau.jpg', 'images/actu/2026-10-13-billets-2.jpg', 'images/actu/2026-10-13-billets-3.jpg', 'images/actu/2026-10-13-billets-4.jpg', 'images/actu/2026-10-13-billets-5.jpg', 'images/actu/2026-10-13-billets-6.jpg', 'images/actu/2026-10-13-billets-7.jpg', 'images/actu/2026-10-13-billets-8.jpg'],
   true, null
 where not exists (select 1 from actus a where a.titre = '837 dessins, 8 381 billets prêts à imprimer');
+
+-- 10. Dix-sept actus ajoutées le 2026-11-14 vers 12 h 30, publiées, à la demande de Jiiji
+--     (« mettre en ligne et dans les actus »). Photos du lot du 12/10 au 13/11, réduites à
+--     1600 px, sans EXIF. Chaque photo a été regardée avant : aucun visage reconnaissable,
+--     aucun prénom d'enfant, aucun écran ni numéro lisible. Textes courts, sans nom de lieu
+--     ni de personne : Jiiji les complète depuis la page Actu.
+insert into actus (date_actu, titre, texte, images, publie, auteur)
+select v.date_actu, v.titre, v.texte, v.images, true, null
+from (values
+  (date '2026-10-14', 'Des billets par terre, des gilets orange',
+   'Dans une grande salle d''exposition, un groupe d''enfants en gilets orange s''assoit par terre. Ils trient leurs billets dessinés, se les échangent, en laissent un petit tas au pied du mur. Ce jour-là, la banque n''a pas de guichet : elle tient dans les mains.',
+   array['images/actu/2026-10-14-gilets-1.jpg', 'images/actu/2026-10-14-gilets-2.jpg']),
+  (date '2026-10-16', 'Une mallette dans un rectangle',
+   'Une mallette en métal est posée par terre, au milieu d''un rectangle de ruban jaune et noir, à côté d''un distributeur de boissons. Personne n''y touche. C''est un dépôt.',
+   array['images/actu/2026-10-16-mallette-1.jpg', 'images/actu/2026-10-16-mallette-2.jpg']),
+  (date '2026-10-21', 'On dessine à la banque',
+   'Trois personnes dessinent, assises à de longues tables, sous une lampe. Sur une autre table, des billets dessinés et la caisse rouge, ouverte. Au fond, quelqu''un s''est installé devant un vieil ordinateur, sous l''écran de projection.',
+   array['images/actu/2026-10-21-tables-1.jpg', 'images/actu/2026-10-21-tables-2.jpg', 'images/actu/2026-10-21-tables-3.jpg', 'images/actu/2026-10-21-tables-4.jpg', 'images/actu/2026-10-21-tables-5.jpg']),
+  (date '2026-10-23', 'Les billets sortent de l''imprimerie',
+   'Des piles de planches de billets : 10, 20, 50, 100, 200 et 500. Sur le billet de 100, une souris à grandes oreilles et les mots « Cash ton flouze ». Les planches passent ensuite au massicot, et la monnaie devient des liasses.',
+   array['images/actu/2026-10-23-imprimerie-1.jpg', 'images/actu/2026-10-23-imprimerie-2.jpg', 'images/actu/2026-10-23-imprimerie-3.jpg', 'images/actu/2026-10-23-imprimerie-4.jpg', 'images/actu/2026-10-23-imprimerie-5.jpg', 'images/actu/2026-10-23-imprimerie-6.jpg', 'images/actu/2026-10-23-imprimerie-7.jpg']),
+  (date '2026-10-23', 'Une table pleine de billets',
+   'L''après-midi, les billets découpés sont rangés en piles serrées sur une grande table, à côté de la caisse rouge. Autour : les meubles jaunes, un présentoir couvert de billets dessinés, un écran où défile du texte, et l''affiche « Be rich, create your monnaie ».',
+   array['images/actu/2026-10-23-table-1.jpg', 'images/actu/2026-10-23-table-2.jpg', 'images/actu/2026-10-23-table-3.jpg', 'images/actu/2026-10-23-table-4.jpg', 'images/actu/2026-10-23-table-5.jpg', 'images/actu/2026-10-23-table-6.jpg', 'images/actu/2026-10-23-table-7.jpg', 'images/actu/2026-10-23-table-8.jpg']),
+  (date '2026-10-23', 'Un bureau d''accueil qui imprime des billets',
+   'Un bureau d''accueil arrondi, du parquet, des poteaux jaunes, des fenêtres sur des toits de brique. Dessus : un écran, une imprimante, et un petit panneau : « Prochainement, ouverture de votre succursale ». Le 23 octobre, l''imprimante sort une planche de billets de 500.',
+   array['images/actu/2026-10-23-accueil-1.jpg', 'images/actu/2026-10-23-accueil-2.jpg', 'images/actu/2026-10-23-accueil-3.jpg', 'images/actu/2026-10-23-accueil-4.jpg']),
+  (date '2026-10-25', 'Une forme bleue sur l''écran',
+   'Sur l''écran de projection, une forme bleue en dentelle. Autour, la salle sans public : les tables, les écrans, les meubles jaunes. La banque tourne même quand il n''y a personne.',
+   array['images/actu/2026-10-25-ecran-1.jpg', 'images/actu/2026-10-25-ecran-2.jpg']),
+  (date '2026-10-26', 'BF en lumière',
+   'Une guirlande lumineuse fixée au mur dessine deux lettres : B et F. Elle change de couleur : jaune et vert, blanc, orange, bleu. Une enseigne de banque, en plus doux.',
+   array['images/actu/2026-10-26-lumiere-1.jpg', 'images/actu/2026-10-26-lumiere-2.jpg', 'images/actu/2026-10-26-lumiere-3.jpg', 'images/actu/2026-10-26-lumiere-4.jpg']),
+  (date '2026-10-29', 'Le bureau du banquier',
+   'Dans la salle, un bureau avec un écran, un clavier et des pots de feutres. Une veste attend sur le dossier du fauteuil. À gauche, le présentoir de billets dessinés. Le banquier s''est absenté.',
+   array['images/actu/2026-10-29-bureau-1.jpg', 'images/actu/2026-10-29-bureau-2.jpg']),
+  (date '2026-11-02', 'Le Magot : une table de chéquiers',
+   'Une table couverte de chéquiers blancs à bande jaune, empilés. Une main en ouvre un : dedans, un dessin rond, très coloré. Le panneau dit « Le Magot » et « Chéquier Claude Monnaie, 15 € ».',
+   array['images/actu/2026-11-02-magot-1.jpg', 'images/actu/2026-11-02-magot-2.jpg', 'images/actu/2026-11-02-magot-3.jpg']),
+  (date '2026-11-02', 'Tour de la salle',
+   'Un tour complet de la salle, sans public. La table de billets, la caisse rouge « Dépôt d''espèces », un masque doré et un faux lingot, une caisse de tampons en bois. Sur les murs et les poteaux, des panneaux : « Ce que j''ai obtenu », « Les tables lumineuses », « La mallette », « Ouvrez un compte ».',
+   array['images/actu/2026-11-02-salle-1.jpg', 'images/actu/2026-11-02-salle-2.jpg', 'images/actu/2026-11-02-salle-3.jpg', 'images/actu/2026-11-02-salle-4.jpg', 'images/actu/2026-11-02-salle-5.jpg']),
+  (date '2026-11-04', 'Un pochoir de billet de 5 imprimé en 3D',
+   'L''écran de l''imprimante 3D affiche « pochoir-005-euros ». Sur le plateau, le dessin d''un billet de 5 apparaît en fines lignes blanches, couche après couche.',
+   array['images/actu/2026-11-04-pochoir-1.jpg', 'images/actu/2026-11-04-pochoir-2.jpg', 'images/actu/2026-11-04-pochoir-3.jpg']),
+  (date '2026-11-06', 'La salle en jaune',
+   'La salle est éclairée en jaune. Sur une table lumineuse, une rosace dessinée aux feutres, à côté de roues dentées en plastique et d''un dessin encadré.',
+   array['images/actu/2026-11-06-jaune-1.jpg', 'images/actu/2026-11-06-jaune-2.jpg', 'images/actu/2026-11-06-jaune-3.jpg', 'images/actu/2026-11-06-jaune-4.jpg']),
+  (date '2026-11-07', 'Le billet et son ombre',
+   'Une main tient un pochoir noir de billet de 5 devant un mur de pierre. Le soleil passe à travers : l''ombre du billet se pose sur le mur, puis sur le sol. Un billet qui ne pèse rien et qu''on ne peut pas ramasser.',
+   array['images/actu/2026-11-07-ombre-1.jpg', 'images/actu/2026-11-07-ombre-2.jpg']),
+  (date '2026-11-10', 'Peinture sur billets, chez les petits',
+   'Dans une classe de jeunes enfants, des planches de billets de 10, 200 et 500 sont peintes à la gouache. Elles sèchent sur un fil, tenues par des pinces à linge. D''autres sont dessinées au feutre : des fleurs, des cœurs, des bonshommes.',
+   array['images/actu/2026-11-10-gouache-1.jpg', 'images/actu/2026-11-10-gouache-2.jpg', 'images/actu/2026-11-10-gouache-3.jpg', 'images/actu/2026-11-10-gouache-4.jpg', 'images/actu/2026-11-10-gouache-5.jpg', 'images/actu/2026-11-10-gouache-6.jpg', 'images/actu/2026-11-10-gouache-7.jpg']),
+  (date '2026-11-12', 'Une bibliothèque, un écran, des gradins',
+   'Dans une bibliothèque, un écran d''ordinateur éteint attend dans une niche, au bout d''un rayonnage courbe. Plus loin, une petite salle à gradins rouges avec un projecteur. La banque cherche où ouvrir sa prochaine agence.',
+   array['images/actu/2026-11-12-gradins-1.jpg', 'images/actu/2026-11-12-gradins-2.jpg']),
+  (date '2026-11-13', 'Des billets dessinés par une classe',
+   'Dans une classe, les enfants dessinent aux feutres sur des planches de billets de 5, 10, 20, 100 et 500. On y trouve un ours brun, un ballon de basket, des maisons, un arc-en-ciel, des personnages.',
+   array['images/actu/2026-11-13-classe-1.jpg', 'images/actu/2026-11-13-classe-2.jpg', 'images/actu/2026-11-13-classe-3.jpg', 'images/actu/2026-11-13-classe-4.jpg', 'images/actu/2026-11-13-classe-5.jpg', 'images/actu/2026-11-13-classe-6.jpg', 'images/actu/2026-11-13-classe-7.jpg', 'images/actu/2026-11-13-classe-8.jpg'])
+) as v(date_actu, titre, texte, images)
+where not exists (select 1 from actus a where a.titre = v.titre);
