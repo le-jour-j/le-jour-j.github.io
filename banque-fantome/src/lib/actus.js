@@ -13,6 +13,15 @@ export function urlImageActu(chemin) {
   return supabase.storage.from(ACTUS_BUCKET).getPublicUrl(chemin).data?.publicUrl || null
 }
 
+// La vignette d'une photo livrée avec le site (720 px, « images/actu/mini/<nom>.jpg », fabriquée par
+// scripts/vignettes-actu.py) : c'est elle que le fil affiche, la grande photo ne se charge qu'au clic.
+// Une photo envoyée depuis le formulaire n'a pas de vignette : on rend la photo elle-même.
+export function urlMiniActu(chemin) {
+  if (!chemin) return null
+  const m = /^images\/actu\/([^/]+)\.(?:jpe?g|png)$/i.exec(chemin)
+  return m ? `${BASE}images/actu/mini/${m[1]}.jpg` : urlImageActu(chemin)
+}
+
 export function estImageEnvoyee(chemin) {
   return !!chemin && !chemin.startsWith('images/')
 }

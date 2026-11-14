@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
 import ImageLightbox from './ImageLightbox'
 import ActuForm from './ActuForm'
-import { chargerActus, urlImageActu, dateActu, supprimerImagesActu } from '../lib/actus'
+import { chargerActus, urlImageActu, urlMiniActu, dateActu, supprimerImagesActu } from '../lib/actus'
 import { messageErreur } from '../utils/encheres'
 
 // Fil d'actu du projet, façon blog : date, titre, texte, photos.
@@ -16,6 +16,8 @@ export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
   const [aSupprimer, setASupprimer] = useState(null) // id en attente de confirmation
   const [galerie, setGalerie] = useState(null)       // { images, index }
   const [recharge, setRecharge] = useState(0)
+  // Sur une petite connexion, on ne montre d'abord que les 8 dernières nouvelles ; le bouton en ajoute 8.
+  const [montrees, setMontrees] = useState(8)
 
   useEffect(() => {
     let actif = true
@@ -44,11 +46,12 @@ export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
 
   return (
     <div className="fil-actu">
-      {actus.map(a => {
+      {actus.slice(0, montrees).map(a => {
         if (enEdition === a.id) {
           return <ActuForm key={a.id} actu={a} onNotif={onNotif} onFini={() => { setEnEdition(null); setRecharge(n => n + 1) }} />
         }
         const urls = (a.images || []).map(urlImageActu).filter(Boolean)
+        const minis = (a.images || []).filter(c => urlImageActu(c)).map(urlMiniActu)
         return (
           <article key={a.id} className={`actu ${a.publie ? '' : 'actu-brouillon'}`}>
             <header className="actu-tete">
@@ -61,7 +64,8 @@ export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
               <div className={`actu-photos n${Math.min(urls.length, 5)}`}>
                 {urls.slice(0, 5).map((src, i) => (
                   <button key={src} type="button" className="actu-photo" onClick={() => setGalerie({ images: urls, index: i })} aria-label={`Agrandir la photo ${i + 1} sur ${urls.length}`}>
-                    <img src={src} alt="" loading="lazy" />
+                    <img src={minis[i] || src} alt="" loading="lazy" decoding="async"
+                      onError={e => { if (e.currentTarget.dataset.grande !== '1') { e.currentTarget.dataset.grande = '1'; e.currentTarget.src = src } }} />
                     {i === 4 && urls.length > 5 && <span className="actu-plus">+{urls.length - 5}</span>}
                   </button>
                 ))}
@@ -82,6 +86,13 @@ export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
           </article>
         )
       })}
+      {actus.length > montrees && (
+        <p className="fil-actu-suite">
+          <button type="button" className="btn btn-outline" onClick={() => setMontrees(n => n + 8)}>
+            Voir les nouvelles d'avant ({actus.length - montrees})
+          </button>
+        </p>
+      )}
       {galerie && (
         <ImageLightbox
           images={galerie.images}
