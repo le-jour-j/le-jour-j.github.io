@@ -27,7 +27,7 @@ export default function Actu() {
           <BoutonLettre className="btn btn-outline btn-sm" />
         </div>
         {nouvelle && <ActuForm onNotif={setNotif} onFini={a => { setNouvelle(false); if (a) setVersion(v => v + 1) }} />}
-        <FilActu version={version} onNotif={setNotif} />
+        <FilActu limit={300} version={version} onNotif={setNotif} />
       </div>
       {notif && <Notif msg={notif.msg} type={notif.type} onClose={() => setNotif(null)} />}
     </div>

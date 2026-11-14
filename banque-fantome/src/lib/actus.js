@@ -34,7 +34,7 @@ export function dateActu(d) {
 
 export async function chargerActus(limit = 50) {
   const { data, error } = await supabase.from('actus').select('*')
-    .order('date_actu', { ascending: false }).order('created_at', { ascending: false }).limit(limit)
+    .order('date_actu', { ascending: false }).order('created_at', { ascending: false }).order('id').limit(limit)
   if (error) throw error
   return data || []
 }

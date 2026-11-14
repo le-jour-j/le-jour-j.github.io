@@ -635,6 +635,7 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 /* ── Fil d'actu (2026-10-04) : journal du projet, façon blog ── */
 .container-actu { max-width: 900px; }
 .fil-actu { display: flex; flex-direction: column; gap: 2.2rem; }
+.fil-actu-suite { margin: 0; padding-top: 1.4rem; border-top: 2px solid var(--noir); text-align: center; }
 .actu { border-top: 2px solid var(--noir); padding-top: 1.1rem; }
 .actu-brouillon { background: repeating-linear-gradient(-45deg, transparent 0 14px, var(--jaune-fond) 14px 28px); padding: 1.1rem 1.1rem 1.2rem; border: 2px dashed var(--noir); }
 .actu-tete { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: .4rem; }
