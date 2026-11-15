@@ -347,6 +347,9 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
 .lightbox-prev { left: .5rem; }
 .lightbox-next { right: .5rem; }
 .lightbox-counter { position: absolute; left: 50%; bottom: -2rem; transform: translateX(-50%); color: var(--blanc); font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; }
+/* 2026-11-15 : la photo (animée) passait par-dessus les boutons au téléphone et prenait les touchers. */
+.lightbox-shell > .lightbox-close, .lightbox-shell > .lightbox-nav, .lightbox-shell > .lightbox-counter { z-index: 2; }
+.lightbox-image { touch-action: pan-y pinch-zoom; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 
 /* ─────────────────────────── NOTIF ─────────────────────────── */
 .notif { position: fixed; bottom: 2rem; right: 2rem; background: var(--noir); color: var(--blanc); padding: .95rem 1.4rem 1.1rem; font-size: .9rem; font-weight: 500; border: 2px solid var(--jaune); z-index: 9000; animation: slidein .3s var(--ressort); max-width: 340px; box-shadow: 6px 6px 0 var(--jaune); overflow: hidden; }
@@ -415,6 +418,10 @@ a.count:hover { color: var(--noir); letter-spacing: .16em; }
   .lightbox-close { top: .5rem; right: .5rem; transform: none; }
   .lightbox-nav { width: 42px; height: 42px; font-size: 1.6rem; }
   .lightbox-counter { bottom: .5rem; }
+  /* Au téléphone : on glisse le doigt. Les flèches descendent en bas, grosses, de chaque côté du compteur. */
+  .lightbox-shell { height: min(92dvh, 900px); }   /* dvh : la hauteur vraiment visible, barre d'adresse comprise */
+  .lightbox-shell > .lightbox-nav { top: auto; bottom: .25rem; transform: none; width: 54px; height: 54px; font-size: 2rem; background: rgba(0,0,0,.72); border-color: rgba(255,255,255,.7); }
+  .lightbox-shell > .lightbox-counter { bottom: 1.25rem; background: rgba(0,0,0,.72); padding: .25rem .6rem; }
 }
 
 /* ─────────────────────────── CONNEXION ─────────────────────────── */
