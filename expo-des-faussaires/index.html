@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#000000">
+<title>L'Expo des Faussaires</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bandeau">
+  <h1>L'Expo des Faussaires</h1>
+</header>
+
+<main id="entree" class="cadre">
+  <p class="attente">Chargement…</p>
+</main>
+
+<main id="page" class="cadre" hidden>
+  <section class="intro">
+    <p>Un petit marché de faussaires, une sorte de marché noir de Noël. Il est itinérant : plusieurs arrêts. Le vernissage se passe dans l'appartement.</p>
+    <p>La dernière semaine avant les vacances de Noël.</p>
+  </section>
+
+  <section>
+    <h2>Vos jours</h2>
+    <p class="aide">Touche une case pour dire « je peux », retouche pour l'enlever.</p>
+    <div class="defile" id="cadre-grille">
+      <table class="grille" id="grille"></table>
+    </div>
+    <div id="meilleur" class="meilleur"></div>
+  </section>
+
+  <section>
+    <h2>Les arrêts</h2>
+    <p class="aide">Coché = calé.</p>
+    <ul class="liste" id="arrets"></ul>
+    <form class="ajout" data-liste="arret">
+      <input type="text" maxlength="120" placeholder="Ajouter un arrêt" aria-label="Ajouter un arrêt">
+      <button type="submit">Ajouter</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Qui montre ou vend quoi</h2>
+    <div id="montre"></div>
+  </section>
+
+  <section>
+    <h2>À faire</h2>
+    <ul class="liste" id="todos"></ul>
+    <form class="ajout" data-liste="todo">
+      <input type="text" maxlength="120" placeholder="Ajouter une ligne" aria-label="Ajouter une ligne">
+      <button type="submit">Ajouter</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Les sous</h2>
+    <p class="sous">J'attends de négocier avec le centre d'art : je ne sais pas encore quelle enveloppe ils vont proposer. Je vous dis dès que je sais. Les frais sont remboursés.</p>
+  </section>
+</main>
+
+<div id="message" class="message" role="status" aria-live="polite" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

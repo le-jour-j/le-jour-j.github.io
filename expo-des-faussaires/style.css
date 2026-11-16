@@ -1,0 +1,98 @@
+:root{
+  --noir:#000;
+  --jaune:#ffd400;
+  --jaune-pale:#fff7c2;
+  --papier:#faf8f0;
+  --texte:#111;
+  --gris:#6b6b6b;
+  --trait:#111;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--papier);color:var(--texte);
+  font:17px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  overflow-x:hidden;
+}
+.bandeau{background:var(--noir);padding:20px 16px 16px;border-bottom:6px solid var(--jaune)}
+.bandeau h1{margin:0;color:var(--jaune);font-size:28px;line-height:1.1;text-transform:uppercase;letter-spacing:.02em}
+.cadre{max-width:640px;margin:0 auto;padding:16px 16px 64px}
+.cadre[hidden]{display:none}
+.attente,.refus{font-size:18px}
+.refus{font-weight:700}
+section{margin-top:28px}
+.intro{margin-top:8px}
+.intro p{margin:0 0 10px;font-size:18px}
+h2{
+  display:inline-block;margin:0 0 8px;padding:3px 10px;background:var(--noir);
+  color:var(--jaune);font-size:18px;text-transform:uppercase;letter-spacing:.03em;
+}
+.aide{margin:0 0 10px;color:var(--gris);font-size:15px}
+
+/* grille des jours */
+.defile{overflow-x:auto;-webkit-overflow-scrolling:touch;border:2px solid var(--trait);background:#fff}
+.grille{border-collapse:collapse;width:100%;table-layout:fixed;min-width:340px}
+.grille th,.grille td{padding:0;text-align:center;border:1px solid #ccc}
+.grille thead th{background:var(--noir);color:var(--jaune);font-size:12px;line-height:1.15;padding:6px 0;font-weight:700;text-transform:uppercase}
+.grille thead th.meilleur-j{background:var(--jaune);color:var(--noir)}
+.grille th.qui{width:78px;text-align:left;padding:0 6px;font-size:14px;font-weight:700;background:#fff;line-height:1.1}
+.grille th.qui small{display:block;font-weight:400;color:var(--gris);font-size:11px}
+.grille thead th.qui{background:var(--noir)}
+.case{
+  display:block;width:100%;height:48px;margin:0;padding:0;border:0;border-radius:0;background:#fff;
+  font:inherit;font-size:22px;font-weight:800;color:var(--noir);cursor:pointer;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.case[aria-pressed="true"]{background:var(--jaune)}
+.case:focus-visible{outline:3px solid var(--noir);outline-offset:-3px}
+.grille tfoot td{background:var(--noir);color:var(--jaune);font-weight:800;font-size:17px;padding:6px 0}
+.grille tfoot th.qui{background:var(--noir);color:var(--jaune);font-size:12px;text-transform:uppercase}
+.grille tfoot td.meilleur-j{background:var(--jaune);color:var(--noir)}
+.meilleur{margin-top:10px;font-size:18px;font-weight:700}
+.meilleur .badge{display:inline-block;background:var(--jaune);color:var(--noir);border:2px solid var(--noir);padding:2px 10px;margin:2px 4px 2px 0}
+.meilleur .vide{font-weight:400;color:var(--gris)}
+
+/* listes a cocher */
+.liste{list-style:none;margin:0;padding:0}
+.liste li{display:flex;align-items:stretch;margin:0 0 8px}
+.ligne{
+  flex:1;display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 12px;margin:0;
+  background:#fff;border:2px solid var(--trait);border-radius:0;font:inherit;text-align:left;color:var(--texte);
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.ligne .boite{
+  flex:none;width:28px;height:28px;border:2px solid var(--noir);background:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;line-height:1;
+}
+.ligne .txt{flex:1;min-width:0;overflow-wrap:anywhere}
+.ligne[aria-pressed="true"]{background:var(--jaune)}
+.ligne[aria-pressed="true"] .boite::after{content:"✓"}
+.ligne:focus-visible{outline:3px solid var(--noir);outline-offset:2px}
+.retire{
+  flex:none;width:48px;margin:0 0 0 -2px;padding:0;border:2px solid var(--trait);background:#fff;color:var(--noir);
+  font:inherit;font-size:22px;cursor:pointer;touch-action:manipulation;
+}
+.ajout{display:flex;gap:8px;margin-top:6px}
+.ajout input{flex:1;min-width:0;height:48px;padding:0 12px;border:2px solid var(--trait);border-radius:0;font:inherit;background:#fff;color:var(--texte)}
+.ajout button{
+  flex:none;height:48px;padding:0 16px;border:2px solid var(--trait);border-radius:0;background:var(--noir);
+  color:var(--jaune);font:inherit;font-weight:800;cursor:pointer;touch-action:manipulation;
+}
+
+/* qui montre ou vend quoi */
+.perso{background:#fff;border:2px solid var(--trait);padding:10px 12px;margin:0 0 10px}
+.perso h3{margin:0;font-size:19px}
+.perso .role{margin:0 0 8px;color:var(--gris);font-size:14px}
+.perso label{display:block;margin:8px 0 0;font-size:14px;font-weight:700}
+.perso textarea{
+  display:block;width:100%;min-height:48px;margin-top:3px;padding:8px 10px;border:2px solid var(--trait);border-radius:0;
+  font:inherit;font-size:16px;font-weight:400;resize:vertical;background:var(--jaune-pale);color:var(--texte);
+}
+
+.sous{margin:0;padding:12px;background:var(--noir);color:#fff;border-left:8px solid var(--jaune)}
+
+.message{
+  position:fixed;left:16px;right:16px;bottom:16px;max-width:608px;margin:0 auto;padding:12px 14px;
+  background:var(--noir);color:var(--jaune);border:2px solid var(--jaune);font-weight:700;z-index:10;
+}
+.message[hidden]{display:none}
