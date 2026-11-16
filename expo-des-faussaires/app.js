@@ -7,6 +7,8 @@
 
   var CODE = '';
   try { CODE = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { CODE = ''; }
+  // Si on colle le lien complet dans un onglet deja ouvert sans le code, la page se recharge avec le code.
+  window.addEventListener('hashchange', function () { location.reload(); });
 
   var PERSONNES = [
     { id: 'jeanson', nom: 'Jeanson', role: 'organise', note: '' },
