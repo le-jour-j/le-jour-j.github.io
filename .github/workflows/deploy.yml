@@ -51,6 +51,8 @@ jobs:
             --exclude ".git" \
             --exclude ".github" \
             --exclude "public-build" \
+            --exclude "/CLAUDE.md" \
+            --exclude "/appels.html" \
             --exclude "/tour-de-phrance" \
             --exclude "/banque-fantome" \
             --exclude "scripts"
