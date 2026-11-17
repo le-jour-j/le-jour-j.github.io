@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere } from '../lib/agences'
+import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere, plusieursJours } from '../lib/agences'
 
 // Où est le banquier ? Lu dans son agenda (table `presences`, recopiée toutes les 15 min par la
 // fonction Edge). L'état « au guichet / pas au guichet » se recalcule chaque minute sans rien
@@ -9,6 +9,11 @@ import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere } from 
 // `compact` : une ligne pour l'accueil ; sinon l'état du moment et les prochains créneaux.
 // « jeudi 15 octobre » → « Jeudi 15 octobre » (le mois garde sa minuscule)
 const majuscule = s => s.charAt(0).toUpperCase() + s.slice(1)
+// « du dimanche 7 février » pour une présence de plusieurs jours (pas « du demain »)
+const debutLigne = p => {
+  const j = jour(p.debut)
+  return plusieursJours(p) && j !== 'demain' && j !== 'aujourd\'hui' ? `du ${j}` : j
+}
 
 export default function PresenceBanquier({ compact = false }) {
   const [presences, setPresences] = useState(null)
@@ -35,8 +40,8 @@ export default function PresenceBanquier({ compact = false }) {
   const prochain = suivants[0]
 
   const etat = enCours
-    ? <><span className="presence-point presence-la" aria-hidden="true">●</span> Le banquier est au guichet {AGENCES[enCours.agence]?.court ?? enCours.agence}{journeeEntiere(enCours) ? ' aujourd\'hui' : ` jusqu'à ${heure(enCours.fin)}`}.</>
-    : <><span className="presence-point" aria-hidden="true">●</span> Le banquier n'est pas au guichet en ce moment.{prochain && <> Prochaine permanence {jour(prochain.debut)} {creneau(prochain)}, {AGENCES[prochain.agence]?.court ?? prochain.agence}.</>}</>
+    ? <><span className="presence-point presence-la" aria-hidden="true">●</span> Le banquier est au guichet {AGENCES[enCours.agence]?.court ?? enCours.agence}{plusieursJours(enCours) ? ` ${creneau(enCours)}` : journeeEntiere(enCours) ? ' aujourd\'hui' : ` jusqu'à ${heure(enCours.fin)}`}.</>
+    : <><span className="presence-point" aria-hidden="true">●</span> Le banquier n'est pas au guichet en ce moment.{prochain && <> Prochaine permanence {debutLigne(prochain)} {creneau(prochain)},{AGENCES[prochain.agence]?.court ?? prochain.agence}.</>}</>
 
   if (compact) {
     return (

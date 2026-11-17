@@ -64,6 +64,20 @@ export function journeeEntiere(p) {
   return heure(p.debut) === '0 h' && heure(p.fin) === '0 h'
 }
 
+// Une présence sur plusieurs jours (ex. du 7 au 23 février) n'a qu'une ligne dans l'agenda :
+// on affiche son dernier jour, sinon elle ressemblait à un seul dimanche (2026-11-17).
+// Fin à minuit : le dernier jour est la veille.
+const cleJour = iso => new Intl.DateTimeFormat('fr-CA', { timeZone: FUSEAU }).format(new Date(iso))
+const dernierInstant = p => heure(p.fin) === '0 h' ? new Date(Date.parse(p.fin) - 1).toISOString() : p.fin
+
+export function plusieursJours(p) {
+  return cleJour(p.debut) !== cleJour(dernierInstant(p))
+}
+
 export function creneau(p) {
+  if (plusieursJours(p)) {
+    const fin = jour(dernierInstant(p))
+    return heure(p.fin) === '0 h' ? `jusqu'au ${fin} inclus` : `jusqu'au ${fin} à ${heure(p.fin)}`
+  }
   return journeeEntiere(p) ? 'toute la journée' : `de ${heure(p.debut)} à ${heure(p.fin)}`
 }
