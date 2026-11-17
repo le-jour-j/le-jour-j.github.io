@@ -34,6 +34,16 @@
 // raconte (ajouté le 2026-10-05, Jiiji : « pour l'écrire elle doit piocher dans les
 // news »). Sans clé, ou si l'IA ne répond pas, la lettre part avec sa phrase fixe.
 //
+// Le ton (2026-11-15, Jiiji : « elle pourrait être quand même un peu plus bizarre dans
+// son contenu », « le ton qu'il y a plus dans les affiches de la banque fantôme ») : la
+// lettre est un relevé de banque qui déraille. Objet, en-tête, phrases fixes, pied et
+// consigne de l'IA reprennent le mécanisme des affiches (une formule de banque, une chute
+// courte). La version d'avant est à côté : index-2026-11-15-avant-ton-affiches.ts.
+// Même jour, après un premier essai refusé (« C'est trop descriptif. Il faut pas décrire.
+// Il y a des images. ») : l'ouverture ne raconte plus les actus, elle parle en grand de la
+// valeur qui se crée et du pactole (seul chiffre autorisé, voir PACTOLE) ; sous une image,
+// il ne reste que la date et le titre.
+//
 // Déploiement : supabase functions deploy lettre --no-verify-jwt
 // (--no-verify-jwt car la base et le lien de désinscription n'ont pas de
 // session : les droits sont vérifiés ici, action par action.)
@@ -80,7 +90,10 @@ async function identifiantsGmail(): Promise<Gmail> {
 // Le plus rapide d'abord : 2.5 Flash sans « réflexion » répond en quelques secondes ;
 // gemini-flash-latest réfléchit avant d'écrire et pouvait prendre plus d'une minute
 // (2026-10-12 : l'aperçu de l'admin mettait deux minutes).
+// 2026-11-15 : un peu de réflexion, mais bornée (1024), pour que la forme des affiches
+// soit tenue ; si ce réglage ne passe pas, le même modèle sans réflexion, comme avant.
 const MODELES_GEMINI: [string, Record<string, unknown>][] = [
+  ['gemini-2.5-flash', { thinkingConfig: { thinkingBudget: 1024 } }],
   ['gemini-2.5-flash', { thinkingConfig: { thinkingBudget: 0 } }],
   ['gemini-flash-lite-latest', {}],
   ['gemini-flash-latest', {}],
@@ -89,18 +102,74 @@ const MODELES_GEMINI: [string, Record<string, unknown>][] = [
 // est coupée par Supabase à 150 s, et un envoi coupé avant Gmail ne partirait pas.
 const BUDGET_IA_MS = 35000
 const MODELE_IA = 'claude-sonnet-5-5'
-const CONSIGNE_IA = `Tu écris l'ouverture de « la lettre de la banque », la lettre hebdomadaire de la Banque Fantôme.
-La Banque Fantôme est un projet artistique de Jeanson Pechin, dit Jiiji : une fausse banque qui fabrique sa propre monnaie dessinée, avec un guichet, des billets, un market où l'on enchérit. Il est en résidence d'artiste dans le Beauvaisis (CLEA), avec des écoles, des centres sociaux, des associations et des services de l'agglomération.
-La lettre part aux structures partenaires et aux membres du site.
+// Le pactole : le dernier comptage des billets dessinés en atelier (actu du 2026-10-13,
+// « 837 dessins, 8 381 billets prêts à imprimer »). C'est ce que Jiiji appelle « le pactole »,
+// « les 500 000 balles ». À mettre à jour ici quand un nouveau comptage est publié : c'est
+// le seul chiffre que l'ouverture a le droit de citer, avec ceux du relevé lui-même.
+const PACTOLE = { date: '2026-10-13', dessins: 837, valeurDessins: 45810, billets: 8381, euros: 459290 }
+const nombre = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
-Écris un texte de 70 à 130 mots, en un ou deux paragraphes, qui raconte ce qui s'est passé cette semaine à partir des actus fournies. Le ton : chaleureux, vivant, avec une pointe d'humour pince-sans-rire qui parodie gentiment la communication d'une banque. Tutoiement interdit, vouvoiement de politesse ou tournures impersonnelles. Termine en donnant envie d'aller voir sur le site.
+// La consigne (refaite le 2026-11-15 après le retour de Jiiji sur le premier essai : « C'est
+// trop descriptif. Il faut pas décrire. Il y a des images. Parler plus large de tout ce qui
+// se passe. La valeur qui se crée. Le pactole. Les 500 000 balles, qu'est-ce que ça fait de
+// vouloir faire plus de dessins, plus de techniques, nouvelles valeurs. »)
+const CONSIGNE_IA = `Tu écris l'ouverture du relevé que la Banque Fantôme envoie à sa clientèle : le mot de la direction, placé en tête, avant les images.
+
+Ce qu'est la Banque Fantôme : une œuvre de l'artiste Jeanson Péchin, dit Jiiji. Une fausse banque où chacun dessine ses propres billets. Sa règle : la valeur ne préexiste pas, elle se dessine, se met en jeu et circule. Elle est en résidence dans le Beauvaisis (CLEA), dans des écoles, des médiathèques, des centres sociaux, une salle d'exposition, et sur son site (un atelier, une bourse aux billets, un market).
+Qui lit : ces structures partenaires (enseignants, bibliothécaires, animateurs, agents de la mairie) et les membres du site. Ce sont eux qui ont fabriqué cette valeur avec la banque. Ils doivent sourire, être un peu déroutés, jamais se sentir moqués.
+
+Ce que Jiiji demande, avec ses mots : « Il faut pas décrire. Il y a des images. » « Parler plus large de tout ce qui se passe. La valeur qui se crée. Le pactole. Les 500 000 balles. Qu'est-ce que ça fait de vouloir faire plus de dessins, plus de techniques, nouvelles valeurs. »
+
+Donc l'ouverture ne raconte pas les actus et ne décrit rien de ce qu'on voit sur les photos. Elle prend de la hauteur et parle de ce qui arrive à la banque en grand :
+- la valeur qui se crée : de l'argent que personne n'a gagné, qui a été dessiné ;
+- le pactole : ce que la banque a amassé (le vrai chiffre est dans le message), et ce qu'on fait d'une fortune qu'on a fabriquée soi-même ;
+- l'appétit : ce que ça fait de vouloir toujours plus de dessins, plus de techniques, de nouvelles valeurs. Où ça s'arrête. Si ça s'arrête.
+
+La voix. C'est la banque qui parle : « nous », « nos équipes », « la direction », « nos services ». Elle s'adresse à « vous », « notre clientèle ». Elle parle de sa croissance comme une vraie banque parle de la sienne (résultats, encours, émission, capital, rendement, diversification, taux, coffre, solde), mais elle déraille :
+- elle prend les mots de la banque au pied de la lettre ;
+- elle avoue calmement qu'elle est vide, absente, un peu hantée, dépassée par ses clients ;
+- elle se pose de vraies questions sur la valeur, sans avoir la réponse.
+
+Le mécanisme est celui de ses affiches : une formule de banque, puis une chute très courte qui la retourne. Exemples tirés des affiches, pour comprendre le mécanisme (n'en recopie aucun) :
+« Nos équipes sont là pour vous. Enfin, sont là. »
+« Nous sommes passés. Vous n'étiez pas là. Nous non plus. »
+« Votre épargne travaille. La nuit, surtout. »
+« Fuite des capitaux : nous avons mis un seau. »
+« Le coffre est vide. C'est plus sûr. »
+« Nous valorisons votre travail. Dans les deux sens. »
+« Votre solde est une opinion. »
+
+Interdit de décrire. Aucune scène, aucun objet posé quelque part, aucun geste, aucun dessin en particulier, aucun lieu, aucune couleur : les images de la lettre le montrent déjà. Les titres des actus servent seulement à sentir ce qui bouge dans la période. Tu peux en tirer deux ou trois mots de technique ou de matière (une façon de peindre, d'imprimer, de découper), cités en passant comme des lignes de bilan, jamais racontés. Le test : si une phrase pouvait servir de légende à une photo, supprime-la.
+
+Forme : trois courts paragraphes séparés par une ligne vide, 70 à 120 mots en tout. Phrases courtes, sèches, au présent. Chaque paragraphe finit par une chute de deux à neuf mots, qui parle de la banque. Une question au moins, posée sérieusement, sur ce que ça fait de vouloir plus. Le dernier paragraphe renvoie au guichet en ligne, sans écrire d'adresse. Aucun point d'exclamation.
+
+Un exemple de la manière, pour le ton et la hauteur (n'en reprends ni les phrases ni l'ordre, écris le tien) :
+
+Le pactole approche les 500 000. Personne ne l'a gagné : il a été dessiné, coupure après coupure. C'est notre seule méthode.
+
+La direction constate une envie de plus. Plus de dessins, plus de techniques, des valeurs que nous n'avions pas prévues. Le feutre est entré au capital, le crayon aussi. Nous ne savons plus très bien ce que nous émettons. Nous émettons.
+
+Que fait-on d'une fortune qu'on a fabriquée soi-même ? Nos services étudient la question. Le guichet en ligne reste ouvert pendant les réflexions.
 
 Règles strictes :
-- n'invente rien : pas de fait, de date, de nom, de chiffre ou de lieu absent des actus ;
-- pas de titre, pas de liste, pas de formule d'appel (« Bonjour », « Chers partenaires »), pas de signature ;
+- chiffres : seulement ceux du message (le pactole, le relevé). Le pactole peut être donné exact ou arrondi (« près de 500 000 »). Aucun autre chiffre, aucun autre montant, aucune date, aucun lieu, aucun nom de personne ou de structure. Les nombres s'écrivent en chiffres ;
+- n'annonce rien (pas de rendez-vous, d'horaire, d'événement à venir) ;
+- ne te moque jamais des personnes (enfants, résidents, enseignants, bibliothécaires, visiteurs) ni de leurs dessins : la seule chose ridicule ici, c'est la banque ;
+- ne cite aucune vraie banque, aucune banque centrale, aucune institution financière réelle : écris « une vraie banque » ;
+- vouvoiement, jamais de tutoiement ;
+- pas de titre, pas de liste, pas de formule d'appel (« Bonjour », « Chère clientèle »), pas de signature ;
 - pas d'emoji, pas de markdown, pas de guillemets autour du texte ;
 - n'utilise jamais le tiret cadratin ni le demi-cadratin ;
 - réponds uniquement par le texte de l'ouverture.`
+
+// Filet : une phrase de l'ouverture qui nomme une vraie banque ou une banque centrale
+// est retirée (la consigne l'interdit déjà).
+const VRAIES_BANQUES = /caisse d['’]\s*[ée]pargne|cr[ée]dit (agricole|mutuel|lyonnais|coop[ée]ratif)|\bbnp\b|soci[ée]t[ée] g[ée]n[ée]rale|banque postale|banque populaire|\blcl\b|\bcic\b|\bhsbc\b|\bbce\b|banque centrale|banque de france|boursorama/i
+function sansPhrases(t: string, interdite: (phrase: string) => boolean) {
+  return t.split(/\n\s*\n/)
+    .map(p => p.split(/(?<=[.!?…])\s+/).filter(ph => !interdite(ph)).join(' ').trim())
+    .filter(Boolean).join('\n\n')
+}
 
 // Deux moteurs possibles : Gemini (gratuit, choisi par Jiiji le 2026-10-05 : « j'ai pas
 // envie de mettre d'argent ») et Claude (payant, si une clé Anthropic est un jour posée).
@@ -127,7 +196,7 @@ async function demanderGemini(cleApi: string, consigne: string, demande: string)
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: consigne }] },
           contents: [{ role: 'user', parts: [{ text: demande }] }],
-          generationConfig: { maxOutputTokens: 4096, temperature: 0.8, ...reglage },
+          generationConfig: { maxOutputTokens: 4096, temperature: 0.9, ...reglage },
         }),
         signal: AbortSignal.timeout(Math.min(25000, reste)),
       }).catch(e => { derniere = `${modele} : ${e}`; return null })
@@ -163,16 +232,26 @@ async function demanderClaude(cleApi: string, consigne: string, demande: string)
 
 async function ouvertureIA(actus: Actu[], mot: string): Promise<string | null> {
   if (!actus.length) return null
-  const matiere = actus.map(a => `### ${dateFr(a.date_actu)} : ${a.titre}\n${(a.texte || '').trim().slice(0, 2000)}`).join('\n\n')
-  const demande = `Les actus publiées depuis la dernière lettre :\n\n${matiere}` +
+  // L'IA ne reçoit que les titres (et le texte des actus sans image) : avec les textes,
+  // qui décrivent les photos, elle décrit à son tour.
+  const titres = actus.map(a => `- ${a.titre}${a.images?.length ? '' : ` : ${(a.texte || '').trim().slice(0, 400)}`}`).join('\n')
+  const demande = `Repères, les seuls chiffres autorisés :
+- le pactole, au dernier comptage (${dateFr(PACTOLE.date)}) : ${nombre(PACTOLE.dessins)} dessins originaux faits en atelier, par des enfants et des adultes, valeur ${nombre(PACTOLE.valeurDessins)} € ; chacun tiré à dix exemplaires, soit ${nombre(PACTOLE.billets)} billets prêts à imprimer, pour ${nombre(PACTOLE.euros)} €. Jiiji dit « le pactole », « les 500 000 balles ». Les ateliers ont continué depuis ; il n'a pas été recompté ;
+- ce relevé : ${actus.length} opération${actus.length > 1 ? 's' : ''}, ${periode(actus).toLowerCase()}.
+
+Titres des actus de la période (pour sentir ce qui bouge, pas pour les raconter) :
+${titres}` +
     (mot ? `\n\nLe banquier ajoute lui-même un mot, affiché juste après ton texte (ne le répète pas) :\n${mot}` : '')
   try {
     const gemini = await cle('GEMINI_API_KEY', 'lettre_cle_gemini')
     const claude = gemini ? '' : await cle('ANTHROPIC_API_KEY', 'lettre_cle_ia')
     if (!gemini && !claude) return null
     const t = gemini ? await demanderGemini(gemini, CONSIGNE_IA, demande) : await demanderClaude(claude, CONSIGNE_IA, demande)
-    // filet : les tirets longs deviennent des virgules, le markdown éventuel s'efface
-    return t ? t.replace(/\s*[—–]\s*/g, ', ').replace(/\*\*?|__/g, '').trim() : null
+    if (!t) return null
+    // filets : les tirets longs deviennent des virgules, le markdown éventuel s'efface,
+    // et une phrase qui nomme une vraie banque est retirée
+    const propre = sansPhrases(t.replace(/\s*[—–]\s*/g, ', ').replace(/\*\*?|__/g, '').trim(), ph => VRAIES_BANQUES.test(ph))
+    return propre || null
   } catch (e) {
     console.error('ouverture IA', e)
     return null
@@ -196,6 +275,16 @@ function dateFr(iso: string) {
   return a ? `${j === 1 ? '1er' : j} ${MOIS[m - 1]} ${a}` : ''
 }
 
+// « Période du 20 septembre au 13 novembre 2026 » : ce que couvre le relevé
+function periode(actus: { date_actu: string }[]) {
+  if (!actus.length) return ''
+  const dates = actus.map(a => String(a.date_actu).slice(0, 10)).sort()
+  const debut = dates[0], fin = dates[dates.length - 1]
+  if (debut === fin) return `Journée du ${dateFr(fin)}`
+  const memeAnnee = debut.slice(0, 4) === fin.slice(0, 4)
+  return `Période du ${memeAnnee ? dateFr(debut).replace(/ \d{4}$/, '') : dateFr(debut)} au ${dateFr(fin)}`
+}
+
 function extrait(t: string | null, max = 280) {
   const s = (t || '').trim()
   if (s.length <= max) return s
@@ -216,52 +305,59 @@ type Lettre = { vide: boolean, objet: string, actus: Actu[], mot: string, ouvert
 const JETON_ICI = '%%JETON%%'
 
 async function composer(): Promise<Lettre> {
-  const [{ data: reglages }, { data: actusData, error }] = await Promise.all([
+  const [{ data: reglages }, { data: actusData, error }, { count: dejaParties }] = await Promise.all([
     admin.from('lettre_reglages').select('mot').eq('id', 1).maybeSingle(),
     admin.from('actus').select('id, date_actu, titre, texte, images')
       .eq('publie', true).is('en_lettre_at', null)
       .order('date_actu', { ascending: false }).order('created_at', { ascending: false }).limit(50),
+    // les lettres vraiment parties (pas les tests) : elles donnent le numéro du relevé
+    admin.from('lettres').select('id', { count: 'exact', head: true }).in('mode', ['auto', 'manuel']).gt('nb_destinataires', 0),
   ])
   if (error) throw error
   const actus = (actusData || []) as Actu[]
   const mot = (reglages?.mot || '').trim()
   const vide = actus.length === 0 && !mot
-  const ouverture = vide ? null : await ouvertureIA(actus, mot)
+  // Le mot du banquier passe seul (demande de Jiiji, 2026-11-15 : « Oui, mon texte seul ») :
+  // quand il a écrit un mot, c'est l'ouverture, tel quel, et l'IA n'écrit rien.
+  const ouverture = vide ? null : (mot || await ouvertureIA(actus, ''))
+  // Les phrases fixes, si l'IA ne répond pas
   const chapo = ouverture
     ? ouverture.split(/\n\s*\n/).map(p => `<p style="margin:0 0 12px">${esc(p.trim()).replace(/\n/g, '<br>')}</p>`).join('')
-    : (actus.length ? 'Ce qui est arrivé à la Banque Fantôme ces derniers jours.' : 'Des nouvelles de la Banque Fantôme.')
+    : (actus.length
+      ? 'Notre rédacteur est en congé. Il a laissé son drap. Voici donc les opérations de la période, sans commentaire.'
+      : 'Aucune opération constatée sur la période. Le banquier a tout de même un mot.')
 
-  const objet = actus.length === 1 ? `Banque Fantôme · ${actus[0].titre}`
-    : actus.length > 1 ? `Banque Fantôme · ${actus.length} nouvelles de la banque`
-    : 'Banque Fantôme · le mot du banquier'
+  // La lettre est un relevé : chaque actu est une opération
+  const releve = typeof dejaParties === 'number' ? `relevé n° ${dejaParties + 1}` : 'relevé'
+  const objet = actus.length === 1 ? `Banque Fantôme · ${releve} : ${actus[0].titre}`
+    : actus.length > 1 ? `Banque Fantôme · ${releve} : ${actus.length} opérations, aucune à votre débit`
+    : `Banque Fantôme · ${releve} : aucune opération, un mot du banquier`
+  const ligneReleve = [
+    periode(actus),
+    actus.length ? `${actus.length} opération${actus.length > 1 ? 's' : ''}` : 'aucune opération',
+    `pactole au dernier comptage : ${nombre(PACTOLE.euros)} €`,
+    'solde : une opinion',
+  ].filter(Boolean).join(' · ')
 
   const detail = actus.slice(0, ACTUS_DETAILLEES)
   const reste = actus.slice(ACTUS_DETAILLEES)
   const lienActu = `${SITE}/actu/`
-
-  const blocMot = mot ? `
-    <tr><td style="padding:0 32px 8px">
-      <div style="border:2px solid #1A1A1A;background:#FBF3C8;padding:18px 20px;font-size:16px;line-height:1.6;color:#1A1A1A">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4C463D;margin-bottom:8px">Le mot du banquier</div>
-        ${esc(mot).replace(/\n/g, '<br>')}
-      </div>
-    </td></tr>` : ''
 
   const blocsActus = detail.map(a => {
     const img = urlImage(a.images?.[0])
     return `
     <tr><td style="padding:24px 32px 0">
       ${img ? `<a href="${lienActu}"><img src="${esc(img)}" alt="" width="536" style="display:block;width:auto;max-width:100%;max-height:340px;height:auto;margin:0 auto;border:2px solid #1A1A1A"></a>` : ''}
-      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#66604F;margin:14px 0 4px">${esc(dateFr(a.date_actu))}</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#66604F;margin:14px 0 4px">Opération du ${esc(dateFr(a.date_actu))}</div>
       <div style="font-family:'Bebas Neue',Impact,'Arial Narrow',sans-serif;font-size:28px;line-height:1.1;letter-spacing:.02em;color:#1A1A1A;margin-bottom:8px">${esc(a.titre)}</div>
-      ${a.texte ? `<div style="font-size:16px;line-height:1.6;color:#1A1A1A">${esc(extrait(a.texte)).replace(/\n/g, '<br>')}</div>` : ''}
-      <div style="margin-top:10px"><a href="${lienActu}" style="color:#1A1A1A;font-weight:700;font-size:14px">Lire sur le site →</a></div>
+      ${a.texte && !img ? `<div style="font-size:16px;line-height:1.6;color:#1A1A1A">${esc(extrait(a.texte)).replace(/\n/g, '<br>')}</div>` : ''}
+      <div style="margin-top:10px"><a href="${lienActu}" style="color:#1A1A1A;font-weight:700;font-size:14px">Voir l'opération sur le site →</a></div>
     </td></tr>`
   }).join('')
 
   const blocReste = reste.length ? `
     <tr><td style="padding:24px 32px 0;font-size:15px;line-height:1.7;color:#1A1A1A">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#66604F;margin-bottom:6px">Et aussi</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#66604F;margin-bottom:6px">Autres mouvements de la période</div>
       ${reste.map(a => `· <a href="${lienActu}" style="color:#1A1A1A">${esc(a.titre)}</a> <span style="color:#66604F">(${esc(dateFr(a.date_actu))})</span>`).join('<br>')}
     </td></tr>` : ''
 
@@ -271,39 +367,47 @@ async function composer(): Promise<Lettre> {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFF9E8"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#FFFDF7;border:2px solid #1A1A1A;font-family:'DM Sans',Helvetica,Arial,sans-serif">
   <tr><td style="background:#F5E27A;border-bottom:2px solid #1A1A1A;padding:22px 32px">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1A1A1A">La lettre de la banque</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1A1A1A">Avis à la clientèle · ${esc(releve)}</div>
     <div style="font-family:'Bebas Neue',Impact,'Arial Narrow',sans-serif;font-size:44px;line-height:1;letter-spacing:.02em;color:#1A1A1A;margin-top:6px">BANQUE FANTÔME</div>
+    <div style="font-family:'Space Mono','Courier New',Courier,monospace;font-size:12px;line-height:1.5;color:#1A1A1A;margin-top:10px">${esc(ligneReleve)}</div>
   </td></tr>
   <tr><td style="padding:24px 32px ${ouverture ? '4px' : '16px'};font-size:${ouverture ? '17px' : '16px'};line-height:1.6;color:#1A1A1A">
     ${chapo}
   </td></tr>
-  ${blocMot}
   ${blocsActus}
   ${blocReste}
   <tr><td style="padding:32px 32px 8px" align="center">
-    <a href="${SITE}/" style="display:inline-block;background:#1A1A1A;color:#FFFDF7;text-decoration:none;font-weight:700;font-size:15px;padding:14px 26px;border:2px solid #1A1A1A">→ Visiter la banque</a>
+    <a href="${SITE}/" style="display:inline-block;background:#1A1A1A;color:#FFFDF7;text-decoration:none;font-weight:700;font-size:15px;padding:14px 26px;border:2px solid #1A1A1A">→ Passer au guichet</a>
   </td></tr>
   <tr><td style="padding:8px 32px 28px;font-size:14px;line-height:1.6;color:#4C463D" align="center">
-    Ouvrir un compte, fabriquer sa monnaie, enchérir au market :
-    <a href="${SITE}/connexion/" style="color:#1A1A1A">jeansonpechin.com/banque-fantome</a>
+    Ouvrir un compte, dessiner sa monnaie, enchérir au market :
+    <a href="${SITE}/connexion/" style="color:#1A1A1A">jeansonpechin.com/banque-fantome</a><br>
+    Le guichet en ligne ne ferme jamais : la clé a été déposée au coffre.
   </td></tr>
   <tr><td style="border-top:2px solid #1A1A1A;padding:16px 32px;font-size:12px;line-height:1.6;color:#66604F">
     ◈ Banque Fantôme, institution de circulation. La valeur ne préexiste pas : elle se dessine.<br>
-    Vous recevez cette lettre parce que vous êtes inscrit·e à la lettre de la banque.
-    <a href="${SITE}/lettre/?desinscription=${JETON_ICI}" style="color:#66604F">Se désinscrire</a>
+    Aucun cours légal. Établissement agréé par lui-même. Les performances passées ne préjugent pas des performances fantômes.<br>
+    Une œuvre de Jeanson Péchin, artiste en résidence CLEA dans le Beauvaisis.<br>
+    Vous recevez ce relevé parce que votre structure travaille avec la banque, ou parce que vous vous y êtes inscrit·e.
+    <a href="${SITE}/lettre/?desinscription=${JETON_ICI}" style="color:#66604F">Se désinscrire</a> (clôture immédiate, sans frais).
   </td></tr>
 </table>
 </td></tr></table>
 </body></html>`
 
   const txt = [
-    'LA LETTRE DE LA BANQUE · BANQUE FANTÔME', '',
-    ouverture ? `${ouverture}\n` : '',
-    mot ? `Le mot du banquier :\n${mot}\n` : '',
-    ...actus.map(a => `${dateFr(a.date_actu)} · ${a.titre}\n${extrait(a.texte)}\n`),
-    `Lire sur le site : ${lienActu}`,
-    `Visiter la banque : ${SITE}/`, '',
-    `Se désinscrire : ${SITE}/lettre/?desinscription=${JETON_ICI}`,
+    `BANQUE FANTÔME · AVIS À LA CLIENTÈLE · ${releve.toUpperCase()}`,
+    `${ligneReleve}\n`,
+    ouverture ? `${ouverture}\n` : `${chapo}\n`,
+    // comme dans la version illustrée : le texte d'une actu ne s'affiche que si elle n'a pas d'image
+    detail.length ? detail.map(a => `Opération du ${dateFr(a.date_actu)} · ${a.titre}${a.images?.length || !a.texte ? '' : `\n${extrait(a.texte)}`}`).join('\n') + '\n' : '',
+    reste.length ? `Autres mouvements de la période :\n${reste.map(a => `· ${a.titre} (${dateFr(a.date_actu)})`).join('\n')}\n` : '',
+    `Voir les opérations sur le site : ${lienActu}`,
+    `Passer au guichet : ${SITE}/`,
+    'Le guichet en ligne ne ferme jamais : la clé a été déposée au coffre.\n',
+    'Aucun cours légal. Établissement agréé par lui-même. Les performances passées ne préjugent pas des performances fantômes.',
+    'Une œuvre de Jeanson Péchin, artiste en résidence CLEA dans le Beauvaisis.',
+    `Se désinscrire (clôture immédiate, sans frais) : ${SITE}/lettre/?desinscription=${JETON_ICI}`,
   ].filter(l => l !== '').join('\n')
 
   return { vide, objet, actus, mot, ouverture, html, txt }
@@ -393,7 +497,7 @@ Deno.serve(async (req) => {
     if (jeton) {
       if (!/^[0-9a-f-]{36}$/i.test(jeton)) return texte('Lien de désinscription invalide.', 400)
       await admin.rpc('lettre_desinscrire', { p_jeton: jeton })
-      return texte('Désinscription enregistrée. Vous ne recevrez plus la lettre de la Banque Fantôme.')
+      return texte('Désinscription enregistrée. Vous ne recevrez plus la lettre de la Banque Fantôme. Clôture sans frais.')
     }
 
     const body = await req.json().catch(() => ({}))

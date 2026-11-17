@@ -109,6 +109,71 @@ notification dans mon interface à moi en tant qu'admin ». Il envoie la lettre 
 
 ---
 
+## Le ton : un relevé de banque qui déraille
+
+*Ajouté le 2026-11-15 vers 10:30, à la demande de Jiiji : « elle pourrait être quand même un
+peu plus bizarre dans son contenu », « regarde le ton qu'il y a plus dans les affiches de la
+banque fantôme ».*
+
+- **La lettre est devenue un relevé.** Objet : « Banque Fantôme · relevé n° 3 : 23 opérations,
+  aucune à votre débit » (le numéro compte les lettres vraiment parties, pas les tests).
+  En-tête : « Avis à la clientèle », la période couverte, le nombre d'opérations,
+  « pactole au dernier comptage : 459 290 € », « solde : une opinion ». Chaque actu est
+  une « opération ».
+- **On ne décrit pas.** Un premier essai racontait les actus (« sur un billet de 500,
+  quelqu'un a dessiné un cornet de glace… »). Jiiji, le 2026-11-15 vers 10:05 : « C'est trop
+  descriptif. Il faut pas décrire. Il y a des images. Parler plus large de tout ce qui se
+  passe. La valeur qui se crée. Le pactole. Les 500 000 balles, qu'est-ce que ça fait de
+  vouloir faire plus de dessins, plus de techniques, nouvelles valeurs. »
+- **L'ouverture**, toujours écrite par Gemini, est donc le mot de la direction : la banque
+  parle (« nous », « nos services ») de la valeur qui se crée, du pactole et de l'envie de
+  toujours plus, avec le mécanisme des affiches (une formule de banque, une chute courte).
+  Gemini ne reçoit plus que les titres des actus, pas leurs textes. On ne se moque jamais des
+  personnes ni des dessins.
+- **Sous une image, plus de légende** : il reste la date, le titre et le lien. Le texte d'une
+  actu ne s'affiche que si elle n'a pas d'image.
+- **Le pactole** est le seul chiffre que l'ouverture peut citer. Il vient de l'actu du
+  13 octobre 2026 (837 dessins, 8 381 billets prêts à imprimer, 459 290 €) et il est écrit
+  en haut de la fonction (`PACTOLE`). À changer là quand un nouveau comptage est publié.
+- **Aucune vraie banque** : la consigne l'interdit, et une phrase de l'ouverture qui en
+  nommerait une est retirée avant l'envoi. La version texte suit la version illustrée.
+- **Le pied** : les mentions des affiches (« Aucun cours légal. Établissement agréé par
+  lui-même… »), « Une œuvre de Jeanson Péchin, artiste en résidence CLEA dans le Beauvaisis »,
+  et le lien « Se désinscrire (clôture immédiate, sans frais) ».
+- Si l'IA ne répond pas : « Notre rédacteur est en congé. Il a laissé son drap. »
+- La version d'avant est gardée : `supabase/functions/lettre/index-2026-11-15-avant-ton-affiches.ts`.
+  Pour revenir en arrière, redéployer ce fichier-là sous le nom `index.ts`.
+- La consigne impose une forme : trois petits paragraphes, chacun fini par une chute, une
+  question au moins, et un exemple de la manière. Gemini réfléchit un peu avant d'écrire
+  (réglage borné), sinon il retombe sur le réglage d'avant.
+- Fonction déployée le 2026-11-15 vers 10:17 (version 13). Quatre tests reçus dans la boîte
+  banque.fantome : 10:00, 10:03, 10:07 (les trois descriptifs, refusés) et 10:17 (le bon
+  sens). Rien n'a été poussé sur GitHub : seule la fonction Supabase a changé, le site est
+  le même.
+- **À savoir** : l'ouverture est réécrite à chaque envoi. Celle qui part à tous n'est donc
+  jamais mot pour mot celle du test ; « Voir l'aperçu » en montre une autre encore. Elle suit
+  de près l'exemple écrit dans la consigne : pour que les lettres suivantes ne se ressemblent
+  pas, il faudra changer cet exemple de temps en temps.
+
+- **Le mot du banquier passe seul** (2026-11-15 vers 14:55). Jiiji a refusé aussi le test de
+  10:17 (« Non, à reprendre », « je pense que c'est bien que j'y mette un peu le nez »), puis :
+  « Oui, mon texte seul ». Donc : dès qu'un mot est écrit dans Admin → Lettre → « Le mot du
+  banquier », c'est lui l'ouverture de la lettre, tel quel, à la place du texte de l'IA (plus de
+  cadre jaune à part). Une ligne vide dans le mot fait un nouveau paragraphe. Sans mot, l'IA
+  écrit comme avant. Le mot s'efface toujours après l'envoi à tous. Fonction version 14.
+  Vérifié : un test parti sans mot (l'IA écrit, la lettre arrive). Le chemin « avec un mot »
+  n'a pas été essayé en vrai, pour ne pas écrire dans la case de Jiiji : à voir par « Voir
+  l'aperçu » dès qu'il a écrit.
+- **Attention à l'IA** : le test de 14:54 disait « Le pactole dépasse 500 000 » alors que le
+  chiffre est 459 290. Relire l'aperçu avant un envoi sans mot du banquier.
+- **Depuis le 2026-11-17 : une fois par mois, à la main.** Jiiji (le 16/11 : « en vrai je vais
+  reprendre moi avant d'envoyer ») écrit son mot, regarde l'aperçu, envoie un test, puis
+  « Envoyer maintenant ». « Envoyer automatiquement » reste décoché ; la tâche du lundi tourne
+  mais ne fait rien. Les 16 partenaires trouvés le 15/11 ne sont pas inscrits : la liste à
+  coller est dans `Desktop\BUREAU-PARTAGE\lettre-prete-2026-11-17.html` (hors du dépôt).
+
+---
+
 ## Les limites à connaître
 
 - **Gmail plafonne à environ 500 envois par jour.** La fonction refuse d'envoyer au-delà de
