@@ -1,8 +1,16 @@
 name: Keep Tour de Phrance Supabase Awake
 
+# Le projet Supabase gratuit se met en pause apres une semaine sans activite.
+# Deux passages par semaine ne suffisaient pas : pause entre le 29/10 et le 02/11 2026,
+# alors que le passage du 29/10 avait reussi (et GitHub retarde souvent les taches planifiees
+# de plusieurs heures). Depuis le 2026-11-14 : un passage chaque jour, plusieurs appels
+# (base, comptes, fichiers), et la tache echoue vraiment si la base ne repond pas, pour que
+# GitHub envoie son mail d'echec au lieu d'afficher un faux succes.
+# Les cles restent dans les secrets GitHub du depot, jamais dans ce fichier.
+
 on:
   schedule:
-    - cron: '42 8 * * 1,4'
+    - cron: '42 8 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,8 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Tour de Phrance Supabase
+        env:
+          URL: ${{ secrets.TOUR_DE_PHRANCE_SUPABASE_URL }}
+          CLE: ${{ secrets.TOUR_DE_PHRANCE_SUPABASE_ANON_KEY }}
         run: |
-          curl -L -sS \
-            -H "apikey: ${{ secrets.TOUR_DE_PHRANCE_SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.TOUR_DE_PHRANCE_SUPABASE_ANON_KEY }}" \
-            "${{ secrets.TOUR_DE_PHRANCE_SUPABASE_URL }}/rest/v1/comments?select=id&limit=1"
+          appel() {
+            curl -fsS --retry 3 --retry-delay 20 --retry-all-errors -o /dev/null -w "%{http_code} $1\n" \
+              -H "apikey: $CLE" -H "Authorization: Bearer $CLE" "$URL$1"
+          }
+          appel "/rest/v1/comments?select=id&limit=1"
+          appel "/auth/v1/settings"
+          appel "/storage/v1/bucket" || echo "fichiers : pas de reponse (sans gravite)"
