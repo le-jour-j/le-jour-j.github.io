@@ -7,23 +7,25 @@ import ClickEffects from './components/ClickEffects'
 import InstallPWA from './components/InstallPWA'
 import Rattrapage from './components/Rattrapage'
 import Home from './pages/Home'
-import Market from './pages/Market'
-import Connexion from './pages/Connexion'
-import Compte from './pages/Compte'
-import Messages from './pages/Messages'
-import Actu from './pages/Actu'
-import Deposer from './pages/Deposer'
-import Lettre from './pages/Lettre'
-import Info from './pages/Info'
-import Bourse from './pages/Bourse'
 import { applySeo } from './lib/seo'
 
-// Les pages lourdes se chargent à la demande : S'enrichir (le catalogue des 834 planches),
-// l'admin, les ateliers de Créer et la collection. Le reste du site ne les télécharge pas.
+// Seul l'accueil arrive avec le programme principal. Toutes les autres pages se chargent à
+// la demande, la première fois qu'on les ouvre (2026-11-14 : le site mettait « des plombes »
+// à se charger sur une petite connexion). Le service worker les précharge ensuite en
+// arrière-plan : dès la deuxième visite, elles s'ouvrent sans attente.
 const Senrichir = lazy(() => import('./pages/Senrichir'))
 const Admin = lazy(() => import('./pages/Admin'))
 const Creer = lazy(() => import('./pages/Creer'))
 const Collection = lazy(() => import('./pages/Collection'))
+const Market = lazy(() => import('./pages/Market'))
+const Connexion = lazy(() => import('./pages/Connexion'))
+const Compte = lazy(() => import('./pages/Compte'))
+const Messages = lazy(() => import('./pages/Messages'))
+const Actu = lazy(() => import('./pages/Actu'))
+const Deposer = lazy(() => import('./pages/Deposer'))
+const Lettre = lazy(() => import('./pages/Lettre'))
+const Info = lazy(() => import('./pages/Info'))
+const Bourse = lazy(() => import('./pages/Bourse'))
 
 // Une adresse inconnue : le serveur répond 404, l'appli le dit aussi (l'écran restait vide)
 function Introuvable() {
