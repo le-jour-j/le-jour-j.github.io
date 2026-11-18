@@ -16,6 +16,8 @@ const musique = {
   // partage d'ecran, sans retard), « melange » (le micro ou l'entree son, plus l'ecran), « pcEcran »
   // (le son du PC sans celui de cette page quand Chrome sait l'exclure, plus l'ecran). L'analyse n'est
   // jamais branchee sur les haut-parleurs : pas de larsen numerique.
+  // 2026-11-17 : « morceaux », la musique de l'expo (morceaux.js). Les mots ecoutent les morceaux du
+  // dossier, dans leur contexte audio a eux, sans micro ni partage d'ecran ni permission.
   SOURCES_ECRAN: new Set(["ecran", "melange", "pcEcran"]),
   // quand l'ecran s'ecoute lui-meme, chaque note qui part frappe aussi sa bande au moment ou elle sonne
   // (graves : kick, medium : caisse, aigu : charley), en plus de l'analyse : une nappe qui monte
@@ -40,14 +42,15 @@ const musique = {
     this.erreur = ""; this.attendSon = false;
     majMusiqueUI();
     try {
-      const src = S.musiqueSource, avecEcran = this.SOURCES_ECRAN.has(src);
+      const src = S.musiqueSource, avecEcran = this.SOURCES_ECRAN.has(src), avecMorceaux = src === "morceaux";
+      if (avecMorceaux && (typeof morceaux === "undefined" || !morceaux.demarrer())) throw new Error("la musique de l'expo ne peut pas démarrer dans ce navigateur");
       if (avecEcran) {
         // l'ecran s'ecoute dans le contexte du son lui-meme : il faut que le son ait demarre
         if (!S.son) throw new Error("le son de l'écran est coupé : allume-le (touche S, onglet Son)");
         son.demarrer();
         if (!son.ctx || !son.ecoute) { this.attendSon = true; throw new Error("en attente d'un clic sur l'écran (le navigateur l'exige)"); }
       }
-      if (src !== "ecran" && !navigator.mediaDevices) throw new Error("ce navigateur ne donne pas accès au son (ouvre la page par ecran.bat)");
+      if (src !== "ecran" && !avecMorceaux && !navigator.mediaDevices) throw new Error("ce navigateur ne donne pas accès au son (ouvre la page par ecran.bat)");
       const sansTraitement = { echoCancellation: false, noiseSuppression: false, autoGainControl: false };
       let flux = null;
       if (src === "pc" || src === "pcEcran") {
@@ -68,8 +71,8 @@ const musique = {
         flux = await navigator.mediaDevices.getUserMedia({ audio: Object.assign({ deviceId: S.musiqueEntree ? { exact: S.musiqueEntree } : undefined, channelCount: { ideal: 2 } }, sansTraitement) });
       }
       this.avecEcran = avecEcran;
-      this.ctxPartage = avecEcran;
-      this.ctx = avecEcran ? son.ctx : new (window.AudioContext || window.webkitAudioContext)();
+      this.ctxPartage = avecEcran || avecMorceaux;
+      this.ctx = avecEcran ? son.ctx : avecMorceaux ? morceaux.ctx : new (window.AudioContext || window.webkitAudioContext)();
       this.analyse = this.ctx.createAnalyser();
       this.analyse.fftSize = 2048;
       this.analyse.smoothingTimeConstant = 0.45;
@@ -87,6 +90,7 @@ const musique = {
         }
       }
       if (avecEcran) { son.ecoute.connect(this.analyse); this.ecouteBranchee = son.ecoute; }
+      if (avecMorceaux) { morceaux.sortie.connect(this.analyse); this.ecouteBranchee = morceaux.sortie; }
       this.donnees = new Uint8Array(this.analyse.frequencyBinCount);
       this.forme = new Uint8Array(this.analyse.fftSize);
       this.flux = flux;
@@ -255,7 +259,7 @@ function majMusiqueUI() {
   let couleur, texte;
   const src = S.musiqueSource, pc = src === "pc" || src === "pcEcran";
   const ecoutent = { pc: "le son du PC.", micro: "l'entrée son.", ecran: "l'écran lui-même : chaque note fait bouger l'image.",
-    melange: "l'entrée son et l'écran lui-même.", pcEcran: "le son du PC et l'écran lui-même" + (musique.sansSoi ? " (Chrome retire cette page du son du PC)." : ".") };
+    melange: "l'entrée son et l'écran lui-même.", morceaux: "la musique de l'expo (les morceaux du dossier).", pcEcran: "le son du PC et l'écran lui-même" + (musique.sansSoi ? " (Chrome retire cette page du son du PC)." : ".") };
   if (musique.branchement) { couleur = "orange"; texte = pc ? "Choisis « Écran entier » et coche « Partager aussi l'audio du système »…" : "Chrome demande la permission d'écouter…"; }
   else if (musique.actif) { couleur = "vert"; texte = "Les mots écoutent " + (ecoutent[src] || "l'entrée son."); }
   else if (musique.erreur) { couleur = "rouge"; texte = "Pas de son : " + musique.erreur + "."; }
@@ -302,7 +306,8 @@ function dessinerVumetre() {
   for (const g of (onglet && onglet.groupes) || []) for (const it of g.items || []) if (it.cle === "musiqueSource") {
     for (const op of [["ecran", "L'écran s'écoute lui-même (ses notes font bouger l'image)"],
       ["melange", "Le micro ou une entrée son, plus l'écran lui-même"],
-      ["pcEcran", "Le son du PC, plus l'écran lui-même (partage d'écran)"]]) if (!it.options.some(x => x[0] === op[0])) it.options.push(op);
+      ["pcEcran", "Le son du PC, plus l'écran lui-même (partage d'écran)"],
+      ["morceaux", "Les morceaux du dossier (la musique de l'expo)"]]) if (!it.options.some(x => x[0] === op[0])) it.options.push(op);
   }
 })();
 

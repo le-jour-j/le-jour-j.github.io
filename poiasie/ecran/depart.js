@@ -48,7 +48,7 @@ if (PARAMS.get("plein") === "1") {
   };
   addEventListener("pointerdown", plein, true); addEventListener("keydown", plein, true);
 }
-if (S.musique && ["micro", "ecran", "melange"].includes(S.musiqueSource)) musique.brancher();
+if (S.musique && ["micro", "ecran", "melange", "morceaux"].includes(S.musiqueSource)) musique.brancher();
 else if (S.musique) { S.musique = false; }
 charger().then(() => {
   const p = PRESET_ADRESSE && presetsDe(S.mode).find(x => x.nom === PRESET_ADRESSE);
