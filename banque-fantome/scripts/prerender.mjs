@@ -41,6 +41,91 @@ if (!gabarit.includes('<div id="root">')) {
   process.exit(1);
 }
 
+// ------------------------------------------------------------
+// L'instantané de départ (2026-11-18).
+//
+// La base gratuite cale par moments 2 à 6 s, et l'accueil restait vide en attendant. On relève
+// donc ici, à chaque construction du site, les contenus publics de l'accueil, et on les pose dans
+// chaque page (window.__BF_DEPART__). L'appli les affiche tout de suite, puis les remplace quand
+// la base répond (src/lib/memoire.js). Les clés et les demandes sont celles des composants :
+// si l'une change là-bas, la changer ici.
+//
+// Rien de ceci ne doit faire échouer la construction : une demande qui rate ou qui traîne est
+// laissée de côté, et sans clé de base (construction locale sans .env) il n'y a pas d'instantané.
+// On ne relève que ce que l'accueil montre déjà à tout le monde, avec la clé publique.
+// ------------------------------------------------------------
+function reglagesBase() {
+  let url = process.env.VITE_SUPABASE_URL;
+  let cle = process.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !cle) {
+    try {
+      for (const ligne of fs.readFileSync(path.join(RACINE, ".env"), "utf8").split(/\r?\n/)) {
+        const m = /^\s*(VITE_SUPABASE_URL|VITE_SUPABASE_ANON_KEY)\s*=\s*"?([^"\s]+)"?\s*$/.exec(ligne);
+        if (m && m[1] === "VITE_SUPABASE_URL") url = url || m[2];
+        if (m && m[1] === "VITE_SUPABASE_ANON_KEY") cle = cle || m[2];
+      }
+    } catch { /* pas de .env : pas d'instantané */ }
+  }
+  return url && cle ? { url: url.replace(/\/+$/, ""), cle } : null;
+}
+
+async function instantane() {
+  const base = reglagesBase();
+  if (!base) { console.log("  (pas d'instantané de départ : pas de clé de base)"); return null; }
+  const entetes = { apikey: base.cle, Authorization: `Bearer ${base.cle}` };
+  const demander = async (chemin, options = {}) => {
+    const r = await fetch(`${base.url}/rest/v1/${chemin}`, {
+      ...options,
+      headers: { ...entetes, ...(options.headers || {}) },
+      signal: AbortSignal.timeout(12000),
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r;
+  };
+  const lire = async (chemin) => (await demander(chemin)).json();
+  const rpc = async (nom, corps = {}) => (await demander(`rpc/${nom}`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corps),
+  })).json();
+  const demandes = {
+    "journal": () => rpc("journal_banque", { p_limit: 20 }),
+    "cours": () => rpc("cours_devises"),
+    "billets-8": () => lire("billets_emis?select=*&order=created_at.desc&limit=8"),
+    "accueil-recent": () => lire("objets?select=*&statut=neq.retir%C3%A9&order=created_at.desc&limit=3"),
+    "accueil-total": async () => {
+      const r = await demander("objets?select=id&statut=eq.disponible", { method: "HEAD", headers: { Prefer: "count=exact" } });
+      const n = Number((r.headers.get("content-range") || "").split("/")[1]);
+      if (!Number.isFinite(n)) throw new Error("compte illisible");
+      return n;
+    },
+    "accueil-stats": () => rpc("stats_banque"),
+    "actus-3": async () => (await lire("actus?select=*&order=date_actu.desc,created_at.desc,id&limit=3")).filter((a) => a.publie !== false),
+    "presences": () => lire(`presences?select=agence,debut,fin&fin=gte.${encodeURIComponent(new Date().toISOString())}&order=debut&limit=40`),
+  };
+  const v = {};
+  for (const [cle, relever] of Object.entries(demandes)) {
+    try {
+      const valeur = await relever();
+      if (valeur != null) v[cle] = valeur;
+    } catch (e) {
+      console.log(`  (instantané : « ${cle} » laissé de côté, ${e.message})`);
+    }
+  }
+  return Object.keys(v).length ? { t: Date.now(), v } : null;
+}
+
+let baliseDepart = "";
+try {
+  const depart = await instantane();
+  if (depart) {
+    // « < » échappé : un texte déposé par un compte ne peut pas refermer la balise
+    const json = JSON.stringify(depart).replace(/</g, "\\u003c");
+    baliseDepart = `<script>window.__BF_DEPART__=${json}</script>`;
+    console.log(`  instantané de départ : ${Object.keys(depart.v).join(", ")} (${Math.round(baliseDepart.length / 1024)} Ko)`);
+  }
+} catch (e) {
+  console.log(`  (pas d'instantané de départ : ${e.message})`);
+}
+
 function baliser(seo) {
   const m = [
     `<title>${echapper(seo.title)}</title>`,
@@ -70,6 +155,8 @@ function pageHtml(route) {
   html = html.replace(/\s*<title>[\s\S]*?<\/title>/i, "");
   html = html.replace(/\s*<meta\s+name="description"[^>]*>/i, "");
   html = html.replace("</head>", `  ${baliser(seo)}\n  </head>`);
+  // L'instantané de départ, avant le script de l'appli (par une fonction : le JSON peut contenir « $ »)
+  if (baliseDepart) html = html.replace("</head>", () => `  ${baliseDepart}\n  </head>`);
 
   if (seo.contenu) {
     // Enveloppé dans .prerendu : visible sans JavaScript (robots, lecteurs), caché sinon

@@ -10,6 +10,7 @@ import CoursDevises from '../components/CoursDevises'
 import Notif from '../components/Notif'
 import BoutonLettre from '../components/BoutonLettre'
 import PresenceBanquier from '../components/PresenceBanquier'
+import { relire, retenir } from '../lib/memoire'
 
 // Compteur animé (le chiffre "monte" jusqu'à sa valeur)
 function Compteur({ valeur }) {
@@ -39,9 +40,10 @@ const PRINCIPE = [
 ]
 
 export default function Home() {
-  const [recent, setRecent] = useState(null)
-  const [total, setTotal] = useState(0)
-  const [stats, setStats] = useState(null) // stats_banque() : trésor, billets en circulation…
+  // Le dernier contenu connu s'affiche sans attendre la base (lib/memoire.js)
+  const [recent, setRecent] = useState(() => relire('accueil-recent'))
+  const [total, setTotal] = useState(() => relire('accueil-total') || 0)
+  const [stats, setStats] = useState(() => relire('accueil-stats')) // stats_banque() : trésor, billets en circulation…
   const [selected, setSelected] = useState(null)
   const [openInfo, setOpenInfo] = useState(false)
   const heroRef = useRef(null)
@@ -56,11 +58,11 @@ export default function Home() {
   useEffect(() => {
     supabase.from('objets').select('*').neq('statut', 'retiré')
       .order('created_at', { ascending: false }).limit(3)
-      .then(({ data }) => setRecent(data || []))
+      .then(({ data }) => { if (data) retenir('accueil-recent', data); setRecent(avant => data || avant || []) })
     // tout ce qui est en vente au market, billets compris depuis qu'ils y ont leur rayon (2026-11-01)
     supabase.from('objets').select('id', { count: 'exact', head: true }).eq('statut', 'disponible')
-      .then(({ count }) => setTotal(count || 0))
-    supabase.rpc('stats_banque').then(({ data }) => setStats(data || null))
+      .then(({ count }) => { if (count != null) retenir('accueil-total', count); setTotal(avant => count ?? avant) })
+    supabase.rpc('stats_banque').then(({ data }) => { if (data) retenir('accueil-stats', data); setStats(avant => data || avant) })
   }, [])
 
   // Le grand "BF" en fond du hero suit légèrement la souris

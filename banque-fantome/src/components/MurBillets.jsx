@@ -5,6 +5,7 @@ import { getPublicImageUrl } from '../utils/images'
 import { messageErreur } from '../utils/encheres'
 import BilletModal from './BilletModal'
 import { useCanal } from '../lib/veille'
+import { relire, retenir } from '../lib/memoire'
 
 const ECOUTES = [{ event: '*', schema: 'public', table: 'billets_emis' }]
 
@@ -12,7 +13,8 @@ const ECOUTES = [{ event: '*', schema: 'public', table: 'billets_emis' }]
 // Sorti de GuichetEmission.jsx le 2026-10-19, quand le guichet photo a quitté le code.
 export default function MurBillets({ limit = 12, titre = 'Derniers billets émis', sousTitre = 'La monnaie en circulation', onNotif }) {
   const { estBanquier } = useAuth()
-  const [billets, setBillets] = useState([])
+  // Les derniers billets connus s'affichent sans attendre la base (lib/memoire.js)
+  const [billets, setBillets] = useState(() => relire(`billets-${limit}`) || [])
   const [zoom, setZoom] = useState(null)
 
   useEffect(() => { charger() }, [limit])
@@ -21,7 +23,9 @@ export default function MurBillets({ limit = 12, titre = 'Derniers billets émis
 
   async function charger() {
     const { data } = await supabase.from('billets_emis').select('*').order('created_at', { ascending: false }).limit(limit)
-    setBillets(data || [])
+    if (!data) return
+    retenir(`billets-${limit}`, data)
+    setBillets(data)
   }
 
   async function annuler(b) {

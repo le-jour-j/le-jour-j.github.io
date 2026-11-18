@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AGENCES, chargerPresences, jour, creneau, heure, journeeEntiere, plusieursJours } from '../lib/agences'
+import { relire, retenir } from '../lib/memoire'
 
 // Où est le banquier ? Lu dans son agenda (table `presences`, recopiée toutes les 15 min par la
 // fonction Edge). L'état « au guichet / pas au guichet » se recalcule chaque minute sans rien
@@ -16,13 +17,14 @@ const debutLigne = p => {
 }
 
 export default function PresenceBanquier({ compact = false }) {
-  const [presences, setPresences] = useState(null)
+  // Le dernier agenda connu s'affiche sans attendre la base (lib/memoire.js)
+  const [presences, setPresences] = useState(() => relire('presences'))
   const [maintenant, setMaintenant] = useState(Date.now())
 
   useEffect(() => {
     let actif = true
     let lu = 0
-    const charger = () => { lu = Date.now(); return chargerPresences().then(d => actif && setPresences(d)).catch(() => actif && setPresences([])) }
+    const charger = () => { lu = Date.now(); return chargerPresences().then(d => { retenir('presences', d); if (actif) setPresences(d) }).catch(() => actif && setPresences(avant => avant || [])) }
     charger()
     const horloge = setInterval(() => setMaintenant(Date.now()), 60000)
     // onglet caché : on ne relève rien (2026-11-01) ; au retour, seulement si la dernière lecture a plus de 5 min

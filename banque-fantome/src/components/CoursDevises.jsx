@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useCanal } from '../lib/veille'
+import { relire, retenir } from '../lib/memoire'
 
 const ECOUTES = [{ event: '*', schema: 'public', table: 'billets_emis' }]
 
 // Cours des devises : chaque monnaie inventée par les joueurs, sa masse émise, ses émetteurs.
 // Recalculé à chaque billet encaissé, tant que la page ne dort pas (lib/veille.js).
 export default function CoursDevises({ compact = false }) {
-  const [devises, setDevises] = useState([])
-  const charger = () => supabase.rpc('cours_devises').then(({ data }) => setDevises(data || []))
+  // Le dernier cours connu s'affiche sans attendre la base (lib/memoire.js)
+  const [devises, setDevises] = useState(() => relire('cours') || [])
+  const charger = () => supabase.rpc('cours_devises').then(({ data }) => { if (data) { retenir('cours', data); setDevises(data) } })
   useEffect(() => { charger() }, [])
   useCanal('cours-devises', ECOUTES, charger)
   if (!devises.length) return null

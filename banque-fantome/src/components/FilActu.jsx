@@ -5,13 +5,16 @@ import ImageLightbox from './ImageLightbox'
 import ActuForm from './ActuForm'
 import { chargerActus, urlImageActu, urlMiniActu, dateActu, supprimerImagesActu } from '../lib/actus'
 import { messageErreur } from '../utils/encheres'
+import { relire, retenir } from '../lib/memoire'
 
 // Fil d'actu du projet, façon blog : date, titre, texte, photos.
 // Le banquier voit aussi les brouillons et peut publier, modifier, supprimer.
 // `version` : changer sa valeur recharge le fil (après une nouvelle publication, par exemple).
 export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
   const { estBanquier } = useAuth()
-  const [actus, setActus] = useState(null)
+  // Le dernier fil connu s'affiche sans attendre la base (lib/memoire.js). On ne retient que les
+  // nouvelles publiées : les brouillons du banquier ne restent pas dans le navigateur.
+  const [actus, setActus] = useState(() => relire(`actus-${limit}`))
   const [enEdition, setEnEdition] = useState(null)   // id de l'actu en cours de modification
   const [aSupprimer, setASupprimer] = useState(null) // id en attente de confirmation
   const [galerie, setGalerie] = useState(null)       // { images, index }
@@ -21,7 +24,9 @@ export default function FilActu({ limit = 50, version = 0, onNotif, vide }) {
 
   useEffect(() => {
     let actif = true
-    chargerActus(limit).then(d => actif && setActus(d)).catch(() => actif && setActus([]))
+    chargerActus(limit)
+      .then(d => { retenir(`actus-${limit}`, d.filter(a => a.publie !== false)); if (actif) setActus(d) })
+      .catch(() => actif && setActus(avant => avant || []))
     return () => { actif = false }
   }, [limit, version, recharge, estBanquier])
 

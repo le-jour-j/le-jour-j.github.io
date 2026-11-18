@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { estEnVeille, surVeille } from '../lib/veille'
+import { relire, retenir } from '../lib/memoire'
 
 // Journal public de la banque (journal_banque) : ce qui vient de se passer.
 // Un seul chargement et un seul abonnement Realtime partagés par tous les composants
@@ -12,7 +13,7 @@ import { estEnVeille, surVeille } from '../lib/veille'
 // personne (les écrans d'exposition) se recharge seulement toutes les 5 minutes.
 const MAX = 20 // on en charge 20 une fois, chaque composant en prend ce qu'il veut
 const RELEVE_EN_VEILLE = 5 * 60 * 1000
-let donnees = []
+let donnees = relire('journal') || [] // le dernier journal connu, affiché sans attendre la base (lib/memoire.js)
 let abonnes = 0
 let channel = null
 let attente = null
@@ -22,7 +23,8 @@ const ecouteurs = new Set()
 
 function charger() {
   supabase.rpc('journal_banque', { p_limit: MAX }).then(({ data }) => {
-    donnees = data || []
+    if (data) retenir('journal', data)
+    donnees = data || donnees
     ecouteurs.forEach(f => f(donnees))
   })
 }
